@@ -14,7 +14,6 @@ export default function AlertRegisterModal({ isModalOpen, closeModal, }: any) {
     closeModal()
     navigate('/')
   }
-console.log(isChecked);
 
   return (
     <>

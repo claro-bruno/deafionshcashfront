@@ -119,7 +119,7 @@ export default function Register() {
             </div>
           </div>
           <button
-            className='hover:bg-brand mt-3 px-3 py-1 ring-2 ring-brand hover:ring-transparent text-brand rounded transition-colors hover:text-white font-bold'
+            className='bg-brand mt-3 px-3 py-1 ring-2 border border-transparent  ring-transparent hover:ring-brand hover:border-gray-50 ring-brand rounded transition-colors text-white font-bold'
             type='submit'>
             Register
           </button>
