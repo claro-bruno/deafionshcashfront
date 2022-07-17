@@ -2,6 +2,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { WarningCircle } from 'phosphor-react'
 import { ChangeEvent, Fragment, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import './alertRegisterModal.css'
 
 export default function AlertRegisterModal({ isModalOpen, closeModal, }: any) {
   const [isChecked, setIsChecked] = useState(false)
@@ -42,7 +43,7 @@ console.log(isChecked);
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="modalAlertCard">
                   <div className='flex items-center justify-center'>
                     <WarningCircle size={42} color='red' />
                   </div>
@@ -87,7 +88,7 @@ console.log(isChecked);
                     <button
                       disabled={!isChecked}
                       type="button"
-                      className="ring-2 bg-brand px-3 py-1 font-bold text-white rounded disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="submitAlertModalButton"
                       onClick={closeModal}
                     >
                       Submit
