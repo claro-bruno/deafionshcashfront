@@ -10,3 +10,26 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.inpuntsDefault {
+  @apply rounded-md text-sm ring-1  ring-zinc-400 w-56 text-zinc-800 p-1 h-8 outline-transparent
+  focus:outline-brand transition-colors;
+
+}
+.labelsDefault {
+
+@apply flex flex-col gap-1 text-zinc-600;
+
+}
+
+.fileInput {
+
+  @apply block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full
+ file:text-sm file:font-semibold file:bg-white file:border file:text-brand hover:file:bg-brand hover:file:text-white transition-colors duration-300 hover:file:border-transparent
+
+}
+
+.inputsAndLabelsContainer {
+  @apply flex justify-between gap-8 w-[35rem] h-[15rem]
+
+}
