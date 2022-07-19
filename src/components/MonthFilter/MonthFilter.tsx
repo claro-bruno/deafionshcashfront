@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { Check, ArrowsVertical } from 'phosphor-react'
 import './monthFilter.css'
@@ -18,9 +18,11 @@ const months = [
   { name: 'December' },
 ]
 
-export default function Example() {
+export default function Example({ setMonthName }: { setMonthName: (monthName: string) => void }) {
   const [selected, setSelected] = useState(months[0])
-
+  useEffect(() => {
+    setMonthName(selected.name)
+  }, [selected])
   return (
     <div className=" w-[8rem]">
       <Listbox value={selected} onChange={setSelected}>
@@ -45,8 +47,7 @@ export default function Example() {
                 <Listbox.Option
                   key={personIdx}
                   className={({ active }) =>
-                    `relative  cursor-default select-none py-2 pl-7 pr-1 ${
-                      active ? 'bg-amber-100 text-brand' : 'text-gray-800'
+                    `relative  cursor-default select-none py-2 pl-7 pr-1 ${active ? 'bg-amber-100 text-brand' : 'text-gray-800'
                     }`
                   }
                   value={person}
@@ -54,9 +55,8 @@ export default function Example() {
                   {({ selected }) => (
                     <>
                       <span
-                        className={`block truncate ${
-                          selected ? 'font-semibold' : 'font-normal'
-                        }`}
+                        className={`block truncate ${selected ? 'font-semibold' : 'font-normal'
+                          }`}
                       >
                         {person.name}
                       </span>
