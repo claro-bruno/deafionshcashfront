@@ -1,6 +1,6 @@
+import { ChangeEvent, Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { WarningCircle } from 'phosphor-react'
-import { ChangeEvent, Fragment, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './alertRegisterModal.css'
 
@@ -17,8 +17,8 @@ export default function AlertRegisterModal({ isModalOpen, closeModal, }: any) {
 
   return (
     <>
-      <Transition appear show={isModalOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={handleClose}>
+      <Transition  appear show={isModalOpen} as={Fragment}>
+        <Dialog  as="div" className="relative z-10" onClose={handleClose}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -43,7 +43,7 @@ export default function AlertRegisterModal({ isModalOpen, closeModal, }: any) {
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel className="modalAlertCard">
-                  <div className='flex items-center justify-center'>
+                  <div tabIndex={0} className='flex items-center focus:outline-none justify-center'>
                     <WarningCircle size={42} color='red' />
                   </div>
                   <Dialog.Title
@@ -52,7 +52,7 @@ export default function AlertRegisterModal({ isModalOpen, closeModal, }: any) {
                   >
                     Carefully Read!
                   </Dialog.Title>
-                  <div className="mt-2 flex items-center justify-center">
+                  <div  className="mt-2 flex items-center justify-center">
                     <p className="text-sm text-gray-500 ">
                       Lorem ipsum dolor, sit amet consectetur adipisicing elit. Rerum asperiores, quibusdam deserunt aliquid at id facere ducimus repellat porro. Doloribus, quos! Accusamus odio inventore veritatis ab amet enim tenetur eius.
                       Lorem ipsum dolor, sit amet consectetur adipisicing elit. Rerum asperiores, quibusdam deserunt aliquid at id facere ducimus repellat porro. Doloribus, quos! Accusamus odio inventore veritatis ab amet enim tenetur eius.

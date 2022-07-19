@@ -3,7 +3,7 @@ import Header from '../../components/header/Header'
 import AlertRegisterModal from '../../components/modal/AlertRegisterModal'
 
 export default function Register() {
-  const [isModalOpen,setIsModalOpen] =useState(true)
+  const [isModalOpen, setIsModalOpen] = useState(true)
   /*   const getdaysofcurrentmonth = () => {
       const date = new Date()
       const days = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate()
@@ -16,10 +16,10 @@ export default function Register() {
       <main className='flex-1 flex flex-col p-4 my-auto gap-2 w-[100%]  min-h-full  items-center  '>
         <form className='flex flex-col items-center justify-center gap-4 px-4  w-auto'>
           <div className='flex flex-col gap-4 bg-zinc-100 mt-8 p-8 rounded-md'>
-            <div className='inputsAndLabelsContainer'>
+            <div className='inputsAndLabelsContainer border-b-2'>
               <div className='flex flex-col gap-2'>
                 <label className='labelsDefault'>
-                  Name
+                  First name
                   <input
                     className='inpuntsDefault'
                     type='text' />
@@ -36,8 +36,27 @@ export default function Register() {
                     className='inpuntsDefault'
                     type='text' />
                 </label>
+                <label className='labelsDefault'>
+                  Birthday
+                  <input
+                    min='1940-12-31'
+                    max='2022-12-31'
+                    className='inpuntsDefault'
+                    type='date' />
+                </label>
               </div>
               <div className='flex flex-col gap-2'>
+                <label className='labelsDefault'>
+                  Last name
+                  <input
+                    className='inpuntsDefault'
+                    type='text'
+                    name='phone'
+                    inputMode='numeric'
+                    pattern='[0-9]{3}-[0-9]{4}-[0-9]{4}'
+                    maxLength={11}
+                  />
+                </label>
                 <label className='labelsDefault'>
                   Phone
                   <input
@@ -49,22 +68,13 @@ export default function Register() {
                     maxLength={11}
                   />
                 </label>
-                <label className='labelsDefault'>
-                  Birthday
-                  <input
-                    min='1940-12-31'
-                    max='2022-12-31'
-                    className='inpuntsDefault'
-                    type='date' />
-                </label>
                 <label className='labelsDefault '>
                   Document Photo
                   <input type='file' className='fileInput' />
                 </label>
               </div>
             </div>
-            <hr className='h-8' />
-            <div className='inputsAndLabelsContainer'>
+            <div className='inputsAndLabelsContainer items-center'>
               <div className='flex flex-col gap-2'>
                 <label className='labelsDefault'>
                   Address N°
@@ -125,8 +135,8 @@ export default function Register() {
           </button>
         </form>
         <AlertRegisterModal
-        isModalOpen={isModalOpen}
-        closeModal={()=>setIsModalOpen(false)}
+          isModalOpen={isModalOpen}
+          closeModal={() => setIsModalOpen(false)}
         />
       </main>
     </div>
