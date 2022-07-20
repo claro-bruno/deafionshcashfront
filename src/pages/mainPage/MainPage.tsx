@@ -1,19 +1,48 @@
 import { Circle } from 'phosphor-react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../../components/header/Header'
 import MonthFilter from '../../components/MonthFilter/MonthFilter'
 import { bodyTable, headerTable } from './constants'
 
 export default function MainPage() {
   const [monthName, setMonthName] = useState('')
+  const [filterContractor, setFilterContractor] = useState('')
+  const [globalRevenue, setGlobalRevenue] = useState({ quinzena1: '', quinzena2: '', total: '' })
 
+  function setRevenue() {
+    const revenue: { type: string, period: string, value: string }[] = bodyTable
+      .filter(item => item.month === monthName.toLowerCase())
+      .map(item => item.payments)
+      .flat()
+
+    const quinzena1 = Number(revenue
+      .filter(item => item.period === 'quinzena1')
+      .reduce((acc, curr) => acc + Number(curr.value), 0))
+
+    const quinzena2 = Number(revenue
+      .filter(item => item.period === 'quinzena2')
+      .reduce((acc, curr) => acc + Number(curr.value), 0))
+
+    const total = (quinzena1 + quinzena2).toFixed(2)
+
+    setGlobalRevenue({
+      quinzena1: quinzena1.toFixed(2),
+      quinzena2: quinzena2.toFixed(2),
+      total
+    })
+  }
+  useEffect(() => {
+    setRevenue()
+  }, [monthName])
   return (
     <div className='flex flex-col'>
       <Header>
         <div className='flex items-center gap-4'>
           <MonthFilter setMonthName={setMonthName} />
           <input
+            onChange={(e) => setFilterContractor(e.target.value)}
             className='inpuntsDefault mt-[0.2rem] '
+            value={filterContractor}
             type="text"
           />
         </div>
@@ -39,53 +68,69 @@ export default function MainPage() {
                 </tr>
               </thead>
               <tbody>
-                {bodyTable.map((item) => (
-                  <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                    <th scope="row" className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                      <Circle
-                        weight="fill"
-                        size={15}
-                        color={item.status === "active" ? "green" : "gray"} />
-                    </th>
-                    <td className="py-4 px-6">
-                      {item.name}
-                    </td>
-                    {item.payments.map((payment) => (
-                      <>
+                {bodyTable.map((item) => {
+                  if (item.month === monthName.toLowerCase() && item.name.includes(filterContractor)) {
+                    return (
+                      <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <th scope="row" className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                          <Circle
+                            weight="fill"
+                            size={15}
+                            color={item.status === "active" ? "green" : "gray"} />
+                        </th>
                         <td className="py-4 px-6">
-                          {payment.value}
+                          {item.name}
                         </td>
+                        {item.payments.map((payment) => (
+                          <>
+                            <td className="py-4 px-6">
+                              {payment.value}
+                            </td>
+                            <td className="py-4 px-6">
+                              {payment.type}
+                            </td>
+                          </>
+                        ))}
                         <td className="py-4 px-6">
-                          {payment.type}
+                          {item.payments
+                            .reduce((acc, curr) => acc + Number(curr.value), 0)
+                            .toFixed(2)
+                          }
                         </td>
-                      </>
-                    ))}
-                    <td className="py-4 px-6">
-                      {item.payments
-                        .reduce((acc, curr) => acc + Number(curr.value), 0)
-                        .toFixed(2)
-                      }
-                    </td>
-                  </tr>
-                ))}
+                      </tr>
+                    )
+                  } else {
+                    return []
+                  }
+                })}
               </tbody>
             </table>
           </div>
         </div>
-        <div className='flex flex-col  items-center '>
-          <h1 className='text-2xl font-bold text-zinc-700'>Revenue</h1>
-          <div className='bg-red-500 flex justify-between rounded h-20 w-[20vw] px-2 py-2'>
-            <strong className='text-sm '>Quinzena 1
-              { }
-            </strong>
-            <strong className='text-sm'>Quinzena 2
-              { }
-            </strong>
-            <strong className='text-sm'> Total month
-              { }
-            </strong>
+        <div className='flex flex-col items-center '>
+          <h1 className='text-2xl w-[20vw] text-center  font-bold text-zinc-700'>Revenue</h1>
+          <div className='flex flex-col gap-8 fixed right-2 mt-8'>
+            <div className='bg-gray-50 shadow-md flex items-center gap-2 flex-col rounded h-20 w-[18vw] py-2'>
+              Quinzena 1
+              <strong className=''>
+                $ {globalRevenue.quinzena1}
+              </strong>
+            </div>
+            <div className='bg-gray-50 shadow-md flex items-center gap-2 flex-col rounded h-20 w-[18vw] py-2'>
+              Quinzena 2
+              <strong className=''>
+                $ {globalRevenue.quinzena2}
+              </strong>
+            </div>
+            <div className='bg-gray-50 shadow-md flex items-center gap-2 flex-col rounded h-20 w-[18vw] py-2'>
+              Total month
+              <strong className=''>
+                $ {globalRevenue.total}
+              </strong>
+            </div>
           </div>
         </div>
+
       </main>
     </div>
   )
