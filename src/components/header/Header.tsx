@@ -10,6 +10,19 @@ export default function Header(props: PropsWithChildren) {
           alt="global janitorial services logo" />
       </div>
       {props.children}
+      <div className='flex  gap-4 '>
+        <div className='flex gap-4 absolute right-[7rem] top-[1.9rem]'>
+            <button className=' text-white text-sm font-bold'>
+              Companies
+            </button>
+            <button className=' text-white text-sm font-bold'>
+              Registration
+            </button>
+        </div>
+          <button className=' text-white text-sm font-bold'>
+            Logout
+          </button>
+       </div>
     </header>
   )
 }

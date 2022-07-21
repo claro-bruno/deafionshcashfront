@@ -1,11 +1,14 @@
 import { Circle } from 'phosphor-react'
 import React, { useEffect, useState } from 'react'
 import Header from '../../components/header/Header'
+import YearFilter from '../../components/MonthFilter/YearFilter'
 import MonthFilter from '../../components/MonthFilter/MonthFilter'
+
 import { bodyTable, headerTable } from './constants'
 
 export default function MainPage() {
   const [monthName, setMonthName] = useState('')
+  const [yearName, setYearName] = useState('')
   const [filterContractor, setFilterContractor] = useState('')
   const [globalRevenue, setGlobalRevenue] = useState({ quinzena1: '', quinzena2: '', total: '' })
 
@@ -37,7 +40,8 @@ export default function MainPage() {
   return (
     <div className='flex flex-col'>
       <Header>
-        <div className='flex items-center gap-4'>
+        <div className='flex items-center gap-2'>
+          <YearFilter setYearName={setYearName} />
           <MonthFilter setMonthName={setMonthName} />
           <input
             onChange={(e) => setFilterContractor(e.target.value)}
@@ -46,12 +50,11 @@ export default function MainPage() {
             type="text"
           />
         </div>
-        <button>
-          Logout
-        </button>
+    
       </Header>
-      <div className='mx-auto font-extrabold text-2xl'>
-        {monthName}
+      <div className='mx-auto flex gap-2 items-center font-extrabold text-2xl'>
+       <div> {yearName}</div>
+       <div> {monthName}</div>
       </div>
       <main className='min-h-screen flex  bg-gray-100 '>
         <div className='w-[80%]'>

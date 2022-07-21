@@ -1,14 +1,25 @@
 import { useState } from 'react'
+import AdressComponent from '../../components/adressRegister/adressComponent'
 import Header from '../../components/header/Header'
-import AlertRegisterModal from '../../components/modal/AlertRegisterModal'
 
 export default function Register() {
-  const [isModalOpen, setIsModalOpen] = useState(true)
+  /* const [isModalOpen, setIsModalOpen] = useState(true) */
+  const [addressNum, setAddressNum] = useState('1')
   /*   const getdaysofcurrentmonth = () => {
       const date = new Date()
       const days = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate()
       return days
     } */
+
+  function setNumberOfAdresses(addressNum: string) {
+    console.log(addressNum);
+
+    return Number(addressNum) === 1 ? (< AdressComponent />) : (
+      <>
+        < AdressComponent />
+        < AdressComponent />
+      </>)
+  }
 
   return (
     <div className='flex flex-col  min-w-screen min-h-screen'>
@@ -70,63 +81,26 @@ export default function Register() {
                 </label>
                 <label className='labelsDefault '>
                   Document Photo
-                  <input type='file' className='fileInput' />
-                </label>
-              </div>
-            </div>
-            <div className='inputsAndLabelsContainer items-center'>
-              <div className='flex flex-col gap-2'>
-                <label className='labelsDefault'>
-                  Address N°
                   <input
-                    inputMode='numeric'
-                    name='addressNum'
-                    className='inpuntsDefault'
-                    type='text' />
-                </label>
-                <label className='labelsDefault'>
-                  Street
-                  <input
-                    name='street'
-                    className='inpuntsDefault'
-                    type='text' />
-                </label>
-                <label className='labelsDefault'>
-                  City
-                  <input
-                    name='city'
-                    className='inpuntsDefault'
-                    type='text' />
-                </label>
-              </div>
-              <div className='flex flex-col gap-2'>
-                <label className='labelsDefault'>
-                  State
-                  <input
-                    name='state'
-                    className='inpuntsDefault'
-                    type='text'
-                  />
-                </label>
-                <label className='labelsDefault'>
-                  Zip-code
-                  <input
-                    name='zipCode'
-                    inputMode='numeric'
-                    pattern='^(?(^00000(|-0000))|(\d{5}(|-\d{4})))$'
-                    className='inpuntsDefault'
-                    type='text' />
-                </label>
-                <label className='labelsDefault '>
-                  Residency proof
-                  <input
-                    name='residencyProof'
+                    accept='image/*'
                     type='file'
-                    className='fileInput'
-                  />
+                    className='fileInput' />
                 </label>
               </div>
             </div>
+            <label
+              className='flex self-center items-center gap-2'
+            >
+              Address
+              <select
+                className='w-fit  py-1 px-2 outline-brand  ring-1 rounded border-b-2'
+                value={addressNum}
+                onChange={(e) => setAddressNum(e.target.value)}>
+                <option value='1'>1</option>
+                <option value='2'>2 </option>
+              </select>
+            </label>
+            {setNumberOfAdresses(addressNum)}
           </div>
           <button
             className='bg-brand mt-3 px-3 py-1 ring-2 border border-transparent  ring-transparent hover:ring-brand hover:border-gray-50 ring-brand rounded transition-colors text-white font-bold'
@@ -134,10 +108,10 @@ export default function Register() {
             Register
           </button>
         </form>
-        <AlertRegisterModal
+        {/*      <AlertRegisterModal
           isModalOpen={isModalOpen}
           closeModal={() => setIsModalOpen(false)}
-        />
+        /> */}
       </main>
     </div>
   )
