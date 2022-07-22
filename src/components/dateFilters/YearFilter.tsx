@@ -1,30 +1,23 @@
 import { Fragment, useEffect, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { Check, ArrowsVertical } from 'phosphor-react'
-import './filter.css'
+import './filters.css'
 
-const months = [
-  { name: 'January' },
-  { name: 'February' },
-  { name: 'March' },
-  { name: 'April' },
-  { name: 'May' },
-  { name: 'June' },
-  { name: 'July' },
-  { name: 'August' },
-  { name: 'September' },
-  { name: 'October' },
-  { name: 'November' },
-  { name: 'December' },
+const years = [
+  { name: '2022' },
+  { name: '2021' },
+  { name: '2020' },
+  { name: '2019' },
+  { name: '2018' },
 ]
 
-export default function Example({ setMonthName }: { setMonthName: (monthName: string) => void }) {
-  const [selected, setSelected] = useState(months[0])
+export default function Example({ setYearName }: { setYearName: (yearName: string) => void }) {
+  const [selected, setSelected] = useState(years[0])
   useEffect(() => {
-    setMonthName(selected.name)
+    setYearName(selected.name)
   }, [selected])
   return (
-    <div className=" w-[8rem]">
+    <div className=" w-[5.5rem]">
       <Listbox value={selected} onChange={setSelected}>
         <div className="relative mt-1">
           <Listbox.Button className="group relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500  sm:text-sm">
@@ -43,14 +36,14 @@ export default function Example({ setMonthName }: { setMonthName: (monthName: st
             leaveTo="opacity-0"
           >
             <Listbox.Options className="absolute overflow-auto scrollHidden mt-1 max-h-60 w-full rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-              {months.map((person, personIdx) => (
+              {years.map((year, yearIdx) => (
                 <Listbox.Option
-                  key={personIdx}
+                  key={yearIdx}
                   className={({ active }) =>
                     `relative  cursor-default select-none py-2 pl-7 pr-1 ${active ? 'bg-amber-100 text-brand' : 'text-gray-800'
                     }`
                   }
-                  value={person}
+                  value={year}
                 >
                   {({ selected }) => (
                     <>
@@ -58,7 +51,7 @@ export default function Example({ setMonthName }: { setMonthName: (monthName: st
                         className={`block truncate ${selected ? 'font-semibold' : 'font-normal'
                           }`}
                       >
-                        {person.name}
+                        {year.name}
                       </span>
                       {selected ? (
                         <span className="absolute inset-y-0 left-0 flex items-center pl-1 text-brand">

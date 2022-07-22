@@ -1,8 +1,8 @@
 import { Circle } from 'phosphor-react'
 import React, { useEffect, useState } from 'react'
 import Header from '../../components/header/Header'
-import YearFilter from '../../components/MonthFilter/YearFilter'
-import MonthFilter from '../../components/MonthFilter/MonthFilter'
+import YearFilter from '../../components/dateFilters/YearFilter'
+import MonthFilter from '../../components/dateFilters/MonthFilter'
 
 import { bodyTable, headerTable } from './constants'
 
@@ -40,7 +40,7 @@ export default function MainPage() {
   return (
     <div className='flex flex-col'>
       <Header>
-        <div className='flex items-center gap-2'>
+        <div className='relative left-20 ml-6 flex items-center gap-2'>
           <YearFilter setYearName={setYearName} />
           <MonthFilter setMonthName={setMonthName} />
           <input
@@ -50,7 +50,7 @@ export default function MainPage() {
             type="text"
           />
         </div>
-    
+
       </Header>
       <div className='mx-auto flex gap-2 items-center font-extrabold text-2xl'>
        <div> {yearName}</div>

@@ -1,9 +1,8 @@
 import { useState } from 'react'
-import AdressComponent from '../../components/adressRegister/adressComponent'
+import AdressComponent from '../../components/adressRegister/AdressComponent'
 import Header from '../../components/header/Header'
 
 export default function Register() {
-  /* const [isModalOpen, setIsModalOpen] = useState(true) */
   const [addressNum, setAddressNum] = useState('1')
   /*   const getdaysofcurrentmonth = () => {
       const date = new Date()
@@ -42,7 +41,7 @@ export default function Register() {
                     type='email' />
                 </label>
                 <label className='labelsDefault'>
-                  Itin/Social Id
+                  Itin/SSN
                   <input
                     className='inpuntsDefault'
                     type='text' />
@@ -108,10 +107,7 @@ export default function Register() {
             Register
           </button>
         </form>
-        {/*      <AlertRegisterModal
-          isModalOpen={isModalOpen}
-          closeModal={() => setIsModalOpen(false)}
-        /> */}
+
       </main>
     </div>
   )

@@ -5,7 +5,7 @@ export default function AdressComponent() {
     <div className='inputsAndLabelsContainer items-center'>
       <div className='flex flex-col gap-2'>
         <label className='labelsDefault'>
-          Address N°
+          Address 
           <input
             inputMode='numeric'
             name='addressNum'

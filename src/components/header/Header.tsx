@@ -1,4 +1,5 @@
 import React, { PropsWithChildren } from 'react'
+import { Link } from 'react-router-dom'
 
 export default function Header(props: PropsWithChildren) {
   return (
@@ -10,19 +11,19 @@ export default function Header(props: PropsWithChildren) {
           alt="global janitorial services logo" />
       </div>
       {props.children}
-      <div className='flex  gap-4 '>
-        <div className='flex gap-4 absolute right-[7rem] top-[1.9rem]'>
-            <button className=' text-white text-sm font-bold'>
+      <div className='flex self-center gap-4 '>
+        <div className='flex gap-4 '>
+            <Link to='/companies' className=' text-white text-sm font-bold'>
               Companies
-            </button>
-            <button className=' text-white text-sm font-bold'>
+            </Link>
+            <Link to='/registration' className=' text-white text-sm font-bold'>
               Registration
-            </button>
+            </Link>
         </div>
-          <button className=' text-white text-sm font-bold'>
+       </div>
+          <button className='  text-white text-sm font-bold'>
             Logout
           </button>
-       </div>
     </header>
   )
 }
