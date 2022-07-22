@@ -1,10 +1,12 @@
 import { Circle, PlusCircle } from 'phosphor-react'
 import React, { useState } from 'react'
 import Header from '../../components/header/Header'
+import NewCompanyModal from '../../components/modal/NewCompanyModal'
 import { bodyTable, headerTable } from './constants'
 
 export default function Companies() {
   const [filterCompanies, setFilterCompanies] = useState('')
+  const [isModalOpen, setIsModalOpen] = useState(false)
   return (
     <div className='flex flex-col'>
       <Header >
@@ -29,6 +31,7 @@ export default function Companies() {
               scope="col"
               className="py-3 px-6">
               <button
+                onClick={() => setIsModalOpen(true)}
                 className='text-brand'
                 title='Add companie'
                 type='button'>
@@ -70,6 +73,10 @@ export default function Companies() {
           })}
         </tbody>
       </table>
+      <NewCompanyModal
+        isModalOpen={isModalOpen}
+        closeModal={() => setIsModalOpen(false)}
+      />
     </div>
   )
 }

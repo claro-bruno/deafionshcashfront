@@ -1,8 +1,8 @@
 import { Circle } from 'phosphor-react'
 import React, { useEffect, useState } from 'react'
 import Header from '../../components/header/Header'
-import YearFilter from '../../components/dateFilters/YearFilter'
-import MonthFilter from '../../components/dateFilters/MonthFilter'
+import YearFilter from '../../components/listboxes/YearFilter'
+import MonthFilter from '../../components/listboxes/MonthFilter'
 
 import { bodyTable, headerTable } from './constants'
 
