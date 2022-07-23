@@ -5,6 +5,7 @@ import YearFilter from '../../components/listboxes/YearFilter'
 import MonthFilter from '../../components/listboxes/MonthFilter'
 
 import { bodyTable, headerTable } from './constants'
+import { Link } from 'react-router-dom'
 
 export default function MainPage() {
   const [monthName, setMonthName] = useState('')
@@ -53,8 +54,8 @@ export default function MainPage() {
 
       </Header>
       <div className='mx-auto flex gap-2 items-center font-extrabold text-2xl'>
-       <div> {yearName}</div>
-       <div> {monthName}</div>
+        <div> {yearName}</div>
+        <div> {monthName}</div>
       </div>
       <main className='min-h-screen flex  bg-gray-100 '>
         <div className='w-[80%]'>
@@ -82,7 +83,7 @@ export default function MainPage() {
                             color={item.status === "active" ? "green" : "gray"} />
                         </th>
                         <td className="py-4 px-6">
-                          {item.name}
+                          <Link to={`/contractor/${item.id}`}> {item.name}</Link>
                         </td>
                         {item.payments.map((payment) => (
                           <>
@@ -112,7 +113,7 @@ export default function MainPage() {
         </div>
         <div className='flex flex-col items-center '>
           <h1 className='text-2xl w-[20vw] text-center  font-bold text-zinc-700'>Revenue</h1>
-          <div className='flex flex-col gap-8 fixed right-2 mt-8'>
+          <article className='flex flex-col gap-8 fixed right-2 mt-8'>
             <div className='bg-gray-50 shadow-md flex items-center gap-2 flex-col rounded h-20 w-[18vw] py-2'>
               Quinzena 1
               <strong className=''>
@@ -131,7 +132,7 @@ export default function MainPage() {
                 $ {globalRevenue.total}
               </strong>
             </div>
-          </div>
+          </article>
         </div>
 
       </main>

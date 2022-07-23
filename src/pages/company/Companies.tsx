@@ -8,7 +8,7 @@ export default function Companies() {
   const [filterCompanies, setFilterCompanies] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col bg-gray-50 min-h-screen'>
       <Header >
         <input
           placeholder='Ex: Amazon'
