@@ -25,3 +25,5 @@ export const bodyTable = [{
   client: 'samsung',
   hourlyPay: '20',
 }]
+
+export const articleInfos=['Payment',' Worked Hours']
