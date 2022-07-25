@@ -13,7 +13,7 @@ export default function Header(props: PropsWithChildren) {
           alt="global janitorial services logo" />
       </div>
       {props.children}
-      {location.pathname !== '/register' ? (
+      {!location.pathname.includes('/register') ? (
         <>
           <div className='flex self-center gap-4 '>
             <div className='flex gap-4 '>

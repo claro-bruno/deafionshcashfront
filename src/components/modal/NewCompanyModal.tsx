@@ -106,7 +106,7 @@ export default function NewCompanyModal({ isModalOpen, closeModal, }: any) {
                     <button
                       disabled={!isChecked}
                       type='button'
-                      className='submitAlertModalButton'
+                      className='submitModalButton'
                       onClick={closeModal}
                     >
                       Create

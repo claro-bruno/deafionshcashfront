@@ -108,7 +108,7 @@ export default function Contractor() {
           <button
             type='button'
             onClick={() => setIsModalOpen(true)}
-            className='px-4 py-1 rounded text-sm border border-transparent ring-2 ring-brand2 hover:border-white h-min relative right-5 font-bold  text-white bg-brand2 transition-colors'>
+            className='px-4 py-1 rounded border border-transparent ring text-sm ring-transparent hover:ring-brand2   ring-brand2 hover:border-white h-min relative right-5 font-bold  text-white bg-brand2 transition-colors'>
             Edit
           </button>
         </div>

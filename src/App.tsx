@@ -4,12 +4,17 @@ import Contractor from "./pages/contractor/Contractor"
 import Login from "./pages/login/Login"
 import MainPage from "./pages/mainPage/MainPage"
 import Register from "./pages/register/Register"
+import Terms from "./pages/register/Terms"
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
-      <Route path="/register" element={<Register />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" >
+        <Route index element={<Register />} />
+        <Route path="terms" element={<Terms />} />
+      </Route>
       <Route path="/main" element={<MainPage />} />
       <Route path="/companies" element={<Companies />} />
       <Route path="/contractor"  >

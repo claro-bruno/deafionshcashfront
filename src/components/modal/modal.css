@@ -1,9 +1,12 @@
 .modal {
   @apply w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all ;
 }
+.termModal {
+  @apply w-full  transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all ;
+}
 .modal button {
   @apply bg-brand;
 }
-.submitAlertModalButton{
-  @apply  px-3 py-1 ring-2 border border-transparent ring-transparent hover:ring-brand hover:border-gray-50 ring-brand  rounded transition-colors text-white font-bold disabled:ring-transparent disabled:opacity-50 disabled:border-transparent;
+.submitModalButton{
+  @apply  px-3 py-1 ring ring-transparent border border-transparent hover:ring-brand hover:border-gray-50  rounded transition-colors text-white font-bold disabled:ring-transparent disabled:opacity-50 disabled:border-transparent;
 }

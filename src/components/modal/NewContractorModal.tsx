@@ -93,7 +93,7 @@ export default function NewContractorModal({ isModalOpen, closeModal, }: any) {
                   <div className='pt-7 text-sm flex flex-col items-center gap-5'>
                     <button
                       type='button'
-                      className='submitAlertModalButton'
+                      className='submitModalButton'
                       onClick={closeModal}
                     >
                       Save
