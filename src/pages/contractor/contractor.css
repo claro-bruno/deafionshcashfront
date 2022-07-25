@@ -1,3 +1,4 @@
-.contractorBody::-webkit-scrollbar {
-    display: none;  /* Safari and Chrome */
+.contractorCardInfos {
+  @apply flex items-center gap-1;
+
 }

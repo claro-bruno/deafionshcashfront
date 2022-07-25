@@ -1,0 +1,8 @@
+.headerLink{
+  @apply text-white text-sm font-bold px-2 py-1 outline-white ;
+
+}
+.loginLink{
+  @apply text-white relative px-2 py-1 outline-white h-min self-center right-1 text-sm font-bold ;
+
+}

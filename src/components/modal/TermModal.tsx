@@ -1,9 +1,11 @@
 import { ChangeEvent, Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { WarningCircle } from 'phosphor-react'
-import './modal.css'
+import { ModalProps } from '../../types/modal'
+import './modal.css';
 
-export default function TermModal({ title, pdfUrl, isModalOpen, closeModal, }: any) {
+type TermModalProps = ModalProps & { title: string, pdfUrl: string }
+export default function TermModal({ title, pdfUrl, isModalOpen, closeModal, }: TermModalProps) {
   const [isChecked, setIsChecked] = useState(false)
   function handleCheckboxChange(e: ChangeEvent<HTMLInputElement>) {
     setIsChecked(e.target.checked)

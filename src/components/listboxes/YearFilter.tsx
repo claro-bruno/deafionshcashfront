@@ -11,7 +11,7 @@ const years = [
   { name: '2018' },
 ]
 
-export default function Example({ setYearName }: { setYearName: (yearName: string) => void }) {
+export default function YearFilter({ setYearName }: { setYearName: (yearName: string) => void }) {
   const [selected, setSelected] = useState(years[0])
   useEffect(() => {
     setYearName(selected.name)
@@ -20,7 +20,7 @@ export default function Example({ setYearName }: { setYearName: (yearName: strin
     <div className=" w-[5.5rem]">
       <Listbox value={selected} onChange={setSelected}>
         <div className="relative mt-1">
-          <Listbox.Button className="group relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500  sm:text-sm">
+          <Listbox.Button className="group relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500  sm:text-sm ">
             <span className="block truncate">{selected.name}</span>
             <span className=" pointer-events-none absolute inset-y-0 right-0 flex items-center pr-1">
               <ArrowsVertical
@@ -35,7 +35,7 @@ export default function Example({ setYearName }: { setYearName: (yearName: strin
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Listbox.Options className="absolute overflow-auto scrollHidden mt-1 max-h-60 w-full rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+            <Listbox.Options className="ListboxOptions">
               {years.map((year, yearIdx) => (
                 <Listbox.Option
                   key={yearIdx}

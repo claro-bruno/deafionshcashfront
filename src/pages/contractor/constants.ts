@@ -24,6 +24,30 @@ export const bodyTable = [{
   workedHours: '5.5',
   client: 'samsung',
   hourlyPay: '20',
+},{
+  id: 11,
+  date: new Date("2/2/22"),
+  workedHours: '3',
+  client: 'apple',
+  hourlyPay: '10',
+}, {
+  id: 122,
+  date: new Date("2/2/22"),
+  workedHours: '7',
+  client: 'google',
+  hourlyPay: '14',
+}, {
+  id: 143,
+  date: new Date("2/2/22"),
+  workedHours: '4.5',
+  client: 'microsoft',
+  hourlyPay: '12',
+}, {
+  id: 154,
+  date: new Date("2/2/22"),
+  workedHours: '5.5',
+  client: 'facebook',
+  hourlyPay: '20',
 }]
 
 export const articleInfos=['Payment',' Worked Hours']

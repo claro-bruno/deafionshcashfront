@@ -1,8 +1,9 @@
 import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import './modal.css'
+import { ModalProps } from '../../types/modal'
 
-export default function NewContractorModal({ isModalOpen, closeModal, }: any) {
+export default function NewContractorModal({ isModalOpen, closeModal, }: ModalProps) {
 
   function handleClose() {
     closeModal()

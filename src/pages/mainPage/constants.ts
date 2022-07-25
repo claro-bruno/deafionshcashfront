@@ -113,7 +113,7 @@ export const bodyTable = [{
   }]
 },{
   id: 9,
-  name: 'bruno augusto',
+  name: 'bruno augusto silva pereira',
   status:'active',
   month: 'april',
   payments: [{

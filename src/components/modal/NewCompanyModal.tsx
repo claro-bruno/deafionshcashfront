@@ -1,9 +1,11 @@
 import { ChangeEvent, Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import './modal.css'
+import { ModalProps } from '../../types/modal'
 
 const WEEKDAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-export default function NewCompanyModal({ isModalOpen, closeModal, }: any) {
+
+export default function NewCompanyModal({ isModalOpen, closeModal, }: ModalProps) {
   const [isChecked, setIsChecked] = useState(false)
   function handleCheckboxChange(e: ChangeEvent<HTMLInputElement>) {
     setIsChecked(e.target.checked)

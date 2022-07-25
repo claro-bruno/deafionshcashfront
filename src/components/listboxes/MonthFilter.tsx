@@ -18,7 +18,7 @@ const months = [
   { name: 'December' },
 ]
 
-export default function Example({ setMonthName }: { setMonthName: (monthName: string) => void }) {
+export default function MonthFilter({ setMonthName }: { setMonthName: (monthName: string) => void }) {
   const [selected, setSelected] = useState(months[0])
   useEffect(() => {
     setMonthName(selected.name)
@@ -27,7 +27,7 @@ export default function Example({ setMonthName }: { setMonthName: (monthName: st
     <div className=" w-[8rem]">
       <Listbox value={selected} onChange={setSelected}>
         <div className="relative mt-1">
-          <Listbox.Button className="group relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500  sm:text-sm">
+          <Listbox.Button className="group relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500  sm:text-sm ">
             <span className="block truncate">{selected.name}</span>
             <span className=" pointer-events-none absolute inset-y-0 right-0 flex items-center pr-1">
               <ArrowsVertical
@@ -42,7 +42,7 @@ export default function Example({ setMonthName }: { setMonthName: (monthName: st
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Listbox.Options className="absolute overflow-auto scrollHidden mt-1 max-h-60 w-full rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+            <Listbox.Options className="ListboxOptions">
               {months.map((person, personIdx) => (
                 <Listbox.Option
                   key={personIdx}

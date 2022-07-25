@@ -1,20 +1,14 @@
-import { Circle, Envelope, PencilSimpleLine, Phone } from 'phosphor-react'
 import React, { useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import CardContractor from '../../components/cardContractor/CardContractor'
 import Header from '../../components/header/Header'
 import MonthFilter from '../../components/listboxes/MonthFilter'
 import NewContractorModal from '../../components/modal/NewContractorModal'
+import { ContractorWorkedInfo } from '../../types/contractor'
 import { articleInfos, bodyTable, headerTable } from './constants'
 import './contractor.css'
 
-interface BodyTable {
-  id: number;
-  date: Date;
-  workedHours: string;
-  client: string;
-  hourlyPay: string;
-}
-interface ContractorWorkedInfos { workedHours: string, payment: string }
+interface TotalWorked { workedHours: string, payment: string }
 
 export default function Contractor() {
   const { id } = useParams()
@@ -22,13 +16,9 @@ export default function Contractor() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [filterCompany, setFilterCompany] = useState('')
   const [monthName, setMonthName] = useState('')
-  const [
-    contractorWorkedInfos,
-    setContractorWorkedInfos
-  ] = useState<ContractorWorkedInfos>({ workedHours: '', payment: '' })
+  const [totalWorkedInfos, setTotalWorkedInfos] = useState<TotalWorked>({ workedHours: '', payment: '' })
 
-
-  function tableFilters(item: BodyTable) {
+  function tableFilters(item: ContractorWorkedInfo) {
     const filterByClient = item.client.toLowerCase().includes(filterCompany.toLowerCase())
     const filterByDate = item.date
       .toLocaleString('default', { month: 'long' })
@@ -52,12 +42,19 @@ export default function Contractor() {
       return '0'
     })
     const hoursSum = hoursArray.reduce((acc, curr) => acc + Number(curr), 0)
-    setContractorWorkedInfos({
+    setTotalWorkedInfos({
       payment: paymentSum.toFixed(2),
       workedHours: hoursSum.toString()
     })
   }
 
+  function contractorPayment(payment: string, multiplier: number = 1) {
+    return (Number(payment) * multiplier).toFixed(2)
+  }
+
+  function contractorWorkedHours(hours: string, multiplier: number = 1) {
+    return (Number(hours) * multiplier).toFixed(2)
+  }
 
   useMemo(() => {
     setContractorValues()
@@ -66,7 +63,7 @@ export default function Contractor() {
   return (
     <div className='flex flex-col min-h-screen bg-gray-100'>
       <Header>
-        <div className='relative left-20 ml-6 flex items-center gap-2'>
+        <div className='relative left-20 mx-auto flex items-center gap-2'>
           <MonthFilter setMonthName={setMonthName} />
           <input
             placeholder='Ex:amazon'
@@ -78,49 +75,18 @@ export default function Contractor() {
         </div>
       </Header>
       <main className='flex flex-col'>
-        <div className='h-[21vh] flex items-center justify-between p-2' >
-          <div className='flex gap-4 rounded w-[20rem] bg-zinc-50 shadow-lg py-4 px-4'>
-            <img
-              className='h-20 w-20 rounded-md'
-              src='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
-              alt='profile '
-            />
-            <div className='flex flex-col text-sm'>
-              <span className='flex items-center gap-1'>
-                <Circle weight='fill' color='green'/>
-                Active
-              </span>
-              <span className='flex items-center gap-1'>
-                <PencilSimpleLine />
-                Bruno alves
-              </span>
-              <span className='flex items-center gap-1'>
-                <Envelope weight='fill' />
-                brunofay1@hotmail.com
-              </span>
-              <span className='flex items-center gap-1'>
-                <Phone weight='fill' />
-                51985473129
-              </span>
-
-            </div>
-          </div>
-          <button
-            type='button'
-            onClick={() => setIsModalOpen(true)}
-            className='px-4 py-1 rounded border border-transparent ring text-sm ring-transparent hover:ring-brand2   ring-brand2 hover:border-white h-min relative right-5 font-bold  text-white bg-brand2 transition-colors'>
-            Edit
-          </button>
-        </div>
-        <div className='contractorBody flex gap-4 w-[75%] max-h-[80vh] overflow-auto'>
-          <table className=' text-sm w-full text-left text-gray-500 dark:text-gray-400'>
-            <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
+        <CardContractor
+          setIsModalOpen={() => setIsModalOpen(true)}
+        />
+        <div className='tableContainer flex gap-4 w-[75%] max-h-[80vh] overflow-auto'>
+          <table className='table'>
+            <thead className='tableHead'>
               <tr>
                 {headerTable.map((item, index) => (
                   <th
                     scope='col'
                     key={index}
-                    className='py-3 px-6'>{item}</th>
+                    className='tableLine'>{item}</th>
                 ))}
               </tr>
             </thead>
@@ -130,18 +96,18 @@ export default function Contractor() {
                   return (
                     <tr
                       key={item.id}
-                      className='bg-white border-b dark:bg-gray-800 dark:border-gray-700'
+                      className='bg-white border-b '
                     >
-                      <th scope='row' className='py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white'>
+                      <th scope='row' className='tableBodyTh'>
                         {item.date.toDateString()}
                       </th>
-                      <td className='py-4 px-6'>
+                      <td className='tableLine flex flex-wrap max-w-[9rem]'>
                         {item.client}
                       </td>
-                      <td className='py-4 px-6'>
-                        {item.workedHours}
+                      <td className='tableLine '>
+                        {item.workedHours} h
                       </td>
-                      <td className='py-4 px-6'>
+                      <td className='tableLine'>
                         ${item.hourlyPay}
                       </td>
                     </tr>
@@ -164,23 +130,23 @@ export default function Contractor() {
                   <div className='flex flex-col gap-1' >
                     <span className='text-sm'>Quinzena 1</span>
                     {
-                      section === 'Payment' ? ` $ ${(Number(contractorWorkedInfos.payment) * 0.7).toFixed(2)}`
-                        : `${Number(contractorWorkedInfos.workedHours) * 0.7} h`
+                      section === 'Payment' ? ` $ ${contractorPayment(totalWorkedInfos.payment, 0.7)}`
+                        : `${contractorWorkedHours(totalWorkedInfos.workedHours, 0.7)} h`
                     }
 
                   </div>
                   <div className='flex flex-col gap-1'>
                     <span className='text-sm'>Quinzena 2</span>
                     {
-                      section === 'Payment' ? ` $ ${Number(contractorWorkedInfos.payment) * 0.3}`
-                        : `${Number(contractorWorkedInfos.workedHours) * 0.3} h`
+                      section === 'Payment' ? ` $ ${contractorPayment(totalWorkedInfos.payment, 0.3)}`
+                        : `${contractorWorkedHours(totalWorkedInfos.workedHours, 0.3)} h`
                     }
                   </div>
                   <div className='flex flex-col gap-1'>
                     <span className='text-sm'>Total</span>
                     {
-                      section === 'Payment' ? ` $ ${contractorWorkedInfos.payment}`
-                        : `${contractorWorkedInfos.workedHours} h`
+                      section === 'Payment' ? ` $ ${contractorPayment(totalWorkedInfos.payment)}`
+                        : `${contractorWorkedHours(totalWorkedInfos.workedHours)} h`
                     }
                   </div>
                 </div>

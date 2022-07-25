@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-
+import './header.css'
 export default function Header(props: PropsWithChildren) {
   const location = useLocation();
   const navigate = useNavigate();
@@ -15,26 +15,29 @@ export default function Header(props: PropsWithChildren) {
       {props.children}
       {!location.pathname.includes('/register') ? (
         <>
-          <div className='flex self-center gap-4 '>
+          <div className='flex self-center relative right-3 gap-4 '>
             <div className='flex gap-4 '>
-              <Link to='/companies' className=' text-white text-sm font-bold'>
+              <Link to='/main' className='headerLink'>
+                Home
+              </Link>
+              <Link to='/companies' className='headerLink'>
                 Companies
               </Link>
-              <Link to='/registration' className=' text-white text-sm font-bold'>
+              <Link to='/registration' className='headerLink'>
                 Registration
               </Link>
             </div>
           </div>
           <button
             onClick={() => navigate('/')}
-            className='text-white relative px-2 py-1 outline-white h-min self-center right-1 text-sm font-bold'
+            className='loginLink'
           >
             Logout
           </button>
         </>) : (
         <button
           onClick={() => navigate('/')}
-          className='text-white relative px-2 py-1 outline-white h-min self-center right-1 text-sm font-bold'
+          className='loginLink'
         >
           Login
         </button>
