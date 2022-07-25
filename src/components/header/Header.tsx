@@ -1,7 +1,9 @@
 import React, { PropsWithChildren } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 export default function Header(props: PropsWithChildren) {
+  const location = useLocation();
+  const navigate = useNavigate();
   return (
     <header className=' p-2 flex justify-between bg-brand'>
       <div className=''>
@@ -11,19 +13,32 @@ export default function Header(props: PropsWithChildren) {
           alt="global janitorial services logo" />
       </div>
       {props.children}
-      <div className='flex self-center gap-4 '>
-        <div className='flex gap-4 '>
-            <Link to='/companies' className=' text-white text-sm font-bold'>
-              Companies
-            </Link>
-            <Link to='/registration' className=' text-white text-sm font-bold'>
-              Registration
-            </Link>
-        </div>
-       </div>
-          <button className='  text-white text-sm font-bold'>
+      {location.pathname !== '/register' ? (
+        <>
+          <div className='flex self-center gap-4 '>
+            <div className='flex gap-4 '>
+              <Link to='/companies' className=' text-white text-sm font-bold'>
+                Companies
+              </Link>
+              <Link to='/registration' className=' text-white text-sm font-bold'>
+                Registration
+              </Link>
+            </div>
+          </div>
+          <button
+            onClick={() => navigate('/')}
+            className='text-white relative px-2 py-1 outline-white h-min self-center right-1 text-sm font-bold'
+          >
             Logout
           </button>
+        </>) : (
+        <button
+          onClick={() => navigate('/')}
+          className='text-white relative px-2 py-1 outline-white h-min self-center right-1 text-sm font-bold'
+        >
+          Login
+        </button>
+      )}
     </header>
   )
 }

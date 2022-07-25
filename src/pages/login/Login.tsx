@@ -33,7 +33,7 @@ export default function Login() {
                 type='password' />
             </label>
             <button
-              className='bg-[#F83F37] mt-3 px-3 py-1 rounded text-white font-bold'
+              className='bg-brand2 ring text-sm ring-brand2 border border-transparent hover:border-white mt-3 px-2 py-[0.15rem]  rounded text-white font-bold transition-colors'
               type='submit'>
               Sing in
             </button>

@@ -78,8 +78,8 @@ export default function Contractor() {
         </div>
       </Header>
       <main className='flex flex-col'>
-        <div className='h-[20vh] flex items-center justify-between p-2' >
-          <div className='flex gap-4 rounded w-[20rem] bg-zinc-50 shadow-lg py-2 px-4'>
+        <div className='h-[21vh] flex items-center justify-between p-2' >
+          <div className='flex gap-4 rounded w-[20rem] bg-zinc-50 shadow-lg py-4 px-4'>
             <img
               className='h-20 w-20 rounded-md'
               src='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
@@ -108,7 +108,7 @@ export default function Contractor() {
           <button
             type='button'
             onClick={() => setIsModalOpen(true)}
-            className='px-4 py-1 rounded border border-transparent ring-2 ring-brand2 hover:border-white h-min relative right-5 font-bold  text-white bg-brand2 transition-colors'>
+            className='px-4 py-1 rounded text-sm border border-transparent ring-2 ring-brand2 hover:border-white h-min relative right-5 font-bold  text-white bg-brand2 transition-colors'>
             Edit
           </button>
         </div>
