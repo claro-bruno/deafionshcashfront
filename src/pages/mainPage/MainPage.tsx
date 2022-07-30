@@ -10,65 +10,74 @@ export default function MainPage() {
   const [monthName, setMonthName] = useState('')
   const [yearName, setYearName] = useState('')
   const [filterContractor, setFilterContractor] = useState('')
-  const [globalRevenue, setGlobalRevenue] = useState({ quinzena1: '', quinzena2: '', total: '' })
-  function tableFilters(item: { name: string, month: string }) {
-    const filterByContractor = item.name.toLowerCase().includes(filterContractor.toLowerCase())
+  const [globalRevenue, setGlobalRevenue] = useState({
+    quinzena1: '',
+    quinzena2: '',
+    total: '',
+  })
+  function tableFilters(item: { name: string; month: string }) {
+    const filterByContractor = item.name
+      .toLowerCase()
+      .includes(filterContractor.toLowerCase())
     const filterByDate = item.month.includes(monthName.toLowerCase())
     return filterByContractor && filterByDate
   }
   function setRevenue() {
-    const revenue: { type: string, period: string, value: string }[] = bodyTable
-      .filter(item => item.month === monthName.toLowerCase())
-      .map(item => item.payments)
+    const revenue: { type: string; period: string; value: string }[] = bodyTable
+      .filter((item) => item.month === monthName.toLowerCase())
+      .map((item) => item.payments)
       .flat()
 
-    const quinzena1 = Number(revenue
-      .filter(item => item.period === 'quinzena1')
-      .reduce((acc, curr) => acc + Number(curr.value), 0))
+    const quinzena1 = Number(
+      revenue
+        .filter((item) => item.period === 'quinzena1')
+        .reduce((acc, curr) => acc + Number(curr.value), 0),
+    )
 
-    const quinzena2 = Number(revenue
-      .filter(item => item.period === 'quinzena2')
-      .reduce((acc, curr) => acc + Number(curr.value), 0))
+    const quinzena2 = Number(
+      revenue
+        .filter((item) => item.period === 'quinzena2')
+        .reduce((acc, curr) => acc + Number(curr.value), 0),
+    )
 
     const total = (quinzena1 + quinzena2).toFixed(2)
     setGlobalRevenue({
       quinzena1: quinzena1.toFixed(2),
       quinzena2: quinzena2.toFixed(2),
-      total
+      total,
     })
   }
   useEffect(() => {
     setRevenue()
   }, [monthName])
   return (
-    <div className='flex flex-col'>
+    <div className="flex flex-col">
       <Header>
-        <div className='relative left-20 mx-auto flex items-center gap-2'>
+        <div className="relative left-20 mx-auto flex items-center gap-2">
           <YearFilter setYearName={setYearName} />
           <MonthFilter setMonthName={setMonthName} />
           <input
             onChange={(e) => setFilterContractor(e.target.value)}
-            className='inpuntsDefault mt-[0.2rem] '
+            className="inpuntsDefault mt-[0.2rem] "
             value={filterContractor}
             type="text"
           />
         </div>
       </Header>
-      <div className='mx-auto flex gap-2 py-1 items-center font-extrabold text-2xl'>
+      <div className="mx-auto flex gap-2 py-1 items-center font-extrabold text-2xl">
         <div> {yearName}</div>
         <div> {monthName}</div>
       </div>
-      <main className='min-h-screen flex  bg-gray-100 '>
-        <div className='w-[80%]'>
+      <main className="min-h-screen flex  bg-gray-100 ">
+        <div className="w-[80%]">
           <div className="tableContainer overflow-auto mt-7 ml-3">
             <table className="table">
               <thead className="tableHead">
                 <tr>
                   {headerTable.map((item, index) => (
-                    <th
-                      scope="col"
-                      key={index}
-                      className="tableLine">{item}</th>
+                    <th scope="col" key={index} className="tableLine">
+                      {item}
+                    </th>
                   ))}
                 </tr>
               </thead>
@@ -81,28 +90,22 @@ export default function MainPage() {
                           <Circle
                             weight="fill"
                             size={15}
-                            color={item.status === "active" ? "green" : "gray"} />
+                            color={item.status === 'active' ? 'green' : 'gray'}
+                          />
                         </th>
                         <td className="tableLine flex flex-wrap max-w-[9rem]">
-                          <Link to={`/contractor/${item.id}`}>
-                            {item.name}
-                          </Link>
+                          <Link to={`/contractor/${item.id}`}>{item.name}</Link>
                         </td>
                         {item.payments.map((payment) => (
                           <>
-                            <td className="tableLine">
-                              {payment.value}
-                            </td>
-                            <td className="tableLine">
-                              {payment.type}
-                            </td>
+                            <td className="tableLine">{payment.value}</td>
+                            <td className="tableLine">{payment.type}</td>
                           </>
                         ))}
                         <td className="tableLine">
                           {item.payments
                             .reduce((acc, curr) => acc + Number(curr.value), 0)
-                            .toFixed(2)
-                          }
+                            .toFixed(2)}
                         </td>
                       </tr>
                     )
@@ -114,30 +117,25 @@ export default function MainPage() {
             </table>
           </div>
         </div>
-        <div className='flex flex-col items-center '>
-          <h1 className='text-2xl w-[20vw] text-center  font-bold text-zinc-700'>Revenue</h1>
-          <article className='flex flex-col gap-8 fixed right-2 mt-8'>
-            <div className='bg-gray-50 shadow-md flex items-center gap-2 flex-col rounded h-20 w-[18vw] py-2'>
+        <div className="flex flex-col items-center ">
+          <h1 className="text-2xl w-[20vw] text-center  font-bold text-zinc-700">
+            Revenue
+          </h1>
+          <article className="flex flex-col gap-8 fixed right-2 mt-8">
+            <div className="bg-gray-50 shadow-md flex items-center gap-2 flex-col rounded h-20 w-[18vw] py-2">
               Quinzena 1
-              <strong className=''>
-                $ {globalRevenue.quinzena1}
-              </strong>
+              <strong className="">$ {globalRevenue.quinzena1}</strong>
             </div>
-            <div className='bg-gray-50 shadow-md flex items-center gap-2 flex-col rounded h-20 w-[18vw] py-2'>
+            <div className="bg-gray-50 shadow-md flex items-center gap-2 flex-col rounded h-20 w-[18vw] py-2">
               Quinzena 2
-              <strong className=''>
-                $ {globalRevenue.quinzena2}
-              </strong>
+              <strong className="">$ {globalRevenue.quinzena2}</strong>
             </div>
-            <div className='bg-gray-50 shadow-md flex items-center gap-2 flex-col rounded h-20 w-[18vw] py-2'>
+            <div className="bg-gray-50 shadow-md flex items-center gap-2 flex-col rounded h-20 w-[18vw] py-2">
               Total month
-              <strong className=''>
-                $ {globalRevenue.total}
-              </strong>
+              <strong className="">$ {globalRevenue.total}</strong>
             </div>
           </article>
         </div>
-
       </main>
     </div>
   )

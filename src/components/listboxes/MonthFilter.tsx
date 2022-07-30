@@ -18,7 +18,11 @@ const months = [
   { name: 'December' },
 ]
 
-export default function MonthFilter({ setMonthName }: { setMonthName: (monthName: string) => void }) {
+export default function MonthFilter({
+  setMonthName,
+}: {
+  setMonthName: (monthName: string) => void
+}) {
   const [selected, setSelected] = useState(months[0])
   useEffect(() => {
     setMonthName(selected.name)
@@ -47,7 +51,8 @@ export default function MonthFilter({ setMonthName }: { setMonthName: (monthName
                 <Listbox.Option
                   key={personIdx}
                   className={({ active }) =>
-                    `relative  cursor-default select-none py-2 pl-7 pr-1 ${active ? 'bg-amber-100 text-brand' : 'text-gray-800'
+                    `relative  cursor-default select-none py-2 pl-7 pr-1 ${
+                      active ? 'bg-amber-100 text-brand' : 'text-gray-800'
                     }`
                   }
                   value={person}
@@ -55,8 +60,9 @@ export default function MonthFilter({ setMonthName }: { setMonthName: (monthName
                   {({ selected }) => (
                     <>
                       <span
-                        className={`block truncate ${selected ? 'font-semibold' : 'font-normal'
-                          }`}
+                        className={`block truncate ${
+                          selected ? 'font-semibold' : 'font-normal'
+                        }`}
                       >
                         {person.name}
                       </span>

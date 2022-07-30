@@ -8,18 +8,26 @@ import { ContractorWorkedInfo } from '../../types/contractor'
 import { articleInfos, bodyTable, headerTable } from './constants'
 import './contractor.css'
 
-interface TotalWorked { workedHours: string, payment: string }
+interface TotalWorked {
+  workedHours: string
+  payment: string
+}
 
 export default function Contractor() {
   const { id } = useParams()
-  console.log(id);
+  console.log(id)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [filterCompany, setFilterCompany] = useState('')
   const [monthName, setMonthName] = useState('')
-  const [totalWorkedInfos, setTotalWorkedInfos] = useState<TotalWorked>({ workedHours: '', payment: '' })
+  const [totalWorkedInfos, setTotalWorkedInfos] = useState<TotalWorked>({
+    workedHours: '',
+    payment: '',
+  })
 
   function tableFilters(item: ContractorWorkedInfo) {
-    const filterByClient = item.client.toLowerCase().includes(filterCompany.toLowerCase())
+    const filterByClient = item.client
+      .toLowerCase()
+      .includes(filterCompany.toLowerCase())
     const filterByDate = item.date
       .toLocaleString('default', { month: 'long' })
       .toLowerCase()
@@ -28,14 +36,17 @@ export default function Contractor() {
   }
 
   function setContractorValues() {
-    const paymentsArray = bodyTable.map(item => {
+    const paymentsArray = bodyTable.map((item) => {
       if (tableFilters(item)) {
         return (Number(item.hourlyPay) * Number(item.workedHours)).toFixed(2)
       }
       return '0'
     })
-    const paymentSum = paymentsArray.reduce((acc, curr) => acc + Number(curr), 0)
-    const hoursArray = bodyTable.map(item => {
+    const paymentSum = paymentsArray.reduce(
+      (acc, curr) => acc + Number(curr),
+      0,
+    )
+    const hoursArray = bodyTable.map((item) => {
       if (tableFilters(item)) {
         return item.workedHours
       }
@@ -44,7 +55,7 @@ export default function Contractor() {
     const hoursSum = hoursArray.reduce((acc, curr) => acc + Number(curr), 0)
     setTotalWorkedInfos({
       payment: paymentSum.toFixed(2),
-      workedHours: hoursSum.toString()
+      workedHours: hoursSum.toString(),
     })
   }
 
@@ -61,32 +72,29 @@ export default function Contractor() {
   }, [filterCompany, monthName])
 
   return (
-    <div className='flex flex-col min-h-screen bg-gray-100'>
+    <div className="flex flex-col min-h-screen bg-gray-100">
       <Header>
-        <div className='relative left-20 mx-auto flex items-center gap-2'>
+        <div className="relative left-20 mx-auto flex items-center gap-2">
           <MonthFilter setMonthName={setMonthName} />
           <input
-            placeholder='Ex:amazon'
+            placeholder="Ex:amazon"
             onChange={(e) => setFilterCompany(e.target.value)}
-            className='inpuntsDefault mt-[0.2rem] '
+            className="inpuntsDefault mt-[0.2rem] "
             value={filterCompany}
-            type='text'
+            type="text"
           />
         </div>
       </Header>
-      <main className='flex flex-col'>
-        <CardContractor
-          setIsModalOpen={() => setIsModalOpen(true)}
-        />
-        <div className='tableContainer flex gap-4 w-[75%] max-h-[80vh] overflow-auto'>
-          <table className='table'>
-            <thead className='tableHead'>
+      <main className="flex flex-col">
+        <CardContractor setIsModalOpen={() => setIsModalOpen(true)} />
+        <div className="tableContainer flex gap-4 w-[75%] max-h-[80vh] overflow-auto">
+          <table className="table">
+            <thead className="tableHead">
               <tr>
                 {headerTable.map((item, index) => (
-                  <th
-                    scope='col'
-                    key={index}
-                    className='tableLine'>{item}</th>
+                  <th scope="col" key={index} className="tableLine">
+                    {item}
+                  </th>
                 ))}
               </tr>
             </thead>
@@ -94,22 +102,15 @@ export default function Contractor() {
               {bodyTable.map((item) => {
                 if (tableFilters(item)) {
                   return (
-                    <tr
-                      key={item.id}
-                      className='bg-white border-b '
-                    >
-                      <th scope='row' className='tableBodyTh'>
+                    <tr key={item.id} className="bg-white border-b ">
+                      <th scope="row" className="tableBodyTh">
                         {item.date.toDateString()}
                       </th>
-                      <td className='tableLine flex flex-wrap max-w-[9rem]'>
+                      <td className="tableLine flex flex-wrap max-w-[9rem]">
                         {item.client}
                       </td>
-                      <td className='tableLine '>
-                        {item.workedHours} h
-                      </td>
-                      <td className='tableLine'>
-                        ${item.hourlyPay}
-                      </td>
+                      <td className="tableLine ">{item.workedHours} h</td>
+                      <td className="tableLine">${item.hourlyPay}</td>
                     </tr>
                   )
                 } else {
@@ -118,36 +119,36 @@ export default function Contractor() {
               })}
             </tbody>
           </table>
-          <article className='w-[24%] mx-2 flex flex-col fixed right-0 gap-8 items-center'>
-            {articleInfos.map(section => (
-              <div className='shadow-md py-4  bg-gray-50 flex flex-col gap-3  w-full text-center rounded'>
-                <strong
-                  className='text-gray-700'
-                >
-                  {section}
-                </strong>
-                <div className='flex justify-around'>
-                  <div className='flex flex-col gap-1' >
-                    <span className='text-sm'>Quinzena 1</span>
-                    {
-                      section === 'Payment' ? ` $ ${contractorPayment(totalWorkedInfos.payment, 0.7)}`
-                        : `${contractorWorkedHours(totalWorkedInfos.workedHours, 0.7)} h`
-                    }
-
+          <article className="w-[24%] mx-2 flex flex-col fixed right-0 gap-8 items-center">
+            {articleInfos.map((section) => (
+              <div className="shadow-md py-4  bg-gray-50 flex flex-col gap-3  w-full text-center rounded">
+                <strong className="text-gray-700">{section}</strong>
+                <div className="flex justify-around">
+                  <div className="flex flex-col gap-1">
+                    <span className="text-sm">Quinzena 1</span>
+                    {section === 'Payment'
+                      ? ` $ ${contractorPayment(totalWorkedInfos.payment, 0.7)}`
+                      : `${contractorWorkedHours(
+                          totalWorkedInfos.workedHours,
+                          0.7,
+                        )} h`}
                   </div>
-                  <div className='flex flex-col gap-1'>
-                    <span className='text-sm'>Quinzena 2</span>
-                    {
-                      section === 'Payment' ? ` $ ${contractorPayment(totalWorkedInfos.payment, 0.3)}`
-                        : `${contractorWorkedHours(totalWorkedInfos.workedHours, 0.3)} h`
-                    }
+                  <div className="flex flex-col gap-1">
+                    <span className="text-sm">Quinzena 2</span>
+                    {section === 'Payment'
+                      ? ` $ ${contractorPayment(totalWorkedInfos.payment, 0.3)}`
+                      : `${contractorWorkedHours(
+                          totalWorkedInfos.workedHours,
+                          0.3,
+                        )} h`}
                   </div>
-                  <div className='flex flex-col gap-1'>
-                    <span className='text-sm'>Total</span>
-                    {
-                      section === 'Payment' ? ` $ ${contractorPayment(totalWorkedInfos.payment)}`
-                        : `${contractorWorkedHours(totalWorkedInfos.workedHours)} h`
-                    }
+                  <div className="flex flex-col gap-1">
+                    <span className="text-sm">Total</span>
+                    {section === 'Payment'
+                      ? ` $ ${contractorPayment(totalWorkedInfos.payment)}`
+                      : `${contractorWorkedHours(
+                          totalWorkedInfos.workedHours,
+                        )} h`}
                   </div>
                 </div>
               </div>
