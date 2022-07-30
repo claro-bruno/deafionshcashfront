@@ -11,7 +11,11 @@ const years = [
   { name: '2018' },
 ]
 
-export default function YearFilter({ setYearName }: { setYearName: (yearName: string) => void }) {
+export default function YearFilter({
+  setYearName,
+}: {
+  setYearName: (yearName: string) => void
+}) {
   const [selected, setSelected] = useState(years[0])
   useEffect(() => {
     setYearName(selected.name)
@@ -40,7 +44,8 @@ export default function YearFilter({ setYearName }: { setYearName: (yearName: st
                 <Listbox.Option
                   key={yearIdx}
                   className={({ active }) =>
-                    `relative  cursor-default select-none py-2 pl-7 pr-1 ${active ? 'bg-amber-100 text-brand' : 'text-gray-800'
+                    `relative  cursor-default select-none py-2 pl-7 pr-1 ${
+                      active ? 'bg-amber-100 text-brand' : 'text-gray-800'
                     }`
                   }
                   value={year}
@@ -48,8 +53,9 @@ export default function YearFilter({ setYearName }: { setYearName: (yearName: st
                   {({ selected }) => (
                     <>
                       <span
-                        className={`block truncate ${selected ? 'font-semibold' : 'font-normal'
-                          }`}
+                        className={`block truncate ${
+                          selected ? 'font-semibold' : 'font-normal'
+                        }`}
                       >
                         {year.name}
                       </span>

@@ -2,10 +2,15 @@ import { ChangeEvent, Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { WarningCircle } from 'phosphor-react'
 import { ModalProps } from '../../types/modal'
-import './modal.css';
+import './modal.css'
 
-type TermModalProps = ModalProps & { title: string, pdfUrl: string }
-export default function TermModal({ title, pdfUrl, isModalOpen, closeModal, }: TermModalProps) {
+type TermModalProps = ModalProps & { title: string; pdfUrl: string }
+export default function TermModal({
+  title,
+  pdfUrl,
+  isModalOpen,
+  closeModal,
+}: TermModalProps) {
   const [isChecked, setIsChecked] = useState(false)
   function handleCheckboxChange(e: ChangeEvent<HTMLInputElement>) {
     setIsChecked(e.target.checked)
@@ -42,8 +47,11 @@ export default function TermModal({ title, pdfUrl, isModalOpen, closeModal, }: T
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel className="termModal">
-                  <div tabIndex={0} className='flex items-center focus:outline-none justify-center'>
-                    <WarningCircle size={42} color='red' />
+                  <div
+                    tabIndex={0}
+                    className="flex items-center focus:outline-none justify-center"
+                  >
+                    <WarningCircle size={42} color="red" />
                   </div>
                   <Dialog.Title
                     as="h3"
@@ -52,19 +60,22 @@ export default function TermModal({ title, pdfUrl, isModalOpen, closeModal, }: T
                     {title}
                   </Dialog.Title>
                   <div className="mt-2 flex items-center justify-center">
-                    <iframe src={`${pdfUrl}#toolbar=0`} height="800vh" width="100%"></iframe>
+                    <iframe
+                      src={`${pdfUrl}#toolbar=0`}
+                      height="800vh"
+                      width="100%"
+                    ></iframe>
                   </div>
 
                   <div className="pt-7 flex flex-col items-center gap-5">
-                    <label className='flex items-center text-sm gap-3'>
+                    <label className="flex items-center text-sm gap-3">
                       <input
                         onChange={handleCheckboxChange}
-                        className='form-radio-input h-4 w-4 '
+                        className="form-radio-input h-4 w-4 "
                         type="checkbox"
-
                       />
-                      I declare that I have read and am aware that I must comply with the rules contained in the
-                      regulation.
+                      I declare that I have read and am aware that I must comply
+                      with the rules contained in the regulation.
                     </label>
                     <button
                       disabled={!isChecked}
