@@ -1,10 +1,10 @@
 import { Circle } from 'phosphor-react'
-import React, { useEffect, useState } from 'react'
-import Header from '../../components/header/Header'
-import YearFilter from '../../components/listboxes/YearFilter'
-import MonthFilter from '../../components/listboxes/MonthFilter'
-import { bodyTable, headerTable } from './constants'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import Header from '../../components/header/Header'
+import MonthFilter from '../../components/listboxes/MonthFilter'
+import YearFilter from '../../components/listboxes/YearFilter'
+import { bodyTable, headerTable } from './constants'
 
 export default function MainPage() {
   const [monthName, setMonthName] = useState('')
@@ -48,7 +48,7 @@ export default function MainPage() {
           <MonthFilter setMonthName={setMonthName} />
           <input
             onChange={(e) => setFilterContractor(e.target.value)}
-            className='inpuntsDefault mt-[0.2rem] '
+            className='inputsDefault mt-[0.2rem] '
             value={filterContractor}
             type="text"
           />

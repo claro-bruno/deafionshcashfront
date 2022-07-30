@@ -1,5 +1,5 @@
-import React, { useMemo, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useMemo, useState } from 'react'
+import { Link, useParams } from 'react-router-dom'
 import CardContractor from '../../components/cardContractor/CardContractor'
 import Header from '../../components/header/Header'
 import MonthFilter from '../../components/listboxes/MonthFilter'
@@ -68,7 +68,7 @@ export default function Contractor() {
           <input
             placeholder='Ex:amazon'
             onChange={(e) => setFilterCompany(e.target.value)}
-            className='inpuntsDefault mt-[0.2rem] '
+            className='inputsDefault mt-[0.2rem] '
             value={filterCompany}
             type='text'
           />
@@ -102,7 +102,9 @@ export default function Contractor() {
                         {item.date.toDateString()}
                       </th>
                       <td className='tableLine flex flex-wrap max-w-[9rem]'>
-                        {item.client}
+                        <Link to={`/clients/${item.client}`}>
+                          {item.client}
+                        </Link>
                       </td>
                       <td className='tableLine '>
                         {item.workedHours} h

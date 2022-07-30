@@ -1,6 +1,6 @@
-import { useState } from 'react'
-import AdressComponent from '../../components/adressRegister/AdressComponent'
-import Header from '../../components/header/Header'
+import { useState } from 'react';
+import AdressComponent from '../../components/adressRegister/AdressComponent';
+import Header from '../../components/header/Header';
 
 export default function Register() {
   const [addressNum, setAddressNum] = useState('1')
@@ -31,19 +31,19 @@ export default function Register() {
                 <label className='labelsDefault'>
                   First name
                   <input
-                    className='inpuntsDefault'
+                    className='inputsDefault'
                     type='text' />
                 </label>
                 <label className='labelsDefault'>
                   Email
                   <input
-                    className='inpuntsDefault'
+                    className='inputsDefault'
                     type='email' />
                 </label>
                 <label className='labelsDefault'>
                   Itin/SSN
                   <input
-                    className='inpuntsDefault'
+                    className='inputsDefault'
                     type='text' />
                 </label>
                 <label className='labelsDefault'>
@@ -51,7 +51,7 @@ export default function Register() {
                   <input
                     min='1940-12-31'
                     max='2022-12-31'
-                    className='inpuntsDefault'
+                    className='inputsDefault'
                     type='date' />
                 </label>
               </div>
@@ -59,7 +59,7 @@ export default function Register() {
                 <label className='labelsDefault'>
                   Last name
                   <input
-                    className='inpuntsDefault'
+                    className='inputsDefault'
                     type='text'
                     name='phone'
                     inputMode='numeric'
@@ -70,7 +70,7 @@ export default function Register() {
                 <label className='labelsDefault'>
                   Phone
                   <input
-                    className='inpuntsDefault'
+                    className='inputsDefault'
                     type='text'
                     name='phone'
                     inputMode='numeric'

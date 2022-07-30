@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Roboto+Mono:wght@700&family=Roboto:wght@400;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -11,7 +11,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.inpuntsDefault {
+.inputsDefault {
   @apply rounded-md text-sm ring-1  ring-zinc-400 w-56 text-zinc-800 p-1 h-8 outline-transparent
   focus:outline-brand transition-colors;
 

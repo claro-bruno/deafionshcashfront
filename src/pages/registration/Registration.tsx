@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import { GearSix } from 'phosphor-react'
+import { useState } from 'react'
 import Header from '../../components/header/Header'
 import MonthFilter from '../../components/listboxes/MonthFilter'
 import YearFilter from '../../components/listboxes/YearFilter'
@@ -34,7 +35,6 @@ export default function Registration() {
     })
     return weakDaysNamed
   }
-  console.log(addWeakDayName());
   return (
     <div>
       <Header>
@@ -43,15 +43,15 @@ export default function Registration() {
           <MonthFilter setMonthName={setMonthName} />
           <input
             onChange={(e) => setFilterContractor(e.target.value)}
-            className='inpuntsDefault mt-[0.2rem] '
+            className='inputsDefault mt-[0.2rem] '
             value={filterContractor}
             type="text"
           />
         </div>
       </Header>
       <div>
-        <div className="tableContainer overflow-auto mt-7 ml-3">
-          {`${yearName} ${monthName}`}
+        <div className="tableContainer flex flex-col overflow-auto mt-7 ml-3">
+        <span className='relative bottom-1 items-center font-extrabold text-2xl self-center'>  {`${yearName} ${monthName}`}</span>
           <table className="table">
             <thead className="tableHead">
               <tr>
@@ -92,6 +92,12 @@ export default function Registration() {
                     </th>
                   )
                 })}
+                <th >
+                  <GearSix
+                    className='relative left-5'
+                    size={32}
+                  />
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -106,7 +112,7 @@ export default function Registration() {
                         {item.client
                         }
                       </td>
-                      <td className="flex relative top-2 left-3 gap-1">
+                      <td className="flex justify-center relative top-2 left-3 gap-1">
                         {getDaysOfMonth().map((day) => (
                           <input
                             onChange={(e) => setBoardValue(e.target.value)}
@@ -128,6 +134,16 @@ export default function Registration() {
                       </td>
                       <td className="tableLine">
                         {Number(item.pHour) * Number(item.hours)}
+                      </td>
+                      <td className=" flex flex-col justify-around">
+                        <button
+                        className='border'
+                        type='button'
+                        >Save</button>
+                        <button
+                        className='border'
+                        type='button'
+                        >Edit</button>
                       </td>
                     </tr>
                   )

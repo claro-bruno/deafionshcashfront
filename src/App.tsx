@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom"
-import Companies from "./pages/company/Companies"
+import Client from "./pages/client/Client"
 import Contractor from "./pages/contractor/Contractor"
 import Login from "./pages/login/Login"
 import MainPage from "./pages/mainPage/MainPage"
@@ -18,7 +18,9 @@ function App() {
       </Route>
       <Route path="/main" element={<MainPage />} />
       <Route path="/registration" element={<Registration />} />
-      <Route path="/companies" element={<Companies />} />
+      <Route path="/clients" element={<Client />}>
+        <Route path=":name" element={<Client />}/>
+      </Route>
       <Route path="/contractor"  >
         <Route path=":id" element={<Contractor />} />
       </Route>

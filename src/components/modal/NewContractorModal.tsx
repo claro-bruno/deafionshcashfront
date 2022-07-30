@@ -1,7 +1,7 @@
-import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import './modal.css'
+import { Fragment } from 'react'
 import { ModalProps } from '../../types/modal'
+import './modal.css'
 
 export default function NewContractorModal({ isModalOpen, closeModal, }: ModalProps) {
 
@@ -65,7 +65,7 @@ export default function NewContractorModal({ isModalOpen, closeModal, }: ModalPr
                     <label className='labelsDefault'>
                       Name:
                       <input
-                        className='inpuntsDefault'
+                        className='inputsDefault'
                         type='text'
                         value='Bruno alves'
                       />
@@ -73,7 +73,7 @@ export default function NewContractorModal({ isModalOpen, closeModal, }: ModalPr
                     <label className='labelsDefault'>
                       Email:
                       <input
-                        className='inpuntsDefault'
+                        className='inputsDefault'
                         type='text'
                         value='brunofay1@hotmail.com'
                       />
@@ -81,7 +81,7 @@ export default function NewContractorModal({ isModalOpen, closeModal, }: ModalPr
                     <label className='labelsDefault'>
                       Phone:
                       <input
-                        className='inpuntsDefault'
+                        className='inputsDefault'
                         type='text'
                         name='phone'
                         inputMode='numeric'

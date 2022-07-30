@@ -20,8 +20,8 @@ export default function Header(props: PropsWithChildren) {
               <Link to='/main' className='headerLink'>
                 Home
               </Link>
-              <Link to='/companies' className='headerLink'>
-                Companies
+              <Link to='/clients' className='headerLink'>
+                Clients
               </Link>
               <Link to='/registration' className='headerLink'>
                 Registration

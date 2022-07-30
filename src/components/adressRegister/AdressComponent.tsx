@@ -1,4 +1,3 @@
-import React from 'react'
 type AdressProps = {
   address: string,
   street: string,
@@ -17,7 +16,7 @@ export default function AdressComponent({ address, street, city, state, zip, res
             inputMode='numeric'
             name='adress'
             value={address}
-            className='inpuntsDefault'
+            className='inputsDefault'
             type='text' />
         </label>
         <label className='labelsDefault'>
@@ -25,7 +24,7 @@ export default function AdressComponent({ address, street, city, state, zip, res
           <input
             name='street'
             value={street}
-            className='inpuntsDefault'
+            className='inputsDefault'
             type='text' />
         </label>
         <label className='labelsDefault'>
@@ -33,7 +32,7 @@ export default function AdressComponent({ address, street, city, state, zip, res
           <input
             name='city'
             value={city}
-            className='inpuntsDefault'
+            className='inputsDefault'
             type='text' />
         </label>
       </div>
@@ -43,7 +42,7 @@ export default function AdressComponent({ address, street, city, state, zip, res
           <input
             name='state'
             value={state}
-            className='inpuntsDefault'
+            className='inputsDefault'
             type='text'
           />
         </label>
@@ -54,7 +53,7 @@ export default function AdressComponent({ address, street, city, state, zip, res
             value={zip}
             inputMode='numeric'
             pattern='^(?(^00000(|-0000))|(\d{5}(|-\d{4})))$'
-            className='inpuntsDefault'
+            className='inputsDefault'
             type='text' />
         </label>
         <label className='labelsDefault '>
