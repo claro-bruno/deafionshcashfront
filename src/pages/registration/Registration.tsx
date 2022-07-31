@@ -5,9 +5,14 @@ import MonthFilter from '../../components/listboxes/MonthFilter'
 import YearFilter from '../../components/listboxes/YearFilter'
 import { bodyTable, headerTable, months } from './constants'
 
+interface DaysObj {
+  dayNum: number
+  weakDayName: string
+}
+
 export default function Registration() {
-  const [monthName, setMonthName] = useState('')
-  const [yearName, setYearName] = useState('')
+  const [monthName, setMonthName] = useState('January')
+  const [yearName, setYearName] = useState('2022')
   const [filterContractor, setFilterContractor] = useState('')
   const [boardValue, setBoardValue] = useState('0')
 
@@ -25,10 +30,6 @@ export default function Registration() {
     const getMonthNumberByName = months.indexOf(monthName) + 1
     const date = new Date()
     const days = new Date(date.getFullYear(), getMonthNumberByName, 0).getDate()
-    console.log(
-      days,
-      new Date(date.getFullYear(), getMonthNumberByName, 0).getDay(),
-    )
 
     return [...Array(days).keys()].map((i) => i + 1)
   }
@@ -44,8 +45,17 @@ export default function Registration() {
     })
     return weakDaysNamed
   }
+  const [fortnightDays, setFortnightDays] = useState<DaysObj[]>(
+    addWeakDayName().splice(0, 14),
+  )
+  function formatFortnightDays(period: string) {
+    const fortnight =
+      period === '1'
+        ? addWeakDayName().splice(0, 14)
+        : addWeakDayName().splice(14)
 
-  console.log(addWeakDayName())
+    setFortnightDays(fortnight)
+  }
 
   return (
     <div>
@@ -62,10 +72,17 @@ export default function Registration() {
         </div>
       </Header>
       <div>
-        <div className="tableContainer flex flex-col overflow-auto mt-7 ml-3">
-          <span className="relative bottom-1 items-center font-extrabold text-2xl self-center">
+        <div className="tableContainer flex flex-col overflow-auto mt-4 ml-3">
+          <span className="relative flex flex-col gap-1 bottom-1 items-center font-extrabold text-2xl self-center">
             {' '}
             {`${yearName} ${monthName}`}
+            <select
+              onChange={(e) => formatFortnightDays(e.target.value)}
+              className="rounded text-lg"
+            >
+              <option value="1">Forthnight 1</option>
+              <option value="2">Forthnight 2</option>
+            </select>
           </span>
           <table className="table">
             <thead className="tableHead">
@@ -73,11 +90,14 @@ export default function Registration() {
                 {headerTable.map((item, index) => {
                   if (item === 'Month') {
                     return (
-                      <div key={index} className="flex relative left-4 ">
-                        {addWeakDayName().map((day, index) => (
+                      <div
+                        key={index}
+                        className="flex relative left-[20%] self-center"
+                      >
+                        {fortnightDays.map((day, index) => (
                           <th
-                            key={index}
-                            className=" tableLineDay py-4 px-2 flex flex-col items-center justify-center"
+                            key={day.dayNum}
+                            className=" tableLineDay py-4 flex flex-col items-center justify-center"
                           >
                             <span>{day.dayNum}</span>
                             <span className="text-xs">{day.weakDayName}</span>
@@ -107,7 +127,7 @@ export default function Registration() {
                       </td>
                       <td className="tableLine">{item.client}</td>
                       <td className="flex justify-center relative top-2 left-3 gap-1">
-                        {addWeakDayName().map((day) => (
+                        {fortnightDays.map((day) => (
                           <input
                             key={day.dayNum}
                             onChange={(e) => setBoardValue(e.target.value)}

@@ -46,8 +46,8 @@ body {
 .tableLine {
   @apply py-4 px-6;
 }
-.tableLineDay:not(:first-child,:last-child) {
-  @apply  px-[0.50rem];
+.tableLineDay {
+  @apply  px-[0.45rem];
 }
 .tableBodyTh{
   @apply tableLine font-medium text-gray-900 whitespace-nowrap dark:text-white ;
