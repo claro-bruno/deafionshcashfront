@@ -25,9 +25,14 @@ export default function Registration() {
     const getMonthNumberByName = months.indexOf(monthName) + 1
     const date = new Date()
     const days = new Date(date.getFullYear(), getMonthNumberByName, 0).getDate()
+    console.log(
+      days,
+      new Date(date.getFullYear(), getMonthNumberByName, 0).getDay(),
+    )
 
     return [...Array(days).keys()].map((i) => i + 1)
   }
+
   function addWeakDayName() {
     const days = getDaysOfMonth()
     const weakDaysNamed = days.map((day) => {
@@ -39,6 +44,9 @@ export default function Registration() {
     })
     return weakDaysNamed
   }
+
+  console.log(addWeakDayName())
+
   return (
     <div>
       <Header>
@@ -65,17 +73,16 @@ export default function Registration() {
                 {headerTable.map((item, index) => {
                   if (item === 'Month') {
                     return (
-                      <div className="flex items-center relative top-4  flex-col">
-                        <th className="flex gap-4" key={index}>
-                          {addWeakDayName().map((day, index) => (
-                            <div className="relative gap-1 left-2 flex flex-col items-center justify-center">
-                              <span key={index}>{day.dayNum}</span>
-                              <span className="text-xs" key={index}>
-                                {day.weakDayName}
-                              </span>
-                            </div>
-                          ))}
-                        </th>
+                      <div key={index} className="flex relative left-4 ">
+                        {addWeakDayName().map((day, index) => (
+                          <th
+                            key={index}
+                            className=" tableLineDay py-4 px-2 flex flex-col items-center justify-center"
+                          >
+                            <span>{day.dayNum}</span>
+                            <span className="text-xs">{day.weakDayName}</span>
+                          </th>
+                        ))}
                       </div>
                     )
                   }
@@ -100,12 +107,16 @@ export default function Registration() {
                       </td>
                       <td className="tableLine">{item.client}</td>
                       <td className="flex justify-center relative top-2 left-3 gap-1">
-                        {getDaysOfMonth().map((day) => (
+                        {addWeakDayName().map((day) => (
                           <input
+                            key={day.dayNum}
                             onChange={(e) => setBoardValue(e.target.value)}
                             type="text"
                             maxLength={3}
-                            className="w-[1.529rem] outline-none ring-1 ring-transparent focus:ring-brand text-center h-10 border text-xs "
+                            className={`${
+                              day.weakDayName === 'S' &&
+                              'bg-zinc-500 text-white'
+                            } w-[1.529rem] outline-none ring-1 ring-transparent focus:ring-brand text-center h-10 border text-xs `}
                             value={boardValue}
                           />
                         ))}

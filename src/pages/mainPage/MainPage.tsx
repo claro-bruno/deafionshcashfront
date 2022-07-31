@@ -15,6 +15,7 @@ export default function MainPage() {
     quinzena2: '',
     total: '',
   })
+
   function tableFilters(item: { name: string; month: string }) {
     const filterByContractor = item.name
       .toLowerCase()
@@ -22,6 +23,7 @@ export default function MainPage() {
     const filterByDate = item.month.includes(monthName.toLowerCase())
     return filterByContractor && filterByDate
   }
+
   function setRevenue() {
     const revenue: { type: string; period: string; value: string }[] = bodyTable
       .filter((item) => item.month === monthName.toLowerCase())
@@ -47,9 +49,11 @@ export default function MainPage() {
       total,
     })
   }
+
   useEffect(() => {
     setRevenue()
   }, [monthName])
+
   return (
     <div className="flex flex-col">
       <Header>
@@ -70,7 +74,7 @@ export default function MainPage() {
       </div>
       <main className="min-h-screen flex  bg-gray-100 ">
         <div className="w-[80%]">
-          <div className="tableContainer overflow-auto mt-7 ml-3">
+          <div className="tableContainer overflow-auto mt-8 ml-3">
             <table className="table">
               <thead className="tableHead">
                 <tr>
@@ -119,7 +123,7 @@ export default function MainPage() {
         </div>
         <div className="flex flex-col items-center ">
           <h1 className="text-2xl w-[20vw] text-center  font-bold text-zinc-700">
-            Revenue
+            Outlay
           </h1>
           <article className="flex flex-col gap-8 fixed right-2 mt-8">
             <div className="bg-gray-50 shadow-md flex items-center gap-2 flex-col rounded h-20 w-[18vw] py-2">

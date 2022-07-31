@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import './header.css'
 export default function Header(props: PropsWithChildren) {
   const location = useLocation()
@@ -18,15 +18,15 @@ export default function Header(props: PropsWithChildren) {
         <>
           <div className="flex self-center relative right-3 gap-4 ">
             <div className="flex gap-4 ">
-              <Link to="/main" className="headerLink">
+              <NavLink to="/main" className="headerLink">
                 Home
-              </Link>
-              <Link to="/clients" className="headerLink">
+              </NavLink>
+              <NavLink to="/clients" className="headerLink">
                 Clients
-              </Link>
-              <Link to="/registration" className="headerLink">
+              </NavLink>
+              <NavLink to="/registration" className="headerLink">
                 Registration
-              </Link>
+              </NavLink>
             </div>
           </div>
           <button onClick={() => navigate('/')} className="loginLink">

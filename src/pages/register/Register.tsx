@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import AdressComponent from '../../components/adressRegister/AdressComponent'
+import AddressComponent from '../../components/addressRegister/AddressComponent'
 import Header from '../../components/header/Header'
 
 export default function Register() {
@@ -10,15 +10,15 @@ export default function Register() {
       return days
     } */
 
-  function setNumberOfAdresses(addressNum: string) {
+  function setNumberOfAddresses(addressNum: string) {
     console.log(addressNum)
 
     return Number(addressNum) === 1 ? (
-      <AdressComponent />
+      <AddressComponent />
     ) : (
       <>
-        <AdressComponent />
-        <AdressComponent />
+        <AddressComponent />
+        <AddressComponent />
       </>
     )
   }
@@ -93,7 +93,7 @@ export default function Register() {
                 <option value="2">2 </option>
               </select>
             </label>
-            {setNumberOfAdresses(addressNum)}
+            {setNumberOfAddresses(addressNum)}
           </div>
           <button
             className="bg-brand mt-3 px-3 py-1 ring-2 border border-transparent  ring-transparent hover:ring-brand hover:border-gray-50 ring-brand rounded transition-colors text-white font-bold"

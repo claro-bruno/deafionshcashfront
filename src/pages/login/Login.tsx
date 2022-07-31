@@ -42,7 +42,7 @@ export default function Login() {
             </button>
           </form>
           <span className="text-sm mt-2 text-gray-400">
-            Don't have an account ?{' '}
+            Don`&lsquo;`t have an account ?{' '}
             {
               <Link className="text-blue-500" to="/register/terms">
                 Register

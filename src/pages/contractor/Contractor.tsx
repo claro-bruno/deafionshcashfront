@@ -123,7 +123,10 @@ export default function Contractor() {
           </table>
           <article className="w-[24%] mx-2 flex flex-col fixed right-0 gap-8 items-center">
             {articleInfos.map((section) => (
-              <div className="shadow-md py-4  bg-gray-50 flex flex-col gap-3  w-full text-center rounded">
+              <div
+                key={section}
+                className="shadow-md py-4  bg-gray-50 flex flex-col gap-3  w-full text-center rounded"
+              >
                 <strong className="text-gray-700">{section}</strong>
                 <div className="flex justify-around">
                   <div className="flex flex-col gap-1">
