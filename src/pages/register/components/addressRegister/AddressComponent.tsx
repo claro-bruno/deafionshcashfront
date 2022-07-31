@@ -1,4 +1,4 @@
-type AdressProps = {
+type AddressProps = {
   address: string
   street: string
   city: string
@@ -13,7 +13,7 @@ export default function AddressComponent({
   state,
   zip,
   residencyProof,
-}: AdressProps) {
+}: Partial<AddressProps>) {
   return (
     <div className="inputsAndLabelsContainer items-center">
       <div className="flex flex-col gap-2">
@@ -21,7 +21,7 @@ export default function AddressComponent({
           Address
           <input
             inputMode="numeric"
-            name="adress"
+            name="address"
             value={address}
             className="inputsDefault"
             type="text"

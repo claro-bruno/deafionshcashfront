@@ -1,29 +1,50 @@
 import { useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import CardContractor from '../../components/cardContractor/CardContractor'
 import Header from '../../components/header/Header'
 import MonthFilter from '../../components/listboxes/MonthFilter'
 import NewContractorModal from '../../components/modal/NewContractorModal'
 import { ContractorWorkedInfo } from '../../types/contractor'
-import { articleInfos, bodyTable, headerTable } from './constants'
+import CardContractor from './components/cardContractor/CardContractor'
+import ContractorAsideInfos from './components/contractorAsideInfos/ContractorAsideInfos'
+import { bodyTable, headerTable } from './constants'
 import './contractor.css'
 
 interface TotalWorked {
   workedHours: string
   payment: string
 }
-
+export interface VisibilityWorkedInfos {
+  quinzena1: boolean
+  quinzena2: boolean
+  total: boolean
+}
+const INITIAL_TOTAL_WORKED_INFOS = {
+  workedHours: '',
+  payment: '',
+}
+const INITIAL_VISIBILITY_WORKED_INFOS = {
+  quinzena1: true,
+  quinzena2: false,
+  total: false,
+}
 export default function Contractor() {
   const { id } = useParams()
   console.log(id)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [filterCompany, setFilterCompany] = useState('')
   const [monthName, setMonthName] = useState('')
-  const [totalWorkedInfos, setTotalWorkedInfos] = useState<TotalWorked>({
-    workedHours: '',
-    payment: '',
-  })
+  const [totalWorkedInfos, setTotalWorkedInfos] = useState<TotalWorked>(
+    INITIAL_TOTAL_WORKED_INFOS,
+  )
+  const [visibilityWorkedInfos, setVisibilityWorkedInfos] = useState(
+    INITIAL_VISIBILITY_WORKED_INFOS,
+  )
 
+  function handleVisibilityWorkedInfos(period: Partial<VisibilityWorkedInfos>) {
+    console.log(period)
+
+    setVisibilityWorkedInfos((state) => ({ ...state, ...period }))
+  }
   function tableFilters(item: ContractorWorkedInfo) {
     const filterByClient = item.client
       .toLowerCase()
@@ -57,14 +78,6 @@ export default function Contractor() {
       payment: paymentSum.toFixed(2),
       workedHours: hoursSum.toString(),
     })
-  }
-
-  function contractorPayment(payment: string, multiplier: number = 1) {
-    return (Number(payment) * multiplier).toFixed(2)
-  }
-
-  function contractorWorkedHours(hours: string, multiplier: number = 1) {
-    return (Number(hours) * multiplier).toFixed(2)
   }
 
   useMemo(() => {
@@ -121,44 +134,11 @@ export default function Contractor() {
               })}
             </tbody>
           </table>
-          <article className="w-[24%] mx-2 flex flex-col fixed right-0 gap-8 items-center">
-            {articleInfos.map((section) => (
-              <div
-                key={section}
-                className="shadow-md py-4  bg-gray-50 flex flex-col gap-3  w-full text-center rounded"
-              >
-                <strong className="text-gray-700">{section}</strong>
-                <div className="flex justify-around">
-                  <div className="flex flex-col gap-1">
-                    <span className="text-sm">Quinzena 1</span>
-                    {section === 'Payment'
-                      ? ` $ ${contractorPayment(totalWorkedInfos.payment, 0.7)}`
-                      : `${contractorWorkedHours(
-                          totalWorkedInfos.workedHours,
-                          0.7,
-                        )} h`}
-                  </div>
-                  <div className="flex flex-col gap-1">
-                    <span className="text-sm">Quinzena 2</span>
-                    {section === 'Payment'
-                      ? ` $ ${contractorPayment(totalWorkedInfos.payment, 0.3)}`
-                      : `${contractorWorkedHours(
-                          totalWorkedInfos.workedHours,
-                          0.3,
-                        )} h`}
-                  </div>
-                  <div className="flex flex-col gap-1">
-                    <span className="text-sm">Total</span>
-                    {section === 'Payment'
-                      ? ` $ ${contractorPayment(totalWorkedInfos.payment)}`
-                      : `${contractorWorkedHours(
-                          totalWorkedInfos.workedHours,
-                        )} h`}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </article>
+          <ContractorAsideInfos
+            handleVisibilityWorkedInfos={handleVisibilityWorkedInfos}
+            visibilityWorkedInfos={visibilityWorkedInfos}
+            totalWorkedInfos={totalWorkedInfos}
+          />
         </div>
       </main>
       <NewContractorModal

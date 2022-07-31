@@ -6,6 +6,10 @@ export default function CardContractor({
 }: {
   setIsModalOpen: () => void
 }) {
+  function formatCellNumber(cellNumber: string) {
+    return cellNumber.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3')
+  }
+
   return (
     <div className="h-[21vh] flex items-center justify-between p-2">
       <div className="flex gap-4 rounded w-[20rem] bg-zinc-50 shadow-lg py-4 px-4">
@@ -29,14 +33,14 @@ export default function CardContractor({
           </span>
           <span className="contractorCardInfos">
             <Phone weight="fill" />
-            51985473129
+            {formatCellNumber('5198547312')}
           </span>
         </div>
       </div>
       <button
         type="button"
         onClick={setIsModalOpen}
-        className="px-4 py-1 rounded border border-transparent ring text-sm ring-transparent hover:ring-brand2 hover:border-white h-min relative right-5 font-bold  text-white bg-brand2 transition-colors"
+        className="px-4 contractorBtns  hover:ring-brand2 bg-brand2 transition-colors"
       >
         Edit
       </button>

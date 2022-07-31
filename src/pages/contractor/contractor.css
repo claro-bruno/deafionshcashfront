@@ -2,3 +2,6 @@
   @apply flex items-center gap-1;
 
 }
+.contractorBtns{
+  @apply py-1 rounded border border-transparent ring text-sm ring-transparent hover:border-white h-min relative right-5 font-bold  text-white shadow-lg
+}

@@ -25,7 +25,7 @@ body {
 .fileInput {
 
   @apply block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full
- file:text-sm file:font-semibold file:bg-white file:border file:text-brand hover:file:bg-brand hover:file:text-white transition-colors duration-300 hover:file:border-transparent
+ file:text-sm file:font-semibold file:bg-white file:border file:text-brand3 hover:file:bg-brand3 hover:file:text-white transition-colors duration-300 hover:file:border-transparent
 
 }
 

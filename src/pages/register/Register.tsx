@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import AddressComponent from '../../components/addressRegister/AddressComponent'
+import AddressComponent from './components/addressRegister/AddressComponent'
 import Header from '../../components/header/Header'
 
 export default function Register() {
@@ -78,7 +78,19 @@ export default function Register() {
                 </label>
                 <label className="labelsDefault ">
                   Document Photo
-                  <input accept="image/*" type="file" className="fileInput" />
+                  <input
+                    accept="image/*"
+                    type="file"
+                    className=" file:py-[0.35rem]  fileInput"
+                  />
+                </label>
+                <label className="labelsDefault ">
+                  Photo
+                  <input
+                    accept="image/*"
+                    type="file"
+                    className=" file:py-[0.35rem]  fileInput"
+                  />
                 </label>
               </div>
             </div>
