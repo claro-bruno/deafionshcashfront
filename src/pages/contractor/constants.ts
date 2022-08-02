@@ -16,28 +16,28 @@ export const months = [
 export const bodyTable = [
   {
     id: 1,
-    date: new Date(Date.now()),
+    date: new Date('01,01,2022'),
     workedHours: '8',
     client: 'big',
     hourlyPay: '13',
   },
   {
     id: 12,
-    date: new Date(Date.now()),
+    date: new Date('01,01,2022'),
     workedHours: '7',
     client: 'americanas',
     hourlyPay: '14',
   },
   {
     id: 14,
-    date: new Date(Date.now()),
+    date: new Date('01,01,2022'),
     workedHours: '4.5',
     client: 'amazon',
     hourlyPay: '12',
   },
   {
     id: 15,
-    date: new Date(Date.now()),
+    date: new Date('01,01,2022'),
     workedHours: '5.5',
     client: 'samsung',
     hourlyPay: '20',

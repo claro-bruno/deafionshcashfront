@@ -90,14 +90,11 @@ export default function Registration() {
                 {headerTable.map((item, index) => {
                   if (item === 'Month') {
                     return (
-                      <div
-                        key={index}
-                        className="flex relative left-[20%] self-center"
-                      >
+                      <div key={index} className="flex gap-1 justify-center">
                         {fortnightDays.map((day, index) => (
                           <th
                             key={day.dayNum}
-                            className=" tableLineDay py-4 flex flex-col items-center justify-center"
+                            className=" w-[1.529rem] relative left-3 border py-4 flex flex-col items-center "
                           >
                             <span>{day.dayNum}</span>
                             <span className="text-xs">{day.weakDayName}</span>

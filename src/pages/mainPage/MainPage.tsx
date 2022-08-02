@@ -11,14 +11,14 @@ export default function MainPage() {
   const [yearName, setYearName] = useState('')
   const [filterContractor, setFilterContractor] = useState('')
 
-  const revenue: { type: string; period: string; value: string }[] = bodyTable
+  const outlay: { type: string; period: string; value: string }[] = bodyTable
     .filter((item) => item.month === monthName.toLowerCase())
     .map((item) => item.payments)
     .flat()
 
   function quinzena(period: string) {
     return Number(
-      revenue
+      outlay
         .filter((item) => item.period === period)
         .reduce((acc, curr) => acc + Number(curr.value), 0),
     )

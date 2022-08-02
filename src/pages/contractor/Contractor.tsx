@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import Header from '../../components/header/Header'
 import MonthFilter from '../../components/listboxes/MonthFilter'
@@ -9,19 +9,12 @@ import ContractorAsideInfos from './components/contractorAsideInfos/ContractorAs
 import { bodyTable, headerTable } from './constants'
 import './contractor.css'
 
-interface TotalWorked {
-  workedHours: string
-  payment: string
-}
 export interface VisibilityWorkedInfos {
   quinzena1: boolean
   quinzena2: boolean
   total: boolean
 }
-const INITIAL_TOTAL_WORKED_INFOS = {
-  workedHours: '',
-  payment: '',
-}
+
 const INITIAL_VISIBILITY_WORKED_INFOS = {
   quinzena1: true,
   quinzena2: false,
@@ -33,18 +26,35 @@ export default function Contractor() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [filterCompany, setFilterCompany] = useState('')
   const [monthName, setMonthName] = useState('')
-  const [totalWorkedInfos, setTotalWorkedInfos] = useState<TotalWorked>(
-    INITIAL_TOTAL_WORKED_INFOS,
-  )
   const [visibilityWorkedInfos, setVisibilityWorkedInfos] = useState(
     INITIAL_VISIBILITY_WORKED_INFOS,
   )
+  const paymentsArray = bodyTable.map((item) => {
+    if (tableFilters(item)) {
+      return (Number(item.hourlyPay) * Number(item.workedHours)).toFixed(2)
+    }
+    return '0'
+  })
+
+  const payment = paymentsArray
+    .reduce((acc, curr) => acc + Number(curr), 0)
+    .toFixed(2)
+
+  const hoursArray = bodyTable.map((item) => {
+    if (tableFilters(item)) {
+      return item.workedHours
+    }
+    return '0'
+  })
+
+  const workedHours = hoursArray
+    .reduce((acc, curr) => acc + Number(curr), 0)
+    .toString()
 
   function handleVisibilityWorkedInfos(period: Partial<VisibilityWorkedInfos>) {
-    console.log(period)
-
     setVisibilityWorkedInfos((state) => ({ ...state, ...period }))
   }
+
   function tableFilters(item: ContractorWorkedInfo) {
     const filterByClient = item.client
       .toLowerCase()
@@ -56,33 +66,7 @@ export default function Contractor() {
     return filterByClient && filterByDate
   }
 
-  function setContractorValues() {
-    const paymentsArray = bodyTable.map((item) => {
-      if (tableFilters(item)) {
-        return (Number(item.hourlyPay) * Number(item.workedHours)).toFixed(2)
-      }
-      return '0'
-    })
-    const paymentSum = paymentsArray.reduce(
-      (acc, curr) => acc + Number(curr),
-      0,
-    )
-    const hoursArray = bodyTable.map((item) => {
-      if (tableFilters(item)) {
-        return item.workedHours
-      }
-      return '0'
-    })
-    const hoursSum = hoursArray.reduce((acc, curr) => acc + Number(curr), 0)
-    setTotalWorkedInfos({
-      payment: paymentSum.toFixed(2),
-      workedHours: hoursSum.toString(),
-    })
-  }
-
-  useMemo(() => {
-    setContractorValues()
-  }, [filterCompany, monthName])
+  console.log('renderizou')
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
@@ -137,7 +121,8 @@ export default function Contractor() {
           <ContractorAsideInfos
             handleVisibilityWorkedInfos={handleVisibilityWorkedInfos}
             visibilityWorkedInfos={visibilityWorkedInfos}
-            totalWorkedInfos={totalWorkedInfos}
+            payment={payment}
+            workedHours={workedHours}
           />
         </div>
       </main>

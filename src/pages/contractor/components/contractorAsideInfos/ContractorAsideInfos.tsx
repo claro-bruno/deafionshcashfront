@@ -3,16 +3,15 @@ import { articleInfos } from '../../constants'
 import { VisibilityWorkedInfos } from '../../Contractor'
 
 interface ContractorAsideInfosProps {
-  totalWorkedInfos: {
-    workedHours: string
-    payment: string
-  }
+  workedHours: string
+  payment: string
   handleVisibilityWorkedInfos: (s: Partial<VisibilityWorkedInfos>) => void
   visibilityWorkedInfos: VisibilityWorkedInfos
 }
 
 export default function ContractorAsideInfos({
-  totalWorkedInfos,
+  workedHours,
+  payment,
   handleVisibilityWorkedInfos,
   visibilityWorkedInfos,
 }: ContractorAsideInfosProps) {
@@ -60,38 +59,32 @@ export default function ContractorAsideInfos({
       {articleInfos.map((section) => (
         <div
           key={section}
-          className="shadow-md py-4  bg-gray-50 flex flex-col gap-3  w-full text-center rounded"
+          className="shadow-md py-4 relative bottom-4 bg-gray-50 flex flex-col gap-3  w-full text-center rounded"
         >
           <strong className="text-gray-700">{section}</strong>
           <div className="flex justify-around">
             {visibilityWorkedInfos.quinzena1 && (
               <div className="flex flex-col gap-1">
-                <span className="text-sm">Quinzena 1</span>
+                <span className="text-sm">Fortnight 1</span>
                 {section === 'Payment'
-                  ? ` $ ${contractorPayment(totalWorkedInfos.payment, 0.7)}`
-                  : `${contractorWorkedHours(
-                      totalWorkedInfos.workedHours,
-                      0.7,
-                    )} h`}
+                  ? ` $ ${contractorPayment(payment, 0.7)}`
+                  : `${contractorWorkedHours(workedHours, 0.7)} h`}
               </div>
             )}
             {visibilityWorkedInfos.quinzena2 && (
               <div className="flex flex-col gap-1">
-                <span className="text-sm">Quinzena 2</span>
+                <span className="text-sm">Fortnight 2</span>
                 {section === 'Payment'
-                  ? ` $ ${contractorPayment(totalWorkedInfos.payment, 0.3)}`
-                  : `${contractorWorkedHours(
-                      totalWorkedInfos.workedHours,
-                      0.3,
-                    )} h`}
+                  ? ` $ ${contractorPayment(payment, 0.3)}`
+                  : `${contractorWorkedHours(workedHours, 0.3)} h`}
               </div>
             )}
             {visibilityWorkedInfos.total && (
               <div className="flex flex-col gap-1">
                 <span className="text-sm">Total</span>
                 {section === 'Payment'
-                  ? ` $ ${contractorPayment(totalWorkedInfos.payment)}`
-                  : `${contractorWorkedHours(totalWorkedInfos.workedHours)} h`}
+                  ? ` $ ${contractorPayment(payment)}`
+                  : `${contractorWorkedHours(workedHours)} h`}
               </div>
             )}
           </div>
