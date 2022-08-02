@@ -1,5 +1,5 @@
 import { Circle } from 'phosphor-react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Header from '../../components/header/Header'
 import MonthFilter from '../../components/listboxes/MonthFilter'
@@ -10,11 +10,20 @@ export default function MainPage() {
   const [monthName, setMonthName] = useState('')
   const [yearName, setYearName] = useState('')
   const [filterContractor, setFilterContractor] = useState('')
-  const [globalRevenue, setGlobalRevenue] = useState({
-    quinzena1: '',
-    quinzena2: '',
-    total: '',
-  })
+
+  const revenue: { type: string; period: string; value: string }[] = bodyTable
+    .filter((item) => item.month === monthName.toLowerCase())
+    .map((item) => item.payments)
+    .flat()
+
+  function quinzena(period: string) {
+    return Number(
+      revenue
+        .filter((item) => item.period === period)
+        .reduce((acc, curr) => acc + Number(curr.value), 0),
+    )
+  }
+  const total = (quinzena('quinzena1') + quinzena('quinzena2')).toFixed(2)
 
   function tableFilters(item: { name: string; month: string }) {
     const filterByContractor = item.name
@@ -23,36 +32,6 @@ export default function MainPage() {
     const filterByDate = item.month.includes(monthName.toLowerCase())
     return filterByContractor && filterByDate
   }
-
-  function setRevenue() {
-    const revenue: { type: string; period: string; value: string }[] = bodyTable
-      .filter((item) => item.month === monthName.toLowerCase())
-      .map((item) => item.payments)
-      .flat()
-
-    const quinzena1 = Number(
-      revenue
-        .filter((item) => item.period === 'quinzena1')
-        .reduce((acc, curr) => acc + Number(curr.value), 0),
-    )
-
-    const quinzena2 = Number(
-      revenue
-        .filter((item) => item.period === 'quinzena2')
-        .reduce((acc, curr) => acc + Number(curr.value), 0),
-    )
-
-    const total = (quinzena1 + quinzena2).toFixed(2)
-    setGlobalRevenue({
-      quinzena1: quinzena1.toFixed(2),
-      quinzena2: quinzena2.toFixed(2),
-      total,
-    })
-  }
-
-  useEffect(() => {
-    setRevenue()
-  }, [monthName])
 
   return (
     <div className="flex flex-col">
@@ -127,16 +106,14 @@ export default function MainPage() {
           </h1>
           <article className="flex flex-col gap-8 fixed right-2 mt-8">
             <div className="bg-gray-50 shadow-md flex items-center gap-2 flex-col rounded h-20 w-[18vw] py-2">
-              Quinzena 1
-              <strong className="">$ {globalRevenue.quinzena1}</strong>
+              Quinzena 1<strong className="">$ {quinzena('quinzena1')}</strong>
             </div>
             <div className="bg-gray-50 shadow-md flex items-center gap-2 flex-col rounded h-20 w-[18vw] py-2">
-              Quinzena 2
-              <strong className="">$ {globalRevenue.quinzena2}</strong>
+              Quinzena 2<strong className="">$ {quinzena('quinzena2')}</strong>
             </div>
             <div className="bg-gray-50 shadow-md flex items-center gap-2 flex-col rounded h-20 w-[18vw] py-2">
               Total month
-              <strong className="">$ {globalRevenue.total}</strong>
+              <strong className="">$ {total}</strong>
             </div>
           </article>
         </div>
