@@ -61,7 +61,7 @@ export default function Register() {
                     type="text"
                     name="phone"
                     inputMode="numeric"
-                    pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}"
+                    pattern="^\(?([0-9]{0,3})\)?[-. ]?([0-9]{0,3})[-. ]?([0-9]{0,4})$"
                     maxLength={11}
                   />
                 </label>
@@ -108,7 +108,7 @@ export default function Register() {
             {setNumberOfAddresses(addressNum)}
           </div>
           <button
-            className="bg-brand mt-3 px-3 py-1 ring-2 border border-transparent  ring-transparent hover:ring-brand hover:border-gray-50 ring-brand rounded transition-colors text-white font-bold"
+            className="bg-brand mt-3 px-3 py-1 ring ring-transparent border border-transparent hover:ring-brand hover:border-gray-50 rounded transition-colors text-white font-bold"
             type="submit"
           >
             Register

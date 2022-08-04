@@ -3,9 +3,10 @@ import { useState } from 'react'
 import Header from '../../components/header/Header'
 import MonthFilter from '../../components/listboxes/MonthFilter'
 import YearFilter from '../../components/listboxes/YearFilter'
+import DayInputsTableLine from './components/DayInputsTableLine'
 import { bodyTable, headerTable, months } from './constants'
 
-interface DaysObj {
+export interface DaysObj {
   dayNum: number
   weakDayName: string
 }
@@ -14,7 +15,6 @@ export default function Registration() {
   const [monthName, setMonthName] = useState('January')
   const [yearName, setYearName] = useState('2022')
   const [filterContractor, setFilterContractor] = useState('')
-  const [boardValue, setBoardValue] = useState('0')
 
   function tableFilters(item: { name: string; month: string }) {
     const filterByContractor = item.name
@@ -85,72 +85,54 @@ export default function Registration() {
             </select>
           </span>
           <table className="table">
-            <thead className="tableHead">
+            <thead className="tableHead ">
               <tr>
                 {headerTable.map((item, index) => {
                   if (item === 'Month') {
                     return (
-                      <div key={index} className="flex gap-1 justify-center">
+                      <th key={index} className="flex gap-1 justify-center">
                         {fortnightDays.map((day, index) => (
                           <th
                             key={day.dayNum}
-                            className=" w-[1.529rem] relative left-3 border py-4 flex flex-col items-center "
+                            className=" w-[1.529rem] py-4 flex flex-col items-center "
                           >
                             <span>{day.dayNum}</span>
                             <span className="text-xs">{day.weakDayName}</span>
                           </th>
                         ))}
-                      </div>
+                      </th>
                     )
                   }
                   return (
-                    <th scope="col" key={index} className="tableLine ">
+                    <th scope="col" key={index} className=" relative  ">
                       {item}
                     </th>
                   )
                 })}
                 <th>
-                  <GearSix className="relative left-5" size={32} />
+                  <GearSix className="relative left-3" size={24} />
                 </th>
               </tr>
             </thead>
             <tbody>
-              {bodyTable.map((item) => {
-                if (tableFilters(item)) {
+              {bodyTable.map((contractor) => {
+                if (tableFilters(contractor)) {
                   return (
                     <tr className="bg-white border-b ">
-                      <td className="tableLine flex flex-wrap max-w-[9rem]">
-                        {item.name}
+                      <td className="tableLine relative flex flex-wrap max-w-[9rem]">
+                        {contractor.name}
                       </td>
-                      <td className="tableLine">{item.client}</td>
-                      <td className="flex justify-center relative top-2 left-3 gap-1">
-                        {fortnightDays.map((day) => (
-                          <input
-                            key={day.dayNum}
-                            onChange={(e) => setBoardValue(e.target.value)}
-                            type="text"
-                            maxLength={3}
-                            className={`${
-                              day.weakDayName === 'S' &&
-                              'bg-zinc-500 text-white'
-                            } w-[1.529rem] outline-none ring-1 ring-transparent focus:ring-brand text-center h-10 border text-xs `}
-                            value={boardValue}
-                          />
-                        ))}
-                      </td>
-                      <td className="tableLine">{item.hours}</td>
-                      <td className="tableLine">{item.pHour}</td>
+                      <td className="">{contractor.client}</td>
+                      <DayInputsTableLine
+                        contractor={contractor}
+                        fortnightDays={fortnightDays}
+                      />
+                      <td className="tableLine">{contractor.hours}</td>
+                      <td className="tableLine">{contractor.pHour}</td>
                       <td className="tableLine">
-                        {Number(item.pHour) * Number(item.hours)}
+                        {Number(contractor.pHour) * Number(contractor.hours)}
                       </td>
-                      <td className=" flex flex-col justify-around">
-                        <button className="border" type="button">
-                          Save
-                        </button>
-                        <button className="border" type="button">
-                          Edit
-                        </button>
-                      </td>
+                      <td className=" tableLine">{''} </td>
                     </tr>
                   )
                 } else {

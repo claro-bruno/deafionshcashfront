@@ -5,7 +5,7 @@ export default function Login() {
   return (
     <div className="flex  min-w-screen min-h-screen">
       <div className="flex-1 flex items-center flex-col object-cover justify-center  bg-brand ">
-        <h1 className="first-letter:text-6xl first-letter:text-zinc-900 leading-4 relative bottom-16 font-extrabold text-2xl font-sans text-gray-200">
+        <h1 className="first-letter:text-6xl first-letter:text-brand3 leading-4 relative bottom-16 font-extrabold text-2xl font-sans text-gray-200">
           Global Janitorial Services!
         </h1>
         <img

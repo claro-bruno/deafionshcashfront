@@ -7,7 +7,7 @@ export default function CardContractor({
   setIsModalOpen: () => void
 }) {
   function formatCellNumber(cellNumber: string) {
-    return cellNumber.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3')
+    return cellNumber.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2 - $3')
   }
 
   return (

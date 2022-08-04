@@ -25,7 +25,7 @@ export const bodyTable = [
     id: 12,
     date: new Date('01,01,2022'),
     workedHours: '7',
-    client: 'americanas',
+    client: 'multilaser',
     hourlyPay: '14',
   },
   {
@@ -39,7 +39,7 @@ export const bodyTable = [
     id: 15,
     date: new Date('01,01,2022'),
     workedHours: '5.5',
-    client: 'samsung',
+    client: 'apple',
     hourlyPay: '20',
   },
   {
