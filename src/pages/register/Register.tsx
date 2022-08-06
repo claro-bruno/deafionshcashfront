@@ -41,7 +41,19 @@ export default function Register() {
                 </label>
                 <label className="labelsDefault">
                   Itin/SSN
-                  <input className="inputsDefault" type="text" />
+                  <input
+                    placeholder="000-00-0000"
+                    className="inputsDefault"
+                    type="text"
+                  />
+                </label>
+                <label className="labelsDefault">
+                  employer
+                  <input
+                    placeholder="00-0000000"
+                    className="inputsDefault"
+                    type="text"
+                  />
                 </label>
                 <label className="labelsDefault">
                   Birthday
@@ -68,6 +80,7 @@ export default function Register() {
                 <label className="labelsDefault">
                   Phone
                   <input
+                    placeholder="(001) 000-0000"
                     className="inputsDefault"
                     type="text"
                     name="phone"

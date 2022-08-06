@@ -38,17 +38,15 @@ body {
 }
 
 .table{
-  @apply text-sm text-left text-gray-500 dark:text-gray-400 w-full ;
+  @apply text-sm text-left text-gray-500 dark:text-gray-400 w-[95%] ;
 }
 .tableHead {
-  @apply text-xs bg-gray-50 text-gray-700 uppercase dark:bg-gray-700 dark:text-gray-400 ;
+  @apply  text-xs bg-gray-50 text-gray-700 uppercase dark:bg-gray-700 dark:text-gray-400 ;
 }
 .tableLine {
   @apply py-4 px-6;
 }
-.tableLineDay {
-  @apply  px-[0.45rem];
-}
+
 .tableBodyTh{
   @apply tableLine font-medium text-gray-900 whitespace-nowrap dark:text-white ;
 }

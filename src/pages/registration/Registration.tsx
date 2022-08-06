@@ -56,6 +56,7 @@ export default function Registration() {
 
     setFortnightDays(fortnight)
   }
+  console.log('renderizei')
 
   return (
     <div>
@@ -72,7 +73,7 @@ export default function Registration() {
         </div>
       </Header>
       <div>
-        <div className="tableContainer flex flex-col overflow-auto mt-4 ml-3">
+        <div className="tableContainer items-center flex flex-col overflow-auto mt-4">
           <span className="relative flex flex-col gap-1 bottom-1 items-center font-extrabold text-2xl self-center">
             {' '}
             {`${yearName} ${monthName}`}
@@ -85,26 +86,26 @@ export default function Registration() {
             </select>
           </span>
           <table className="table">
-            <thead className="tableHead ">
-              <tr>
+            <thead className="tableHead  ">
+              <tr className="">
                 {headerTable.map((item, index) => {
                   if (item === 'Month') {
                     return (
                       <th key={index} className="flex gap-1 justify-center">
                         {fortnightDays.map((day, index) => (
-                          <th
+                          <p
                             key={day.dayNum}
                             className=" w-[1.529rem] py-4 flex flex-col items-center "
                           >
                             <span>{day.dayNum}</span>
                             <span className="text-xs">{day.weakDayName}</span>
-                          </th>
+                          </p>
                         ))}
                       </th>
                     )
                   }
                   return (
-                    <th scope="col" key={index} className=" relative  ">
+                    <th scope="col" key={index} className=" first:pl-6 ">
                       {item}
                     </th>
                   )
