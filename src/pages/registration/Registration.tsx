@@ -74,12 +74,12 @@ export default function Registration() {
       </Header>
       <div>
         <div className="tableContainer items-center flex flex-col overflow-auto mt-4">
-          <span className="relative flex flex-col gap-1 bottom-1 items-center font-extrabold text-2xl self-center">
+          <span className="relative flex gap-2 bottom-1 items-center font-extrabold text-2xl self-center">
             {' '}
             {`${yearName} ${monthName}`}
             <select
               onChange={(e) => formatFortnightDays(e.target.value)}
-              className="rounded text-lg"
+              className="rounded text-lg border border-brand3"
             >
               <option value="1">Forthnight 1</option>
               <option value="2">Forthnight 2</option>
@@ -129,7 +129,14 @@ export default function Registration() {
                         fortnightDays={fortnightDays}
                       />
                       <td className="tableLine">{contractor.hours}</td>
-                      <td className="tableLine">{contractor.pHour}</td>
+                      <td className="tableLine">
+                        <input
+                          name="phour"
+                          className="w-[2rem] relative right-5 outline-none ring-1 ring-transparent focus:ring-brand text-center h-10 border text-sm"
+                          value={contractor.pHour}
+                          type="number"
+                        />
+                      </td>
                       <td className="tableLine">
                         {Number(contractor.pHour) * Number(contractor.hours)}
                       </td>

@@ -40,8 +40,9 @@ export default function Register() {
                   <input className="inputsDefault" type="email" />
                 </label>
                 <label className="labelsDefault">
-                  Itin/SSN
+                  ITIN/SSN
                   <input
+                    title="Individual Taxpayer Identification Number (ITIN) or Social Security Number (SSN)"
                     placeholder="000-00-0000"
                     className="inputsDefault"
                     type="text"
@@ -74,8 +75,9 @@ export default function Register() {
                   />
                 </label>
                 <label className="labelsDefault">
-                  Employer identification number
+                  EIN
                   <input
+                    title="Employer Identification Number (EIN)"
                     placeholder="00-0000000"
                     className="inputsDefault"
                     type="text"

@@ -40,7 +40,7 @@ export default function DayInputsTableLine({
       </p>
       <button
         onClick={() => console.log(contractorWorkedInfos)}
-        className="border bg-brand3 text-white rounded border-brand3 ring-2 ring-brand3 hover:border-white focus:border-white py-[0.19rem] px-3 absolute right-[3.7%] "
+        className="border bg-brand3 text-white rounded border-brand3 ring-2 ring-brand3 hover:border-white focus:border-white py-[0.12rem] px-3 absolute mt-5 right-[3.7%] "
         type="button"
       >
         Save

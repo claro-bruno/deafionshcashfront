@@ -1,16 +1,15 @@
 import { Link } from 'react-router-dom'
-import janitorialImage from '../../assets/janitorialfoto2.png'
 
 export default function Login() {
   return (
     <div className="flex  min-w-screen min-h-screen">
       <div className="flex-1 flex items-center flex-col object-cover justify-center  bg-brand ">
-        <h1 className=" uppercase leading-4 relative bottom-16 font-extrabold text-4xl font-['Poppins'] text-gray-200">
+        <h1 className=" uppercase leading-4 relative bottom-24 font-extrabold text-4xl font-['Poppins'] text-gray-200">
           Global Janitorial Services!
         </h1>
         <img
-          className="w-[99%] rounded shadow-md"
-          src={janitorialImage}
+          className="w-[99%] object-cover rounded shadow-md"
+          src="https://www.globaljanitorialservices.com/assets/images/backgrounds/main-slider-2-1.jpg"
           alt="workers smiling"
         />
       </div>

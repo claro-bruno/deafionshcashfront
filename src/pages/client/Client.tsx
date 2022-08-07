@@ -13,7 +13,7 @@ export default function Client() {
     return item.name.toUpperCase().includes(filterClient.toUpperCase())
   }
   return (
-    <div className="flex flex-col  bg-gray-100 min-h-screen">
+    <div className="flex  flex-col  bg-gray-100 min-h-screen">
       <Header>
         <input
           placeholder="Ex: Amazon"
@@ -23,7 +23,7 @@ export default function Client() {
           type="text"
         />
       </Header>
-      <div className="mx-8 mt-7 tableContainer overflow-auto ">
+      <div className=" mt-7 w-[80vw] relative top-8 self-center tableContainer overflow-auto ">
         <table className="table">
           <thead className="tableHead">
             <tr>
