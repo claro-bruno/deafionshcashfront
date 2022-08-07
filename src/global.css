@@ -30,7 +30,7 @@ body {
 }
 
 .inputsAndLabelsContainer {
-  @apply flex justify-between gap-8 w-[35rem] h-[18rem]
+  @apply flex justify-around w-[55rem] 
 
 }
 .tableContainer::-webkit-scrollbar {

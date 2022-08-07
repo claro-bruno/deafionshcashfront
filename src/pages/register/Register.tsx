@@ -26,10 +26,10 @@ export default function Register() {
   return (
     <div className="flex flex-col  min-w-screen min-h-screen">
       <Header />
-      <main className="flex-1 flex flex-col p-4 my-auto gap-2 w-[100%]  min-h-full  items-center  ">
+      <main className="flex-1 flex flex-col my-auto gap-2 w-[100%]  min-h-full  items-center  ">
         <form className="flex flex-col items-center justify-center gap-4 px-4  w-auto">
-          <div className="flex flex-col gap-4 bg-zinc-100 mt-8 p-8 rounded-md">
-            <div className="inputsAndLabelsContainer border-b-2">
+          <div className="flex flex-col  bg-gray-200 mt-8 p-8 rounded-md">
+            <div className="inputsAndLabelsContainer h-[18rem] border-b-2">
               <div className="flex flex-col gap-2">
                 <label className="labelsDefault">
                   First name
@@ -47,21 +47,38 @@ export default function Register() {
                     type="text"
                   />
                 </label>
+                <label className="labelsDefault ">
+                  Photo
+                  <input
+                    accept="image/*"
+                    type="file"
+                    className=" file:py-[0.35rem]  fileInput"
+                  />
+                </label>
+              </div>
+              <div className="flex flex-col gap-2">
                 <label className="labelsDefault">
-                  employer
+                  Middle name
+                  <input className="inputsDefault" type="text" />
+                </label>
+                <label className="labelsDefault">
+                  Phone
+                  <input
+                    placeholder="(001) 000-0000"
+                    className="inputsDefault"
+                    type="text"
+                    name="phone"
+                    inputMode="numeric"
+                    pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}"
+                    maxLength={11}
+                  />
+                </label>
+                <label className="labelsDefault">
+                  Employer identification number
                   <input
                     placeholder="00-0000000"
                     className="inputsDefault"
                     type="text"
-                  />
-                </label>
-                <label className="labelsDefault">
-                  Birthday
-                  <input
-                    min="1940-12-31"
-                    max="2022-12-31"
-                    className="inputsDefault"
-                    type="date"
                   />
                 </label>
               </div>
@@ -78,17 +95,15 @@ export default function Register() {
                   />
                 </label>
                 <label className="labelsDefault">
-                  Phone
+                  Birthday
                   <input
-                    placeholder="(001) 000-0000"
+                    min="1940-12-31"
+                    max="2022-12-31"
                     className="inputsDefault"
-                    type="text"
-                    name="phone"
-                    inputMode="numeric"
-                    pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}"
-                    maxLength={11}
+                    type="date"
                   />
                 </label>
+
                 <label className="labelsDefault ">
                   Document Photo
                   <input
@@ -97,31 +112,25 @@ export default function Register() {
                     className=" file:py-[0.35rem]  fileInput"
                   />
                 </label>
-                <label className="labelsDefault ">
-                  Photo
-                  <input
-                    accept="image/*"
-                    type="file"
-                    className=" file:py-[0.35rem]  fileInput"
-                  />
-                </label>
               </div>
             </div>
-            <label className="flex self-center items-center gap-2">
-              Address
-              <select
-                className="w-fit  py-1 px-2 outline-brand  ring-1 rounded border-b-2"
-                value={addressNum}
-                onChange={(e) => setAddressNum(e.target.value)}
-              >
-                <option value="1">1</option>
-                <option value="2">2 </option>
-              </select>
-            </label>
+            <div className="flex w-full py-4 border-t-2 border-gray-400 justify-center">
+              <label className="flex items-center gap-2">
+                Address
+                <select
+                  className="w-fit  py-1 px-2 outline-brand  ring-1 rounded border-b-2"
+                  value={addressNum}
+                  onChange={(e) => setAddressNum(e.target.value)}
+                >
+                  <option value="1">1</option>
+                  <option value="2">2 </option>
+                </select>
+              </label>
+            </div>
             {setNumberOfAddresses(addressNum)}
           </div>
           <button
-            className="bg-brand mt-3 px-3 py-1 ring ring-transparent border border-transparent hover:ring-brand hover:border-gray-50 rounded transition-colors text-white font-bold"
+            className="bg-brand mt-3 px-3 py-1 ring ring-transparent border border-transparent hover:ring-brand hover:border-gray-50 rounded relative bottom-3 transition-colors text-white font-bold"
             type="submit"
           >
             Register

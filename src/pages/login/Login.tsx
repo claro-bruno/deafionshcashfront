@@ -5,7 +5,7 @@ export default function Login() {
   return (
     <div className="flex  min-w-screen min-h-screen">
       <div className="flex-1 flex items-center flex-col object-cover justify-center  bg-brand ">
-        <h1 className="first-letter:text-6xl first-letter:text-brand3 leading-4 relative bottom-16 font-extrabold text-2xl font-sans text-gray-200">
+        <h1 className=" uppercase leading-4 relative bottom-16 font-extrabold text-4xl font-['Poppins'] text-gray-200">
           Global Janitorial Services!
         </h1>
         <img
@@ -15,10 +15,10 @@ export default function Login() {
         />
       </div>
       <div className="flex-1 flex flex-col w-[100%] bg-gray-100 min-h-full  items-center  ">
-        <div className="flex items-center mt-9 p-4  my-auto gap-2 flex-col">
+        <div className="flex items-center mt-3  gap-2 flex-col">
           <img
-            className=" mt-10 object-contain"
-            src="https://www.globaljanitorialservices.com/assets/images/resources/logo-3.png"
+            className="h-[12rem] object-contain"
+            src="https://www.globaljanitorialservices.com/assets/images/resources/welcome-two-small-img.png"
             alt="globaljanitorialservices logo"
           />
           <form className="flex flex-col items-center justify-center gap-4 px-4 h-72 w-auto">
@@ -38,11 +38,11 @@ export default function Login() {
               className="disabled:cursor-not-allowed bg-brand2 ring text-sm ring-transparent hover:ring-brand2 border border-transparent hover:border-white mt-3 px-2 py-[0.15rem]  rounded text-white font-bold transition-colors"
               type="submit"
             >
-              <Link to="/main">Sing in</Link>
+              <Link to="/main">Sign in</Link>
             </button>
           </form>
           <span className="text-sm mt-2 text-gray-400">
-            Don`&lsquo;`t have an account ?{' '}
+            Don&apos;t have an account ?{' '}
             {
               <Link className="text-blue-500" to="/register/terms">
                 Register

@@ -15,7 +15,7 @@ export default function AddressComponent({
   residencyProof,
 }: Partial<AddressProps>) {
   return (
-    <div className="inputsAndLabelsContainer items-center">
+    <div className="inputsAndLabelsContainer h-[13rem] items-center">
       <div className="flex flex-col gap-2">
         <label className="labelsDefault">
           Address
@@ -32,15 +32,6 @@ export default function AddressComponent({
           <input
             name="street"
             value={street}
-            className="inputsDefault"
-            type="text"
-          />
-        </label>
-        <label className="labelsDefault">
-          City
-          <input
-            name="city"
-            value={city}
             className="inputsDefault"
             type="text"
           />
@@ -63,6 +54,17 @@ export default function AddressComponent({
             value={zip}
             inputMode="numeric"
             pattern="^(?(^00000(|-0000))|(\d{5}(|-\d{4})))$"
+            className="inputsDefault"
+            type="text"
+          />
+        </label>
+      </div>
+      <div className="flex flex-col gap-2">
+        <label className="labelsDefault">
+          City
+          <input
+            name="city"
+            value={city}
             className="inputsDefault"
             type="text"
           />

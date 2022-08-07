@@ -46,13 +46,13 @@ export default function Registration() {
     return weakDaysNamed
   }
   const [fortnightDays, setFortnightDays] = useState<DaysObj[]>(
-    addWeakDayName().splice(0, 14),
+    addWeakDayName().splice(0, 15),
   )
   function formatFortnightDays(period: string) {
     const fortnight =
       period === '1'
-        ? addWeakDayName().splice(0, 14)
-        : addWeakDayName().splice(14)
+        ? addWeakDayName().splice(0, 15)
+        : addWeakDayName().splice(15)
 
     setFortnightDays(fortnight)
   }
