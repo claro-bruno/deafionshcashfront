@@ -6,20 +6,29 @@ export type ContractorWorkedInfo = {
   hourlyPay: string
 }
 
-export type newContractor = {
+export type NewContractor = {
   id?: string
   firstName: string
+  middleName: string
   lastName: string
   email: string
+  birthDate: string
   phone: string
-  birthDate: Date
-  ssn_itin: string
+  ssnOrItin: string
   ein?: string
+  acceptTerms: boolean
   address: {
     address: string
     city: string
     state: string
     street: string
     zip: string
+  }
+  secondaryAddress?: {
+    address?: string
+    city?: string
+    state?: string
+    street?: string
+    zip?: string
   }
 }
