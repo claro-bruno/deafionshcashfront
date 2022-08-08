@@ -1,7 +1,11 @@
 import { useFormContext } from 'react-hook-form'
 import useFormate from '../../../../hooks/useFormate'
 
-export default function AddressComponent() {
+export default function AddressComponent({
+  secondaryAddress = false,
+}: {
+  secondaryAddress: boolean
+}) {
   const { register, watch } = useFormContext()
   const { formatZipCode } = useFormate()
   return (
@@ -10,7 +14,9 @@ export default function AddressComponent() {
         <label className="labelsDefault">
           Address
           <input
-            {...register('address.address')}
+            {...register(
+              secondaryAddress ? 'secondaryAddress.address' : 'address.address',
+            )}
             inputMode="numeric"
             className="inputsDefault"
             type="text"
@@ -19,7 +25,9 @@ export default function AddressComponent() {
         <label className="labelsDefault">
           Street
           <input
-            {...register('address.street')}
+            {...register(
+              secondaryAddress ? 'secondaryAddress.street' : 'address.street',
+            )}
             className="inputsDefault"
             type="text"
           />
@@ -29,7 +37,9 @@ export default function AddressComponent() {
         <label className="labelsDefault">
           State
           <input
-            {...register('address.state')}
+            {...register(
+              secondaryAddress ? 'secondaryAddress.state' : 'address.state',
+            )}
             className="inputsDefault"
             type="text"
           />
@@ -37,8 +47,12 @@ export default function AddressComponent() {
         <label className="labelsDefault">
           Zip-code
           <input
-            {...register('address.zip')}
-            value={formatZipCode(watch('address.zip'))}
+            {...register(
+              secondaryAddress ? 'secondaryAddress.zip' : 'address.zip',
+            )}
+            value={formatZipCode(
+              watch(secondaryAddress ? 'secondaryAddress.zip' : 'address.zip'),
+            )}
             inputMode="numeric"
             pattern="^(?(^00000(|-0000))|(\d{5}(|-\d{4})))$"
             className="inputsDefault"
@@ -50,7 +64,9 @@ export default function AddressComponent() {
         <label className="labelsDefault">
           City
           <input
-            {...register('address.city')}
+            {...register(
+              secondaryAddress ? 'secondaryAddress.city' : 'address.city',
+            )}
             className="inputsDefault"
             type="text"
           />
@@ -58,7 +74,11 @@ export default function AddressComponent() {
         <label className="labelsDefault ">
           Residency proof
           <input
-            {...register('residencyProof')}
+            {...register(
+              secondaryAddress
+                ? 'secondaryAddress.residencyProof'
+                : 'address.residencyProof',
+            )}
             type="file"
             className="fileInput"
           />

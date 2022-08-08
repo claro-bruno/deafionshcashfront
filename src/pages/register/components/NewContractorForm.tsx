@@ -10,11 +10,11 @@ export default function NewContractorForm() {
 
   function setNumberOfAddresses(addressNum: string) {
     return Number(addressNum) === 1 ? (
-      <AddressComponent />
+      <AddressComponent secondaryAddress={false} />
     ) : (
       <>
-        <AddressComponent />
-        <AddressComponent />
+        <AddressComponent secondaryAddress={false} />
+        <AddressComponent secondaryAddress />
       </>
     )
   }

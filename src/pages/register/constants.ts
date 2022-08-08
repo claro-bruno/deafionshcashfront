@@ -9,7 +9,8 @@ export const INITIAL_NEW_CONTRACTOR_STATE: NewContractor = {
   birthDate: '',
   phone: '',
   ssnOrItin: '',
-  acceptTerms: false,
+  acceptTerms: true,
+  dateCreated: new Date(),
   address: {
     address: '',
     city: '',

@@ -17,6 +17,7 @@ export type NewContractor = {
   ssnOrItin: string
   ein?: string
   acceptTerms: boolean
+  dateCreated: Date
   address: {
     address: string
     city: string
