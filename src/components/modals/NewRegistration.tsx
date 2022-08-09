@@ -1,13 +1,36 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
-import { clients, contractors } from '../../pages/registration/constants'
+import { useForm } from 'react-hook-form'
+import {
+  clients,
+  contractors,
+  INITIAL_STATE_31_DAYS_OBJ,
+} from '../../pages/registration/constants'
 import { ModalProps } from '../../types/modal'
 import './modal.css'
 
+type NewRegistrationProps = ModalProps & { users: any[] }
 export default function NewRegistration({
   isModalOpen,
   closeModal,
-}: ModalProps) {
+  users,
+}: NewRegistrationProps) {
+  const newJob = useForm({
+    defaultValues: {
+      contractor: '',
+      client: '',
+      pHour: '',
+      hours: '0',
+      month: 'January',
+      workedDays: INITIAL_STATE_31_DAYS_OBJ,
+    },
+  })
+  const { register, handleSubmit } = newJob
+  function handleCreateNewJob(data: any) {
+    console.log(data)
+    users.push(data)
+    closeModal()
+  }
   return (
     <>
       <Transition appear show={isModalOpen} as={Fragment}>
@@ -54,6 +77,7 @@ export default function NewRegistration({
                         className="inputsDefault"
                         list="contractors"
                         type="text"
+                        {...register('contractor')}
                       />
                     </label>
                     <datalist id="contractors">
@@ -67,6 +91,7 @@ export default function NewRegistration({
                         list="clients"
                         className="inputsDefault"
                         type="text"
+                        {...register('client')}
                       />
                     </label>
                     <datalist id="clients">
@@ -76,14 +101,18 @@ export default function NewRegistration({
                     </datalist>
                     <label className="labelsDefault">
                       P/Hour:
-                      <input className="inputsDefault" type="number" />
+                      <input
+                        {...register('pHour')}
+                        className="inputsDefault"
+                        type="number"
+                      />
                     </label>
                   </div>
                   <div className="pt-7 text-sm flex flex-col items-center gap-5">
                     <button
                       type="button"
                       className="submitModalButton"
-                      onClick={closeModal}
+                      onClick={handleSubmit(handleCreateNewJob)}
                     >
                       Create
                     </button>

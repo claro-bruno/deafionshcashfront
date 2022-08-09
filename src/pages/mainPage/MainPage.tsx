@@ -52,11 +52,12 @@ export default function MainPage() {
           />
         </div>
       </Header>
-      <div className="mx-auto flex gap-2 py-1 items-center font-extrabold text-xl">
-        <div> {yearName}</div>
-        <div> {monthName}</div>
-      </div>
-      <main className="min-h-screen flex  bg-gray-100 ">
+
+      <main className="min-h-screen flex bg-gray-100 ">
+        <div className=" absolute text-zinc-700 left-[45%] right-full flex gap-2 font-extrabold text-xl">
+          <h2>{yearName}</h2>
+          <h2>{monthName}</h2>
+        </div>
         <div className="w-full">
           <div className="tableContainer overflow-auto mt-8 ml-3">
             <table className="table">

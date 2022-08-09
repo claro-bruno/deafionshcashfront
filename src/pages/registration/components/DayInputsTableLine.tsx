@@ -40,14 +40,14 @@ export default function DayInputsTableLine({
       </p>
       <button
         onClick={() => console.log(contractorWorkedInfos)}
-        className="border bg-brand3 text-white rounded border-brand3 ring-2 ring-brand3 hover:border-white focus:border-white py-[0.12rem] px-2 absolute  right-[5.7%] "
+        className="border bg-brand3 text-white rounded border-brand3 ring-2 ring-brand3 hover:border-white focus:border-white text-xs py-[0.09rem] px-2 absolute  right-[5.7%] "
         type="button"
       >
         Save
       </button>
       <button
         onClick={() => console.log(contractorWorkedInfos)}
-        className="border bg-brand2 text-white rounded border-brand2 ring-2 ring-brand2 hover:border-white focus:border-white py-[0.12rem] px-2 absolute right-[1.9%] "
+        className="border bg-brand2 text-white rounded border-brand2 ring-2 ring-brand2 hover:border-white focus:border-white text-xs py-[0.09rem] px-2 absolute right-[1.9%] "
         type="button"
       >
         Edit

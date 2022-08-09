@@ -60,7 +60,7 @@ export const INITIAL_STATE_31_DAYS_OBJ = {
 export const bodyTable = [
   {
     id: 1,
-    name: 'bruno fay',
+    contractor: 'bruno fay',
     month: 'January',
     client: 'amazon',
     hours: '10',
@@ -69,7 +69,16 @@ export const bodyTable = [
   },
   {
     id: 1,
-    name: 'james brown',
+    contractor: 'james brown',
+    month: 'February',
+    client: 'amazon',
+    hours: '10',
+    pHour: '20',
+    workedDays: INITIAL_STATE_31_DAYS_OBJ,
+  },
+  {
+    id: 1,
+    contractor: 'angela borges ',
     month: 'January',
     client: 'amazon',
     hours: '10',
@@ -78,7 +87,7 @@ export const bodyTable = [
   },
   {
     id: 1,
-    name: 'angela borges ',
+    contractor: 'john doe ',
     month: 'January',
     client: 'amazon',
     hours: '10',
@@ -87,16 +96,7 @@ export const bodyTable = [
   },
   {
     id: 1,
-    name: 'john doe ',
-    month: 'January',
-    client: 'amazon',
-    hours: '10',
-    pHour: '20',
-    workedDays: INITIAL_STATE_31_DAYS_OBJ,
-  },
-  {
-    id: 1,
-    name: 'bruno fay',
+    contractor: 'bruno fay',
     month: 'February',
     client: 'amazon',
     hours: '10',

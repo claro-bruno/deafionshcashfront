@@ -19,8 +19,8 @@ export default function Registration() {
   const [filterContractor, setFilterContractor] = useState('')
   const { closeModal, isModalOpen } = useModal()
 
-  function tableFilters(item: { name: string; month: string }) {
-    const filterByContractor = item.name
+  function tableFilters(item: { contractor: string; month: string }) {
+    const filterByContractor = item.contractor
       .toLowerCase()
       .includes(filterContractor.toLowerCase())
     const filterByDate = item.month
@@ -88,7 +88,11 @@ export default function Registration() {
               <option value="2">Forthnight 2</option>
             </select>
           </span>
-          <button className="w-10 absolute left-[93%] mt-2 ring-2 border-transparent hover:border-white focus:border-white ring-brand2 border bg-brand2 flex justify-center py-1 px-2 rounded">
+          <button
+            type="button"
+            onClick={closeModal}
+            className="w-10 absolute left-[93%] mt-2 ring-2 border-transparent hover:border-white focus:border-white ring-brand3 border bg-brand3 flex justify-center py-1 px-2 rounded"
+          >
             <Plus size={20} color={'white'} />
           </button>
           <table className="table">
@@ -127,13 +131,15 @@ export default function Registration() {
                   return (
                     <tr className="bg-white border-b ">
                       <td className="tableLine relative flex flex-wrap max-w-[9rem]">
-                        {contractor.name}
+                        {contractor.contractor}
                       </td>
                       <td className="">{contractor.client}</td>
+
                       <DayInputsTableLine
                         contractor={contractor}
                         fortnightDays={fortnightDays}
                       />
+
                       <td className="tableLine">{contractor.hours}</td>
                       <td className="tableLine relative right-5">
                         $ {contractor.pHour}
@@ -152,7 +158,11 @@ export default function Registration() {
           </table>
         </div>
       </div>
-      <NewRegistration closeModal={closeModal} isModalOpen={isModalOpen} />
+      <NewRegistration
+        users={bodyTable}
+        closeModal={closeModal}
+        isModalOpen={isModalOpen}
+      />
     </div>
   )
 }
