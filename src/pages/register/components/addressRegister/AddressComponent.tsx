@@ -20,6 +20,7 @@ export default function AddressComponent({
             inputMode="numeric"
             className="inputsDefault"
             type="text"
+            required
           />
         </label>
         <label className="labelsDefault">
@@ -30,6 +31,7 @@ export default function AddressComponent({
             )}
             className="inputsDefault"
             type="text"
+            required
           />
         </label>
       </div>
@@ -42,6 +44,7 @@ export default function AddressComponent({
             )}
             className="inputsDefault"
             type="text"
+            required
           />
         </label>
         <label className="labelsDefault">
@@ -57,6 +60,7 @@ export default function AddressComponent({
             pattern="^(?(^00000(|-0000))|(\d{5}(|-\d{4})))$"
             className="inputsDefault"
             type="text"
+            required
           />
         </label>
       </div>
@@ -69,10 +73,11 @@ export default function AddressComponent({
             )}
             className="inputsDefault"
             type="text"
+            required
           />
         </label>
         <label className="labelsDefault ">
-          Residency proof
+          * Residency proof
           <input
             {...register(
               secondaryAddress

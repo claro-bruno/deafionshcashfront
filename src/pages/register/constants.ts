@@ -18,4 +18,11 @@ export const INITIAL_NEW_CONTRACTOR_STATE: NewContractor = {
     street: '',
     zip: '',
   },
+  secondaryAddress: {
+    address: '',
+    city: '',
+    state: '',
+    street: '',
+    zip: '',
+  },
 }

@@ -12,7 +12,6 @@ export default function Register() {
   const newContractorForm = useForm<NewContractor>({
     defaultValues: INITIAL_NEW_CONTRACTOR_STATE,
   })
-  console.log('renderizpu')
   return (
     <div className="flex flex-col  min-w-screen min-h-screen">
       <Header />

@@ -4,12 +4,14 @@ import { Link } from 'react-router-dom'
 import Header from '../../components/header/Header'
 import MonthFilter from '../../components/listboxes/MonthFilter'
 import YearFilter from '../../components/listboxes/YearFilter'
+import useFormate from '../../hooks/useFormate'
 import { bodyTable, headerTable } from './constants'
 
 export default function MainPage() {
   const [monthName, setMonthName] = useState('')
   const [yearName, setYearName] = useState('')
   const [filterContractor, setFilterContractor] = useState('')
+  const { formatMoney } = useFormate()
 
   const outlay: { type: string; period: string; value: string }[] = bodyTable
     .filter((item) => item.month === monthName.toLowerCase())
@@ -23,10 +25,10 @@ export default function MainPage() {
         .reduce((acc, curr) => acc + Number(curr.value), 0),
     )
   }
-  const total = (forthnight('forthnight1') + forthnight('forthnight2')).toFixed(
-    2,
-  )
-
+  const fortnight1Formated = formatMoney(forthnight('forthnight1'))
+  const fortnight2Formated = formatMoney(forthnight('forthnight2'))
+  const total = forthnight('forthnight1') + forthnight('forthnight2')
+  const totalFormatted = formatMoney(total)
   function tableFilters(item: { name: string; month: string }) {
     const filterByContractor = item.name
       .toLowerCase()
@@ -83,14 +85,20 @@ export default function MainPage() {
                         </td>
                         {item.payments.map((payment) => (
                           <>
-                            <td className="tableLine">{payment.value}</td>
+                            <td className="tableLine">
+                              $ {formatMoney(Number(payment.value))}
+                            </td>
                             <td className="tableLine">{payment.type}</td>
                           </>
                         ))}
                         <td className="tableLine">
-                          {item.payments
-                            .reduce((acc, curr) => acc + Number(curr.value), 0)
-                            .toFixed(2)}
+                          ${' '}
+                          {formatMoney(
+                            item.payments.reduce(
+                              (acc, curr) => acc + Number(curr.value),
+                              0,
+                            ),
+                          )}
                         </td>
                       </tr>
                     )
@@ -108,16 +116,14 @@ export default function MainPage() {
           </h1>
           <article className="flex flex-col gap-8 fixed right-2 mt-8">
             <div className="bg-gray-50 shadow-md flex items-center gap-2 flex-col rounded h-20 w-[18vw] py-2">
-              Forthnight 1
-              <strong className="">$ {forthnight('forthnight1')}</strong>
+              Forthnight 1<strong className="">$ {fortnight1Formated}</strong>
             </div>
             <div className="bg-gray-50 shadow-md flex items-center gap-2 flex-col rounded h-20 w-[18vw] py-2">
-              Forthnight 2
-              <strong className="">$ {forthnight('forthnight2')}</strong>
+              Forthnight 2<strong className="">$ {fortnight2Formated}</strong>
             </div>
             <div className="bg-gray-50 shadow-md flex items-center gap-2 flex-col rounded h-20 w-[18vw] py-2">
               Total month
-              <strong className="">$ {total}</strong>
+              <strong className="">$ {totalFormatted}</strong>
             </div>
           </article>
         </div>

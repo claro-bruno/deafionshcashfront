@@ -1,8 +1,6 @@
 export default function useFormate() {
-  function formatMoney(payload: string) {
-    return Number(payload)
-      .toFixed(2)
-      .replace(/\d(?=(\d{3})+\.)/g, '$&,')
+  function formatMoney(payload: number) {
+    return payload.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
   }
   function formatPhone(payload: string) {
     return payload.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3')

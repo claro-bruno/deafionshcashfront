@@ -14,7 +14,7 @@ export default function NewContractorForm() {
     ) : (
       <>
         <AddressComponent secondaryAddress={false} />
-        <AddressComponent secondaryAddress />
+        <AddressComponent secondaryAddress={true} />
       </>
     )
   }
@@ -23,6 +23,7 @@ export default function NewContractorForm() {
   }
   const ssnOrItin = watch('ssnOrItin')
   const phone = watch('phone')
+  const zip = watch('address.zip')
   const ein = watch('ein')
 
   return (
@@ -39,6 +40,7 @@ export default function NewContractorForm() {
                 className="inputsDefault"
                 type="text"
                 {...register('firstName')}
+                required
               />
             </label>
             <label className="labelsDefault">
@@ -47,6 +49,7 @@ export default function NewContractorForm() {
                 className="inputsDefault"
                 type="email"
                 {...register('email')}
+                required
               />
             </label>
             <label className="labelsDefault">
@@ -60,10 +63,11 @@ export default function NewContractorForm() {
                 inputMode="numeric"
                 value={formatSsnOrItin(ssnOrItin)}
                 {...register('ssnOrItin')}
+                required
               />
             </label>
             <label className="labelsDefault ">
-              Photo
+              * Photo
               <input
                 accept="image/*"
                 type="file"
@@ -73,7 +77,7 @@ export default function NewContractorForm() {
           </div>
           <div className="flex flex-col gap-2">
             <label className="labelsDefault">
-              Middle name
+              * Middle name
               <input
                 {...register('middleName')}
                 name="middleName"
@@ -87,14 +91,14 @@ export default function NewContractorForm() {
                 {...register('phone')}
                 placeholder="(001) 000-0000"
                 className="inputsDefault"
-                type="text"
+                type="tel"
                 inputMode="numeric"
                 maxLength={11}
                 value={formatPhone(phone)}
               />
             </label>
             <label className="labelsDefault">
-              EIN
+              * EIN
               <input
                 {...register('ein')}
                 title="Employer Identification Number (EIN)"
@@ -114,6 +118,7 @@ export default function NewContractorForm() {
                 {...register('lastName')}
                 type="text"
                 className="inputsDefault"
+                required
               />
             </label>
             <label className="labelsDefault">
@@ -124,11 +129,12 @@ export default function NewContractorForm() {
                 max="2022-12-31"
                 className="inputsDefault"
                 type="date"
+                required
               />
             </label>
 
             <label className="labelsDefault ">
-              Document Photo
+              * Document Photo
               <input
                 {...register('documentPhoto')}
                 accept="image/*"
@@ -154,8 +160,9 @@ export default function NewContractorForm() {
         {setNumberOfAddresses(addressNum)}
       </div>
       <button
-        className="bg-brand mt-3 px-3 py-1 ring ring-transparent border border-transparent hover:ring-brand hover:border-gray-50 rounded relative bottom-3 transition-colors text-white font-bold"
+        className="bg-brand mt-3 px-3 py-1 ring ring-transparent border border-transparent hover:ring-brand hover:border-gray-50 rounded relative bottom-3 transition-colors text-white font-bold disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-transparent disabled:hover:ring-transparent"
         type="submit"
+        disabled={!zip || !phone}
       >
         Register
       </button>
