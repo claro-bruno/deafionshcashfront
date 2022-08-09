@@ -3,12 +3,13 @@ import Header from '../../components/header/Header'
 import AntiBriberyandCorruption from '../../assets/AntiBriberyandCorruption.pdf'
 import CodeofConduct from '../../assets/CodeofConduct.pdf'
 import CodeofEthicalBehavior from '../../assets/CodeofEthicalBehavior.pdf'
-import TermModal from '../../components/modal/TermModal'
+import TermModal from '../../components/modals/TermModal'
 import { File } from 'phosphor-react'
 import { useNavigate } from 'react-router-dom'
+import useModal from '../../hooks/useModal'
 
 export default function Terms() {
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const { closeModal, isModalOpen } = useModal()
   const [pdfInfos, setPdfInfos] = useState<{ title: string; url: string }>({
     title: '',
     url: '',
@@ -32,7 +33,7 @@ export default function Terms() {
     })
   }
   function handleClickPdf(pdfName: string) {
-    setIsModalOpen(true)
+    closeModal()
     if (pdfName === 'Anti-Bribery and Corruption') {
       setPdfInfos({
         title: 'Anti-Bribery and Corruption',
@@ -127,7 +128,7 @@ export default function Terms() {
       </button>
       <TermModal
         isModalOpen={isModalOpen}
-        closeModal={() => setIsModalOpen(false)}
+        closeModal={() => closeModal()}
         title={pdfInfos.title}
         pdfUrl={pdfInfos.url}
       />

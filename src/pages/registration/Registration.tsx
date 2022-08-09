@@ -1,8 +1,10 @@
-import { GearSix } from 'phosphor-react'
+import { GearSix, Plus } from 'phosphor-react'
 import { useState } from 'react'
 import Header from '../../components/header/Header'
 import MonthFilter from '../../components/listboxes/MonthFilter'
 import YearFilter from '../../components/listboxes/YearFilter'
+import NewRegistration from '../../components/modals/NewRegistration'
+import useModal from '../../hooks/useModal'
 import DayInputsTableLine from './components/DayInputsTableLine'
 import { bodyTable, headerTable, months } from './constants'
 
@@ -15,6 +17,7 @@ export default function Registration() {
   const [monthName, setMonthName] = useState('January')
   const [yearName, setYearName] = useState('2022')
   const [filterContractor, setFilterContractor] = useState('')
+  const { closeModal, isModalOpen } = useModal()
 
   function tableFilters(item: { name: string; month: string }) {
     const filterByContractor = item.name
@@ -73,9 +76,8 @@ export default function Registration() {
         </div>
       </Header>
       <div>
-        <div className="tableContainer items-center flex flex-col overflow-auto mt-4">
-          <span className="relative flex gap-2 bottom-1 items-center font-extrabold text-2xl self-center">
-            {' '}
+        <div className="tableContainer items-center flex flex-col overflow-auto ">
+          <span className="relative h-10 flex gap-2 my-1 items-center font-extrabold text-2xl self-center">
             {`${yearName} ${monthName}`}
             <select
               onChange={(e) => formatFortnightDays(e.target.value)}
@@ -84,6 +86,9 @@ export default function Registration() {
               <option value="1">Forthnight 1</option>
               <option value="2">Forthnight 2</option>
             </select>
+            <button className="w-10 relative  left-[29rem] ring-2 border-transparent hover:border-white focus:border-white ring-brand2 border bg-brand2 flex justify-center py-1 px-2 rounded">
+              <Plus size={20} color={'white'} />
+            </button>
           </span>
           <table className="table">
             <thead className="tableHead  ">
@@ -132,10 +137,11 @@ export default function Registration() {
                       <td className="tableLine">
                         <input
                           name="phour"
-                          className="w-[2rem] relative right-5 outline-none ring-1 ring-transparent focus:ring-brand text-center h-10 border text-sm"
+                          className="w-[1.5rem] relative right-5 outline-none ring-1 ring-transparent focus:ring-brand text-center h-10 border text-sm"
                           value={contractor.pHour}
                           type="number"
                         />
+                        $
                       </td>
                       <td className="tableLine">
                         {Number(contractor.pHour) * Number(contractor.hours)}
@@ -151,6 +157,7 @@ export default function Registration() {
           </table>
         </div>
       </div>
+      <NewRegistration closeModal={closeModal} isModalOpen={isModalOpen} />
     </div>
   )
 }

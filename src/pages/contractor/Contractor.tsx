@@ -2,7 +2,8 @@ import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import Header from '../../components/header/Header'
 import MonthFilter from '../../components/listboxes/MonthFilter'
-import NewContractorModal from '../../components/modal/NewContractorModal'
+import NewContractorModal from '../../components/modals/NewContractorModal'
+import useModal from '../../hooks/useModal'
 import { ContractorWorkedInfo } from '../../types/contractor'
 import CardContractor from './components/cardContractor/CardContractor'
 import ContractorAsideInfos from './components/contractorAsideInfos/ContractorAsideInfos'
@@ -23,7 +24,7 @@ const INITIAL_VISIBILITY_WORKED_INFOS = {
 export default function Contractor() {
   const { id } = useParams()
   console.log(id)
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const { closeModal, isModalOpen } = useModal()
   const [filterCompany, setFilterCompany] = useState('')
   const [monthName, setMonthName] = useState('')
   const [visibilityWorkedInfos, setVisibilityWorkedInfos] = useState(
@@ -83,7 +84,7 @@ export default function Contractor() {
         </div>
       </Header>
       <main className="flex flex-col">
-        <CardContractor setIsModalOpen={() => setIsModalOpen(true)} />
+        <CardContractor setIsModalOpen={() => closeModal()} />
         <div className="tableContainer flex gap-4 w-[75%] max-h-[80vh] overflow-auto">
           <table className="table">
             <thead className="tableHead">
@@ -128,7 +129,7 @@ export default function Contractor() {
       </main>
       <NewContractorModal
         isModalOpen={isModalOpen}
-        closeModal={() => setIsModalOpen(false)}
+        closeModal={() => closeModal()}
       />
     </div>
   )

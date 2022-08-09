@@ -16,14 +16,16 @@ export default function MainPage() {
     .map((item) => item.payments)
     .flat()
 
-  function quinzena(period: string) {
+  function forthnight(period: string) {
     return Number(
       outlay
         .filter((item) => item.period === period)
         .reduce((acc, curr) => acc + Number(curr.value), 0),
     )
   }
-  const total = (quinzena('quinzena1') + quinzena('quinzena2')).toFixed(2)
+  const total = (forthnight('forthnight1') + forthnight('forthnight2')).toFixed(
+    2,
+  )
 
   function tableFilters(item: { name: string; month: string }) {
     const filterByContractor = item.name
@@ -106,10 +108,12 @@ export default function MainPage() {
           </h1>
           <article className="flex flex-col gap-8 fixed right-2 mt-8">
             <div className="bg-gray-50 shadow-md flex items-center gap-2 flex-col rounded h-20 w-[18vw] py-2">
-              Quinzena 1<strong className="">$ {quinzena('quinzena1')}</strong>
+              Forthnight 1
+              <strong className="">$ {forthnight('forthnight1')}</strong>
             </div>
             <div className="bg-gray-50 shadow-md flex items-center gap-2 flex-col rounded h-20 w-[18vw] py-2">
-              Quinzena 2<strong className="">$ {quinzena('quinzena2')}</strong>
+              Forthnight 2
+              <strong className="">$ {forthnight('forthnight2')}</strong>
             </div>
             <div className="bg-gray-50 shadow-md flex items-center gap-2 flex-col rounded h-20 w-[18vw] py-2">
               Total month

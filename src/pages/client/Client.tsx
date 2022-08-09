@@ -2,13 +2,14 @@ import { Circle, PlusCircle } from 'phosphor-react'
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Header from '../../components/header/Header'
-import NewCompanyModal from '../../components/modal/NewCompanyModal'
+import NewCompanyModal from '../../components/modals/NewCompanyModal'
+import useModal from '../../hooks/useModal'
 import { bodyTable, headerTable } from './constants'
 
 export default function Client() {
   const { name } = useParams()
   const [filterClient, setFilterClient] = useState(name ?? '')
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const { closeModal, isModalOpen } = useModal()
   function tableFilters(item: { name: string }) {
     return item.name.toUpperCase().includes(filterClient.toUpperCase())
   }
@@ -34,7 +35,7 @@ export default function Client() {
               ))}
               <th scope="col" className="tableLine">
                 <button
-                  onClick={() => setIsModalOpen(true)}
+                  onClick={() => closeModal()}
                   className="text-brand relative left-10"
                   title="Add company"
                   type="button"
@@ -76,7 +77,7 @@ export default function Client() {
       </div>
       <NewCompanyModal
         isModalOpen={isModalOpen}
-        closeModal={() => setIsModalOpen(false)}
+        closeModal={() => closeModal()}
       />
     </div>
   )
