@@ -1,5 +1,6 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
+import { clients, contractors } from '../../pages/registration/constants'
 import { ModalProps } from '../../types/modal'
 import './modal.css'
 
@@ -43,53 +44,39 @@ export default function NewRegistration({
                     as="h3"
                     className="text-xl text-center py-4 font-medium leading-6 text-gray-900"
                   >
-                    Edit Contractor
+                    New Job
                   </Dialog.Title>
                   <div className="mt-2 flex flex-col gap-4 items-center justify-center">
-                    <label className="flex flex-col gap-4 items-center">
-                      <img
-                        className="h-20 w-20 rounded-md"
-                        src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-                        alt="profile "
-                      />
-                      <input
-                        accept="image/*"
-                        type="file"
-                        className="block w-full text-sm text-slate-500 file:mr-4 file:py-1 file:px-2 file:rounded-full
-                        file:text-sm file:font-semibold file:bg-white file:border file:text-brand hover:file:bg-brand hover:file:text-white transition-colors duration-300 hover:file:border-transparent"
-                      />
-                    </label>
-                    <select className="outline-green-500 bg-slate-50 border border-zinc-400 rounded p-1">
-                      <option>Active</option>
-                      <option>Inactive</option>
-                    </select>
+                    <label className="flex flex-col gap-4 items-center"></label>
                     <label className="labelsDefault">
-                      Name:
+                      Contractor:
                       <input
                         className="inputsDefault"
+                        list="contractors"
                         type="text"
-                        value="Bruno alves"
                       />
                     </label>
+                    <datalist id="contractors">
+                      {contractors.map((contractor, index) => (
+                        <option key={index} value={contractor} />
+                      ))}
+                    </datalist>
                     <label className="labelsDefault">
-                      Email:
+                      Client:
                       <input
+                        list="clients"
                         className="inputsDefault"
                         type="text"
-                        value="brunofay1@hotmail.com"
                       />
                     </label>
+                    <datalist id="clients">
+                      {clients.map((client, index) => (
+                        <option key={index} value={client} />
+                      ))}
+                    </datalist>
                     <label className="labelsDefault">
-                      Phone:
-                      <input
-                        className="inputsDefault"
-                        type="text"
-                        name="phone"
-                        inputMode="numeric"
-                        pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}"
-                        maxLength={11}
-                        value="51985473129"
-                      />
+                      P/Hour:
+                      <input className="inputsDefault" type="number" />
                     </label>
                   </div>
                   <div className="pt-7 text-sm flex flex-col items-center gap-5">
@@ -98,7 +85,7 @@ export default function NewRegistration({
                       className="submitModalButton"
                       onClick={closeModal}
                     >
-                      Save
+                      Create
                     </button>
                   </div>
                 </Dialog.Panel>

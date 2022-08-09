@@ -1,4 +1,5 @@
 import React from 'react'
+import useFormate from '../../../../hooks/useFormate'
 import { articleInfos } from '../../constants'
 import { VisibilityWorkedInfos } from '../../Contractor'
 
@@ -15,8 +16,9 @@ export default function ContractorAsideInfos({
   handleVisibilityWorkedInfos,
   visibilityWorkedInfos,
 }: ContractorAsideInfosProps) {
+  const { formatMoney } = useFormate()
   function contractorPayment(payment: string, multiplier: number = 1) {
-    return (Number(payment) * multiplier).toFixed(2)
+    return formatMoney(Number(payment) * multiplier)
   }
 
   function contractorWorkedHours(hours: string, multiplier: number = 1) {

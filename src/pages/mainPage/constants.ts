@@ -1,6 +1,6 @@
 export const headerTable = [
   'status',
-  'name',
+  'Contractor',
   'forthnight 1',
   'Pay Type',
   ' forthnight 2',

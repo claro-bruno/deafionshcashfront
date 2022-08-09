@@ -23,7 +23,7 @@ export default function DayInputsTableLine({
 
   return (
     <td className="flex items-center justify-center">
-      <p className="flex justify-center relative top-1 gap-1">
+      <p className="flex justify-center gap-1">
         {fortnightDays.map((day: any) => (
           <input
             key={day.dayNum}
@@ -40,10 +40,17 @@ export default function DayInputsTableLine({
       </p>
       <button
         onClick={() => console.log(contractorWorkedInfos)}
-        className="border bg-brand3 text-white rounded border-brand3 ring-2 ring-brand3 hover:border-white focus:border-white py-[0.12rem] px-3 absolute mt-5 right-[3.7%] "
+        className="border bg-brand3 text-white rounded border-brand3 ring-2 ring-brand3 hover:border-white focus:border-white py-[0.12rem] px-2 absolute  right-[5.7%] "
         type="button"
       >
         Save
+      </button>
+      <button
+        onClick={() => console.log(contractorWorkedInfos)}
+        className="border bg-brand2 text-white rounded border-brand2 ring-2 ring-brand2 hover:border-white focus:border-white py-[0.12rem] px-2 absolute right-[1.9%] "
+        type="button"
+      >
+        Edit
       </button>
     </td>
   )

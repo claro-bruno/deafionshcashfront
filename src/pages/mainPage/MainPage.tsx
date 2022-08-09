@@ -44,6 +44,7 @@ export default function MainPage() {
           <YearFilter setYearName={setYearName} />
           <MonthFilter setMonthName={setMonthName} />
           <input
+            placeholder="Ex: John"
             onChange={(e) => setFilterContractor(e.target.value)}
             className="inputsDefault mt-[0.2rem] "
             value={filterContractor}
@@ -51,12 +52,12 @@ export default function MainPage() {
           />
         </div>
       </Header>
-      <div className="mx-auto flex gap-2 py-1 items-center font-extrabold text-2xl">
+      <div className="mx-auto flex gap-2 py-1 items-center font-extrabold text-xl">
         <div> {yearName}</div>
         <div> {monthName}</div>
       </div>
       <main className="min-h-screen flex  bg-gray-100 ">
-        <div className="w-[80%]">
+        <div className="w-full">
           <div className="tableContainer overflow-auto mt-8 ml-3">
             <table className="table">
               <thead className="tableHead">
@@ -111,7 +112,7 @@ export default function MainPage() {
           </div>
         </div>
         <div className="flex flex-col items-center ">
-          <h1 className="text-2xl w-[20vw] text-center  font-bold text-zinc-700">
+          <h1 className="text-2xl w-[15vw] relative right-7 text-center  font-bold text-zinc-700">
             Outlay
           </h1>
           <article className="flex flex-col gap-8 fixed right-2 mt-8">

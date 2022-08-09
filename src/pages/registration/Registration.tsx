@@ -68,6 +68,7 @@ export default function Registration() {
           <YearFilter setYearName={setYearName} />
           <MonthFilter setMonthName={setMonthName} />
           <input
+            placeholder="Ex: John"
             onChange={(e) => setFilterContractor(e.target.value)}
             className="inputsDefault mt-[0.2rem] "
             value={filterContractor}
@@ -77,19 +78,19 @@ export default function Registration() {
       </Header>
       <div>
         <div className="tableContainer items-center flex flex-col overflow-auto ">
-          <span className="relative h-10 flex gap-2 my-1 items-center font-extrabold text-2xl self-center">
+          <span className="relative h-10 flex gap-2 my-1 items-center font-extrabold text-xl self-center">
             {`${yearName} ${monthName}`}
             <select
               onChange={(e) => formatFortnightDays(e.target.value)}
-              className="rounded text-lg border border-brand3"
+              className="rounded py-1 bg-transparent px-2 outline-brand3 text-sm border border-brand3"
             >
               <option value="1">Forthnight 1</option>
               <option value="2">Forthnight 2</option>
             </select>
-            <button className="w-10 relative  left-[29rem] ring-2 border-transparent hover:border-white focus:border-white ring-brand2 border bg-brand2 flex justify-center py-1 px-2 rounded">
-              <Plus size={20} color={'white'} />
-            </button>
           </span>
+          <button className="w-10 absolute left-[93%] mt-2 ring-2 border-transparent hover:border-white focus:border-white ring-brand2 border bg-brand2 flex justify-center py-1 px-2 rounded">
+            <Plus size={20} color={'white'} />
+          </button>
           <table className="table">
             <thead className="tableHead  ">
               <tr className="">
@@ -134,17 +135,11 @@ export default function Registration() {
                         fortnightDays={fortnightDays}
                       />
                       <td className="tableLine">{contractor.hours}</td>
-                      <td className="tableLine">
-                        <input
-                          name="phour"
-                          className="w-[1.5rem] relative right-5 outline-none ring-1 ring-transparent focus:ring-brand text-center h-10 border text-sm"
-                          value={contractor.pHour}
-                          type="number"
-                        />
-                        $
+                      <td className="tableLine relative right-5">
+                        $ {contractor.pHour}
                       </td>
-                      <td className="tableLine">
-                        {Number(contractor.pHour) * Number(contractor.hours)}
+                      <td className="tableLine relative right-4">
+                        $ {Number(contractor.pHour) * Number(contractor.hours)}
                       </td>
                       <td className=" tableLine">{''} </td>
                     </tr>

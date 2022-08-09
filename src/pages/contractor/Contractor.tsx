@@ -85,7 +85,7 @@ export default function Contractor() {
       </Header>
       <main className="flex flex-col">
         <CardContractor setIsModalOpen={() => closeModal()} />
-        <div className="tableContainer flex gap-4 w-[75%] max-h-[80vh] overflow-auto">
+        <div className="tableContainer relative left-2 flex gap-4 w-[75%] max-h-[80vh] overflow-auto">
           <table className="table">
             <thead className="tableHead">
               <tr>
@@ -110,7 +110,7 @@ export default function Contractor() {
                         </Link>
                       </td>
                       <td className="tableLine ">{item.workedHours} h</td>
-                      <td className="tableLine">${item.hourlyPay}</td>
+                      <td className="tableLine">$ {item.hourlyPay}</td>
                     </tr>
                   )
                 } else {

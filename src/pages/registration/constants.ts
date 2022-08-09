@@ -1,5 +1,5 @@
 export const headerTable = [
-  'name',
+  'Contractor',
   'client',
   'Month',
   ' total hours',
@@ -20,6 +20,9 @@ export const months = [
   'November',
   'December',
 ]
+
+export const clients = ['Multilaser', 'Big', 'Apple', 'Amazon', 'Google']
+export const contractors = ['John', 'Paul', 'George', 'Ringo']
 export const INITIAL_STATE_31_DAYS_OBJ = {
   '1': 0,
   '2': 0,
