@@ -34,7 +34,7 @@ export default function ContractorAsideInfos({
               quinzena1: !visibilityWorkedInfos.quinzena1,
             })
           }
-          className="px-2 contractorBtns hover:ring-brand3 bg-brand3"
+          className="px-2 contractorBtns buttonStyle1"
         >
           fortnight 1{' '}
         </button>
@@ -44,7 +44,7 @@ export default function ContractorAsideInfos({
               quinzena2: !visibilityWorkedInfos.quinzena2,
             })
           }
-          className="px-2 contractorBtns hover:ring-brand3 bg-brand3"
+          className="px-2 contractorBtns buttonStyle1"
         >
           fortnight 2
         </button>
@@ -53,7 +53,7 @@ export default function ContractorAsideInfos({
           onClick={() =>
             handleVisibilityWorkedInfos({ total: !visibilityWorkedInfos.total })
           }
-          className="px-2 contractorBtns disabled:opacity-50 disabled:hover:ring-transparent disabled:hover:border-transparent disabled:cursor-not-allowed hover:ring-brand3 bg-brand3"
+          className="px-2 contractorBtns buttonStyle1"
         >
           Total month
         </button>

@@ -119,7 +119,7 @@ export default function NewCompanyModal({
                       <button
                         disabled={!isChecked}
                         type="submit"
-                        className="submitModalButton"
+                        className="buttonStyle1 px-3"
                         onClick={closeModal}
                       >
                         Create

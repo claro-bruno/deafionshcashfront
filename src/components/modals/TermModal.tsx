@@ -80,7 +80,7 @@ export default function TermModal({
                     <button
                       disabled={!isChecked}
                       type="button"
-                      className="bg-brand disabled:opacity-50 ring border ring-transparent hover:ring-brand text-white text-sm font-bold py-2 px-4 rounded-lg"
+                      className="buttonStyle1 text-sm px-4"
                       onClick={handleClose}
                     >
                       Send

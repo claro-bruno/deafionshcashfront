@@ -40,7 +40,7 @@ export default function CardContractor({
       <button
         type="button"
         onClick={setIsModalOpen}
-        className="px-4 contractorBtns  hover:ring-brand2 bg-brand2 transition-colors"
+        className="px-4 contractorBtns  buttonStyle2"
       >
         Edit
       </button>

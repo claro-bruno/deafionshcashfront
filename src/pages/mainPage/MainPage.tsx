@@ -40,7 +40,7 @@ export default function MainPage() {
   return (
     <div className="flex flex-col">
       <Header>
-        <div className="relative left-20 mx-auto flex items-center gap-2">
+        <div className="relative left-24 mx-auto flex items-center gap-2">
           <YearFilter setYearName={setYearName} />
           <MonthFilter setMonthName={setMonthName} />
           <input

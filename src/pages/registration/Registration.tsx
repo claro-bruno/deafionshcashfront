@@ -64,7 +64,7 @@ export default function Registration() {
   return (
     <div>
       <Header>
-        <div className="relative z-10 left-20 mx-auto flex items-center gap-2">
+        <div className="relative z-10 left-24 mx-auto flex items-center gap-2">
           <YearFilter setYearName={setYearName} />
           <MonthFilter setMonthName={setMonthName} />
           <input
@@ -91,7 +91,7 @@ export default function Registration() {
           <button
             type="button"
             onClick={closeModal}
-            className="w-10 absolute left-[93%] mt-2 ring-2 border-transparent hover:border-white focus:border-white ring-brand3 border bg-brand3 flex justify-center py-1 px-2 rounded"
+            className="w-10 absolute left-[93%] mt-2  flex justify-center  px-2 buttonStyle1"
           >
             <Plus size={20} color={'white'} />
           </button>

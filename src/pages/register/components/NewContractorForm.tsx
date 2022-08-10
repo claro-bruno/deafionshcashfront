@@ -1,3 +1,4 @@
+import { Asterisk } from 'phosphor-react'
 import { useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 import useFormate from '../../../hooks/useFormate'
@@ -37,6 +38,7 @@ export default function NewContractorForm() {
             <label className="labelsDefault">
               First name
               <input
+                placeholder="Ex: John  "
                 className="inputsDefault"
                 type="text"
                 {...register('firstName')}
@@ -46,6 +48,7 @@ export default function NewContractorForm() {
             <label className="labelsDefault">
               Email
               <input
+                placeholder=" example@exemple.com  "
                 className="inputsDefault"
                 type="email"
                 {...register('email')}
@@ -67,7 +70,11 @@ export default function NewContractorForm() {
               />
             </label>
             <label className="labelsDefault ">
-              * Photo
+              <div className="flex items-start">
+                Photo
+                <Asterisk size={10} />
+              </div>
+
               <input
                 accept="image/*"
                 type="file"
@@ -77,10 +84,14 @@ export default function NewContractorForm() {
           </div>
           <div className="flex flex-col gap-2">
             <label className="labelsDefault">
-              * Middle name
+              <div className="flex items-start">
+                Middle name
+                <Asterisk size={10} />
+              </div>
+
               <input
                 {...register('middleName')}
-                name="middleName"
+                placeholder="Ex: Doe  "
                 className="inputsDefault"
                 type="text"
               />
@@ -98,7 +109,10 @@ export default function NewContractorForm() {
               />
             </label>
             <label className="labelsDefault">
-              * EIN
+              <div className="flex items-start">
+                EIN
+                <Asterisk size={10} />
+              </div>
               <input
                 {...register('ein')}
                 title="Employer Identification Number (EIN)"
@@ -117,6 +131,7 @@ export default function NewContractorForm() {
               <input
                 {...register('lastName')}
                 type="text"
+                placeholder="Ex: Smith  "
                 className="inputsDefault"
                 required
               />
@@ -134,7 +149,10 @@ export default function NewContractorForm() {
             </label>
 
             <label className="labelsDefault ">
-              * Document Photo
+              <div className="flex items-start">
+                Document Photo
+                <Asterisk size={10} />
+              </div>
               <input
                 {...register('documentPhoto')}
                 accept="image/*"
@@ -142,6 +160,9 @@ export default function NewContractorForm() {
                 className=" file:py-[0.35rem]  fileInput"
               />
             </label>
+            <span className="relative top-14 left-14 text-sm text-zinc-500">
+              * optional (must be sent in the future)
+            </span>
           </div>
         </div>
         <div className="flex w-full py-4 border-t-2 border-gray-400 justify-center">

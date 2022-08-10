@@ -1,3 +1,4 @@
+import { Asterisk } from 'phosphor-react'
 import { useFormContext } from 'react-hook-form'
 import useFormate from '../../../../hooks/useFormate'
 
@@ -77,7 +78,11 @@ export default function AddressComponent({
           />
         </label>
         <label className="labelsDefault ">
-          * Residency proof
+          <div className="flex items-start">
+            Residency proof
+            <Asterisk size={10} />
+          </div>
+
           <input
             {...register(
               secondaryAddress

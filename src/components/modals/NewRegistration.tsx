@@ -111,7 +111,7 @@ export default function NewRegistration({
                   <div className="pt-7 text-sm flex flex-col items-center gap-5">
                     <button
                       type="button"
-                      className="submitModalButton"
+                      className="buttonStyle1 px-3"
                       onClick={handleSubmit(handleCreateNewJob)}
                     >
                       Create

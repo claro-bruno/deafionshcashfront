@@ -24,6 +24,9 @@ export default function Header(props: PropsWithChildren) {
               <NavLink to="/clients" className="headerLink">
                 Clients
               </NavLink>
+              <NavLink to="/payments" className="headerLink">
+                payments
+              </NavLink>
               <NavLink to="/registration" className="headerLink">
                 Registration
               </NavLink>
