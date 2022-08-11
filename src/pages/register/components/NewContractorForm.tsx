@@ -1,5 +1,7 @@
+import { useMutation } from '@tanstack/react-query'
+import axios from 'axios'
 import { Asterisk } from 'phosphor-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 import useFormate from '../../../hooks/useFormate'
 import AddressComponent from './addressRegister/AddressComponent'
@@ -8,7 +10,17 @@ export default function NewContractorForm() {
   const [addressNum, setAddressNum] = useState('1')
   const { formatEIN, formatPhone, formatSsnOrItin } = useFormate()
   const { register, handleSubmit, watch } = useFormContext()
+  const mutation = useMutation<{ name: string; job: string }>((data) =>
+    axios.post('https://reqres.in/api/users', data),
+  )
+  useEffect(() => {
+    mutation.mutate({
+      name: 'morpheus',
+      job: 'leader',
+    })
+  }, [])
 
+  console.log(mutation.data)
   function setNumberOfAddresses(addressNum: string) {
     return Number(addressNum) === 1 ? (
       <AddressComponent secondaryAddress={false} />

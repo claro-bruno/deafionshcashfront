@@ -47,7 +47,7 @@ export default function DayInputsTableLine({
       </button>
       <button
         onClick={() => console.log(contractorWorkedInfos)}
-        className="buttonStyle2 text-xs py-[0.09rem] px-2 absolute right-[1.9%] "
+        className="buttonStyle2 text-xs py-[0.09rem] px-2 absolute right-[2.5%] "
         type="button"
       >
         Edit
