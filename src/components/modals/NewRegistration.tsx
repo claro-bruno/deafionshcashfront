@@ -9,7 +9,18 @@ import {
 import { ModalProps } from '../../types/modal'
 import './modal.css'
 
+const WEEKDAYS = [
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+  'Sunday',
+]
+
 type NewRegistrationProps = ModalProps & { users: any[] }
+
 export default function NewRegistration({
   isModalOpen,
   closeModal,
@@ -107,6 +118,22 @@ export default function NewRegistration({
                         type="number"
                       />
                     </label>
+                  </div>
+                  <div className="text-zinc-800 gap-1 flex flex-col">
+                    Working Days:
+                    {WEEKDAYS.map((day, index) => (
+                      <label
+                        key={index}
+                        className="flex gap-1 text-sm items-center"
+                      >
+                        <input
+                          className=""
+                          placeholder="Ex: Amazon"
+                          type="checkbox"
+                        />
+                        {day}
+                      </label>
+                    ))}
                   </div>
                   <div className="pt-7 text-sm flex flex-col items-center gap-5">
                     <button

@@ -18,6 +18,7 @@ export default function Registration() {
   const [yearName, setYearName] = useState('2022')
   const [filterContractor, setFilterContractor] = useState('')
   const { closeModal, isModalOpen } = useModal()
+  const [currentInputValue, setCurrentInputValue] = useState('')
 
   function tableFilters(item: { contractor: string; month: string }) {
     const filterByContractor = item.contractor
@@ -136,6 +137,8 @@ export default function Registration() {
                       <td className="">{contractor.client}</td>
 
                       <DayInputsTableLine
+                        currentInputValue={currentInputValue}
+                        setCurrentInputValue={setCurrentInputValue}
                         contractor={contractor}
                         fortnightDays={fortnightDays}
                       />

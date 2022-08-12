@@ -1,4 +1,4 @@
-import { Circle } from 'phosphor-react'
+import { Circle, GearSix } from 'phosphor-react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Header from '../../components/header/Header'
@@ -68,6 +68,9 @@ export default function MainPage() {
                       {item}
                     </th>
                   ))}
+                  <th scope="col" className="tableLine">
+                    <GearSix className="relative left-3" size={24} />
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -90,7 +93,14 @@ export default function MainPage() {
                             <td className="tableLine">
                               $ {formatMoney(Number(payment.value))}
                             </td>
-                            <td className="tableLine">{payment.type}</td>
+                            <td className="tableLine">
+                              <input
+                                title="nome do pagamento completo"
+                                placeholder={payment.type}
+                                type="text"
+                                className="border rounded w-[4rem] px-2 py-1 outline-brand"
+                              />
+                            </td>
                           </>
                         ))}
                         <td className="tableLine">
@@ -101,6 +111,15 @@ export default function MainPage() {
                               0,
                             ),
                           )}
+                        </td>
+                        <td className="tableLine">
+                          <button
+                            onClick={() => console.log('save')}
+                            className="buttonStyle1 text-xs py-[0.09rem] px-2  "
+                            type="button"
+                          >
+                            Save
+                          </button>
                         </td>
                       </tr>
                     )

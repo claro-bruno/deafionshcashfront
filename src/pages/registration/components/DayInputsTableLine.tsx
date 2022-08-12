@@ -4,21 +4,39 @@ import { DaysObj } from '../Registration'
 export default function DayInputsTableLine({
   fortnightDays,
   contractor,
+  currentInputValue,
+  setCurrentInputValue,
 }: {
   fortnightDays: DaysObj[]
   contractor: any
+  currentInputValue: string
+  setCurrentInputValue: (value: string) => void
 }) {
   const [contractorWorkedInfos, setContractorWorkedInfos] = useState({
     ...contractor,
   })
+
   function handleChange(e: any) {
     const { name, value } = e.target
     /*   contractor.workedDays[name] = value */
     /* como alterar com mutabilidade */
+    setCurrentInputValue(value)
+
     setContractorWorkedInfos((state: any) => ({
       ...state,
       workedDays: { ...state.workedDays, [name]: value },
     }))
+  }
+  function handleKeyPress(e: any) {
+    const { name } = e.target
+
+    const isKeyTab = e.key === 'Tab'
+    if (isKeyTab) {
+      setContractorWorkedInfos((state: any) => ({
+        ...state,
+        workedDays: { ...state.workedDays, [name]: currentInputValue },
+      }))
+    }
   }
 
   return (
@@ -30,6 +48,7 @@ export default function DayInputsTableLine({
             name={day.dayNum.toString()}
             value={contractorWorkedInfos.workedDays[day.dayNum]}
             onChange={(e) => handleChange(e)}
+            onKeyUp={handleKeyPress}
             type="number"
             max={3}
             className={`${

@@ -13,7 +13,7 @@ const WEEKDAYS = [
   'Sunday',
 ]
 
-export default function NewCompanyModal({
+export default function NewClientModal({
   isModalOpen,
   closeModal,
 }: ModalProps) {

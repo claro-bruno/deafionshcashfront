@@ -2,7 +2,7 @@ import { Circle, PlusCircle } from 'phosphor-react'
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Header from '../../components/header/Header'
-import NewCompanyModal from '../../components/modals/NewCompanyModal'
+import NewCompanyModal from '../../components/modals/NewClientModal'
 import useModal from '../../hooks/useModal'
 import { bodyTable, headerTable } from './constants'
 
