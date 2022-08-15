@@ -32,7 +32,7 @@ export default function NewContractorForm() {
     )
   }
   function handleSubmitNewContractor(data: any) {
-    console.log(data)
+    console.log(JSON.stringify(data, null, 2))
   }
   const ssnOrItin = watch('ssnOrItin')
   const phone = watch('phone')
