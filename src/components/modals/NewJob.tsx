@@ -1,7 +1,11 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { clients, contractors } from '../../pages/job/constants'
+import {
+  clients,
+  contractors,
+  createObjectDaysByMonth,
+} from '../../pages/job/constants'
 import { ModalProps } from '../../types/modal'
 import './modal.css'
 
@@ -16,6 +20,7 @@ const WEEKDAYS = [
 ]
 
 type NewJobProps = ModalProps & { users: any[] }
+
 export default function NewJob({
   isModalOpen,
   closeModal,
@@ -27,14 +32,36 @@ export default function NewJob({
       client: '',
       pHour: '',
       hours: '0',
+      year: '2022',
       month: 'January',
+      workedDaysInfos: {},
     },
   })
+
   const { register, handleSubmit } = newJob
+  const [hoursWorked, setHoursWorked] = useState(0)
+  const [daysWorked, setDaysWorked] = useState<string[]>([])
+
   function handleCreateNewJob(data: any) {
-    console.log(data)
-    users.push(data)
+    const formatedNewJob = {
+      ...data,
+      workedDaysInfos: createObjectDaysByMonth(data.month, data.year, {
+        hours: hoursWorked,
+        days: daysWorked,
+      }),
+    }
+    console.log(formatedNewJob)
+    /* users.push(data) */
     closeModal()
+  }
+  function addNewWorkedDay(e: any) {
+    const isChecked = e.target.checked
+    const day = e.target.value
+    if (isChecked) {
+      setDaysWorked((state) => [...state, day])
+    } else {
+      setDaysWorked((state) => state.filter((d) => d !== day))
+    }
   }
   return (
     <>
@@ -115,7 +142,7 @@ export default function NewJob({
                     <label className="labelsDefault">
                       Hours:
                       <input
-                        {...register('pHour')}
+                        onChange={(e) => setHoursWorked(Number(e.target.value))}
                         className="inputsDefault"
                         type="number"
                       />
@@ -129,8 +156,8 @@ export default function NewJob({
                             className="flex gap-1 text-sm items-center"
                           >
                             <input
-                              className=""
-                              placeholder="Ex: Amazon"
+                              value={day}
+                              onChange={(e) => addNewWorkedDay(e)}
                               type="checkbox"
                             />
                             {day}

@@ -30,9 +30,11 @@ function formatDate(date: Date): string {
   const year = date.getFullYear()
   return `${day}/${month}/${year}`
 }
+
 export function createObjectDaysByMonth(
   month: string,
   year: number = new Date().getFullYear(),
+  options?: { days?: string[]; hours?: number },
 ) {
   const getMonthNumberByName = months.indexOf(month)
   const getNumberOfDaysInMonth = new Date(
@@ -42,6 +44,7 @@ export function createObjectDaysByMonth(
   ).getDate()
 
   const days = new Array(getNumberOfDaysInMonth).fill(0)
+
   const objectDays = days.reduce((acc, _, index) => {
     const day = index + 1
     const date = new Date(year, getMonthNumberByName, day)
@@ -49,9 +52,14 @@ export function createObjectDaysByMonth(
       year,
       getMonthNumberByName,
       day,
-    ).toLocaleDateString('en-US', { weekday: 'narrow' })
+    ).toLocaleDateString('en-US', { weekday: 'long' })
+
     const dateFormatted = formatDate(date)
-    acc[dateFormatted] = { weekDay: weekDayName, workedHours: 0 }
+    if (options?.days?.includes(weekDayName)) {
+      acc[dateFormatted] = { weekDay: weekDayName, workedHours: options?.hours }
+    } else {
+      acc[dateFormatted] = { weekDay: weekDayName, workedHours: 0 }
+    }
     return acc
   }, {})
   return objectDays
