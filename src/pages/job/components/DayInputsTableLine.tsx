@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { DaysObj } from '../Registration'
+import { DaysObj } from '../Job'
 
 export default function DayInputsTableLine({
   fortnightDays,
@@ -18,13 +18,16 @@ export default function DayInputsTableLine({
 
   function handleChange(e: any) {
     const { name, value } = e.target
-    /*   contractor.workedDays[name] = value */
-    /* como alterar com mutabilidade */
+    console.log(name, value)
+
     setCurrentInputValue(value)
 
     setContractorWorkedInfos((state: any) => ({
       ...state,
-      workedDays: { ...state.workedDays, [name]: value },
+      workedDaysInfos: {
+        ...state.workedDaysInfos,
+        [name]: { ...state.workedDaysInfos[name], workedHours: value },
+      },
     }))
   }
   function handleKeyPress(e: any) {
@@ -34,19 +37,44 @@ export default function DayInputsTableLine({
     if (isKeyTab) {
       setContractorWorkedInfos((state: any) => ({
         ...state,
-        workedDays: { ...state.workedDays, [name]: currentInputValue },
+        workedDaysInfos: {
+          ...state.workedDaysInfos,
+          [name]: {
+            ...state.workedDaysInfos[name],
+            workedHours: currentInputValue,
+          },
+        },
       }))
     }
   }
 
+  function getWorkedDayValue(day: any) {
+    const contractorArr = Object.entries(contractorWorkedInfos.workedDaysInfos)
+    const currentContractor = contractorArr.find(
+      (_, index) => index === day,
+    ) as any
+
+    if (currentContractor) {
+      return currentContractor[1].workedHours
+    }
+    return '9090'
+  }
+  function getWorkedDayName(day: any) {
+    const contractorArr = Object.entries(contractorWorkedInfos.workedDaysInfos)
+    const currentContractor = contractorArr.find(
+      (_, index) => index === day,
+    ) as any
+
+    return currentContractor[0]
+  }
   return (
     <td className="flex items-center justify-center">
       <p className="flex justify-center gap-1">
-        {fortnightDays.map((day: any) => (
+        {fortnightDays.map((day: any, index) => (
           <input
             key={day.dayNum}
-            name={day.dayNum.toString()}
-            value={contractorWorkedInfos.workedDays[day.dayNum]}
+            name={getWorkedDayName(index)}
+            value={getWorkedDayValue(index)}
             onChange={(e) => handleChange(e)}
             onKeyUp={handleKeyPress}
             type="number"

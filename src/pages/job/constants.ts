@@ -23,41 +23,41 @@ export const months = [
 
 export const clients = ['Multilaser', 'Big', 'Apple', 'Amazon', 'Google']
 export const contractors = ['John', 'Paul', 'George', 'Ringo']
-export const INITIAL_STATE_31_DAYS_OBJ = {
-  '1': 0,
-  '2': 0,
-  '3': 0,
-  '4': 0,
-  '5': 0,
-  '6': 0,
-  '7': 0,
-  '8': 0,
-  '9': 0,
-  '10': 0,
-  '11': 0,
-  '12': 0,
-  '13': 0,
-  '14': 0,
-  '15': 0,
-  '16': 0,
-  '17': 0,
-  '18': 0,
-  '19': 0,
-  '20': 0,
-  '21': 0,
-  '22': 0,
-  '23': 0,
-  '24': 0,
-  '25': 0,
-  '26': 0,
-  '27': 0,
-  '28': 0,
-  '29': 0,
-  '30': 0,
-  '31': 0,
+
+function formatDate(date: Date): string {
+  const day = date.getDate()
+  const month = date.getMonth() + 1
+  const year = date.getFullYear()
+  return `${day}/${month}/${year}`
+}
+export function createObjectDaysByMonth(
+  month: string,
+  year: number = new Date().getFullYear(),
+) {
+  const getMonthNumberByName = months.indexOf(month)
+  const getNumberOfDaysInMonth = new Date(
+    year,
+    getMonthNumberByName,
+    0,
+  ).getDate()
+
+  const days = new Array(getNumberOfDaysInMonth).fill(0)
+  const objectDays = days.reduce((acc, _, index) => {
+    const day = index + 1
+    const date = new Date(year, getMonthNumberByName, day)
+    const weekDayName = new Date(
+      year,
+      getMonthNumberByName,
+      day,
+    ).toLocaleDateString('en-US', { weekday: 'narrow' })
+    const dateFormatted = formatDate(date)
+    acc[dateFormatted] = { weekDay: weekDayName, workedHours: 0 }
+    return acc
+  }, {})
+  return objectDays
 }
 
-export const bodyTable = [
+export const jobs = [
   {
     id: 1,
     contractor: 'bruno fay',
@@ -66,7 +66,6 @@ export const bodyTable = [
     client: 'amazon',
     hours: '10',
     pHour: '20',
-    workedDays: INITIAL_STATE_31_DAYS_OBJ,
   },
   {
     id: 1,
@@ -76,7 +75,6 @@ export const bodyTable = [
     client: 'amazon',
     hours: '10',
     pHour: '20',
-    workedDays: INITIAL_STATE_31_DAYS_OBJ,
   },
   {
     id: 1,
@@ -86,7 +84,6 @@ export const bodyTable = [
     client: 'amazon',
     hours: '10',
     pHour: '20',
-    workedDays: INITIAL_STATE_31_DAYS_OBJ,
   },
   {
     id: 1,
@@ -96,7 +93,6 @@ export const bodyTable = [
     client: 'amazon',
     hours: '10',
     pHour: '20',
-    workedDays: INITIAL_STATE_31_DAYS_OBJ,
   },
   {
     id: 1,
@@ -106,6 +102,9 @@ export const bodyTable = [
     client: 'amazon',
     hours: '10',
     pHour: '20',
-    workedDays: INITIAL_STATE_31_DAYS_OBJ,
   },
 ]
+export const bodyTable = jobs.map((job) => ({
+  ...job,
+  workedDaysInfos: createObjectDaysByMonth(job.month, job.year),
+}))

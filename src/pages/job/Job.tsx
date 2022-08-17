@@ -3,7 +3,7 @@ import { useState } from 'react'
 import Header from '../../components/header/Header'
 import MonthFilter from '../../components/listboxes/MonthFilter'
 import YearFilter from '../../components/listboxes/YearFilter'
-import NewRegistration from '../../components/modals/NewRegistration'
+import NewJob from '../../components/modals/NewJob'
 import useModal from '../../hooks/useModal'
 import DayInputsTableLine from './components/DayInputsTableLine'
 import { bodyTable, headerTable, months } from './constants'
@@ -13,7 +13,7 @@ export interface DaysObj {
   weakDayName: string
 }
 
-export default function Registration() {
+export default function Job() {
   const [monthName, setMonthName] = useState('January')
   const [yearName, setYearName] = useState('2022')
   const [filterContractor, setFilterContractor] = useState('')
@@ -161,7 +161,7 @@ export default function Registration() {
           </table>
         </div>
       </div>
-      <NewRegistration
+      <NewJob
         users={bodyTable}
         closeModal={closeModal}
         isModalOpen={isModalOpen}

@@ -5,7 +5,7 @@ import Login from './pages/login/Login'
 import MainPage from './pages/mainPage/MainPage'
 import Register from './pages/register/Register'
 import Terms from './pages/register/Terms'
-import Registration from './pages/registration/Registration'
+import Job from './pages/job/Job'
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
         <Route path="terms" element={<Terms />} />
       </Route>
       <Route path="/main" element={<MainPage />} />
-      <Route path="/registration" element={<Registration />} />
+      <Route path="/jobs" element={<Job />} />
       <Route path="/clients" element={<Client />}>
         <Route path=":name" element={<Client />} />
       </Route>

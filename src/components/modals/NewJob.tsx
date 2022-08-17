@@ -1,11 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
 import { useForm } from 'react-hook-form'
-import {
-  clients,
-  contractors,
-  INITIAL_STATE_31_DAYS_OBJ,
-} from '../../pages/registration/constants'
+import { clients, contractors } from '../../pages/job/constants'
 import { ModalProps } from '../../types/modal'
 import './modal.css'
 
@@ -19,13 +15,12 @@ const WEEKDAYS = [
   'Sunday',
 ]
 
-type NewRegistrationProps = ModalProps & { users: any[] }
-
-export default function NewRegistration({
+type NewJobProps = ModalProps & { users: any[] }
+export default function NewJob({
   isModalOpen,
   closeModal,
   users,
-}: NewRegistrationProps) {
+}: NewJobProps) {
   const newJob = useForm({
     defaultValues: {
       contractor: '',
@@ -33,7 +28,6 @@ export default function NewRegistration({
       pHour: '',
       hours: '0',
       month: 'January',
-      workedDays: INITIAL_STATE_31_DAYS_OBJ,
     },
   })
   const { register, handleSubmit } = newJob
@@ -80,7 +74,7 @@ export default function NewRegistration({
                   >
                     New Job
                   </Dialog.Title>
-                  <div className="mt-2 flex flex-col gap-4 items-center justify-center">
+                  <div className=" flex flex-col gap-4 items-center justify-center">
                     <label className="flex flex-col gap-4 items-center"></label>
                     <label className="labelsDefault">
                       Contractor:
@@ -118,22 +112,32 @@ export default function NewRegistration({
                         type="number"
                       />
                     </label>
-                  </div>
-                  <div className="text-zinc-800 gap-1 flex flex-col">
-                    Working Days:
-                    {WEEKDAYS.map((day, index) => (
-                      <label
-                        key={index}
-                        className="flex gap-1 text-sm items-center"
-                      >
-                        <input
-                          className=""
-                          placeholder="Ex: Amazon"
-                          type="checkbox"
-                        />
-                        {day}
-                      </label>
-                    ))}
+                    <label className="labelsDefault">
+                      Hours:
+                      <input
+                        {...register('pHour')}
+                        className="inputsDefault"
+                        type="number"
+                      />
+                    </label>
+                    <label className=" w-[16rem] ml-6 self-center gap-1 flex flex-col labelsDefault">
+                      Working Days:
+                      <div className="flex flex-wrap gap-2">
+                        {WEEKDAYS.map((day, index) => (
+                          <label
+                            key={index}
+                            className="flex gap-1 text-sm items-center"
+                          >
+                            <input
+                              className=""
+                              placeholder="Ex: Amazon"
+                              type="checkbox"
+                            />
+                            {day}
+                          </label>
+                        ))}
+                      </div>
+                    </label>
                   </div>
                   <div className="pt-7 text-sm flex flex-col items-center gap-5">
                     <button
