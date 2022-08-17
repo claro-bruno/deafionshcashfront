@@ -34,7 +34,7 @@ function formatDate(date: Date): string {
 export function createObjectDaysByMonth(
   month: string,
   year: number = new Date().getFullYear(),
-  options?: { days?: string[]; hours?: number },
+  options?: { days?: string[]; hours?: string },
 ) {
   const getMonthNumberByName = months.indexOf(month)
   const getNumberOfDaysInMonth = new Date(
@@ -58,7 +58,7 @@ export function createObjectDaysByMonth(
     if (options?.days?.includes(weekDayName)) {
       acc[dateFormatted] = { weekDay: weekDayName, workedHours: options?.hours }
     } else {
-      acc[dateFormatted] = { weekDay: weekDayName, workedHours: 0 }
+      acc[dateFormatted] = { weekDay: weekDayName, workedHours: '' }
     }
     return acc
   }, {})
@@ -67,48 +67,48 @@ export function createObjectDaysByMonth(
 
 export const jobs = [
   {
-    id: 1,
+    id: 11,
     contractor: 'bruno fay',
     month: 'January',
     year: 2022,
     client: 'amazon',
-    hours: '10',
+    hours: '0',
     pHour: '20',
   },
   {
-    id: 1,
+    id: 12,
     contractor: 'james brown',
     month: 'February',
     year: 2022,
     client: 'amazon',
-    hours: '10',
+    hours: '0',
     pHour: '20',
   },
   {
-    id: 1,
+    id: 13,
     contractor: 'angela borges ',
     month: 'January',
     year: 2022,
     client: 'amazon',
-    hours: '10',
+    hours: '0',
     pHour: '20',
   },
   {
-    id: 1,
+    id: 14,
     contractor: 'john doe ',
     month: 'January',
     year: 2022,
     client: 'amazon',
-    hours: '10',
+    hours: '0',
     pHour: '20',
   },
   {
-    id: 1,
+    id: 15,
     contractor: 'bruno fay',
     month: 'February',
     year: 2022,
     client: 'amazon',
-    hours: '10',
+    hours: '0',
     pHour: '20',
   },
 ]

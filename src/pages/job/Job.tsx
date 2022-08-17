@@ -103,7 +103,7 @@ export default function Job() {
                   if (item === 'Month') {
                     return (
                       <th key={index} className="flex gap-1 justify-center">
-                        {fortnightDays.map((day, index) => (
+                        {fortnightDays.map((day) => (
                           <p
                             key={day.dayNum}
                             className=" w-[1.529rem] py-4 flex flex-col items-center "
@@ -130,7 +130,7 @@ export default function Job() {
               {bodyTable.map((contractor) => {
                 if (tableFilters(contractor)) {
                   return (
-                    <tr className="bg-white border-b ">
+                    <tr key={contractor.id} className="bg-white border-b ">
                       <td className="tableLine relative flex flex-wrap max-w-[9rem]">
                         {contractor.contractor}
                       </td>
@@ -162,9 +162,11 @@ export default function Job() {
         </div>
       </div>
       <NewJob
+        tableDate={{ monthName, yearName }}
         users={bodyTable}
         closeModal={closeModal}
         isModalOpen={isModalOpen}
+        setCurrentInputValue={setCurrentInputValue}
       />
     </div>
   )

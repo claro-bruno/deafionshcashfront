@@ -19,12 +19,18 @@ const WEEKDAYS = [
   'Sunday',
 ]
 
-type NewJobProps = ModalProps & { users: any[] }
+type NewJobProps = ModalProps & {
+  users: any[]
+  tableDate: { monthName: string; yearName: string }
+  setCurrentInputValue: (value: string) => void
+}
 
 export default function NewJob({
+  tableDate,
   isModalOpen,
   closeModal,
   users,
+  setCurrentInputValue,
 }: NewJobProps) {
   const newJob = useForm({
     defaultValues: {
@@ -32,29 +38,34 @@ export default function NewJob({
       client: '',
       pHour: '',
       hours: '0',
-      year: '2022',
-      month: 'January',
+      year: tableDate.yearName,
+      month: tableDate.monthName,
       workedDaysInfos: {},
     },
   })
 
-  const { register, handleSubmit } = newJob
-  const [hoursWorked, setHoursWorked] = useState(0)
+  const { register, handleSubmit, reset } = newJob
+  const [hoursWorked, setHoursWorked] = useState('0')
   const [daysWorked, setDaysWorked] = useState<string[]>([])
 
   function handleCreateNewJob(data: any) {
-    const formatedNewJob = {
+    const formattedNewJob = {
       ...data,
+      id: Math.random(),
+      month: tableDate.monthName,
+      year: Number(tableDate.yearName),
       workedDaysInfos: createObjectDaysByMonth(data.month, data.year, {
         hours: hoursWorked,
         days: daysWorked,
       }),
     }
-    console.log(formatedNewJob)
-    /* users.push(data) */
+    setCurrentInputValue(hoursWorked)
+    users.push(formattedNewJob)
+    reset()
+    setDaysWorked([])
     closeModal()
   }
-  function addNewWorkedDay(e: any) {
+  function handleCheckboxAddNewWorkedDay(e: any) {
     const isChecked = e.target.checked
     const day = e.target.value
     if (isChecked) {
@@ -142,7 +153,7 @@ export default function NewJob({
                     <label className="labelsDefault">
                       Hours:
                       <input
-                        onChange={(e) => setHoursWorked(Number(e.target.value))}
+                        onChange={(e) => setHoursWorked(e.target.value)}
                         className="inputsDefault"
                         type="number"
                       />
@@ -157,7 +168,7 @@ export default function NewJob({
                           >
                             <input
                               value={day}
-                              onChange={(e) => addNewWorkedDay(e)}
+                              onChange={(e) => handleCheckboxAddNewWorkedDay(e)}
                               type="checkbox"
                             />
                             {day}

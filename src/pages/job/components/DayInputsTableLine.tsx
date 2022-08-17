@@ -57,8 +57,8 @@ export default function DayInputsTableLine({
     if (currentContractor) {
       return currentContractor[1].workedHours
     }
-    return '9090'
   }
+
   function getWorkedDayName(day: any) {
     const contractorArr = Object.entries(contractorWorkedInfos.workedDaysInfos)
     const currentContractor = contractorArr.find(
@@ -73,6 +73,7 @@ export default function DayInputsTableLine({
         {fortnightDays.map((day: any, index) => (
           <input
             key={day.dayNum}
+            placeholder="0"
             name={getWorkedDayName(index)}
             value={getWorkedDayValue(index)}
             onChange={(e) => handleChange(e)}
