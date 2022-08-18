@@ -1,26 +1,22 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+import { jobsContext } from '../../../context/JobContextProvider'
 import { DaysObj } from '../Job'
 
 export default function DayInputsTableLine({
   fortnightDays,
   contractor,
-  currentInputValue,
-  setCurrentInputValue,
 }: {
   fortnightDays: DaysObj[]
   contractor: any
-  currentInputValue: string
-  setCurrentInputValue: (value: string) => void
 }) {
   const [contractorWorkedInfos, setContractorWorkedInfos] = useState({
     ...contractor,
   })
-
+  const { handleCurrentInputJobValue, currentInputJobValue, handleEditJob } =
+    useContext(jobsContext)
   function handleChange(e: any) {
     const { name, value } = e.target
-    console.log(name, value)
-
-    setCurrentInputValue(value)
+    handleCurrentInputJobValue(value)
 
     setContractorWorkedInfos((state: any) => ({
       ...state,
@@ -41,7 +37,7 @@ export default function DayInputsTableLine({
           ...state.workedDaysInfos,
           [name]: {
             ...state.workedDaysInfos[name],
-            workedHours: currentInputValue,
+            workedHours: currentInputJobValue,
           },
         },
       }))
@@ -66,6 +62,10 @@ export default function DayInputsTableLine({
     ) as any
 
     return currentContractor[0]
+  }
+  function handleEditContractor() {
+    handleEditJob(contractorWorkedInfos)
+    console.log(contractorWorkedInfos)
   }
   return (
     <td className="flex items-center justify-center">
@@ -94,7 +94,7 @@ export default function DayInputsTableLine({
         Save
       </button>
       <button
-        onClick={() => console.log(contractorWorkedInfos)}
+        onClick={handleEditContractor}
         className="buttonStyle2 text-xs py-[0.09rem] px-2 absolute right-[2.5%] "
         type="button"
       >

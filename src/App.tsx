@@ -6,6 +6,7 @@ import MainPage from './pages/mainPage/MainPage'
 import Register from './pages/register/Register'
 import Terms from './pages/register/Terms'
 import Job from './pages/job/Job'
+import JobContextProvider from './context/JobContextProvider'
 
 function App() {
   return (
@@ -17,7 +18,14 @@ function App() {
         <Route path="terms" element={<Terms />} />
       </Route>
       <Route path="/main" element={<MainPage />} />
-      <Route path="/jobs" element={<Job />} />
+      <Route
+        path="/jobs"
+        element={
+          <JobContextProvider>
+            <Job />
+          </JobContextProvider>
+        }
+      />
       <Route path="/clients" element={<Client />}>
         <Route path=":name" element={<Client />} />
       </Route>

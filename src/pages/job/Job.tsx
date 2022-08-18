@@ -1,10 +1,10 @@
 import { GearSix, Plus } from 'phosphor-react'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import Header from '../../components/header/Header'
 import MonthFilter from '../../components/listboxes/MonthFilter'
 import YearFilter from '../../components/listboxes/YearFilter'
 import NewJob from '../../components/modals/NewJob'
-import useModal from '../../hooks/useModal'
+import { jobsContext } from '../../context/JobContextProvider'
 import DayInputsTableLine from './components/DayInputsTableLine'
 import { bodyTable, headerTable, months } from './constants'
 
@@ -17,8 +17,7 @@ export default function Job() {
   const [monthName, setMonthName] = useState('January')
   const [yearName, setYearName] = useState('2022')
   const [filterContractor, setFilterContractor] = useState('')
-  const { closeModal, isModalOpen } = useModal()
-  const [currentInputValue, setCurrentInputValue] = useState('')
+  const { closeModal } = useContext(jobsContext)
 
   function tableFilters(item: { contractor: string; month: string }) {
     const filterByContractor = item.contractor
@@ -137,8 +136,6 @@ export default function Job() {
                       <td className="">{contractor.client}</td>
 
                       <DayInputsTableLine
-                        currentInputValue={currentInputValue}
-                        setCurrentInputValue={setCurrentInputValue}
                         contractor={contractor}
                         fortnightDays={fortnightDays}
                       />
@@ -161,13 +158,7 @@ export default function Job() {
           </table>
         </div>
       </div>
-      <NewJob
-        tableDate={{ monthName, yearName }}
-        users={bodyTable}
-        closeModal={closeModal}
-        isModalOpen={isModalOpen}
-        setCurrentInputValue={setCurrentInputValue}
-      />
+      <NewJob tableDate={{ monthName, yearName }} users={bodyTable} />
     </div>
   )
 }
