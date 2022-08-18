@@ -20,11 +20,11 @@ const WEEKDAYS = [
 ]
 
 type NewJobProps = {
-  users: any[]
   tableDate: { monthName: string; yearName: string }
 }
 
-export default function NewJob({ tableDate, users }: NewJobProps) {
+export default function NewJob({ tableDate }: NewJobProps) {
+  const { jobToEdit, users, handleSetUsers } = useContext(jobsContext)
   const newJob = useForm({
     defaultValues: {
       contractor: '',
@@ -40,12 +40,12 @@ export default function NewJob({ tableDate, users }: NewJobProps) {
   const { register, handleSubmit, reset } = newJob
   const [hoursWorked, setHoursWorked] = useState('0')
   const [daysWorked, setDaysWorked] = useState<string[]>([])
-  const { handleCurrentInputJobValue, closeModal, isModalOpen } =
+  const { handleCurrentInputJobValue, handleCloseModal, isModalOpen } =
     useContext(jobsContext)
+
   function handleCreateNewJob(data: any) {
     const formattedNewJob = {
       ...data,
-      id: Math.random(),
       month: tableDate.monthName,
       year: Number(tableDate.yearName),
       workedDaysInfos: createObjectDaysByMonth(data.month, data.year, {
@@ -54,13 +54,26 @@ export default function NewJob({ tableDate, users }: NewJobProps) {
       }),
     }
     handleCurrentInputJobValue(hoursWorked)
-    console.log(formattedNewJob)
 
-    users.push(formattedNewJob)
+    handleSetUsers([...users, formattedNewJob])
     reset()
     setDaysWorked([])
-    closeModal()
+    handleCloseModal()
   }
+  function handleEditJob(data: any) {
+    const formattedEditedJob = {
+      id: jobToEdit.id,
+      ...data,
+    }
+    handleCurrentInputJobValue(hoursWorked)
+    const usersFiltered = users.filter((user) => user.id !== jobToEdit.id)
+    const newUsers = [...usersFiltered, formattedEditedJob]
+    handleSetUsers(newUsers)
+    reset()
+    setDaysWorked([])
+    handleCloseModal()
+  }
+
   function handleCheckboxAddNewWorkedDay(e: any) {
     const isChecked = e.target.checked
     const day = e.target.value
@@ -73,13 +86,13 @@ export default function NewJob({ tableDate, users }: NewJobProps) {
   return (
     <>
       <Transition appear show={isModalOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeModal}>
+        <Dialog as="div" className="relative z-10" onClose={handleCloseModal}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
             enterFrom="opacity-0"
             enterTo="opacity-100"
-            leave="ease-in duration-200"
+            leave="ease-in duration-1"
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
@@ -93,7 +106,7 @@ export default function NewJob({ tableDate, users }: NewJobProps) {
                 enter="ease-out duration-300"
                 enterFrom="opacity-0 scale-95"
                 enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
+                leave="ease-in duration-1"
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
@@ -106,7 +119,7 @@ export default function NewJob({ tableDate, users }: NewJobProps) {
                     as="h3"
                     className="text-xl text-center py-4 font-medium leading-6 text-gray-900"
                   >
-                    New Job
+                    {jobToEdit.contractor ? 'Edit Job' : ' New Job'}
                   </Dialog.Title>
                   <div className=" flex flex-col gap-4 items-center justify-center">
                     <label className="flex flex-col gap-4 items-center"></label>
@@ -174,13 +187,23 @@ export default function NewJob({ tableDate, users }: NewJobProps) {
                     </label>
                   </div>
                   <div className="pt-7 text-sm flex flex-col items-center gap-5">
-                    <button
-                      type="button"
-                      className="buttonStyle1 px-3"
-                      onClick={handleSubmit(handleCreateNewJob)}
-                    >
-                      Create
-                    </button>
+                    {jobToEdit.id ? (
+                      <button
+                        type="button"
+                        className="buttonStyle1 px-3"
+                        onClick={handleSubmit(handleEditJob)}
+                      >
+                        Edit
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        className="buttonStyle1 px-3"
+                        onClick={handleSubmit(handleCreateNewJob)}
+                      >
+                        Create
+                      </button>
+                    )}
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

@@ -6,7 +6,7 @@ import YearFilter from '../../components/listboxes/YearFilter'
 import NewJob from '../../components/modals/NewJob'
 import { jobsContext } from '../../context/JobContextProvider'
 import DayInputsTableLine from './components/DayInputsTableLine'
-import { bodyTable, headerTable, months } from './constants'
+import { headerTable, months } from './constants'
 
 export interface DaysObj {
   dayNum: number
@@ -17,8 +17,7 @@ export default function Job() {
   const [monthName, setMonthName] = useState('January')
   const [yearName, setYearName] = useState('2022')
   const [filterContractor, setFilterContractor] = useState('')
-  const { closeModal } = useContext(jobsContext)
-
+  const { handleCloseModal, users } = useContext(jobsContext)
   function tableFilters(item: { contractor: string; month: string }) {
     const filterByContractor = item.contractor
       .toLowerCase()
@@ -90,7 +89,7 @@ export default function Job() {
           </span>
           <button
             type="button"
-            onClick={closeModal}
+            onClick={handleCloseModal}
             className="w-10 absolute left-[93%] mt-2  flex justify-center  px-2 buttonStyle1"
           >
             <Plus size={20} color={'white'} />
@@ -126,7 +125,7 @@ export default function Job() {
               </tr>
             </thead>
             <tbody>
-              {bodyTable.map((contractor) => {
+              {users.map((contractor) => {
                 if (tableFilters(contractor)) {
                   return (
                     <tr key={contractor.id} className="bg-white border-b ">
@@ -158,7 +157,7 @@ export default function Job() {
           </table>
         </div>
       </div>
-      <NewJob tableDate={{ monthName, yearName }} users={bodyTable} />
+      <NewJob tableDate={{ monthName, yearName }} />
     </div>
   )
 }

@@ -9,11 +9,14 @@ export default function DayInputsTableLine({
   fortnightDays: DaysObj[]
   contractor: any
 }) {
-  const [contractorWorkedInfos, setContractorWorkedInfos] = useState({
-    ...contractor,
-  })
-  const { handleCurrentInputJobValue, currentInputJobValue, handleEditJob } =
-    useContext(jobsContext)
+  const [contractorWorkedInfos, setContractorWorkedInfos] = useState(contractor)
+  const {
+    handleCurrentInputJobValue,
+    currentInputJobValue,
+    handleEditJob,
+    handleCloseModal,
+  } = useContext(jobsContext)
+
   function handleChange(e: any) {
     const { name, value } = e.target
     handleCurrentInputJobValue(value)
@@ -26,9 +29,9 @@ export default function DayInputsTableLine({
       },
     }))
   }
+
   function handleKeyPress(e: any) {
     const { name } = e.target
-
     const isKeyTab = e.key === 'Tab'
     if (isKeyTab) {
       setContractorWorkedInfos((state: any) => ({
@@ -63,10 +66,13 @@ export default function DayInputsTableLine({
 
     return currentContractor[0]
   }
+
   function handleEditContractor() {
     handleEditJob(contractorWorkedInfos)
     console.log(contractorWorkedInfos)
+    handleCloseModal()
   }
+
   return (
     <td className="flex items-center justify-center">
       <p className="flex justify-center gap-1">
