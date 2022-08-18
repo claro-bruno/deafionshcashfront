@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import Header from '../../components/header/Header'
-import MonthFilter from '../../components/listboxes/MonthFilter'
+import { monthsListbox } from '../../components/listboxes/constants'
+import SelectFilter from '../../components/listboxes/SelectFilter'
 import NewContractorModal from '../../components/modals/EditContractorModal'
 import useModal from '../../hooks/useModal'
 import { ContractorWorkedInfo } from '../../types/contractor'
@@ -73,7 +74,11 @@ export default function Contractor() {
     <div className="flex flex-col min-h-screen bg-gray-100">
       <Header>
         <div className="relative left-20 mx-auto flex items-center gap-2">
-          <MonthFilter setMonthName={setMonthName} />
+          <SelectFilter
+            setFilter={setMonthName}
+            selectOptions={monthsListbox}
+            listCSS="w-[8rem]"
+          />
           <input
             placeholder="Ex:amazon"
             onChange={(e) => setFilterCompany(e.target.value)}

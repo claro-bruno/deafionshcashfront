@@ -1,34 +1,23 @@
-import { Fragment, useEffect, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
-import { Check, ArrowsVertical } from 'phosphor-react'
+import { ArrowsVertical, Check } from 'phosphor-react'
+import { Fragment, useEffect, useState } from 'react'
 import './filters.css'
 
-const months = [
-  { name: 'January' },
-  { name: 'February' },
-  { name: 'March' },
-  { name: 'April' },
-  { name: 'May' },
-  { name: 'June' },
-  { name: 'July' },
-  { name: 'August' },
-  { name: 'September' },
-  { name: 'October' },
-  { name: 'November' },
-  { name: 'December' },
-]
-
-export default function MonthFilter({
-  setMonthName,
+export default function SelectFilter({
+  setFilter,
+  selectOptions,
+  listCSS,
 }: {
-  setMonthName: (monthName: string) => void
+  setFilter?: (optionName: string) => void
+  selectOptions: { name: string }[]
+  listCSS?: string
 }) {
-  const [selected, setSelected] = useState(months[0])
+  const [selected, setSelected] = useState(selectOptions[0])
   useEffect(() => {
-    setMonthName(selected.name)
+    setFilter && setFilter(selected.name)
   }, [selected])
   return (
-    <div className=" w-[8rem]">
+    <div className={listCSS ?? ' w-[5.5rem]'}>
       <Listbox value={selected} onChange={setSelected}>
         <div className="relative mt-1">
           <Listbox.Button className="group relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500  sm:text-sm ">
@@ -47,15 +36,15 @@ export default function MonthFilter({
             leaveTo="opacity-0"
           >
             <Listbox.Options className="ListboxOptions">
-              {months.map((person, personIdx) => (
+              {selectOptions.map((option, optionIdx) => (
                 <Listbox.Option
-                  key={personIdx}
+                  key={optionIdx}
                   className={({ active }) =>
                     `relative  cursor-default select-none py-2 pl-7 pr-1 ${
                       active ? 'bg-amber-100 text-brand' : 'text-gray-800'
                     }`
                   }
-                  value={person}
+                  value={option}
                 >
                   {({ selected }) => (
                     <>
@@ -64,7 +53,7 @@ export default function MonthFilter({
                           selected ? 'font-semibold' : 'font-normal'
                         }`}
                       >
-                        {person.name}
+                        {option.name}
                       </span>
                       {selected ? (
                         <span className="absolute inset-y-0 left-0 flex items-center pl-1 text-brand">

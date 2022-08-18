@@ -2,8 +2,11 @@ import { Circle, GearSix } from 'phosphor-react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Header from '../../components/header/Header'
-import MonthFilter from '../../components/listboxes/MonthFilter'
-import YearFilter from '../../components/listboxes/YearFilter'
+import {
+  monthsListbox,
+  yearsListBox,
+} from '../../components/listboxes/constants'
+import SelectFilter from '../../components/listboxes/SelectFilter'
 import useFormate from '../../hooks/useFormate'
 import { bodyTable, headerTable } from './constants'
 
@@ -41,8 +44,12 @@ export default function MainPage() {
     <div className="flex flex-col">
       <Header>
         <div className="relative left-24 mx-auto flex items-center gap-2">
-          <YearFilter setYearName={setYearName} />
-          <MonthFilter setMonthName={setMonthName} />
+          <SelectFilter setFilter={setYearName} selectOptions={yearsListBox} />
+          <SelectFilter
+            setFilter={setMonthName}
+            selectOptions={monthsListbox}
+            listCSS="w-[8rem]"
+          />
           <input
             placeholder="Ex: John"
             onChange={(e) => setFilterContractor(e.target.value)}

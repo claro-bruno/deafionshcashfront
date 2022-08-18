@@ -1,8 +1,12 @@
 import { GearSix, Plus } from 'phosphor-react'
 import { useContext, useState } from 'react'
 import Header from '../../components/header/Header'
-import MonthFilter from '../../components/listboxes/MonthFilter'
-import YearFilter from '../../components/listboxes/YearFilter'
+import {
+  fortnightListBox,
+  monthsListbox,
+  yearsListBox,
+} from '../../components/listboxes/constants'
+import SelectFilter from '../../components/listboxes/SelectFilter'
 import NewJob from '../../components/modals/NewJob'
 import { jobsContext } from '../../context/JobContextProvider'
 import DayInputsTableLine from './components/DayInputsTableLine'
@@ -52,20 +56,24 @@ export default function Job() {
   )
   function formatFortnightDays(period: string) {
     const fortnight =
-      period === '1'
+      period === 'Fortnight 1'
         ? addWeakDayName().splice(0, 15)
         : addWeakDayName().splice(15)
 
     setFortnightDays(fortnight)
   }
-  console.log('renderizei')
+  console.log('rendering')
 
   return (
     <div>
       <Header>
         <div className="relative z-10 left-24 mx-auto flex items-center gap-2">
-          <YearFilter setYearName={setYearName} />
-          <MonthFilter setMonthName={setMonthName} />
+          <SelectFilter setFilter={setYearName} selectOptions={yearsListBox} />
+          <SelectFilter
+            setFilter={setMonthName}
+            selectOptions={monthsListbox}
+            listCSS="w-[8rem]"
+          />
           <input
             placeholder="Ex: John"
             onChange={(e) => setFilterContractor(e.target.value)}
@@ -79,13 +87,12 @@ export default function Job() {
         <div className="tableContainer items-center flex flex-col overflow-auto ">
           <span className="relative h-10 flex gap-2 my-1 items-center font-extrabold text-xl self-center">
             {`${yearName} ${monthName}`}
-            <select
-              onChange={(e) => formatFortnightDays(e.target.value)}
-              className="rounded py-1 bg-transparent px-2 outline-brand3 text-sm border border-brand3"
-            >
-              <option value="1">Forthnight 1</option>
-              <option value="2">Forthnight 2</option>
-            </select>
+
+            <SelectFilter
+              setFilter={formatFortnightDays}
+              selectOptions={fortnightListBox}
+              listCSS=" w-[8rem]"
+            />
           </span>
           <button
             type="button"
