@@ -1,5 +1,6 @@
-import { useContext, useState } from 'react'
+import { ChangeEvent, KeyboardEvent, useContext, useState } from 'react'
 import { jobsContext } from '../../../context/JobContextProvider'
+import { Job } from '../../../types/job'
 import { DaysObj } from '../Job'
 
 export default function DayInputsTableLine({
@@ -7,9 +8,10 @@ export default function DayInputsTableLine({
   contractor,
 }: {
   fortnightDays: DaysObj[]
-  contractor: any
+  contractor: Job
 }) {
-  const [contractorWorkedInfos, setContractorWorkedInfos] = useState(contractor)
+  const [contractorWorkedInfos, setContractorWorkedInfos] =
+    useState<Job>(contractor)
   const {
     handleCurrentInputJobValue,
     currentInputJobValue,
@@ -17,7 +19,7 @@ export default function DayInputsTableLine({
     handleCloseModal,
   } = useContext(jobsContext)
 
-  function handleChange(e: any) {
+  function handleChange(e: ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target
     handleCurrentInputJobValue(value)
 
@@ -30,7 +32,9 @@ export default function DayInputsTableLine({
     }))
   }
 
-  function handleKeyPress(e: any) {
+  function handleKeyPress(
+    e: KeyboardEvent<HTMLInputElement> & { target: HTMLInputElement },
+  ) {
     const { name } = e.target
     const isKeyTab = e.key === 'Tab'
     if (isKeyTab) {
@@ -47,22 +51,22 @@ export default function DayInputsTableLine({
     }
   }
 
-  function getWorkedDayValue(day: any) {
+  function getWorkedDayValue(day: number) {
     const contractorArr = Object.entries(contractorWorkedInfos.workedDaysInfos)
     const currentContractor = contractorArr.find(
       (_, index) => index === day,
-    ) as any
+    ) as [string, { workedHours: string }]
 
     if (currentContractor) {
       return currentContractor[1].workedHours
     }
   }
 
-  function getWorkedDayName(day: any) {
+  function getWorkedDayName(day: number) {
     const contractorArr = Object.entries(contractorWorkedInfos.workedDaysInfos)
     const currentContractor = contractorArr.find(
       (_, index) => index === day,
-    ) as any
+    ) as [string, { workedHours: string }]
 
     return currentContractor[0]
   }
@@ -76,7 +80,7 @@ export default function DayInputsTableLine({
   return (
     <td className="flex items-center justify-center">
       <p className="flex justify-center gap-1">
-        {fortnightDays.map((day: any, index) => (
+        {fortnightDays.map((day: DaysObj, index) => (
           <input
             key={day.dayNum}
             placeholder="0"
