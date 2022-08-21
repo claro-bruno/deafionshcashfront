@@ -1,9 +1,9 @@
 export const headerTable = [
   'status',
   'Contractor',
-  'fortnight 1',
+  'quinzena 1',
   'Pay Type',
-  ' fortnight 2',
+  'quinzena 2',
   'Pay Type',
   'Total Month',
 ]

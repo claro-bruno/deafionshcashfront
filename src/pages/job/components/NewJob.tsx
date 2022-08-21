@@ -1,13 +1,9 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useContext, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { jobsContext } from '../../context/JobContextProvider'
-import {
-  clients,
-  contractors,
-  createObjectDaysByMonth,
-} from '../../pages/job/constants'
-import './modal.css'
+import { jobsContext } from '../../../context/JobContextProvider'
+import { clients, contractors, createObjectDaysByMonth } from '../constants'
+import '../../../components/modals/modal.css'
 
 const WEEKDAYS = [
   'Monday',
@@ -54,7 +50,7 @@ export default function NewJob({ tableDate }: NewJobProps) {
       }),
     }
     handleCurrentInputJobValue(hoursWorked)
-
+    console.log(formattedNewJob)
     handleSetUsers([...users, formattedNewJob])
     reset()
     setDaysWorked([])

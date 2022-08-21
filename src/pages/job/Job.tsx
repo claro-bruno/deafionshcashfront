@@ -7,7 +7,7 @@ import {
   yearsListBox,
 } from '../../components/listboxes/constants'
 import SelectFilter from '../../components/listboxes/SelectFilter'
-import NewJob from '../../components/modals/NewJob'
+import NewJob from './components/NewJob'
 import { jobsContext } from '../../context/JobContextProvider'
 import DayInputsTableLine from './components/DayInputsTableLine'
 import { headerTable, months } from './constants'
@@ -56,7 +56,7 @@ export default function Job() {
   )
   function formatFortnightDays(period: string) {
     const fortnight =
-      period === 'Fortnight 1'
+      period === 'Quinzena 1'
         ? addWeakDayName().splice(0, 15)
         : addWeakDayName().splice(15)
 
