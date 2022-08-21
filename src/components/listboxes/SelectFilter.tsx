@@ -1,23 +1,23 @@
-import { Fragment, useEffect, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
-import { Check, ArrowsVertical } from 'phosphor-react'
+import { ArrowsVertical, Check } from 'phosphor-react'
+import { Fragment, useEffect, useState } from 'react'
 import './filters.css'
 
-const years = [
-  { name: '2022' },
-  { name: '2021' },
-  { name: '2020' },
-  { name: '2019' },
-  { name: '2018' },
-]
-
-export default function YearFilter({ setYearName }: { setYearName: (yearName: string) => void }) {
-  const [selected, setSelected] = useState(years[0])
+export default function SelectFilter({
+  setFilter,
+  selectOptions,
+  listCSS,
+}: {
+  setFilter?: (optionName: string) => void
+  selectOptions: { name: string }[]
+  listCSS?: string
+}) {
+  const [selected, setSelected] = useState(selectOptions[0])
   useEffect(() => {
-    setYearName(selected.name)
+    setFilter && setFilter(selected.name)
   }, [selected])
   return (
-    <div className=" w-[5.5rem]">
+    <div className={listCSS ?? ' w-[5.5rem]'}>
       <Listbox value={selected} onChange={setSelected}>
         <div className="relative mt-1">
           <Listbox.Button className="group relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500  sm:text-sm ">
@@ -36,22 +36,24 @@ export default function YearFilter({ setYearName }: { setYearName: (yearName: st
             leaveTo="opacity-0"
           >
             <Listbox.Options className="ListboxOptions">
-              {years.map((year, yearIdx) => (
+              {selectOptions.map((option, optionIdx) => (
                 <Listbox.Option
-                  key={yearIdx}
+                  key={optionIdx}
                   className={({ active }) =>
-                    `relative  cursor-default select-none py-2 pl-7 pr-1 ${active ? 'bg-amber-100 text-brand' : 'text-gray-800'
+                    `relative  cursor-default select-none py-2 pl-7 pr-1 ${
+                      active ? 'bg-amber-100 text-brand' : 'text-gray-800'
                     }`
                   }
-                  value={year}
+                  value={option}
                 >
                   {({ selected }) => (
                     <>
                       <span
-                        className={`block truncate ${selected ? 'font-semibold' : 'font-normal'
-                          }`}
+                        className={`block truncate ${
+                          selected ? 'font-semibold' : 'font-normal'
+                        }`}
                       >
-                        {year.name}
+                        {option.name}
                       </span>
                       {selected ? (
                         <span className="absolute inset-y-0 left-0 flex items-center pl-1 text-brand">

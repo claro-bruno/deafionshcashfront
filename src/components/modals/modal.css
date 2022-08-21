@@ -5,8 +5,8 @@
   @apply w-full  transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all ;
 }
 .modal button {
-  @apply bg-brand;
+  @apply bg-brand3;
 }
 .submitModalButton{
-  @apply  px-3 py-1 ring ring-transparent border border-transparent hover:ring-brand hover:border-gray-50  rounded transition-colors text-white font-bold disabled:ring-transparent disabled:opacity-50 disabled:border-transparent;
+  @apply  px-2  py-1  font-bold
 }

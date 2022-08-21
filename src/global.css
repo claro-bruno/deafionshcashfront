@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Roboto+Mono:wght@700&family=Roboto:wght@400;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -11,7 +11,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.inpuntsDefault {
+.inputsDefault {
   @apply rounded-md text-sm ring-1  ring-zinc-400 w-56 text-zinc-800 p-1 h-8 outline-transparent
   focus:outline-brand transition-colors;
 
@@ -25,12 +25,12 @@ body {
 .fileInput {
 
   @apply block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full
- file:text-sm file:font-semibold file:bg-white file:border file:text-brand hover:file:bg-brand hover:file:text-white transition-colors duration-300 hover:file:border-transparent
+ file:text-sm file:font-semibold file:bg-white file:border file:text-brand3 hover:file:bg-brand3 hover:file:text-white transition-colors duration-300 hover:file:border-transparent
 
 }
 
 .inputsAndLabelsContainer {
-  @apply flex justify-between gap-8 w-[35rem] h-[18rem]
+  @apply flex justify-around w-[55rem]
 
 }
 .tableContainer::-webkit-scrollbar {
@@ -38,14 +38,30 @@ body {
 }
 
 .table{
-  @apply text-sm text-left text-gray-500 dark:text-gray-400 w-full ;
+  @apply text-sm text-left text-gray-500 dark:text-gray-400 w-[95%] ;
 }
 .tableHead {
-  @apply text-xs bg-gray-50 text-gray-700 uppercase dark:bg-gray-700 dark:text-gray-400 ;
+  @apply  text-xs bg-gray-50 text-gray-700 uppercase dark:bg-gray-700 dark:text-gray-400 ;
 }
 .tableLine {
   @apply py-4 px-6;
 }
+
 .tableBodyTh{
   @apply tableLine font-medium text-gray-900 whitespace-nowrap dark:text-white ;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+.buttonStyle1 {
+  @apply disabled:opacity-50 disabled:hover:ring-transparent disabled:hover:border-transparent disabled:cursor-not-allowed hover:ring-brand3 bg-brand3 focus:ring-brand3 transition-colors
+  py-1 rounded border border-transparent hover:border-white text-white ring-2 ring-transparent
+}
+.buttonStyle2 {
+  @apply disabled:opacity-50 disabled:hover:ring-transparent disabled:hover:border-transparent disabled:cursor-not-allowed hover:ring-brand2 bg-brand2 focus:ring-brand2 transition-colors hover:border-white text-white  py-1 rounded border border-transparent ring-2 ring-transparent
 }

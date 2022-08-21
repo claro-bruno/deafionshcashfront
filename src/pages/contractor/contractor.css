@@ -2,3 +2,6 @@
   @apply flex items-center gap-1;
 
 }
+.contractorBtns{
+  @apply  text-sm  h-min relative right-5 font-bold 
+}
