@@ -1,10 +1,14 @@
+import { months } from '../job/constants'
+
 export const headerTable = [
   'status',
   'Contractor',
-  'quinzena 1',
-  'Pay Type',
+  '1 - 15',
+  'Payment Type',
+  'Payment Identifier',
   'quinzena 2',
-  'Pay Type',
+  'Payment Type',
+  'Payment Identifier',
   'Total Month',
 ]
 export const bodyTable = [
@@ -16,11 +20,13 @@ export const bodyTable = [
     payments: [
       {
         type: 'ch 101',
+        identifier: '12345',
         period: 'fortnight1',
         value: '1520.30',
       },
       {
         type: 'ch 102',
+        identifier: '12345',
         period: 'fortnight2',
         value: '4520.30',
       },
@@ -34,11 +40,13 @@ export const bodyTable = [
     payments: [
       {
         type: 'ch 101',
+        identifier: '12345',
         period: 'fortnight1',
         value: '150.30',
       },
       {
         type: 'ch 102',
+        identifier: '12345',
         period: 'fortnight2',
         value: '4520.30',
       },
@@ -52,11 +60,13 @@ export const bodyTable = [
     payments: [
       {
         type: 'ch 101',
+        identifier: '12345',
         period: 'fortnight1',
         value: '2520.30',
       },
       {
         type: 'ch 102',
+        identifier: '12345',
         period: 'fortnight2',
         value: '2000',
       },
@@ -70,11 +80,13 @@ export const bodyTable = [
     payments: [
       {
         type: 'ch 101',
+        identifier: '12345',
         period: 'fortnight1',
         value: '3120.50',
       },
       {
         type: 'ch 102',
+        identifier: '12345',
         period: 'fortnight2',
         value: '1520.30',
       },
@@ -88,11 +100,13 @@ export const bodyTable = [
     payments: [
       {
         type: 'ch 101',
+        identifier: '12345',
         period: 'fortnight1',
         value: '520.30',
       },
       {
         type: 'ch 102',
+        identifier: '12345',
         period: 'fortnight2',
         value: '120.30',
       },
@@ -106,11 +120,13 @@ export const bodyTable = [
     payments: [
       {
         type: 'ch 101',
+        identifier: '12345',
         period: 'fortnight1',
         value: '5020.70',
       },
       {
         type: 'ch 102',
+        identifier: '12345',
         period: 'fortnight2',
         value: '1220.10',
       },
@@ -124,11 +140,13 @@ export const bodyTable = [
     payments: [
       {
         type: 'ch 101',
+        identifier: '12345',
         period: 'fortnight1',
         value: '520.30',
       },
       {
         type: 'ch 102',
+        identifier: '12345',
         period: 'fortnight2',
         value: '120.30',
       },
@@ -142,11 +160,13 @@ export const bodyTable = [
     payments: [
       {
         type: 'ch 101',
+        identifier: '12345',
         period: 'fortnight1',
         value: '2520.30',
       },
       {
         type: 'ch 102',
+        identifier: '12345',
         period: 'fortnight2',
         value: '2220.30',
       },
@@ -160,11 +180,13 @@ export const bodyTable = [
     payments: [
       {
         type: 'ch 101',
+        identifier: '12345',
         period: 'fortnight1',
         value: '2520.30',
       },
       {
         type: 'ch 102',
+        identifier: '12345',
         period: 'fortnight2',
         value: '2220.30',
       },
@@ -178,14 +200,23 @@ export const bodyTable = [
     payments: [
       {
         type: 'ch 101',
+        identifier: '12345',
         period: 'fortnight1',
         value: '1520.30',
       },
       {
         type: 'ch 102',
+        identifier: '12345',
         period: 'fortnight2',
         value: '4300',
       },
     ],
   },
 ]
+
+export function getLastDayOfMonth(month: string) {
+  const findMonthIndex = months.findIndex((item) => item === month)
+  const lastDayOfMonth = new Date(2020, findMonthIndex + 1, 0).getDate()
+  return lastDayOfMonth
+}
+export const PAYMENT_TYPES = ['Transference', 'Deposit', 'Application']

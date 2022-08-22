@@ -8,9 +8,14 @@ import {
 } from '../../components/listboxes/constants'
 import SelectFilter from '../../components/listboxes/SelectFilter'
 import useFormate from '../../hooks/useFormate'
-import { bodyTable, headerTable } from './constants'
+import {
+  bodyTable,
+  getLastDayOfMonth,
+  headerTable,
+  PAYMENT_TYPES,
+} from './constants'
 
-export default function MainPage() {
+export default function Payments() {
   const [monthName, setMonthName] = useState('')
   const [yearName, setYearName] = useState('')
   const [filterContractor, setFilterContractor] = useState('')
@@ -65,16 +70,25 @@ export default function MainPage() {
           <h2>{yearName}</h2>
           <h2>{monthName}</h2>
         </div>
-        <div className="w-full">
-          <div className="tableContainer overflow-auto mt-8 ml-3">
-            <table className="table">
+        <div className="w-full ml-2">
+          <div className="tableContainer overflow-auto mt-8">
+            <table className="table ">
               <thead className="tableHead">
                 <tr>
-                  {headerTable.map((item, index) => (
-                    <th scope="col" key={index} className="tableLine">
-                      {item}
-                    </th>
-                  ))}
+                  {headerTable.map((item, index) => {
+                    if (item === 'quinzena 2') {
+                      return (
+                        <th scope="col" key={index} className="tableLine">
+                          {`16 - ${getLastDayOfMonth(monthName)}`}
+                        </th>
+                      )
+                    }
+                    return (
+                      <th scope="col" key={index} className="tableLine">
+                        {item}
+                      </th>
+                    )
+                  })}
                   <th scope="col" className="tableLine">
                     <GearSix className="relative left-3" size={24} />
                   </th>
@@ -92,25 +106,43 @@ export default function MainPage() {
                             color={item.status === 'active' ? 'green' : 'gray'}
                           />
                         </th>
-                        <td className="tableLine flex flex-wrap max-w-[9rem]">
+                        <td className="tableLine max-w-[9rem]">
                           <Link to={`/contractor/${item.id}`}>{item.name}</Link>
                         </td>
                         {item.payments.map((payment) => (
                           <>
-                            <td className="tableLine">
+                            <td className="w-[7rem]  px-5">
                               $ {formatMoney(Number(payment.value))}
                             </td>
-                            <td className="tableLine">
+                            <td className="tableLine flex flex-col">
+                              {PAYMENT_TYPES.map(
+                                (type: string, index: number) => (
+                                  <label
+                                    key={index}
+                                    title={type}
+                                    className="flex gap-1"
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      value={type}
+                                      name="paymentType"
+                                    />
+                                    {type.slice(0, 4)}
+                                  </label>
+                                ),
+                              )}
+                            </td>
+                            <td className=" w-[7rem] px-0">
                               <input
-                                title="nome do pagamento completo"
-                                placeholder={payment.type}
+                                title="identificação do pagamento"
+                                value={payment.identifier}
                                 type="text"
-                                className="border rounded w-[4rem] px-2 py-1 outline-brand"
+                                className="border rounded ml-5 focus:ml-0 focus:w-[7rem] w-[4rem] px-2 py-1 outline-brand"
                               />
                             </td>
                           </>
                         ))}
-                        <td className="tableLine">
+                        <td className="w-[7rem]  px-5">
                           ${' '}
                           {formatMoney(
                             item.payments.reduce(
@@ -119,13 +151,20 @@ export default function MainPage() {
                             ),
                           )}
                         </td>
-                        <td className="tableLine">
+                        <td className="tableLine flex relative top-3 gap-1">
                           <button
                             onClick={() => console.log('save')}
                             className="buttonStyle1 text-xs py-[0.09rem] px-2  "
                             type="button"
                           >
                             Save
+                          </button>
+                          <button
+                            onClick={() => console.log('save')}
+                            className="buttonStyle2 text-xs py-[0.09rem] px-2  "
+                            type="button"
+                          >
+                            Edit
                           </button>
                         </td>
                       </tr>
@@ -138,18 +177,18 @@ export default function MainPage() {
             </table>
           </div>
         </div>
-        <div className="flex flex-col items-center ">
-          <h1 className="text-2xl w-[15vw] relative right-7 text-center  font-bold text-zinc-700">
+        <div className="flex flex-col items-center  ">
+          <h1 className="text-2xl w-[10vw] relative right-4 text-center  font-bold text-zinc-700">
             Outlay
           </h1>
-          <article className="flex flex-col gap-8 fixed right-2 mt-8">
-            <div className="bg-gray-50 shadow-md flex items-center gap-2 flex-col rounded h-20 w-[18vw] py-2">
+          <article className="flex flex-col gap-8 fixed right-4 mt-8">
+            <div className="bg-gray-50 shadow-md flex items-center gap-2 flex-col rounded h-20 w-[10vw] py-2">
               Forthnight 1<strong className="">$ {fortnight1Formated}</strong>
             </div>
-            <div className="bg-gray-50 shadow-md flex items-center gap-2 flex-col rounded h-20 w-[18vw] py-2">
+            <div className="bg-gray-50 shadow-md flex items-center gap-2 flex-col rounded h-20 w-[10vw] py-2">
               Forthnight 2<strong className="">$ {fortnight2Formated}</strong>
             </div>
-            <div className="bg-gray-50 shadow-md flex items-center gap-2 flex-col rounded h-20 w-[18vw] py-2">
+            <div className="bg-gray-50 shadow-md flex items-center gap-2 flex-col rounded h-20 w-[10vw] py-2">
               Total month
               <strong className="">$ {totalFormatted}</strong>
             </div>

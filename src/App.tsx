@@ -1,12 +1,12 @@
 import { Route, Routes } from 'react-router-dom'
+import JobContextProvider from './context/JobContextProvider'
 import Client from './pages/client/Client'
 import Contractor from './pages/contractor/Contractor'
+import Job from './pages/job/Job'
 import Login from './pages/login/Login'
-import MainPage from './pages/mainPage/MainPage'
+import Payments from './pages/payments/Payments'
 import Register from './pages/register/Register'
 import Terms from './pages/register/Terms'
-import Job from './pages/job/Job'
-import JobContextProvider from './context/JobContextProvider'
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
         <Route index element={<Register />} />
         <Route path="terms" element={<Terms />} />
       </Route>
-      <Route path="/main" element={<MainPage />} />
+      <Route path="/payments" element={<Payments />} />
       <Route
         path="/jobs"
         element={

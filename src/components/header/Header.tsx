@@ -18,8 +18,8 @@ export default function Header(props: PropsWithChildren) {
         <>
           <div className="flex self-center relative right-3 gap-4 ">
             <div className="flex gap-4 ">
-              <NavLink to="/main" className="headerLink">
-                Home
+              <NavLink to="/payments" className="headerLink">
+                Payments
               </NavLink>
               <NavLink to="/clients" className="headerLink">
                 Clients

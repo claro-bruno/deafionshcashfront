@@ -1,4 +1,3 @@
-import { Asterisk } from 'phosphor-react'
 import { useFormContext } from 'react-hook-form'
 import useFormate from '../../../../hooks/useFormate'
 
@@ -13,7 +12,7 @@ export default function AddressComponent({
     <div className="inputsAndLabelsContainer h-[13rem] items-center">
       <div className="flex flex-col gap-2">
         <label className="labelsDefault">
-          Address
+          Address *
           <input
             {...register(
               secondaryAddress ? 'secondaryAddress.address' : 'address.address',
@@ -25,7 +24,7 @@ export default function AddressComponent({
           />
         </label>
         <label className="labelsDefault">
-          Street
+          Street *
           <input
             {...register(
               secondaryAddress ? 'secondaryAddress.street' : 'address.street',
@@ -38,7 +37,7 @@ export default function AddressComponent({
       </div>
       <div className="flex flex-col gap-2">
         <label className="labelsDefault">
-          State
+          State *
           <input
             {...register(
               secondaryAddress ? 'secondaryAddress.state' : 'address.state',
@@ -49,7 +48,7 @@ export default function AddressComponent({
           />
         </label>
         <label className="labelsDefault">
-          Zip-code
+          Zip-code *
           <input
             {...register(
               secondaryAddress ? 'secondaryAddress.zip' : 'address.zip',
@@ -67,7 +66,7 @@ export default function AddressComponent({
       </div>
       <div className="flex flex-col gap-2">
         <label className="labelsDefault">
-          City
+          City *
           <input
             {...register(
               secondaryAddress ? 'secondaryAddress.city' : 'address.city',
@@ -78,10 +77,7 @@ export default function AddressComponent({
           />
         </label>
         <label className="labelsDefault ">
-          <div className="flex items-start">
-            Residency proof
-            <Asterisk size={10} />
-          </div>
+          <div className="flex items-start">Proof of address</div>
 
           <input
             {...register(

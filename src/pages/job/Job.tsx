@@ -9,7 +9,7 @@ import {
 import SelectFilter from '../../components/listboxes/SelectFilter'
 import NewJob from './components/NewJob'
 import { jobsContext } from '../../context/JobContextProvider'
-import DayInputsTableLine from './components/DayInputsTableLine'
+import DayInputsTableLine from './components/InputsTableLine'
 import { headerTable, months } from './constants'
 
 export interface DaysObj {
@@ -140,20 +140,10 @@ export default function Job() {
                         {contractor.contractor}
                       </td>
                       <td className="">{contractor.client}</td>
-
                       <DayInputsTableLine
                         contractor={contractor}
                         fortnightDays={fortnightDays}
                       />
-
-                      <td className="tableLine">{contractor.hours}</td>
-                      <td className="tableLine relative right-5">
-                        $ {contractor.pHour}
-                      </td>
-                      <td className="tableLine relative right-4">
-                        $ {Number(contractor.pHour) * Number(contractor.hours)}
-                      </td>
-                      <td className=" tableLine">{''} </td>
                     </tr>
                   )
                 } else {

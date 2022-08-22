@@ -3,7 +3,7 @@ import { jobsContext } from '../../../context/JobContextProvider'
 import { Job } from '../../../types/job'
 import { DaysObj } from '../Job'
 
-export default function DayInputsTableLine({
+export default function InputsTableLine({
   fortnightDays,
   contractor,
 }: {
@@ -19,10 +19,15 @@ export default function DayInputsTableLine({
     handleCloseModal,
   } = useContext(jobsContext)
 
-  function handleChange(e: ChangeEvent<HTMLInputElement>) {
+  function handleChange(e: ChangeEvent<HTMLInputElement>, options?: string) {
     const { name, value } = e.target
     handleCurrentInputJobValue(value)
-
+    if (options) {
+      setContractorWorkedInfos({
+        ...contractorWorkedInfos,
+        [name]: value,
+      })
+    }
     setContractorWorkedInfos((state: any) => ({
       ...state,
       workedDaysInfos: {
@@ -78,38 +83,57 @@ export default function DayInputsTableLine({
   }
 
   return (
-    <td className="flex items-center justify-center">
-      <p className="flex justify-center gap-1">
-        {fortnightDays.map((day: DaysObj, index) => (
-          <input
-            key={day.dayNum}
-            placeholder="0"
-            name={getWorkedDayName(index)}
-            value={getWorkedDayValue(index)}
-            onChange={(e) => handleChange(e)}
-            onKeyUp={handleKeyPress}
-            type="number"
-            max={3}
-            className={`${
-              day.weakDayName === 'S' && 'bg-zinc-500 text-white'
-            } w-[1.529rem] outline-none ring-1 ring-transparent focus:ring-brand text-center h-10 border text-[0.7rem] `}
-          />
-        ))}
-      </p>
-      <button
-        onClick={() => console.log(contractorWorkedInfos)}
-        className="buttonStyle1 text-xs py-[0.09rem] px-2 absolute  right-[5.7%] "
-        type="button"
-      >
-        Save
-      </button>
-      <button
-        onClick={handleEditContractor}
-        className="buttonStyle2 text-xs py-[0.09rem] px-2 absolute right-[2.5%] "
-        type="button"
-      >
-        Edit
-      </button>
-    </td>
+    <>
+      <td className="flex items-center justify-center">
+        <p className="flex justify-center gap-1">
+          {fortnightDays.map((day: DaysObj, index) => (
+            <input
+              key={day.dayNum}
+              placeholder="0"
+              name={getWorkedDayName(index)}
+              value={getWorkedDayValue(index)}
+              onChange={handleChange}
+              onKeyUp={handleKeyPress}
+              type="number"
+              max={3}
+              className={`${
+                day.weakDayName === 'S' && 'bg-zinc-500 text-white'
+              } w-[1.529rem] outline-none ring-1 ring-transparent focus:ring-brand text-center h-10 border text-[0.7rem] `}
+            />
+          ))}
+        </p>
+      </td>
+      <td className="tableLine">{contractorWorkedInfos.hours}</td>
+      <td className="tableLine relative right-5">
+        $
+        <input
+          onChange={(e) => handleChange(e, 'pHour')}
+          name="pHour"
+          className="w-[2.1rem] border ml-1 px-1"
+          value={contractorWorkedInfos.pHour}
+        />
+      </td>
+      <td className="tableLine relative right-4">
+        ${' '}
+        {Number(contractorWorkedInfos.pHour) *
+          Number(contractorWorkedInfos.hours)}
+      </td>
+      <td className="tableLine flex">
+        <button
+          onClick={() => console.log(contractorWorkedInfos)}
+          className="buttonStyle1 text-xs py-[0.09rem] px-2 absolute  right-[5.7%] "
+          type="button"
+        >
+          Save
+        </button>
+        <button
+          onClick={() => console.log(handleEditContractor())}
+          className="buttonStyle2 text-xs py-[0.09rem] px-2 absolute right-[2.5%] "
+          type="button"
+        >
+          Edit
+        </button>
+      </td>
+    </>
   )
 }

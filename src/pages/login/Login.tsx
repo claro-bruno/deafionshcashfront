@@ -37,7 +37,7 @@ export default function Login() {
               className="disabled:cursor-not-allowed bg-brand2 ring text-sm ring-transparent hover:ring-brand2 border border-transparent hover:border-white mt-3 px-2 py-[0.15rem]  rounded text-white font-bold transition-colors"
               type="submit"
             >
-              <Link to="/main">Sign in</Link>
+              <Link to="/payments">Sign in</Link>
             </button>
           </form>
           <span className="text-sm mt-2 text-gray-400">

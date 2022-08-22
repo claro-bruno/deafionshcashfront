@@ -48,7 +48,7 @@ export default function NewContractorForm() {
         <div className="inputsAndLabelsContainer h-[18rem] border-b-2">
           <div className="flex flex-col gap-2">
             <label className="labelsDefault">
-              First name
+              First name *
               <input
                 placeholder="Ex: John  "
                 className="inputsDefault"
@@ -58,7 +58,7 @@ export default function NewContractorForm() {
               />
             </label>
             <label className="labelsDefault">
-              Email
+              Email *
               <input
                 placeholder=" example@exemple.com  "
                 className="inputsDefault"
@@ -68,7 +68,7 @@ export default function NewContractorForm() {
               />
             </label>
             <label className="labelsDefault">
-              ITIN/SSN
+              ITIN/SSN *
               <input
                 title="Individual Taxpayer Identification Number (ITIN) or Social Security Number (SSN)"
                 placeholder="000-00-0000"
@@ -82,10 +82,7 @@ export default function NewContractorForm() {
               />
             </label>
             <label className="labelsDefault ">
-              <div className="flex items-start">
-                Photo
-                <Asterisk size={10} />
-              </div>
+              <div className="flex items-start">Photo</div>
 
               <input
                 accept="image/*"
@@ -96,10 +93,7 @@ export default function NewContractorForm() {
           </div>
           <div className="flex flex-col gap-2">
             <label className="labelsDefault">
-              <div className="flex items-start">
-                Middle name
-                <Asterisk size={10} />
-              </div>
+              <div className="flex items-start">Middle name</div>
 
               <input
                 {...register('middleName')}
@@ -109,7 +103,7 @@ export default function NewContractorForm() {
               />
             </label>
             <label className="labelsDefault">
-              Phone
+              Phone *
               <input
                 {...register('phone')}
                 placeholder="(001) 000-0000"
@@ -121,10 +115,7 @@ export default function NewContractorForm() {
               />
             </label>
             <label className="labelsDefault">
-              <div className="flex items-start">
-                EIN
-                <Asterisk size={10} />
-              </div>
+              <div className="flex items-start">EIN</div>
               <input
                 {...register('ein')}
                 title="Employer Identification Number (EIN)"
@@ -139,7 +130,7 @@ export default function NewContractorForm() {
           </div>
           <div className="flex flex-col gap-2">
             <label className="labelsDefault">
-              Last name
+              Last name *
               <input
                 {...register('lastName')}
                 type="text"
@@ -149,7 +140,7 @@ export default function NewContractorForm() {
               />
             </label>
             <label className="labelsDefault">
-              Birthday
+              Birthday *
               <input
                 {...register('birthDate')}
                 min="1940-12-31"
@@ -161,10 +152,7 @@ export default function NewContractorForm() {
             </label>
 
             <label className="labelsDefault ">
-              <div className="flex items-start">
-                Document Photo
-                <Asterisk size={10} />
-              </div>
+              <div className="flex items-start">Document Photo</div>
               <input
                 {...register('documentPhoto')}
                 accept="image/*"
@@ -172,9 +160,6 @@ export default function NewContractorForm() {
                 className=" file:py-[0.35rem]  fileInput"
               />
             </label>
-            <span className="relative top-14 left-14 text-sm text-zinc-500">
-              * optional (must be sent in the future)
-            </span>
           </div>
         </div>
         <div className="flex w-full py-4 border-t-2 border-gray-400 justify-center">
