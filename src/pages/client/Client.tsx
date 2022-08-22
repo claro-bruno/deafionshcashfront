@@ -49,7 +49,7 @@ export default function Client() {
             {bodyTable.map((item) => {
               if (tableFilters(item)) {
                 return (
-                  <tr className="bg-white border-b ">
+                  <tr key={item.id} className="bg-white border-b ">
                     <th scope="row" className="tableBodyTh">
                       <Circle
                         weight="fill"

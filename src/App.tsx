@@ -25,7 +25,9 @@ function App() {
             <Job />
           </JobContextProvider>
         }
-      />
+      >
+        <Route path=":id" element={<Payments />} />
+      </Route>
       <Route path="/clients" element={<Client />}>
         <Route path=":name" element={<Client />} />
       </Route>

@@ -21,11 +21,16 @@ export default function Job() {
   const [monthName, setMonthName] = useState('January')
   const [yearName, setYearName] = useState('2022')
   const [filterContractor, setFilterContractor] = useState('')
+  const [fortnightDays, setFortnightDays] = useState<DaysObj[]>(
+    addWeakDayName().splice(0, 15),
+  )
   const { handleCloseModal, users } = useContext(jobsContext)
+
   function tableFilters(item: { contractor: string; month: string }) {
     const filterByContractor = item.contractor
       .toLowerCase()
       .includes(filterContractor.toLowerCase())
+
     const filterByDate = item.month
       .toLowerCase()
       .includes(monthName.toLowerCase())
@@ -36,7 +41,6 @@ export default function Job() {
     const getMonthNumberByName = months.indexOf(monthName) + 1
     const date = new Date()
     const days = new Date(date.getFullYear(), getMonthNumberByName, 0).getDate()
-
     return [...Array(days).keys()].map((i) => i + 1)
   }
 
@@ -51,9 +55,7 @@ export default function Job() {
     })
     return weakDaysNamed
   }
-  const [fortnightDays, setFortnightDays] = useState<DaysObj[]>(
-    addWeakDayName().splice(0, 15),
-  )
+
   function formatFortnightDays(period: string) {
     const fortnight =
       period === 'Quinzena 1'
@@ -62,7 +64,7 @@ export default function Job() {
 
     setFortnightDays(fortnight)
   }
-  console.log('rendering')
+  console.log('mudei')
 
   return (
     <div>

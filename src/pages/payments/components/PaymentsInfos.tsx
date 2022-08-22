@@ -78,19 +78,18 @@ export default function PaymentsInfos(payInfos: ContractorPaymentInfos) {
       </td>
       <td className="tableLine flex relative top-3 gap-1">
         <button
-          onClick={() => console.log('save')}
+          onClick={handleSubmit(handleUpdatePayment)}
           className="buttonStyle1 text-xs py-[0.09rem] px-2  "
           type="button"
         >
           Save
         </button>
-        <button
-          onClick={handleSubmit(handleUpdatePayment)}
+        <Link
+          to={`/jobs/${payInfos.contractor.id}`}
           className="buttonStyle2 text-xs py-[0.09rem] px-2  "
-          type="button"
         >
           Edit
-        </button>
+        </Link>
       </td>
     </tr>
   )
