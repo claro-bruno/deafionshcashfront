@@ -18,15 +18,23 @@ function App() {
         <Route path="terms" element={<Terms />} />
       </Route>
       <Route path="/payments" element={<Payments />} />
-      <Route
-        path="/jobs"
-        element={
-          <JobContextProvider>
-            <Job />
-          </JobContextProvider>
-        }
-      >
-        <Route path=":id" element={<Payments />} />
+      <Route path="/jobs">
+        <Route
+          index
+          element={
+            <JobContextProvider>
+              <Job />
+            </JobContextProvider>
+          }
+        />
+        <Route
+          path=":id"
+          element={
+            <JobContextProvider>
+              <Job />
+            </JobContextProvider>
+          }
+        />
       </Route>
       <Route path="/clients" element={<Client />}>
         <Route path=":name" element={<Client />} />

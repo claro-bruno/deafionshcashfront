@@ -17,10 +17,14 @@ export default function PaymentsInfos(payInfos: ContractorPaymentInfos) {
         {
           type: payInfos.payments[0].type,
           identifier: payInfos.payments[0].identifier,
+          value: payInfos.payments[0].value,
+          period: payInfos.payments[0].period,
         },
         {
           type: payInfos.payments[1].type,
           identifier: payInfos.payments[1].identifier,
+          value: payInfos.payments[1].value,
+          period: payInfos.payments[1].period,
         },
       ],
     },

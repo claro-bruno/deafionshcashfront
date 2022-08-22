@@ -1,5 +1,5 @@
 import { GearSix, Plus } from 'phosphor-react'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import Header from '../../components/header/Header'
 import {
   fortnightListBox,
@@ -11,6 +11,7 @@ import NewJob from './components/NewJob'
 import { jobsContext } from '../../context/JobContextProvider'
 import DayInputsTableLine from './components/InputsTableLine'
 import { headerTable, months } from './constants'
+import { useParams } from 'react-router-dom'
 
 export interface DaysObj {
   dayNum: number
@@ -24,7 +25,16 @@ export default function Job() {
   const [fortnightDays, setFortnightDays] = useState<DaysObj[]>(
     addWeakDayName().splice(0, 15),
   )
-  const { handleCloseModal, users } = useContext(jobsContext)
+  const { handleCloseModal, users, handleSetUsers } = useContext(jobsContext)
+  const { id } = useParams()
+  console.log(id)
+
+  useEffect(() => {
+    if (id) {
+      const userFilteredById = users.filter((user) => user.id === Number(id))
+      handleSetUsers(userFilteredById)
+    }
+  }, [])
 
   function tableFilters(item: { contractor: string; month: string }) {
     const filterByContractor = item.contractor

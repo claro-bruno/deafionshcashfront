@@ -12,10 +12,11 @@ import PaymentsInfos from './components/PaymentsInfos'
 import { bodyTable, getLastDayOfMonth, headerTable } from './constants'
 
 export default function Payments() {
-  const [monthName, setMonthName] = useState('')
-  const [yearName, setYearName] = useState('')
+  const [monthName, setMonthName] = useState('January')
+  const [yearName, setYearName] = useState('2022')
   const [filterContractor, setFilterContractor] = useState('')
   const { formatMoney } = useFormate()
+
   const outlay: { type: string; period: string; value: string }[] = bodyTable
     .filter((item) => item.month === monthName.toLowerCase())
     .map((item) => item.payments)
