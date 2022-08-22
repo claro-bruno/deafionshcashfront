@@ -14,9 +14,13 @@ export const headerTable = [
 export const bodyTable = [
   {
     id: 1,
-    name: 'bruno fay',
+    contractor: {
+      name: 'bruno fay',
+      id: 5,
+    },
     status: 'active',
     month: 'january',
+    year: '2022',
     payments: [
       {
         type: 'ch 101',
@@ -34,9 +38,13 @@ export const bodyTable = [
   },
   {
     id: 2,
-    name: 'renata',
+    contractor: {
+      name: 'renata',
+      id: 51,
+    },
     status: 'active',
     month: 'january',
+    year: '2022',
     payments: [
       {
         type: 'ch 101',
@@ -54,9 +62,13 @@ export const bodyTable = [
   },
   {
     id: 3,
-    name: 'bruno fay',
+    contractor: {
+      name: 'bruno fay',
+      id: 52,
+    },
     status: 'active',
     month: 'april',
+    year: '2022',
     payments: [
       {
         type: 'ch 101',
@@ -74,9 +86,13 @@ export const bodyTable = [
   },
   {
     id: 4,
-    name: 'bruno fay',
+    contractor: {
+      name: 'bruno fay',
+      id: 53,
+    },
     status: 'active',
     month: 'may',
+    year: '2022',
     payments: [
       {
         type: 'ch 101',
@@ -94,9 +110,13 @@ export const bodyTable = [
   },
   {
     id: 5,
-    name: 'james',
+    contractor: {
+      name: 'james',
+      id: 54,
+    },
     status: 'inative',
     month: 'january',
+    year: '2022',
     payments: [
       {
         type: 'ch 101',
@@ -114,9 +134,13 @@ export const bodyTable = [
   },
   {
     id: 6,
-    name: 'maria',
+    contractor: {
+      name: 'maria',
+      id: 55,
+    },
     status: 'inative',
     month: 'january',
+    year: '2022',
     payments: [
       {
         type: 'ch 101',
@@ -134,9 +158,13 @@ export const bodyTable = [
   },
   {
     id: 7,
-    name: 'james',
+    contractor: {
+      name: 'james',
+      id: 56,
+    },
     status: 'inative',
     month: 'april',
+    year: '2022',
     payments: [
       {
         type: 'ch 101',
@@ -154,9 +182,13 @@ export const bodyTable = [
   },
   {
     id: 8,
-    name: 'bruno augusto',
+    contractor: {
+      name: 'bruno augusto',
+      id: 57,
+    },
     status: 'active',
     month: 'january',
+    year: '2022',
     payments: [
       {
         type: 'ch 101',
@@ -174,9 +206,13 @@ export const bodyTable = [
   },
   {
     id: 9,
-    name: 'bruno augusto silva pereira',
+    contractor: {
+      name: 'bruno augusto silva pereira',
+      id: 58,
+    },
     status: 'active',
     month: 'april',
+    year: '2022',
     payments: [
       {
         type: 'ch 101',
@@ -194,9 +230,13 @@ export const bodyTable = [
   },
   {
     id: 10,
-    name: 'bruno augusto',
+    contractor: {
+      name: 'bruno augusto',
+      id: 599,
+    },
     status: 'inative',
     month: 'february',
+    year: '2022',
     payments: [
       {
         type: 'ch 101',

@@ -1,6 +1,5 @@
-import { Circle, GearSix } from 'phosphor-react'
+import { GearSix } from 'phosphor-react'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
 import Header from '../../components/header/Header'
 import {
   monthsListbox,
@@ -8,19 +7,15 @@ import {
 } from '../../components/listboxes/constants'
 import SelectFilter from '../../components/listboxes/SelectFilter'
 import useFormate from '../../hooks/useFormate'
-import {
-  bodyTable,
-  getLastDayOfMonth,
-  headerTable,
-  PAYMENT_TYPES,
-} from './constants'
+import { ContractorPaymentInfos } from '../../types/contractor'
+import PaymentsInfos from './components/PaymentsInfos'
+import { bodyTable, getLastDayOfMonth, headerTable } from './constants'
 
 export default function Payments() {
   const [monthName, setMonthName] = useState('')
   const [yearName, setYearName] = useState('')
   const [filterContractor, setFilterContractor] = useState('')
   const { formatMoney } = useFormate()
-
   const outlay: { type: string; period: string; value: string }[] = bodyTable
     .filter((item) => item.month === monthName.toLowerCase())
     .map((item) => item.payments)
@@ -33,12 +28,14 @@ export default function Payments() {
         .reduce((acc, curr) => acc + Number(curr.value), 0),
     )
   }
+
   const fortnight1Formated = formatMoney(forthnight('forthnight1'))
   const fortnight2Formated = formatMoney(forthnight('forthnight2'))
   const total = forthnight('forthnight1') + forthnight('forthnight2')
   const totalFormatted = formatMoney(total)
-  function tableFilters(item: { name: string; month: string }) {
-    const filterByContractor = item.name
+
+  function tableFilters(item: ContractorPaymentInfos) {
+    const filterByContractor = item.contractor.name
       .toLowerCase()
       .includes(filterContractor.toLowerCase())
     const filterByDate = item.month.includes(monthName.toLowerCase())
@@ -95,80 +92,9 @@ export default function Payments() {
                 </tr>
               </thead>
               <tbody>
-                {bodyTable.map((item) => {
-                  if (tableFilters(item)) {
-                    return (
-                      <tr className="bg-white border-b ">
-                        <th scope="row" className="tableBodyTh">
-                          <Circle
-                            weight="fill"
-                            size={15}
-                            color={item.status === 'active' ? 'green' : 'gray'}
-                          />
-                        </th>
-                        <td className="tableLine max-w-[9rem]">
-                          <Link to={`/contractor/${item.id}`}>{item.name}</Link>
-                        </td>
-                        {item.payments.map((payment) => (
-                          <>
-                            <td className="w-[7rem]  px-5">
-                              $ {formatMoney(Number(payment.value))}
-                            </td>
-                            <td className="tableLine flex flex-col">
-                              {PAYMENT_TYPES.map(
-                                (type: string, index: number) => (
-                                  <label
-                                    key={index}
-                                    title={type}
-                                    className="flex gap-1"
-                                  >
-                                    <input
-                                      type="checkbox"
-                                      value={type}
-                                      name="paymentType"
-                                    />
-                                    {type.slice(0, 4)}
-                                  </label>
-                                ),
-                              )}
-                            </td>
-                            <td className=" w-[7rem] px-0">
-                              <input
-                                title="identificação do pagamento"
-                                value={payment.identifier}
-                                type="text"
-                                className="border rounded ml-5 focus:ml-0 focus:w-[7rem] w-[4rem] px-2 py-1 outline-brand"
-                              />
-                            </td>
-                          </>
-                        ))}
-                        <td className="w-[7rem]  px-5">
-                          ${' '}
-                          {formatMoney(
-                            item.payments.reduce(
-                              (acc, curr) => acc + Number(curr.value),
-                              0,
-                            ),
-                          )}
-                        </td>
-                        <td className="tableLine flex relative top-3 gap-1">
-                          <button
-                            onClick={() => console.log('save')}
-                            className="buttonStyle1 text-xs py-[0.09rem] px-2  "
-                            type="button"
-                          >
-                            Save
-                          </button>
-                          <button
-                            onClick={() => console.log('save')}
-                            className="buttonStyle2 text-xs py-[0.09rem] px-2  "
-                            type="button"
-                          >
-                            Edit
-                          </button>
-                        </td>
-                      </tr>
-                    )
+                {bodyTable.map((payments: ContractorPaymentInfos) => {
+                  if (tableFilters(payments)) {
+                    return <PaymentsInfos {...payments} />
                   } else {
                     return []
                   }

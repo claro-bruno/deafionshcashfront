@@ -33,3 +33,16 @@ export type NewContractor = {
     zip?: string
   }
 }
+export type ContractorPaymentInfos = {
+  id: number
+  contractor: { name: string; id: number }
+  status: string
+  month: string
+  year: string
+  payments: {
+    type: string
+    identifier: string
+    period: string
+    value: string
+  }[]
+}
