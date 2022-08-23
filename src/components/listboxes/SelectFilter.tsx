@@ -7,10 +7,12 @@ export default function SelectFilter({
   setFilter,
   selectOptions,
   listCSS,
+  selectedIcon = true,
 }: {
   setFilter?: (optionName: string) => void
   selectOptions: { name: string }[]
   listCSS?: string
+  selectedIcon?: boolean
 }) {
   const [selected, setSelected] = useState(selectOptions[0])
   useEffect(() => {
@@ -49,13 +51,14 @@ export default function SelectFilter({
                   {({ selected }) => (
                     <>
                       <span
+                        title={selectedIcon ? undefined : option.name}
                         className={`block truncate ${
-                          selected ? 'font-semibold' : 'font-normal'
+                          selected ? 'font-semibold ' : 'font-normal'
                         }`}
                       >
                         {option.name}
                       </span>
-                      {selected ? (
+                      {selected && selectedIcon ? (
                         <span className="absolute inset-y-0 left-0 flex items-center pl-1 text-brand">
                           <Check className="h-5 w-5" aria-hidden="true" />
                         </span>

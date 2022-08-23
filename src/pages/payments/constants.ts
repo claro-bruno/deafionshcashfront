@@ -259,4 +259,3 @@ export function getLastDayOfMonth(month: string) {
   const lastDayOfMonth = new Date(2020, findMonthIndex + 1, 0).getDate()
   return lastDayOfMonth
 }
-export const PAYMENT_TYPES = ['Transference', 'Deposit', 'Application']

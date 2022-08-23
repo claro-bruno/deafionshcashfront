@@ -21,3 +21,8 @@ export const yearsListBox = [
   { name: '2018' },
 ]
 export const fortnightListBox = [{ name: 'Quinzena 1' }, { name: 'Quinzena 2' }]
+export const PAYMENT_TYPES = [
+  { name: 'Transference' },
+  { name: 'Deposit' },
+  { name: 'Application' },
+]

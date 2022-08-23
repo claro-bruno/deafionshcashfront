@@ -3,7 +3,7 @@ import { jobsContext } from '../../../context/JobContextProvider'
 import { Job } from '../../../types/job'
 import { DaysObj } from '../Job'
 
-export default function InputsTableLine({
+export default function JobTableLine({
   fortnightDays,
   contractor,
 }: {
@@ -83,9 +83,20 @@ export default function InputsTableLine({
   }
 
   return (
-    <>
+    <tr key={contractor.id} className=" bg-white border-b ">
+      <td className="pl-4 ">
+        <select
+          className="rounded bg-white border outline-none p-1"
+          name="jobStatus"
+        >
+          <option value="active">active</option>
+          <option value="inactive">inactive</option>
+        </select>
+      </td>
+      <td className="max-w-[9rem]">{contractor.contractor}</td>
+      <td className="">{contractor.client}</td>
       <td className="flex items-center justify-center">
-        <p className="flex justify-center gap-1">
+        <p className="flex justify-center py-2 gap-1">
           {fortnightDays.map((day: DaysObj, index) => (
             <input
               key={day.dayNum}
@@ -103,8 +114,8 @@ export default function InputsTableLine({
           ))}
         </p>
       </td>
-      <td className="tableLine">{contractorWorkedInfos.hours}</td>
-      <td className="tableLine relative right-5">
+      <td className="">{contractorWorkedInfos.hours}</td>
+      <td className="w-[5rem]">
         $
         <input
           onChange={(e) => handleChange(e, 'pHour')}
@@ -113,30 +124,28 @@ export default function InputsTableLine({
           value={contractorWorkedInfos.pHour}
         />
       </td>
-      <td className="tableLine relative right-4">
+      <td className=" ">
         ${' '}
         {Number(contractorWorkedInfos.pHour) *
           Number(contractorWorkedInfos.hours)}
       </td>
-      <td className="tableLine relative right-6">
-        <button className="border rounded text-sm px-1">Ativo</button>
-      </td>
-      <td className="tableLine flex">
+
+      <td className=" flex gap-1">
         <button
           onClick={() => console.log(contractorWorkedInfos)}
-          className="buttonStyle1 text-xs py-[0.09rem] px-2 absolute  right-[4.7%] "
+          className="buttonStyle1 text-xs py-[0.09rem] px-2  "
           type="button"
         >
           Save
         </button>
         <button
           onClick={() => console.log(handleEditContractor())}
-          className="buttonStyle2 text-xs py-[0.09rem] px-2 absolute right-[1.5%] "
+          className="buttonStyle2 text-xs py-[0.09rem] px-2  "
           type="button"
         >
           Edit
         </button>
       </td>
-    </>
+    </tr>
   )
 }

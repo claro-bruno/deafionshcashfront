@@ -1,11 +1,11 @@
 export const headerTable = [
+  'status',
   'Contractor',
   'client',
   'Month',
   ' total hours',
   'P/Hour',
   'total payment',
-  'status',
 ]
 export const months = [
   'January',
@@ -69,7 +69,7 @@ export function createObjectDaysByMonth(
 export const jobs = [
   {
     id: 11,
-    contractor: 'bruno fay',
+    contractor: 'bruno alves da silva fay',
     month: 'January',
     year: 2022,
     client: 'amazon',

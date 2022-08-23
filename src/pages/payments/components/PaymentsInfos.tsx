@@ -1,10 +1,10 @@
 import { Circle } from 'phosphor-react'
-import React from 'react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
+import { PAYMENT_TYPES } from '../../../components/listboxes/constants'
+import SelectFilter from '../../../components/listboxes/SelectFilter'
 import useFormate from '../../../hooks/useFormate'
 import { ContractorPaymentInfos } from '../../../types/contractor'
-import { PAYMENT_TYPES } from '../constants'
 
 export default function PaymentsInfos(payInfos: ContractorPaymentInfos) {
   const { formatMoney } = useFormate()
@@ -52,19 +52,15 @@ export default function PaymentsInfos(payInfos: ContractorPaymentInfos) {
           <td className="w-[7rem]  px-5">
             $ {formatMoney(Number(payment.value))}
           </td>
-          <td className="tableLine flex flex-col">
-            {PAYMENT_TYPES.map((type: string, index: number) => (
-              <label key={index} title={type} className="flex gap-1">
-                <input
-                  type="checkbox"
-                  value={type}
-                  {...register(`payments[${i}].type`)}
-                />
-                {type.slice(0, 4)}
-              </label>
-            ))}
+          <td className="tableLine flex flex-col items-center justify-center">
+            <SelectFilter
+              selectedIcon={false}
+              selectOptions={PAYMENT_TYPES}
+              listCSS="w-[7rem] absolute mt-5"
+              {...register(`payments[${i}].type`)}
+            />
           </td>
-          <td className=" w-[7rem] px-0">
+          <td className=" w-[7rem] ">
             <input
               {...register(`payments[${i}].identifier`)}
               title="identificação do pagamento"
@@ -80,7 +76,7 @@ export default function PaymentsInfos(payInfos: ContractorPaymentInfos) {
           payInfos.payments.reduce((acc, curr) => acc + Number(curr.value), 0),
         )}
       </td>
-      <td className="tableLine flex relative top-3 gap-1">
+      <td className="tableLine flex gap-1">
         <button
           onClick={handleSubmit(handleUpdatePayment)}
           className="buttonStyle1 text-xs py-[0.09rem] px-2  "

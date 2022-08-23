@@ -9,9 +9,9 @@ import {
 import SelectFilter from '../../components/listboxes/SelectFilter'
 import NewJob from './components/NewJob'
 import { jobsContext } from '../../context/JobContextProvider'
-import DayInputsTableLine from './components/InputsTableLine'
 import { headerTable, months } from './constants'
 import { useParams } from 'react-router-dom'
+import JobTableLine from './components/JobTableLine'
 
 export interface DaysObj {
   dayNum: number
@@ -133,7 +133,11 @@ export default function Job() {
                     )
                   }
                   return (
-                    <th scope="col" key={index} className=" first:pl-6 ">
+                    <th
+                      scope="col"
+                      key={index}
+                      className=" first:pl-6 last:text-pink-500 "
+                    >
                       {item}
                     </th>
                   )
@@ -147,16 +151,10 @@ export default function Job() {
               {users.map((contractor) => {
                 if (tableFilters(contractor)) {
                   return (
-                    <tr key={contractor.id} className="bg-white border-b ">
-                      <td className="tableLine relative flex flex-wrap max-w-[9rem]">
-                        {contractor.contractor}
-                      </td>
-                      <td className="">{contractor.client}</td>
-                      <DayInputsTableLine
-                        contractor={contractor}
-                        fortnightDays={fortnightDays}
-                      />
-                    </tr>
+                    <JobTableLine
+                      contractor={contractor}
+                      fortnightDays={fortnightDays}
+                    />
                   )
                 } else {
                   return []
