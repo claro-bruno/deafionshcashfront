@@ -139,7 +139,7 @@ export default function Job() {
                   )
                 })}
                 <th>
-                  <GearSix className="relative left-3" size={24} />
+                  <GearSix size={24} />
                 </th>
               </tr>
             </thead>

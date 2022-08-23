@@ -5,6 +5,7 @@ export const headerTable = [
   ' total hours',
   'P/Hour',
   'total payment',
+  'status',
 ]
 export const months = [
   'January',

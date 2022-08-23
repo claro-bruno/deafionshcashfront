@@ -118,17 +118,20 @@ export default function InputsTableLine({
         {Number(contractorWorkedInfos.pHour) *
           Number(contractorWorkedInfos.hours)}
       </td>
+      <td className="tableLine relative right-6">
+        <button className="border rounded text-sm px-1">Ativo</button>
+      </td>
       <td className="tableLine flex">
         <button
           onClick={() => console.log(contractorWorkedInfos)}
-          className="buttonStyle1 text-xs py-[0.09rem] px-2 absolute  right-[5.7%] "
+          className="buttonStyle1 text-xs py-[0.09rem] px-2 absolute  right-[4.7%] "
           type="button"
         >
           Save
         </button>
         <button
           onClick={() => console.log(handleEditContractor())}
-          className="buttonStyle2 text-xs py-[0.09rem] px-2 absolute right-[2.5%] "
+          className="buttonStyle2 text-xs py-[0.09rem] px-2 absolute right-[1.5%] "
           type="button"
         >
           Edit
