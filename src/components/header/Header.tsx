@@ -16,19 +16,20 @@ export default function Header(props: PropsWithChildren) {
       {props.children}
       {!location.pathname.includes('/register') ? (
         <>
-          <div className="flex self-center relative right-3 gap-4 ">
-            <div className="flex gap-4 ">
-              <NavLink to="/payments" className="headerLink">
-                Payments
-              </NavLink>
-              <NavLink to="/clients" className="headerLink">
-                Clients
-              </NavLink>
-              <NavLink to="/jobs" className="headerLink">
-                Jobs
-              </NavLink>
-            </div>
-          </div>
+          <nav className="flex self-center relative right-3 gap-4 ">
+            <NavLink to="/payments" className="headerLink">
+              Payments
+            </NavLink>
+            {/*  <NavLink to="/contractors" className="headerLink">
+              Contractors
+            </NavLink> */}
+            <NavLink to="/clients" className="headerLink">
+              Clients
+            </NavLink>
+            <NavLink to="/jobs" className="headerLink">
+              Jobs
+            </NavLink>
+          </nav>
           <button onClick={() => navigate('/')} className="loginLink">
             Logout
           </button>

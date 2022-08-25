@@ -14,7 +14,7 @@ export default function PaymentsInfos(payInfos: ContractorPaymentInfos) {
       year: payInfos.year,
       payments: [
         {
-          type: payInfos.payments[0].type,
+          type: payInfos.payments[0].type ?? '',
           identifier: payInfos.payments[0].identifier,
           value: payInfos.payments[0].value,
           period: payInfos.payments[0].period,

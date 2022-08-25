@@ -124,7 +124,7 @@ export default function JobTableLine({
         <input
           onChange={(e) => handleChange(e, 'pHour')}
           name="pHour"
-          className="w-[2.1rem] border ml-1 px-1"
+          className="w-[2.1rem] border ml-1 p-1"
           value={contractorWorkedInfos.pHour}
         />
       </td>

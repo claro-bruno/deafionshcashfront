@@ -63,7 +63,7 @@ export default function Payments() {
         </div>
       </Header>
 
-      <main className="min-h-screen flex bg-gray-100 ">
+      <main className="flex bg-gray-100 ">
         <div className=" absolute text-zinc-700 left-[45%] right-full flex gap-2 font-extrabold text-xl">
           <h2>{yearName}</h2>
           <h2>{monthName}</h2>
