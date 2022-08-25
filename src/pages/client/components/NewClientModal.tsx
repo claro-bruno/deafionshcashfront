@@ -1,7 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { ChangeEvent, Fragment, useState } from 'react'
-import { ModalProps } from '../../types/modal'
-import './modal.css'
+import { ModalProps } from '../../../types/modal'
+import '../../../components/modals/modal.css'
 
 const WEEKDAYS = [
   'Monday',
@@ -80,6 +80,7 @@ export default function NewClientModal({
                             Start:
                             <input
                               className="outline-brand  p-1 ring-1  ring-zinc-400  rounded"
+                              onChange={(e) => console.log(e.target.value)}
                               type="time"
                               name="start"
                               required
@@ -89,6 +90,9 @@ export default function NewClientModal({
                             End:
                             <input
                               className="outline-brand  p-1 ring-1  ring-zinc-400  rounded"
+                              onChange={(e) =>
+                                console.log(typeof e.target.value)
+                              }
                               type="time"
                               name="end"
                               required

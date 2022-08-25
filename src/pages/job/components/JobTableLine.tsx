@@ -19,7 +19,10 @@ export default function JobTableLine({
     handleCloseModal,
   } = useContext(jobsContext)
 
-  function handleChange(e: ChangeEvent<HTMLInputElement>, options?: string) {
+  function handleChange(
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    options?: string,
+  ) {
     const { name, value } = e.target
     handleCurrentInputJobValue(value)
     if (options) {
@@ -86,6 +89,7 @@ export default function JobTableLine({
     <tr key={contractor.id} className=" bg-white border-b ">
       <td className="pl-4 ">
         <select
+          onChange={handleChange}
           className="rounded bg-white border outline-none p-1"
           name="jobStatus"
         >

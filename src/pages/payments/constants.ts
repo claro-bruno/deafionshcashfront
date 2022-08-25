@@ -23,13 +23,13 @@ export const bodyTable = [
     year: '2022',
     payments: [
       {
-        type: 'ch 101',
+        type: 'Transfer',
         identifier: '12345',
         period: 'fortnight1',
         value: '1520.30',
       },
       {
-        type: 'ch 102',
+        type: 'Deposit',
         identifier: '12345',
         period: 'fortnight2',
         value: '4520.30',
@@ -47,13 +47,13 @@ export const bodyTable = [
     year: '2022',
     payments: [
       {
-        type: 'ch 101',
+        type: 'Transfer',
         identifier: '12345',
         period: 'fortnight1',
         value: '150.30',
       },
       {
-        type: 'ch 102',
+        type: 'Deposit',
         identifier: '12345',
         period: 'fortnight2',
         value: '4520.30',
@@ -71,13 +71,13 @@ export const bodyTable = [
     year: '2022',
     payments: [
       {
-        type: 'ch 101',
+        type: 'Transfer',
         identifier: '12345',
         period: 'fortnight1',
         value: '2520.30',
       },
       {
-        type: 'ch 102',
+        type: 'Deposit',
         identifier: '12345',
         period: 'fortnight2',
         value: '2000',
@@ -95,13 +95,13 @@ export const bodyTable = [
     year: '2022',
     payments: [
       {
-        type: 'ch 101',
+        type: 'Transfer',
         identifier: '12345',
         period: 'fortnight1',
         value: '3120.50',
       },
       {
-        type: 'ch 102',
+        type: 'Deposit',
         identifier: '12345',
         period: 'fortnight2',
         value: '1520.30',
@@ -119,13 +119,13 @@ export const bodyTable = [
     year: '2022',
     payments: [
       {
-        type: 'ch 101',
+        type: 'Transfer',
         identifier: '12345',
         period: 'fortnight1',
         value: '520.30',
       },
       {
-        type: 'ch 102',
+        type: 'Deposit',
         identifier: '12345',
         period: 'fortnight2',
         value: '120.30',
@@ -143,13 +143,13 @@ export const bodyTable = [
     year: '2022',
     payments: [
       {
-        type: 'ch 101',
+        type: 'Transfer',
         identifier: '12345',
         period: 'fortnight1',
         value: '5020.70',
       },
       {
-        type: 'ch 102',
+        type: 'Deposit',
         identifier: '12345',
         period: 'fortnight2',
         value: '1220.10',
@@ -167,13 +167,13 @@ export const bodyTable = [
     year: '2022',
     payments: [
       {
-        type: 'ch 101',
+        type: 'Transfer',
         identifier: '12345',
         period: 'fortnight1',
         value: '520.30',
       },
       {
-        type: 'ch 102',
+        type: 'Deposit',
         identifier: '12345',
         period: 'fortnight2',
         value: '120.30',
@@ -191,13 +191,13 @@ export const bodyTable = [
     year: '2022',
     payments: [
       {
-        type: 'ch 101',
+        type: 'Transfer',
         identifier: '12345',
         period: 'fortnight1',
         value: '2520.30',
       },
       {
-        type: 'ch 102',
+        type: 'Deposit',
         identifier: '12345',
         period: 'fortnight2',
         value: '2220.30',
@@ -215,13 +215,13 @@ export const bodyTable = [
     year: '2022',
     payments: [
       {
-        type: 'ch 101',
+        type: 'Transfer',
         identifier: '12345',
         period: 'fortnight1',
         value: '2520.30',
       },
       {
-        type: 'ch 102',
+        type: 'Deposit',
         identifier: '12345',
         period: 'fortnight2',
         value: '2220.30',
@@ -239,13 +239,13 @@ export const bodyTable = [
     year: '2022',
     payments: [
       {
-        type: 'ch 101',
+        type: 'Transfer',
         identifier: '12345',
         period: 'fortnight1',
         value: '1520.30',
       },
       {
-        type: 'ch 102',
+        type: 'Depositosit',
         identifier: '12345',
         period: 'fortnight2',
         value: '4300',

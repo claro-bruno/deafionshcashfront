@@ -1,13 +1,12 @@
 import { Circle } from 'phosphor-react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
-import { PAYMENT_TYPES } from '../../../components/listboxes/constants'
-import SelectFilter from '../../../components/listboxes/SelectFilter'
 import useFormate from '../../../hooks/useFormate'
 import { ContractorPaymentInfos } from '../../../types/contractor'
 
 export default function PaymentsInfos(payInfos: ContractorPaymentInfos) {
   const { formatMoney } = useFormate()
+
   const paymentContractorInfos = useForm<any>({
     defaultValues: {
       contractorId: payInfos.contractor.id,
@@ -21,7 +20,7 @@ export default function PaymentsInfos(payInfos: ContractorPaymentInfos) {
           period: payInfos.payments[0].period,
         },
         {
-          type: payInfos.payments[1].type,
+          type: payInfos.payments[1].type ?? '',
           identifier: payInfos.payments[1].identifier,
           value: payInfos.payments[1].value,
           period: payInfos.payments[1].period,
@@ -29,10 +28,11 @@ export default function PaymentsInfos(payInfos: ContractorPaymentInfos) {
       ],
     },
   })
-  function handleUpdatePayment(data: any) {
-    console.log(data)
-  }
   const { register, handleSubmit } = paymentContractorInfos
+  function handleUpdatePayment(data: any) {
+    console.log({ ...data })
+  }
+
   return (
     <tr className="bg-white border-b">
       <th scope="row" className="tableBodyTh">
@@ -53,12 +53,14 @@ export default function PaymentsInfos(payInfos: ContractorPaymentInfos) {
             $ {formatMoney(Number(payment.value))}
           </td>
           <td className="tableLine flex flex-col items-center justify-center">
-            <SelectFilter
-              selectedIcon={false}
-              selectOptions={PAYMENT_TYPES}
-              listCSS="w-[7rem] absolute mt-5"
+            <select
+              className="rounded bg-white border outline-none text-xs py-1"
               {...register(`payments[${i}].type`)}
-            />
+            >
+              <option value="Transfer">Transfer</option>
+              <option value="Deposit">Deposit</option>
+              <option value="Others">Others</option>
+            </select>
           </td>
           <td className=" w-[7rem] ">
             <input
