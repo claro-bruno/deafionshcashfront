@@ -27,7 +27,7 @@ export default function Job() {
   )
   const { handleCloseModal, users, handleSetUsers } = useContext(jobsContext)
   const { id } = useParams()
-  console.log(id)
+  /* console.log(id) */
 
   useEffect(() => {
     if (id) {
@@ -74,7 +74,6 @@ export default function Job() {
 
     setFortnightDays(fortnight)
   }
-  console.log('mudei')
 
   return (
     <div>

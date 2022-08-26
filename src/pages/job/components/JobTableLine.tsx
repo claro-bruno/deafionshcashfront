@@ -31,6 +31,8 @@ export default function JobTableLine({
         [name]: value,
       })
     }
+    console.log(name, value)
+
     setContractorWorkedInfos((state: any) => ({
       ...state,
       workedDaysInfos: {
@@ -62,7 +64,7 @@ export default function JobTableLine({
   function getWorkedDayValue(day: number) {
     const contractorArr = Object.entries(contractorWorkedInfos.workedDaysInfos)
     const currentContractor = contractorArr.find(
-      (_, index) => index === day,
+      (_, index) => index + 1 === day,
     ) as [string, { workedHours: string }]
 
     if (currentContractor) {
@@ -73,9 +75,8 @@ export default function JobTableLine({
   function getWorkedDayName(day: number) {
     const contractorArr = Object.entries(contractorWorkedInfos.workedDaysInfos)
     const currentContractor = contractorArr.find(
-      (_, index) => index === day,
+      (_, index) => index + 1 === day,
     ) as [string, { workedHours: string }]
-
     return currentContractor[0]
   }
 
@@ -101,12 +102,12 @@ export default function JobTableLine({
       <td className="">{contractor.client}</td>
       <td className="flex items-center justify-center">
         <p className="flex justify-center py-2 gap-1">
-          {fortnightDays.map((day: DaysObj, index) => (
+          {fortnightDays.map((day: DaysObj) => (
             <input
               key={day.dayNum}
               placeholder="0"
-              name={getWorkedDayName(index)}
-              value={getWorkedDayValue(index)}
+              name={getWorkedDayName(day.dayNum)}
+              value={getWorkedDayValue(day.dayNum)}
               onChange={handleChange}
               onKeyUp={handleKeyPress}
               type="number"
