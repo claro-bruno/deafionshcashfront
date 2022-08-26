@@ -141,7 +141,7 @@ export default function Job() {
                     </th>
                   )
                 })}
-                <th>
+                <th className="tableLine">
                   <GearSix size={24} />
                 </th>
               </tr>

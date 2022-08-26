@@ -10,16 +10,18 @@ export default function NewContractorForm() {
   const { formatEIN, formatPhone, formatSsnOrItin } = useFormate()
   const { register, handleSubmit, watch } = useFormContext()
   const mutation = useMutation<{ name: string; job: string }>((data) =>
-    axios.post('https://reqres.in/api/users', data),
+    axios.post(
+      'http://localhost:3001/contractor',
+      { body: data },
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      },
+    ),
   )
-  useEffect(() => {
-    mutation.mutate({
-      name: 'morpheus',
-      job: 'leader',
-    })
-  }, [])
+  useEffect(() => {}, [])
 
-  console.log(mutation.data)
   function setNumberOfAddresses(addressNum: string) {
     return Number(addressNum) === 1 ? (
       <AddressComponent secondaryAddress={false} />
@@ -32,6 +34,8 @@ export default function NewContractorForm() {
   }
   function handleSubmitNewContractor(data: any) {
     console.log(JSON.stringify(data, null, 2))
+    /*     mutation.mutate(data)
+    console.log(mutation.data) */
   }
   const ssnOrItin = watch('ssnOrItin')
   const phone = watch('phone')
@@ -153,7 +157,6 @@ export default function NewContractorForm() {
             <label className="labelsDefault ">
               <div className="flex items-start">Document Photo</div>
               <input
-                {...register('documentPhoto')}
                 accept="image/*"
                 type="file"
                 className=" file:py-[0.35rem]  fileInput"

@@ -24,19 +24,6 @@ export default function AddressComponent({
           />
         </label>
         <label className="labelsDefault">
-          Street *
-          <input
-            {...register(
-              secondaryAddress ? 'secondaryAddress.street' : 'address.street',
-            )}
-            className="inputsDefault"
-            type="text"
-            required
-          />
-        </label>
-      </div>
-      <div className="flex flex-col gap-2">
-        <label className="labelsDefault">
           State *
           <input
             {...register(
@@ -47,6 +34,8 @@ export default function AddressComponent({
             required
           />
         </label>
+      </div>
+      <div className="flex flex-col gap-2">
         <label className="labelsDefault">
           Zip-code *
           <input
@@ -60,11 +49,10 @@ export default function AddressComponent({
             pattern="^(?(^00000(|-0000))|(\d{5}(|-\d{4})))$"
             className="inputsDefault"
             type="text"
+            maxLength={20}
             required
           />
         </label>
-      </div>
-      <div className="flex flex-col gap-2">
         <label className="labelsDefault">
           City *
           <input
@@ -76,18 +64,12 @@ export default function AddressComponent({
             required
           />
         </label>
+      </div>
+      <div className="flex flex-col gap-2">
         <label className="labelsDefault ">
           <div className="flex items-start">Proof of address</div>
 
-          <input
-            {...register(
-              secondaryAddress
-                ? 'secondaryAddress.residencyProof'
-                : 'address.residencyProof',
-            )}
-            type="file"
-            className="fileInput"
-          />
+          <input type="file" className="fileInput" />
         </label>
       </div>
     </div>

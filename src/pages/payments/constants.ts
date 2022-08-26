@@ -23,8 +23,8 @@ export const bodyTable = [
     year: '2022',
     payments: [
       {
-        type: 'Transfer',
-        identifier: '12345',
+        type: '',
+        identifier: '',
         period: 'fortnight1',
         value: '1520.30',
       },

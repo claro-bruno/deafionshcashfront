@@ -68,6 +68,7 @@ export default function JobTableLine({
     ) as [string, { workedHours: string }]
 
     if (currentContractor) {
+      console.log(currentContractor)
       return currentContractor[1].workedHours
     }
   }
