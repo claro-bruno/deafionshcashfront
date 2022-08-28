@@ -17,19 +17,16 @@ export type NewContractor = {
   ssnOrItin: string
   ein?: string
   acceptTerms: boolean
-  dateCreated: Date
   address: {
     address: string
     city: string
     state: string
-    street: string
     zip: string
   }
   secondaryAddress?: {
     address?: string
     city?: string
     state?: string
-    street?: string
     zip?: string
   }
 }

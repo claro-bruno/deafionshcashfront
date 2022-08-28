@@ -46,7 +46,6 @@ export default function AddressComponent({
               watch(secondaryAddress ? 'secondaryAddress.zip' : 'address.zip'),
             )}
             inputMode="numeric"
-            pattern="^(?(^00000(|-0000))|(\d{5}(|-\d{4})))$"
             className="inputsDefault"
             type="text"
             maxLength={20}
