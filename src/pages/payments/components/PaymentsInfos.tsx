@@ -17,13 +17,13 @@ export default function PaymentsInfos(payInfos: ContractorPaymentInfos) {
           type: payInfos.payments[0].type ?? '',
           identifier: payInfos.payments[0].identifier,
           value: payInfos.payments[0].value,
-          period: payInfos.payments[0].period,
+          quarter: payInfos.payments[0].quarter,
         },
         {
           type: payInfos.payments[1].type ?? '',
           identifier: payInfos.payments[1].identifier,
           value: payInfos.payments[1].value,
-          period: payInfos.payments[1].period,
+          quarter: payInfos.payments[1].quarter,
         },
       ],
     },
@@ -54,12 +54,14 @@ export default function PaymentsInfos(payInfos: ContractorPaymentInfos) {
           </td>
           <td className="tableLine flex flex-col items-center justify-center">
             <select
-              className="rounded bg-white border outline-none text-xs py-1"
+              className="rounded bg-white border w-[4.9rem] outline-none text-xs py-1"
               {...register(`payments[${i}].type`)}
             >
-              <option value="Transfer">Transfer</option>
-              <option value="Deposit">Deposit</option>
-              <option value="Others">Others</option>
+              <option className="w-20" value="Transfer">
+                Bank Transfer
+              </option>
+              <option value="Deposit">Check</option>
+              <option value="Others">Venmo</option>
             </select>
           </td>
           <td className=" w-[7rem] ">

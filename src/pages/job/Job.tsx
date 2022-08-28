@@ -66,9 +66,9 @@ export default function Job() {
     return weakDaysNamed
   }
 
-  function formatFortnightDays(period: string) {
+  function formatFortnightDays(quarter: number) {
     const fortnight =
-      period === 'Quinzena 1'
+      quarter === 1
         ? addWeakDayName().splice(0, 15)
         : addWeakDayName().splice(15)
 

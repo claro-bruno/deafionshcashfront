@@ -17,22 +17,22 @@ export default function Payments() {
   const [filterContractor, setFilterContractor] = useState('')
   const { formatMoney } = useFormate()
 
-  const outlay: { type: string; period: string; value: string }[] = bodyTable
+  const outlay: { type: string; quarter: number; value: string }[] = bodyTable
     .filter((item) => item.month === monthName.toLowerCase())
     .map((item) => item.payments)
     .flat()
 
-  function forthnight(period: string) {
+  function forthnight(quarter: number) {
     return Number(
       outlay
-        .filter((item) => item.period === period)
+        .filter((item) => item.quarter === quarter)
         .reduce((acc, curr) => acc + Number(curr.value), 0),
     )
   }
 
-  const fortnight1Formated = formatMoney(forthnight('forthnight1'))
-  const fortnight2Formated = formatMoney(forthnight('forthnight2'))
-  const total = forthnight('forthnight1') + forthnight('forthnight2')
+  const fortnight1Formated = formatMoney(forthnight(1))
+  const fortnight2Formated = formatMoney(forthnight(2))
+  const total = forthnight(1) + forthnight(2)
   const totalFormatted = formatMoney(total)
 
   function tableFilters(item: ContractorPaymentInfos) {
@@ -63,7 +63,7 @@ export default function Payments() {
         </div>
       </Header>
 
-      <main className="flex bg-gray-100 ">
+      <main className="flex bg-gray-100 min-h-[88vh]">
         <div className=" absolute text-zinc-700 left-[45%] right-full flex gap-2 font-extrabold text-xl">
           <h2>{yearName}</h2>
           <h2>{monthName}</h2>

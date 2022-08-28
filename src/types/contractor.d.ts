@@ -42,7 +42,7 @@ export type ContractorPaymentInfos = {
   payments: {
     type: string
     identifier: string
-    period: string
+    quarter: number
     value: string
   }[]
 }
