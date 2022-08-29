@@ -24,7 +24,7 @@ export default function Client() {
           type="text"
         />
       </Header>
-      <div className=" mt-7 w-[80vw] relative top-8 self-center tableContainer overflow-auto ">
+      <div className=" mt-10 w-[80vw] self-center tableContainer overflow-auto ">
         <table className="table">
           <thead className="tableHead">
             <tr>

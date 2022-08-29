@@ -68,7 +68,6 @@ export default function JobTableLine({
     ) as [string, { workedHours: string }]
 
     if (currentContractor) {
-      console.log(currentContractor)
       return currentContractor[1].workedHours
     }
   }
@@ -100,7 +99,7 @@ export default function JobTableLine({
         </select>
       </td>
       <td className="max-w-[9rem]">{contractor.contractor}</td>
-      <td className="">{contractor.client}</td>
+      <td>{contractor.client}</td>
       <td className="flex items-center justify-center">
         <p className="flex justify-center py-2 gap-1">
           {fortnightDays.map((day: DaysObj) => (
@@ -120,7 +119,7 @@ export default function JobTableLine({
           ))}
         </p>
       </td>
-      <td className="">{contractorWorkedInfos.hours}</td>
+      <td>{contractorWorkedInfos.hours}</td>
       <td className="w-[5rem]">
         $
         <input
@@ -130,7 +129,7 @@ export default function JobTableLine({
           value={contractorWorkedInfos.pHour}
         />
       </td>
-      <td className=" ">
+      <td>
         ${' '}
         {Number(contractorWorkedInfos.pHour) *
           Number(contractorWorkedInfos.hours)}

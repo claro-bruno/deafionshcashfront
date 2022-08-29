@@ -8,7 +8,7 @@ import useModal from '../../hooks/useModal'
 import { ContractorWorkedInfo } from '../../types/contractor'
 import CardContractor from './components/cardContractor/CardContractor'
 import ContractorAsideInfos from './components/contractorAsideInfos/ContractorAsideInfos'
-import { bodyTable, headerTable } from './constants'
+import { bodyTableContractor, headerTableContractor } from './constants'
 import './contractor.css'
 
 export interface VisibilityWorkedInfos {
@@ -31,7 +31,7 @@ export default function Contractor() {
   const [visibilityWorkedInfos, setVisibilityWorkedInfos] = useState(
     INITIAL_VISIBILITY_WORKED_INFOS,
   )
-  const paymentsArray = bodyTable.map((item) => {
+  const paymentsArray = bodyTableContractor.map((item) => {
     if (tableFilters(item)) {
       return (Number(item.hourlyPay) * Number(item.workedHours)).toFixed(2)
     }
@@ -42,7 +42,7 @@ export default function Contractor() {
     .reduce((acc, curr) => acc + Number(curr), 0)
     .toFixed(2)
 
-  const hoursArray = bodyTable.map((item) => {
+  const hoursArray = bodyTableContractor.map((item) => {
     if (tableFilters(item)) {
       return item.workedHours
     }
@@ -94,7 +94,7 @@ export default function Contractor() {
           <table className="table">
             <thead className="tableHead">
               <tr>
-                {headerTable.map((item, index) => (
+                {headerTableContractor.map((item, index) => (
                   <th scope="col" key={index} className="tableLine">
                     {item}
                   </th>
@@ -102,7 +102,7 @@ export default function Contractor() {
               </tr>
             </thead>
             <tbody>
-              {bodyTable.map((item) => {
+              {bodyTableContractor.map((item) => {
                 if (tableFilters(item)) {
                   return (
                     <tr key={item.id} className="bg-white border-b ">

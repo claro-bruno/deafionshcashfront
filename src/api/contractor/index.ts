@@ -1,8 +1,18 @@
 import axios from 'axios'
+import { NewContractor } from '../../types/contractor'
 
-export async function axiosCreateNewContractor(payload) {
-  return await axios.post('rota', payload)
+export function axiosCreateNewContractor(payload: NewContractor) {
+  return axios.post(
+    'http://localhost:3001/contractor',
+    { body: payload },
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    },
+  )
 }
+
 export async function axiosUpdateNewContractor(payload) {
   return await axios.put('rota', payload)
 }

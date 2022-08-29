@@ -18,6 +18,7 @@ export default function SelectFilter({
   useEffect(() => {
     setFilter && setFilter(selected.name)
   }, [selected])
+
   return (
     <div className={listCSS ?? ' w-[5.5rem]'}>
       <Listbox value={selected} onChange={setSelected}>

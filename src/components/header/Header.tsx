@@ -20,11 +20,11 @@ export default function Header(props: PropsWithChildren) {
             <NavLink to="/payments" className="headerLink">
               Payments
             </NavLink>
-            {/*  <NavLink to="/contractors" className="headerLink">
-              Contractors
-            </NavLink> */}
             <NavLink to="/clients" className="headerLink">
               Clients
+            </NavLink>
+            <NavLink to="/contractors" className="headerLink">
+              Contractors
             </NavLink>
             <NavLink to="/jobs" className="headerLink">
               Jobs

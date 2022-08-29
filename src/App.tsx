@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom'
 import JobContextProvider from './context/JobContextProvider'
 import Client from './pages/client/Client'
 import Contractor from './pages/contractor/Contractor'
+import Contractors from './pages/contractor/Contractors'
 import Job from './pages/job/Job'
 import Login from './pages/login/Login'
 import Payments from './pages/payments/Payments'
@@ -39,7 +40,8 @@ function App() {
       <Route path="/clients" element={<Client />}>
         <Route path=":name" element={<Client />} />
       </Route>
-      <Route path="/contractor">
+      <Route path="/contractors">
+        <Route index element={<Contractors />} />
         <Route path=":id" element={<Contractor />} />
       </Route>
     </Routes>

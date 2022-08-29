@@ -43,7 +43,7 @@ export default function PaymentsInfos(payInfos: ContractorPaymentInfos) {
         />
       </th>
       <td className="tableLine max-w-[9rem]">
-        <Link to={`/contractor/${payInfos.id}`}>
+        <Link to={`/contractors/${payInfos.id}`}>
           {payInfos.contractor.name}
         </Link>
       </td>

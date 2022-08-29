@@ -1,24 +1,17 @@
 import { useMutation } from '@tanstack/react-query'
-import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
+import { axiosCreateNewContractor } from '../../../api/contractor'
 import useFormate from '../../../hooks/useFormate'
+import { NewContractor } from '../../../types/contractor'
 import AddressComponent from './addressRegister/AddressComponent'
 
 export default function NewContractorForm() {
   const [addressNum, setAddressNum] = useState('1')
   const { formatEIN, formatPhone, formatSsnOrItin } = useFormate()
   const { register, handleSubmit, watch } = useFormContext()
-  const mutation = useMutation<{ name: string; job: string }>((data) =>
-    axios.post(
-      'http://localhost:3001/contractor',
-      { body: data },
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      },
-    ),
+  const newContractorMutate = useMutation((payload: NewContractor) =>
+    axiosCreateNewContractor(payload),
   )
   useEffect(() => {}, [])
 
@@ -32,10 +25,21 @@ export default function NewContractorForm() {
       </>
     )
   }
+  function removeEmptyValuesFromObj(obj: any) {
+    Object.keys(obj).forEach((key) => {
+      if (typeof obj[key] === 'object') {
+        removeEmptyValuesFromObj(obj[key])
+      }
+      if (obj[key] === '') {
+        delete obj[key]
+      }
+    })
+  }
   function handleSubmitNewContractor(data: any) {
-    console.log(JSON.stringify(data, null, 2))
-    /*     mutation.mutate(data)
-    console.log(mutation.data) */
+    removeEmptyValuesFromObj(data)
+    console.log(JSON.stringify(data, 0, 2))
+    newContractorMutate.mutate(data)
+    console.log(newContractorMutate.data)
   }
   const ssnOrItin = watch('ssnOrItin')
   const phone = watch('phone')
