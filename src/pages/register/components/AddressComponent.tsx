@@ -1,5 +1,5 @@
 import { useFormContext } from 'react-hook-form'
-import useFormate from '../../../../hooks/useFormate'
+import useFormate from '../../../hooks/useFormate'
 
 export default function AddressComponent({
   secondaryAddress = false,
@@ -15,7 +15,9 @@ export default function AddressComponent({
           Address *
           <input
             {...register(
-              secondaryAddress ? 'secondaryAddress.address' : 'address.address',
+              secondaryAddress
+                ? 'secondaryAddress.address'
+                : 'primaryAddress.address',
             )}
             inputMode="numeric"
             className="inputsDefault"
@@ -27,7 +29,9 @@ export default function AddressComponent({
           State *
           <input
             {...register(
-              secondaryAddress ? 'secondaryAddress.state' : 'address.state',
+              secondaryAddress
+                ? 'secondaryAddress.state'
+                : 'primaryAddress.state',
             )}
             className="inputsDefault"
             type="text"
@@ -40,10 +44,16 @@ export default function AddressComponent({
           Zip-code *
           <input
             {...register(
-              secondaryAddress ? 'secondaryAddress.zip' : 'address.zip',
+              secondaryAddress
+                ? 'secondaryAddress.zipcode'
+                : 'primaryAddress.zipcode',
             )}
             value={formatZipCode(
-              watch(secondaryAddress ? 'secondaryAddress.zip' : 'address.zip'),
+              watch(
+                secondaryAddress
+                  ? 'secondaryAddress.zipcode'
+                  : 'primaryAddress.zipcode',
+              ),
             )}
             inputMode="numeric"
             className="inputsDefault"
@@ -56,7 +66,9 @@ export default function AddressComponent({
           City *
           <input
             {...register(
-              secondaryAddress ? 'secondaryAddress.city' : 'address.city',
+              secondaryAddress
+                ? 'secondaryAddress.city'
+                : 'primaryAddress.city',
             )}
             className="inputsDefault"
             type="text"

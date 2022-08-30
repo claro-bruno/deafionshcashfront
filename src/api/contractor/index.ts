@@ -2,9 +2,10 @@ import axios from 'axios'
 import { NewContractor } from '../../types/contractor'
 
 export function axiosCreateNewContractor(payload: NewContractor) {
+  const jsonToString = JSON.stringify(payload)
   return axios.post(
     'http://localhost:3001/contractor',
-    { body: payload },
+    { body: jsonToString },
     {
       headers: {
         'Content-Type': 'multipart/form-data',

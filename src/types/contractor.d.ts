@@ -17,17 +17,17 @@ export type NewContractor = {
   ssnOrItin: string
   ein?: string
   acceptTerms: boolean
-  address: {
+  primaryAddress: {
     address: string
     city: string
     state: string
-    zip: string
+    zipcode: string
   }
   secondaryAddress?: {
     address?: string
     city?: string
     state?: string
-    zip?: string
+    zipcode?: string
   }
 }
 export type ContractorPaymentInfos = {
