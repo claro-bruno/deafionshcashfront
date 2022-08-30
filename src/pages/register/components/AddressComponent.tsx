@@ -3,7 +3,9 @@ import useFormate from '../../../hooks/useFormate'
 
 export default function AddressComponent({
   secondaryAddress = false,
+  sendProof,
 }: {
+  sendProof?: (e: any, name: string) => void
   secondaryAddress: boolean
 }) {
   const { register, watch } = useFormContext()
@@ -20,6 +22,7 @@ export default function AddressComponent({
                 : 'primaryAddress.address',
             )}
             inputMode="numeric"
+            maxLength={120}
             className="inputsDefault"
             type="text"
             required
@@ -34,6 +37,7 @@ export default function AddressComponent({
                 : 'primaryAddress.state',
             )}
             className="inputsDefault"
+            maxLength={120}
             type="text"
             required
           />
@@ -72,6 +76,7 @@ export default function AddressComponent({
             )}
             className="inputsDefault"
             type="text"
+            maxLength={120}
             required
           />
         </label>
@@ -80,7 +85,12 @@ export default function AddressComponent({
         <label className="labelsDefault ">
           <div className="flex items-start">Proof of address</div>
 
-          <input type="file" className="fileInput" />
+          <input
+            accept="image/*"
+            type="file"
+            onChange={(e) => sendProof!(e, 'residenceProof')}
+            className="fileInput"
+          />
         </label>
       </div>
     </div>

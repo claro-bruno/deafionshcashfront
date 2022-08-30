@@ -43,3 +43,8 @@ export type ContractorPaymentInfos = {
     value: string
   }[]
 }
+export type InputsFiles = {
+  profile: File | {}
+  documentProof: File | {}
+  residenceProof: File | {}
+}

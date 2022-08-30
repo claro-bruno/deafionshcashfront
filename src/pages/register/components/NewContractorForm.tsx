@@ -1,10 +1,10 @@
 import { useMutation } from '@tanstack/react-query'
-import { useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { axiosCreateNewContractor } from '../../../api/contractor'
 import useFormate from '../../../hooks/useFormate'
 import useModal from '../../../hooks/useModal'
-import { NewContractor } from '../../../types/contractor'
+import { InputsFiles, NewContractor } from '../../../types/contractor'
 import AddressComponent from './AddressComponent'
 import AlertModal from './AlertModal'
 
@@ -12,21 +12,26 @@ export default function NewContractorForm() {
   const [addressNum, setAddressNum] = useState('1')
   const { formatEIN, formatPhone, formatSsnOrItin } = useFormate()
   const { register, handleSubmit, watch } = useFormContext()
+  const [inputsFiles, setInputsFiles] = useState<InputsFiles>({
+    profile: {},
+    documentProof: {},
+    residenceProof: {},
+  })
   const [response, setResponse] = useState<any>({})
   const { isModalOpen, closeModal } = useModal()
 
   const { mutateAsync } = useMutation(
-    (payload: NewContractor) => axiosCreateNewContractor(payload),
+    (payload: [NewContractor, InputsFiles]) =>
+      axiosCreateNewContractor(payload[0], payload[1]),
     {
       onSuccess: (response) => {
         setResponse({ isContractorCreated: true, ...response?.data })
         closeModal()
-        console.log(response.data)
       },
-      onError: (error: { request: { response: {} } }) => {
+      onError: (error: { response: any }) => {
         setResponse({
           isContractorCreated: false,
-          message: error.request.response,
+          message: error.response.data.message,
         })
         closeModal()
       },
@@ -35,10 +40,16 @@ export default function NewContractorForm() {
 
   function setNumberOfAddresses(addressNum: string) {
     return Number(addressNum) === 1 ? (
-      <AddressComponent secondaryAddress={false} />
+      <AddressComponent
+        sendProof={handleInputsFiles}
+        secondaryAddress={false}
+      />
     ) : (
       <>
-        <AddressComponent secondaryAddress={false} />
+        <AddressComponent
+          sendProof={handleInputsFiles}
+          secondaryAddress={false}
+        />
         <AddressComponent secondaryAddress={true} />
       </>
     )
@@ -54,9 +65,15 @@ export default function NewContractorForm() {
       }
     })
   }
-  function handleSubmitNewContractor(payload: any) {
-    removeEmptyValuesFromObj(payload)
-    mutateAsync(payload)
+  function handleInputsFiles(
+    e: ChangeEvent<HTMLInputElement>,
+    inputName: string,
+  ) {
+    setInputsFiles({ ...inputsFiles, [inputName]: e.target.files![0] })
+  }
+  function handleSubmitNewContractor(contractorInfos: any) {
+    removeEmptyValuesFromObj(contractorInfos)
+    mutateAsync([contractorInfos, inputsFiles])
   }
 
   const ssnOrItin = watch('ssnOrItin')
@@ -113,6 +130,7 @@ export default function NewContractorForm() {
                 <input
                   accept="image/*"
                   type="file"
+                  onChange={(e) => handleInputsFiles(e, 'profile')}
                   className=" file:py-[0.35rem]  fileInput"
                 />
               </label>
@@ -181,6 +199,7 @@ export default function NewContractorForm() {
                 <div className="flex items-start">Document Photo</div>
                 <input
                   accept="image/*"
+                  onChange={(e) => handleInputsFiles(e, 'documentProof')}
                   type="file"
                   className=" file:py-[0.35rem]  fileInput"
                 />

@@ -1,17 +1,32 @@
 import axios from 'axios'
-import { NewContractor } from '../../types/contractor'
 
-export function axiosCreateNewContractor(payload: NewContractor) {
+import { InputsFiles, NewContractor } from '../../types/contractor'
+
+export function axiosCreateNewContractor(
+  payload: NewContractor,
+  inputsFiles: InputsFiles,
+) {
   const jsonToString = JSON.stringify(payload)
-  return axios.post(
-    'http://localhost:3001/contractor',
-    { body: jsonToString },
-    {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
+  let objToAPI: any = { body: jsonToString }
+  if ('name' in inputsFiles.documentProof) {
+    objToAPI = { ...objToAPI, documentProof: inputsFiles.documentProof }
+  }
+  if ('name' in inputsFiles.residenceProof) {
+    objToAPI = {
+      ...objToAPI,
+      primaryResidencyProof: inputsFiles.residenceProof,
+    }
+  }
+  if ('name' in inputsFiles.profile) {
+    objToAPI = { ...objToAPI, profile: inputsFiles.profile }
+  }
+  console.log(objToAPI)
+
+  return axios.post('http://localhost:3001/contractor', objToAPI, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
     },
-  )
+  })
 }
 
 export async function axiosUpdateNewContractor(payload) {
