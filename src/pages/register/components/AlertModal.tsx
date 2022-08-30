@@ -10,7 +10,7 @@ export default function AlertModal({
 }: any) {
   const navigate = useNavigate()
   function handleCloseModal() {
-   /*  modalInfos.isContractorCreated && navigate('/') */
+    modalInfos.isContractorCreated && navigate('/')
     setIsAlertModalOpen()
   }
 
