@@ -29,3 +29,22 @@ export const bodyTable = [
     workingHours: { start: '08:00', end: '17:00' },
   },
 ]
+
+export type Weekdays = [
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+  'Sunday',
+]
+export const WEEKDAYS: Weekdays = [
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+  'Sunday',
+]

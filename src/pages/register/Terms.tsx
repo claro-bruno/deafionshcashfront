@@ -121,7 +121,7 @@ export default function Terms() {
       <button
         onClick={navigateToRegisterPage}
         disabled={IsAllTermsChecked}
-        className="disabled:opacity-50 disabled:cursor-not-allowed bg-brand ring border border-transparent ring-brand hover:border-white w-min self-center text-white font-bold py-1 px-3 rounded m-4"
+        className="buttonStyle1 px-3 flex items-center justify-center self-center"
         type="button"
       >
         Register

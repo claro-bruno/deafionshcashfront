@@ -1,34 +1,66 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { ChangeEvent, Fragment, useState } from 'react'
-import { ModalProps } from '../../../types/modal'
+import { useMutation } from '@tanstack/react-query'
+import { Fragment, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { axiosCreateClient } from '../../../api/client'
 import '../../../components/modals/modal.css'
-
-const WEEKDAYS = [
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday',
-  'Sunday',
-]
+import { ModalProps } from '../../../types/modal'
+import { WEEKDAYS } from '../constants'
 
 export default function NewClientModal({
   isModalOpen,
   closeModal,
 }: ModalProps) {
-  const [isChecked, setIsChecked] = useState(false)
-  function handleCheckboxChange(e: ChangeEvent<HTMLInputElement>) {
-    setIsChecked(e.target.checked)
-  }
-  function handleClose() {
-    closeModal()
+  const [response, setResponse] = useState<any>({})
+  const { mutateAsync, data } = useMutation(axiosCreateClient, {
+    onSuccess: () => {
+      setResponse(data)
+      reset()
+    },
+    onError: (error) => {
+      console.log(error)
+    },
+  })
+  const { register, handleSubmit, reset, watch } = useForm({
+    defaultValues: {
+      name: '',
+      start: '',
+      end: '',
+      Monday: false,
+      Tuesday: false,
+      Wednesday: false,
+      Thursday: false,
+      Friday: false,
+      Saturday: false,
+      Sunday: false,
+    },
+  })
+  const sunday = watch('Sunday')
+  const tuesday = watch('Tuesday')
+  const saturday = watch('Saturday')
+  const monday = watch('Monday')
+  const wednesday = watch('Wednesday')
+  const thursday = watch('Thursday')
+  const friday = watch('Friday')
+  const isSomeDayChecked = [
+    sunday,
+    tuesday,
+    wednesday,
+    thursday,
+    friday,
+    monday,
+    saturday,
+  ].every((day) => day === false)
+
+  function handleNewClient(payload: any) {
+    console.log(payload)
+    mutateAsync(payload)
   }
 
   return (
     <>
       <Transition appear show={isModalOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={handleClose}>
+        <Dialog as="div" className="relative z-10" onClose={closeModal}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -53,7 +85,10 @@ export default function NewClientModal({
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel className="modal">
-                  <form action="">
+                  <form
+                    action="submit"
+                    onSubmit={handleSubmit(handleNewClient)}
+                  >
                     <div
                       tabIndex={0}
                       className="flex items-center focus:outline-none justify-center"
@@ -68,6 +103,7 @@ export default function NewClientModal({
                       <label className="text-zinc-800 flex gap-2 flex-col">
                         Name:
                         <input
+                          {...register('name')}
                           className="inputsDefault"
                           placeholder="Ex: Amazon"
                           type="text"
@@ -79,10 +115,9 @@ export default function NewClientModal({
                           <label className="flex flex-col text-zinc-700 text-sm">
                             Start:
                             <input
+                              {...register('start')}
                               className="outline-brand  p-1 ring-1  ring-zinc-400  rounded"
-                              onChange={(e) => console.log(e.target.value)}
                               type="time"
-                              name="start"
                               required
                             />
                           </label>
@@ -90,11 +125,8 @@ export default function NewClientModal({
                             End:
                             <input
                               className="outline-brand  p-1 ring-1  ring-zinc-400  rounded"
-                              onChange={(e) =>
-                                console.log(typeof e.target.value)
-                              }
                               type="time"
-                              name="end"
+                              {...register('end')}
                               required
                             />
                           </label>
@@ -107,12 +139,7 @@ export default function NewClientModal({
                             key={index}
                             className="flex gap-1 text-sm items-center"
                           >
-                            <input
-                              onChange={handleCheckboxChange}
-                              className=""
-                              placeholder="Ex: Amazon"
-                              type="checkbox"
-                            />
+                            <input {...register(`${day}`)} type="checkbox" />
                             {day}
                           </label>
                         ))}
@@ -121,7 +148,7 @@ export default function NewClientModal({
 
                     <div className="pt-7 flex flex-col items-center gap-5">
                       <button
-                        disabled={!isChecked}
+                        disabled={isSomeDayChecked}
                         type="submit"
                         className="buttonStyle1 px-3"
                         onClick={closeModal}

@@ -1,6 +1,6 @@
 import { FormProvider, useForm } from 'react-hook-form'
 import Header from '../../components/header/Header'
-import AlertModal from '../../components/modals/AlertModal'
+import AlertModal from './components/AlertModal'
 import useModal from '../../hooks/useModal'
 import { NewContractor } from '../../types/contractor'
 import NewContractorForm from './components/NewContractorForm'

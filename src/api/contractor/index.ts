@@ -8,16 +8,17 @@ export function axiosCreateNewContractor(
 ) {
   const jsonToString = JSON.stringify(payload)
   let objToAPI: any = { body: jsonToString }
-  if ('name' in inputsFiles.documentProof) {
+
+  if (inputsFiles.documentProof instanceof File) {
     objToAPI = { ...objToAPI, documentProof: inputsFiles.documentProof }
   }
-  if ('name' in inputsFiles.residenceProof) {
+  if (inputsFiles.residenceProof instanceof File) {
     objToAPI = {
       ...objToAPI,
       primaryResidencyProof: inputsFiles.residenceProof,
     }
   }
-  if ('name' in inputsFiles.profile) {
+  if (inputsFiles.profile instanceof File) {
     objToAPI = { ...objToAPI, profile: inputsFiles.profile }
   }
   console.log(objToAPI)
@@ -32,8 +33,8 @@ export function axiosCreateNewContractor(
 export async function axiosUpdateNewContractor(payload) {
   return await axios.put('rota', payload)
 }
-export async function axiosGetAllContractors(payload) {
-  return await axios.get('rota', payload)
+export async function axiosGetAllContractors() {
+  return await axios.get('rota')
 }
 export async function axiosGetContractorsById(payload) {
   return await axios.get('rota', payload)

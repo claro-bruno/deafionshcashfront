@@ -11,7 +11,7 @@ import AlertModal from './AlertModal'
 export default function NewContractorForm() {
   const [addressNum, setAddressNum] = useState('1')
   const { formatEIN, formatPhone, formatSsnOrItin } = useFormate()
-  const { register, handleSubmit, watch } = useFormContext()
+  const { register, handleSubmit, watch, reset } = useFormContext()
   const [inputsFiles, setInputsFiles] = useState<InputsFiles>({
     profile: {},
     documentProof: {},
@@ -27,6 +27,7 @@ export default function NewContractorForm() {
       onSuccess: (response) => {
         setResponse({ isContractorCreated: true, ...response?.data })
         closeModal()
+        reset()
       },
       onError: (error: { response: any }) => {
         setResponse({
@@ -230,8 +231,8 @@ export default function NewContractorForm() {
         </button>
       </form>
       <AlertModal
-        isAlertModalOpen={isModalOpen}
-        setIsAlertModalOpen={closeModal}
+        isModalOpen={isModalOpen}
+        closeModal={closeModal}
         modalInfos={response}
       />
     </>

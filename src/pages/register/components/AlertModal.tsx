@@ -2,26 +2,23 @@ import { Dialog, Transition } from '@headlessui/react'
 import { CheckCircle, Warning } from 'phosphor-react'
 import { Fragment } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { ModalProps } from '../../../types/modal'
 
 export default function AlertModal({
-  isAlertModalOpen,
+  isModalOpen,
   modalInfos,
-  setIsAlertModalOpen,
-}: any) {
+  closeModal,
+}: ModalProps) {
   const navigate = useNavigate()
   function handleCloseModal() {
     modalInfos.isContractorCreated && navigate('/')
-    setIsAlertModalOpen()
+    closeModal()
   }
 
   return (
     <>
-      <Transition appear show={isAlertModalOpen} as={Fragment}>
-        <Dialog
-          as="div"
-          className="relative z-10"
-          onClose={() => setIsAlertModalOpen()}
-        >
+      <Transition appear show={isModalOpen} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={() => closeModal()}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
