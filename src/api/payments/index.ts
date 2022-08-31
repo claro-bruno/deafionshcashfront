@@ -1,8 +1,8 @@
-import axios from 'axios'
+import { Api } from '..'
 
 export async function axiosGetAllPayments(payload) {
-  return await axios.get('rota', payload)
+  return await Api.get('rota', payload)
 }
 export async function axiosUpdatePayments(payload) {
-  return await axios.put('rota', payload)
+  return await Api.put('rota', payload)
 }

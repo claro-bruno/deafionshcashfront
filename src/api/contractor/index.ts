@@ -1,4 +1,4 @@
-import axios from 'axios'
+import { Api } from '..'
 
 import { InputsFiles, NewContractor } from '../../types/contractor'
 
@@ -23,7 +23,7 @@ export function axiosCreateNewContractor(
   }
   console.log(objToAPI)
 
-  return axios.post('contractor', objToAPI, {
+  return Api.post('contractor', objToAPI, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
@@ -31,17 +31,17 @@ export function axiosCreateNewContractor(
 }
 
 export async function axiosUpdateNewContractor(payload) {
-  return await axios.put('rota', payload)
+  return await Api.put('rota', payload)
 }
 export async function axiosGetAllContractors() {
-  return await axios.get('rota')
+  return await Api.get('rota')
 }
 export async function axiosGetContractorsById(payload) {
-  return await axios.get('rota', payload)
+  return await Api.get('rota', payload)
 }
 export async function axiosUpdateContractorStatus(payload) {
-  return await axios.post('rota', payload)
+  return await Api.post('rota', payload)
 }
 export async function axiosUpdateContractorPassword(payload) {
-  return await axios.put('rota', payload)
+  return await Api.put('rota', payload)
 }

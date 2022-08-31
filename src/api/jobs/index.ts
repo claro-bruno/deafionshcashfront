@@ -1,11 +1,11 @@
-import axios from 'axios'
+import { Api } from '..'
 
 export async function axiosGetAllJobs(payload) {
-  return await axios.get('rota', payload)
+  return await Api.get('rota', payload)
 }
 export async function axiosCreateNewJob(payload) {
-  return await axios.post('rota', payload)
+  return await Api.post('rota', payload)
 }
 export async function axiosUpdateNewJob(payload) {
-  return await axios.put('rota', payload)
+  return await Api.put('rota', payload)
 }
