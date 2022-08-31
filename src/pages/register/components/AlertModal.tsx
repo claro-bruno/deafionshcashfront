@@ -44,7 +44,7 @@ export default function AlertModal({
               >
                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                   <div className="flex items-center justify-center">
-                    {modalInfos.isContractorCreated ? (
+                    {modalInfos?.isContractorCreated ? (
                       <CheckCircle size={36} color={'green'} />
                     ) : (
                       <Warning size={36} color={'red'} />
@@ -55,13 +55,13 @@ export default function AlertModal({
                     className="text-xl text-center py-4 font-medium leading-6 text-gray-900"
                   >
                     <span className="font-bold">
-                      {modalInfos.isContractorCreated
+                      {modalInfos?.isContractorCreated
                         ? 'Successfully created'
                         : 'Warning!'}
                     </span>
                   </Dialog.Title>
                   <div className="mt-2 flex items-center justify-center">
-                    {modalInfos.isContractorCreated ? (
+                    {modalInfos?.isContractorCreated ? (
                       <div className="text-lg text-gray-700  flex flex-col gap-2 ">
                         Your login is:
                         <p className="text-xl italic flex flex-col gap-2">

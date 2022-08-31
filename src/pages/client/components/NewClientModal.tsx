@@ -1,5 +1,5 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Fragment, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { axiosCreateClient } from '../../../api/client'
@@ -12,10 +12,13 @@ export default function NewClientModal({
   closeModal,
 }: ModalProps) {
   const [response, setResponse] = useState<any>({})
+  const { invalidateQueries } = useQueryClient()
+
   const { mutateAsync, data } = useMutation(axiosCreateClient, {
     onSuccess: () => {
       setResponse(data)
       reset()
+      invalidateQueries(['clients'])
     },
     onError: (error) => {
       console.log(error)
@@ -53,7 +56,6 @@ export default function NewClientModal({
   ].every((day) => day === false)
 
   function handleNewClient(payload: any) {
-    console.log(payload)
     mutateAsync(payload)
   }
 

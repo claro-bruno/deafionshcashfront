@@ -15,5 +15,9 @@ export async function axiosCreateClient(payload: NewClient) {
   })
 }
 export async function axiosUpdateClient(payload: Partial<NewClient>) {
-  return await axios.put('rota', payload)
+  return await axios.put('rota', payload, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
 }

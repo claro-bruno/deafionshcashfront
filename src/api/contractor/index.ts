@@ -23,7 +23,7 @@ export function axiosCreateNewContractor(
   }
   console.log(objToAPI)
 
-  return axios.post('http://localhost:3001/contractor', objToAPI, {
+  return axios.post('contractor', objToAPI, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },

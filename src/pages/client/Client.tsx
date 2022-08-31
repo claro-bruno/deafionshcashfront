@@ -5,14 +5,18 @@ import Header from '../../components/header/Header'
 import NewCompanyModal from './components/NewClientModal'
 import useModal from '../../hooks/useModal'
 import { bodyTable, headerTable } from './constants'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { axiosGetAllClients } from '../../api/client'
 
 export default function Client() {
   const { name } = useParams()
   const [filterClient, setFilterClient] = useState(name ?? '')
   const { closeModal, isModalOpen } = useModal()
+  const { data } = useQuery(['clients'], axiosGetAllClients)
   function tableFilters(item: { name: string }) {
     return item.name.toUpperCase().includes(filterClient.toUpperCase())
   }
+
   return (
     <div className="flex  flex-col  bg-gray-100 min-h-screen">
       <Header>
@@ -65,6 +69,11 @@ export default function Client() {
                     </td>
                     <td className="tableLine">
                       {`${item.workingHours.start}h - ${item.workingHours.end}h`}
+                    </td>
+                    <td className="tableLine">
+                      <button className="buttonStyle2 px-3 relative left-7">
+                        Edit
+                      </button>
                     </td>
                   </tr>
                 )
