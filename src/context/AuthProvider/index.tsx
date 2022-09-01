@@ -28,7 +28,7 @@ export function AuthProvider({ children }: AuthProviderType) {
     })
   }
   function logout() {
-    setUser(undefined)
+    setUser(null)
     removeUserFromLocalStorage()
   }
   const valueToProvide = { ...user, authenticate, logout, saveUser }

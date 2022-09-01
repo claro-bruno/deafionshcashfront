@@ -69,7 +69,8 @@ export default function PaymentsInfos(payInfos: ContractorPaymentInfos) {
               {...register(`payments[${i}].identifier`)}
               title="identificação do pagamento"
               type="text"
-              className="border rounded ml-5 focus:ml-0 focus:w-[7rem] w-[4rem] px-2 py-1 outline-brand"
+              className={`
+              border rounded ml-5 focus:ml-0 focus:w-[7rem] w-[4rem] px-2 py-1 outline-brand`}
             />
           </td>
         </>

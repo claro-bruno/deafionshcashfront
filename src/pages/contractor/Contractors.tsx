@@ -39,17 +39,24 @@ export default function Contractors() {
                     <option value="pending">Pending</option>
                   </select>
                 </td>
-                <td className="px-4"> {user.firstname}</td>
+                <td className="px-4">
+                  {' '}
+                  {`${user.firstname} ${user.lastname}`}
+                </td>
                 <td className="px-2  h-16 flex items-start gap-2 justify-center flex-col">
                   <span className="relative left-4">
                     {user['itin/ssn/ein']}
                   </span>
                   <button className="buttonStyle1 relative left-2 text-xs py-[0.09rem] px-2">
-                    document img
+                    Document img
                   </button>
                 </td>
                 <td className="px-4">{user.phone}</td>
-                <td className="px-4">{user.phone}</td>
+                <td className="px-4">
+                  <button className="buttonStyle1 text-xs py-[0.09rem] px-2">
+                    Address infos
+                  </button>
+                </td>
                 <td className="px-4">
                   <button
                     onClick={() => console.log(user.address)}

@@ -24,16 +24,16 @@ export default function Login() {
   const username = watch('username')
   const password = watch('password')
   const navigate = useNavigate()
-  const { mutateAsync, data } = useMutation(
+  const { mutateAsync } = useMutation(
     (payload: UserLogin) => authenticate(payload.username, payload.password),
     {
-      onSuccess: () => {
-        console.log(data.data)
-        saveUser(data.data)
+      onSuccess: (response) => {
+        console.log()
+        saveUser(response.data)
         navigate('/payments')
       },
       onError: (error: { response: any }) => {
-        console.log(error.response.data)
+        console.log(error.response?.data)
         setResponse({
           isContractorCreated: false,
           message: error.response.data,

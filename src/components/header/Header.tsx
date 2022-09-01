@@ -1,9 +1,15 @@
-import React, { PropsWithChildren } from 'react'
+import React, { PropsWithChildren, useContext } from 'react'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
+import { AuthContext } from '../../context/AuthProvider'
 import './header.css'
 export default function Header(props: PropsWithChildren) {
   const location = useLocation()
   const navigate = useNavigate()
+  const { logout } = useContext(AuthContext)
+  function handleLogout() {
+    logout()
+    navigate('/')
+  }
   return (
     <header className=" p-2 flex justify-between bg-brand">
       <div className="">
@@ -30,7 +36,7 @@ export default function Header(props: PropsWithChildren) {
               Jobs
             </NavLink>
           </nav>
-          <button onClick={() => navigate('/')} className="loginLink">
+          <button onClick={handleLogout} className="loginLink">
             Logout
           </button>
         </>
