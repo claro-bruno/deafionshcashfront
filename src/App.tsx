@@ -1,4 +1,5 @@
 import { Route, Routes } from 'react-router-dom'
+import ProtectedLayout from './components/auth/Protectedlayout'
 import JobContextProvider from './context/JobContextProvider'
 import Client from './pages/client/Client'
 import Contractor from './pages/contractor/Contractor'
@@ -18,7 +19,14 @@ function App() {
         <Route index element={<Register />} />
         <Route path="terms" element={<Terms />} />
       </Route>
-      <Route path="/payments" element={<Payments />} />
+      <Route
+        path="/payments"
+        element={
+          <ProtectedLayout>
+            <Payments />
+          </ProtectedLayout>
+        }
+      />
       <Route path="/jobs">
         <Route
           index

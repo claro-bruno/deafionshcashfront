@@ -1,12 +1,23 @@
-import { ReactNode, useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../context/AuthProvider'
 
-export default function ProtectedLayout({ children }: { children: ReactNode }) {
-  const { token, role } = useContext(AuthContext)
+export default function ProtectedLayout({
+  children,
+}: {
+  children: JSX.Element
+}) {
+  const { token, access } = useContext(AuthContext)
   const navigate = useNavigate()
-  if (!token || !role) {
-    return navigate('/login')
+
+  useEffect(() => {
+    if (!token || !access) {
+      navigate('/login')
+      console.log('voce nao tem acesso')
+    }
+  }, [])
+  if (!token || !access) {
+    return null
   }
   return children
 }
