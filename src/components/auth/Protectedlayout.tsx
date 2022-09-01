@@ -13,7 +13,7 @@ export default function ProtectedLayout({
 
   useEffect(() => {
     const user = getUserFromLocalStorage()
-    if (!user.token || !user.access) {
+    if (!user?.token || !user?.access) {
       navigate('/login')
       console.log('voce nao tem acesso')
     }

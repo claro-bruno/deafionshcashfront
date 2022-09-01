@@ -31,7 +31,6 @@ export default function JobTableLine({
         [name]: value,
       })
     }
-    console.log(name, value)
 
     setContractorWorkedInfos((state: any) => ({
       ...state,

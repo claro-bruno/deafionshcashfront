@@ -29,7 +29,7 @@ function formatDate(date: Date): string {
   const day = date.getDate()
   const month = date.getMonth() + 1
   const year = date.getFullYear()
-  return `${day}/${month}/${year}`
+  return `${year}-${month}-${day}`
 }
 
 export function createObjectDaysByMonth(
