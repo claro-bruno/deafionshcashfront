@@ -29,8 +29,8 @@ export const bodyTable = [
         value: '1520.30',
       },
       {
-        type: 'Deposit',
-        identifier: '12345',
+        type: '',
+        identifier: '',
         quarter: 2,
         value: '4520.30',
       },
@@ -143,14 +143,14 @@ export const bodyTable = [
     year: '2022',
     payments: [
       {
-        type: 'Transfer',
-        identifier: '12345',
+        type: '',
+        identifier: '',
         quarter: 1,
         value: '5020.70',
       },
       {
-        type: 'Deposit',
-        identifier: '12345',
+        type: '',
+        identifier: '',
         quarter: 2,
         value: '1220.10',
       },

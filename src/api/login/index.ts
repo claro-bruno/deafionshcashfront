@@ -2,7 +2,7 @@ import { Api } from '..'
 import { UserLogin } from '../../pages/login/Login'
 
 export async function axiosLogin(payload: UserLogin) {
-  return await Api.post('rota', payload, {
+  return await Api.post('account/contractor', payload, {
     headers: {
       'Content-Type': 'application/json',
     },

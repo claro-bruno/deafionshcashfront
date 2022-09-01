@@ -16,20 +16,22 @@ export function AuthProvider({ children }: AuthProviderType) {
       setUser(user)
     }
   }, [])
-  async function authenticate(username: string, password: string) {
-    const response = (await axiosLogin({
-      username,
-      password,
-    })) as unknown as User
-    const payload = { token: response.token, role: response.role }
+  function saveUser(user: User) {
+    const payload = { token: user.token, access: user.access }
     setUser(payload)
     setUserToLocalStorage(payload)
+  }
+  async function authenticate(username: string, password: string) {
+    return await axiosLogin({
+      username,
+      password,
+    })
   }
   function logout() {
     setUser(undefined)
     removeUserFromLocalStorage()
   }
-  const valueToProvide = { ...user, authenticate, logout }
+  const valueToProvide = { ...user, authenticate, logout, saveUser }
   return (
     <AuthContext.Provider value={valueToProvide}>
       {children}

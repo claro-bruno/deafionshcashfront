@@ -39,30 +39,29 @@ export default function AlertModal({
               >
                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                   <div className="flex items-center justify-center">
-                    {modalInfos.isContractorCreated && (
+                    {modalInfos.isContractorCreated === false && (
                       <Warning size={36} color={'red'} />
                     )}
                   </div>
                   <Dialog.Title
                     as="h3"
-                    className="text-lg font-medium leading-6 text-gray-900"
+                    className="text-xl text-center py-4 font-medium leading-6 text-gray-900"
                   >
-                    Payment successful
+                    Warning!
                   </Dialog.Title>
-                  <div className="mt-2">
-                    <p className="text-sm text-gray-500">
-                      Your payment has been successfully submitted. We’ve sent
-                      you an email with all of the details of your order.
+                  <div className="mt-2 font-semibold text-2xl flex items-center justify-center">
+                    <p className="text-lg text-gray-500">
+                      {modalInfos?.message?.message}
                     </p>
                   </div>
 
-                  <div className="mt-4">
+                  <div className="pt-7 flex justify-evenly">
                     <button
                       type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      className="px-3 buttonStyle1 self-center"
                       onClick={closeModal}
                     >
-                      Got it, thanks!
+                      Close
                     </button>
                   </div>
                 </Dialog.Panel>

@@ -1,9 +1,9 @@
 import { useMutation } from '@tanstack/react-query'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
-import { axiosLogin } from '../../api/login'
 import AlertModal from '../../components/modals/AlertModal'
+import { AuthContext } from '../../context/AuthProvider'
 import useModal from '../../hooks/useModal'
 
 export type UserLogin = {
@@ -14,20 +14,26 @@ export type UserLogin = {
 export default function Login() {
   const [response, setResponse] = useState<any>({})
   const { isModalOpen, closeModal } = useModal()
-  const { register, handleSubmit } = useForm<UserLogin>({
+  const { authenticate, saveUser } = useContext(AuthContext)
+  const { register, handleSubmit, watch } = useForm<UserLogin>({
     defaultValues: {
       username: '',
       password: '',
     },
   })
+  const username = watch('username')
+  const password = watch('password')
   const navigate = useNavigate()
   const { mutateAsync, data } = useMutation(
-    (payload: UserLogin) => axiosLogin(payload),
+    (payload: UserLogin) => authenticate(payload.username, payload.password),
     {
       onSuccess: () => {
+        console.log(data.data)
+        saveUser(data.data)
         navigate('/payments')
       },
       onError: (error: { response: any }) => {
+        console.log(error.response.data)
         setResponse({
           isContractorCreated: false,
           message: error.response.data,
@@ -36,7 +42,6 @@ export default function Login() {
       },
     },
   )
-  console.log(data)
   function handleLogin(payload: UserLogin) {
     mutateAsync(payload)
   }
@@ -79,7 +84,11 @@ export default function Login() {
                 type="password"
               />
             </label>
-            <button className="buttonStyle2 px-3" type="submit">
+            <button
+              disabled={!username || password.length < 5}
+              className="buttonStyle2 px-3"
+              type="submit"
+            >
               Sign in
             </button>
           </form>
