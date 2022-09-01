@@ -10,12 +10,12 @@ export function axiosCreateNewContractor(
   let objToAPI: any = { body: jsonToString }
 
   if (inputsFiles.documentProof instanceof File) {
-    objToAPI = { ...objToAPI, documentProf: inputsFiles.documentProof }
+    objToAPI = { ...objToAPI, documentProof: inputsFiles.documentProof }
   }
   if (inputsFiles.residenceProof instanceof File) {
     objToAPI = {
       ...objToAPI,
-      primaryResidencyProf: inputsFiles.residenceProof,
+      primaryResidencyProof: inputsFiles.residenceProof,
     }
   }
   if (inputsFiles.profile instanceof File) {
