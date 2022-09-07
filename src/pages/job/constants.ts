@@ -71,7 +71,7 @@ export function createObjectDaysByMonth(
         {
           day: dateFormatted,
           weekDay: weekDayName,
-          workedHours: 0,
+          workedHours: '0',
         },
       ]
     }

@@ -79,13 +79,11 @@ export default function JobTableLine({
     const contractorArr = Object.entries(contractorWorkedInfos.workedDaysInfos)
     const currentContractor = contractorArr.find(
       (_, index) => index + 1 === day,
-    ) as any
+    ) as [string, { day: string; weekday: string; workedHours: string }]
 
     if (currentContractor) {
-      const value = Object.values(currentContractor[1])[0] as {
-        workedHours: number
-      }
-      return value.workedHours
+      const value = currentContractor[1].workedHours
+      return value
     }
   }
 
@@ -93,9 +91,9 @@ export default function JobTableLine({
     const contractorArr = Object.entries(contractorWorkedInfos.workedDaysInfos)
     const currentContractor = contractorArr.find(
       (_, index) => index + 1 === day,
-    ) as any
+    ) as [string, { day: string; weekday: string; workedHours: string }]
 
-    const dayName = Object.keys(currentContractor[1])[0]
+    const dayName = currentContractor[1].day
     return dayName
   }
   function handleUpdateJob(jobInfos: Job) {
