@@ -155,38 +155,45 @@ export default function NewJob({ tableDate }: NewJobProps) {
                         type="number"
                       />
                     </label>
-                    <label className="labelsDefault">
-                      Hours:
-                      <input
-                        onChange={(e) => setHoursWorked(e.target.value)}
-                        className="inputsDefault"
-                        type="number"
-                      />
-                    </label>
-                    <label className=" w-[16rem] ml-6 self-center gap-1 flex flex-col labelsDefault">
-                      Working Days:
-                      <div className="flex flex-wrap gap-2">
-                        {WEEKDAYS.map((day, index) => (
-                          <label
-                            key={index}
-                            className="flex gap-1 text-sm items-center"
-                          >
-                            <input
-                              value={day}
-                              onChange={(e) => handleCheckboxAddNewWorkedDay(e)}
-                              type="checkbox"
-                            />
-                            {day}
-                          </label>
-                        ))}
-                      </div>
-                    </label>
+                    {!jobToEdit.contractor && (
+                      <>
+                        {' '}
+                        <label className="labelsDefault">
+                          Hours:
+                          <input
+                            onChange={(e) => setHoursWorked(e.target.value)}
+                            className="inputsDefault"
+                            type="number"
+                          />
+                        </label>
+                        <label className=" w-[16rem] ml-6 self-center gap-1 flex flex-col labelsDefault">
+                          Working Days:
+                          <div className="flex flex-wrap gap-2">
+                            {WEEKDAYS.map((day, index) => (
+                              <label
+                                key={index}
+                                className="flex gap-1 text-sm items-center"
+                              >
+                                <input
+                                  value={day}
+                                  onChange={(e) =>
+                                    handleCheckboxAddNewWorkedDay(e)
+                                  }
+                                  type="checkbox"
+                                />
+                                {day}
+                              </label>
+                            ))}
+                          </div>
+                        </label>
+                      </>
+                    )}
                   </div>
                   <div className="pt-7 text-sm flex flex-col items-center gap-5">
                     {jobToEdit.id ? (
                       <button
                         type="button"
-                        className="buttonStyle1 px-3"
+                        className="buttonStyle2 px-3"
                         onClick={handleSubmit(handleEditJob)}
                       >
                         Edit

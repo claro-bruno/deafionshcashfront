@@ -85,8 +85,6 @@ export default function JobTableLine({
     const currentContractor = contractorArr.find(
       (_, index) => index + 1 === day,
     ) as [string, { day: string; weekday: string; workedHours: string }]
-    console.log(currentContractor)
-
     const dayName = currentContractor[1].day
     return dayName
   }
