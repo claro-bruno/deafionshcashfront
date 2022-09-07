@@ -34,24 +34,15 @@ export default function JobTableLine({
     }
 
     setContractorWorkedInfos((state: any) => {
-      const currentJob = state.workedDaysInfos.filter(
-        (i: any) => Object.keys(i)[0] === name,
-      )
-      console.log(contractorWorkedInfos)
-      const daysJobArrays = state.workedDaysInfos.filter(
-        (i: any) => Object.keys(i)[0] !== name,
-      )
+      const handleJobArray = state.workedDaysInfos.map((e: any) => {
+        if (e.day === name) {
+          return { ...e, workedHours: value }
+        }
+        return e
+      })
       return {
         ...state,
-        workedDaysInfos: [
-          ...daysJobArrays,
-          {
-            [name]: {
-              weekDay: currentJob[0][name].weekDay,
-              workedDay: value,
-            },
-          },
-        ],
+        workedDaysInfos: handleJobArray,
       }
     })
   }
@@ -92,6 +83,7 @@ export default function JobTableLine({
     const currentContractor = contractorArr.find(
       (_, index) => index + 1 === day,
     ) as [string, { day: string; weekday: string; workedHours: string }]
+    console.log(currentContractor)
 
     const dayName = currentContractor[1].day
     return dayName
@@ -105,9 +97,10 @@ export default function JobTableLine({
       month: jobInfos.month,
       pHour: jobInfos.pHour,
       year: jobInfos.year,
+      quarter: isQuarterOne ? 1 : 2,
       workedDaysInfos: isQuarterOne
-        ? jobInfos.workedDaysInfos.splice(fistDayOfQuarter, lastDayOfQuarter)
-        : jobInfos.workedDaysInfos.splice(0, lastDayOfQuarter),
+        ? jobInfos.workedDaysInfos.slice(0, lastDayOfQuarter)
+        : jobInfos.workedDaysInfos.slice(15, lastDayOfQuarter),
     }
 
     console.log(jobToUpdateFormatted)
@@ -136,7 +129,7 @@ export default function JobTableLine({
         <p className="flex justify-center py-2 gap-1">
           {fortnightDays.map((day: DaysObj) => (
             <input
-              key={day.dayNum}
+              key={getWorkedDayName(day.dayNum)}
               placeholder="0"
               name={getWorkedDayName(day.dayNum)}
               value={getWorkedDayValue(day.dayNum)}
