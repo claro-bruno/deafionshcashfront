@@ -114,12 +114,11 @@ export default function NewContractorForm() {
               <label className="labelsDefault">
                 ITIN/SSN *
                 <input
-                  title="Individual Taxpayer Identification Number (ITIN) or Social Security Number (SSN)"
                   placeholder="000-00-0000"
                   maxLength={9}
                   className="inputsDefault"
                   type="text"
-                  inputMode="numeric"
+                  title="Insert a valid individual Taxpayer Identification Number (ITIN) or Social Security Number (SSN)"
                   value={formatSsnOrItin(ssnOrItin)}
                   {...register('ssnOrItin')}
                   required

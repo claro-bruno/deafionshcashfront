@@ -10,7 +10,7 @@ export default function SelectFilter({
   selectedIcon = true,
 }: {
   setFilter?: (optionName: string) => void
-  selectOptions: { name: string }[]
+  selectOptions: { name: string; number?: number }[]
   listCSS?: string
   selectedIcon?: boolean
 }) {

@@ -6,5 +6,5 @@ export interface Job {
   hours: string
   year: number
   month: string
-  workedDaysInfos: {}
+  workedDaysInfos: []
 }

@@ -57,12 +57,26 @@ export function createObjectDaysByMonth(
 
     const dateFormatted = formatDate(date)
     if (options?.days?.includes(weekDayName)) {
-      acc[dateFormatted] = { weekDay: weekDayName, workedHours: options?.hours }
+      acc = [
+        ...acc,
+        {
+          day: dateFormatted,
+          weekDay: weekDayName,
+          workedHours: options?.hours,
+        },
+      ]
     } else {
-      acc[dateFormatted] = { weekDay: weekDayName, workedHours: '' }
+      acc = [
+        ...acc,
+        {
+          day: dateFormatted,
+          weekDay: weekDayName,
+          workedHours: 0,
+        },
+      ]
     }
     return acc
-  }, {})
+  }, [])
   return objectDays
 }
 

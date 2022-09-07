@@ -30,15 +30,30 @@ export default function JobTableLine({
         ...contractorWorkedInfos,
         [name]: value,
       })
+      return
     }
 
-    setContractorWorkedInfos((state: any) => ({
-      ...state,
-      workedDaysInfos: {
-        ...state.workedDaysInfos,
-        [name]: { ...state.workedDaysInfos[name], workedHours: value },
-      },
-    }))
+    setContractorWorkedInfos((state: any) => {
+      const currentJob = state.workedDaysInfos.filter(
+        (i: any) => Object.keys(i)[0] === name,
+      )
+      console.log(contractorWorkedInfos)
+      const daysJobArrays = state.workedDaysInfos.filter(
+        (i: any) => Object.keys(i)[0] !== name,
+      )
+      return {
+        ...state,
+        workedDaysInfos: [
+          ...daysJobArrays,
+          {
+            [name]: {
+              weekDay: currentJob[0][name].weekDay,
+              workedDay: value,
+            },
+          },
+        ],
+      }
+    })
   }
 
   function handleKeyPress(
@@ -64,10 +79,13 @@ export default function JobTableLine({
     const contractorArr = Object.entries(contractorWorkedInfos.workedDaysInfos)
     const currentContractor = contractorArr.find(
       (_, index) => index + 1 === day,
-    ) as [string, { workedHours: string }]
+    ) as any
 
     if (currentContractor) {
-      return currentContractor[1].workedHours
+      const value = Object.values(currentContractor[1])[0] as {
+        workedHours: number
+      }
+      return value.workedHours
     }
   }
 
@@ -75,10 +93,27 @@ export default function JobTableLine({
     const contractorArr = Object.entries(contractorWorkedInfos.workedDaysInfos)
     const currentContractor = contractorArr.find(
       (_, index) => index + 1 === day,
-    ) as [string, { workedHours: string }]
-    return currentContractor[0]
-  }
+    ) as any
 
+    const dayName = Object.keys(currentContractor[1])[0]
+    return dayName
+  }
+  function handleUpdateJob(jobInfos: Job) {
+    const fistDayOfQuarter = fortnightDays[0].dayNum
+    const lastDayOfQuarter = fortnightDays[fortnightDays.length - 1].dayNum
+    const isQuarterOne = fistDayOfQuarter === 1
+    const jobToUpdateFormatted = {
+      id: jobInfos.id,
+      month: jobInfos.month,
+      pHour: jobInfos.pHour,
+      year: jobInfos.year,
+      workedDaysInfos: isQuarterOne
+        ? jobInfos.workedDaysInfos.splice(fistDayOfQuarter, lastDayOfQuarter)
+        : jobInfos.workedDaysInfos.splice(0, lastDayOfQuarter),
+    }
+
+    console.log(jobToUpdateFormatted)
+  }
   function handleEditContractor() {
     handleEditJob(contractorWorkedInfos)
     console.log(contractorWorkedInfos)
@@ -136,7 +171,7 @@ export default function JobTableLine({
 
       <td className=" flex gap-1">
         <button
-          onClick={() => console.log(contractorWorkedInfos)}
+          onClick={() => handleUpdateJob(contractorWorkedInfos)}
           className="buttonStyle1 text-xs py-[0.09rem] px-2  "
           type="button"
         >
