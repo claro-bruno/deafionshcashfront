@@ -53,16 +53,18 @@ export default function JobTableLine({
     const { name } = e.target
     const isKeyTab = e.key === 'Tab'
     if (isKeyTab) {
-      setContractorWorkedInfos((state: any) => ({
-        ...state,
-        workedDaysInfos: {
-          ...state.workedDaysInfos,
-          [name]: {
-            ...state.workedDaysInfos[name],
-            workedHours: currentInputJobValue,
-          },
-        },
-      }))
+      setContractorWorkedInfos((state: any) => {
+        const handleJobArray = state.workedDaysInfos.map((e: any) => {
+          if (e.day === name) {
+            return { ...e, workedHours: currentInputJobValue }
+          }
+          return e
+        })
+        return {
+          ...state,
+          workedDaysInfos: handleJobArray,
+        }
+      })
     }
   }
 
