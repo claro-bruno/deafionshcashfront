@@ -58,13 +58,16 @@ export default function Contractors() {
                   <span className="relative left-4">
                     {formatSsnOrItin(user['itin/ssn/ein'].value)}
                   </span>
+                </td>
+                <td className="px-4">
                   <button
-                    onClick={() => handleModalInfos(user['itin/ssn/ein'])}
+                    onClick={() => handleModalInfos(user.document)}
                     className="buttonStyle1 relative left-2 text-xs py-[0.09rem] px-2"
                   >
                     Document img
                   </button>
                 </td>
+
                 <td className="px-4">{formatPhone(user.phone)}</td>
                 <td className="px-4">
                   <button

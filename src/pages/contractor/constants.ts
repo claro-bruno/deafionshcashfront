@@ -80,6 +80,7 @@ export const headerTableContractors = [
   'status',
   'fullname',
   'ITIN/SSN/EIN',
+  'document',
   'Phone',
   'address',
 ]
@@ -91,9 +92,11 @@ export const bodyTableContractors = [
     lastname: 'hub',
     phone: '11632585432',
     'itin/ssn/ein': {
+      type: 'ein',
       value: '229241415',
-      src: 'https://www.coloradocollege.edu/offices/globalandfieldstudy/images/SS%20card%20sample.jpg',
     },
+    document:
+      'https://www.coloradocollege.edu/offices/globalandfieldstudy/images/SS%20card%20sample.jpg',
     address: {
       address: '356 OLD STEESE HWY',
       city: 'FAIRBANKS',
@@ -109,9 +112,11 @@ export const bodyTableContractors = [
     lastname: 'hub',
     phone: '20672571623',
     'itin/ssn/ein': {
+      type: 'itin/ssn',
       value: '924721415',
-      src: 'http://iprev.ma.gov.br/files/2022/01/WhatsApp-Image-2022-01-14-at-14.48.27.jpeg',
     },
+    document:
+      'http://iprev.ma.gov.br/files/2022/01/WhatsApp-Image-2022-01-14-at-14.48.27.jpeg',
     address: {
       address: 'belem novo',
       city: 'porto alegre',
