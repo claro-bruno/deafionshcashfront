@@ -18,7 +18,7 @@ export default function JobTableLine({
     handleEditJob,
     handleCloseModal,
   } = useContext(jobsContext)
-
+  console.log(contractor)
   function handleChange(
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
     options?: string,

@@ -85,17 +85,39 @@ export const headerTableContractors = [
 ]
 export const bodyTableContractors = [
   {
-    id: 2,
-    firstname: 'james',
+    id: 3,
+    firstname: 'jamal',
     status: 'active',
     lastname: 'hub',
     phone: '11632585432',
-    'itin/ssn/ein': '229241415',
+    'itin/ssn/ein': {
+      value: '229241415',
+      src: 'https://www.coloradocollege.edu/offices/globalandfieldstudy/images/SS%20card%20sample.jpg',
+    },
     address: {
-      address: 'ijdias',
-      city: 'diasjd',
-      state: 'kdaksjsa',
-      zip: '95263856653',
+      address: '356 OLD STEESE HWY',
+      city: 'FAIRBANKS',
+      state: 'AK',
+      zip: '99701',
+      src: 'https://www.tesz.in/assets/answers/60a3a4f9b1848-img.jpg',
+    },
+  },
+  {
+    id: 4,
+    firstname: 'joana',
+    status: 'inactive',
+    lastname: 'hub',
+    phone: '20672571623',
+    'itin/ssn/ein': {
+      value: '924721415',
+      src: 'http://iprev.ma.gov.br/files/2022/01/WhatsApp-Image-2022-01-14-at-14.48.27.jpeg',
+    },
+    address: {
+      address: 'belem novo',
+      city: 'porto alegre',
+      state: 'rio grande do sul',
+      zip: '952638566',
+      src: 'https://www.tesz.in/assets/answers/60a3a4f9b1848-img.jpg',
     },
   },
 ]

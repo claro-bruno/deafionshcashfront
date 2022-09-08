@@ -1,8 +1,19 @@
 import { GearSix } from 'phosphor-react'
+import { useState } from 'react'
 import Header from '../../components/header/Header'
+import useFormate from '../../hooks/useFormate'
+import useModal from '../../hooks/useModal'
+import AddressContractorModal from './components/addressContractorsModal/AddressContractorModal'
 import { bodyTableContractors, headerTableContractors } from './constants'
 
 export default function Contractors() {
+  const { formatPhone, formatSsnOrItin } = useFormate()
+  const { closeModal, isModalOpen } = useModal()
+  const [contractorInfos, setContractorInfos] = useState({})
+  function handleModalInfos(infos: {}) {
+    closeModal()
+    setContractorInfos(infos)
+  }
   return (
     <>
       <Header>
@@ -28,14 +39,14 @@ export default function Contractors() {
           </thead>
           <tbody>
             {bodyTableContractors.map((user) => (
-              <tr key={user.id} className=" bg-white border-b py-4 ">
+              <tr key={user.id} className=" bg-white  border-b  ">
                 <td>
                   <select
-                    className="rounded bg-white border ml-3 outline-none p-1"
+                    className="rounded bg-white  border ml-3 outline-none p-1"
                     value={user.status}
                   >
                     <option value="active">Active</option>
-                    <option value="inactive">a Inactive</option>
+                    <option value="inactive">Inactive</option>
                     <option value="pending">Pending</option>
                   </select>
                 </td>
@@ -43,17 +54,23 @@ export default function Contractors() {
                   {' '}
                   {`${user.firstname} ${user.lastname}`}
                 </td>
-                <td className="px-2  h-16 flex items-start gap-2 justify-center flex-col">
+                <td className="px-2 my-2  h-16 flex items-start gap-2 justify-center flex-col">
                   <span className="relative left-4">
-                    {user['itin/ssn/ein']}
+                    {formatSsnOrItin(user['itin/ssn/ein'].value)}
                   </span>
-                  <button className="buttonStyle1 relative left-2 text-xs py-[0.09rem] px-2">
+                  <button
+                    onClick={() => handleModalInfos(user['itin/ssn/ein'])}
+                    className="buttonStyle1 relative left-2 text-xs py-[0.09rem] px-2"
+                  >
                     Document img
                   </button>
                 </td>
-                <td className="px-4">{user.phone}</td>
+                <td className="px-4">{formatPhone(user.phone)}</td>
                 <td className="px-4">
-                  <button className="buttonStyle1 text-xs py-[0.09rem] px-2">
+                  <button
+                    onClick={() => handleModalInfos(user.address)}
+                    className="buttonStyle1 text-xs py-[0.09rem] px-2"
+                  >
                     Address infos
                   </button>
                 </td>
@@ -70,6 +87,11 @@ export default function Contractors() {
             ))}
           </tbody>
         </table>
+        <AddressContractorModal
+          isModalOpen={isModalOpen}
+          closeModal={closeModal}
+          modalInfos={contractorInfos}
+        />
       </main>
     </>
   )

@@ -1,3 +1,4 @@
+import { SignOut } from 'phosphor-react'
 import React, { PropsWithChildren, useContext } from 'react'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../context/AuthProvider'
@@ -36,8 +37,8 @@ export default function Header(props: PropsWithChildren) {
               Jobs
             </NavLink>
           </nav>
-          <button onClick={handleLogout} className="loginLink">
-            Logout
+          <button title="Logout" onClick={handleLogout} className="loginLink">
+            <SignOut size={22} />
           </button>
         </>
       ) : (

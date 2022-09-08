@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import AlertModal from '../../components/modals/AlertModal'
@@ -14,7 +14,8 @@ export type UserLogin = {
 export default function Login() {
   const [response, setResponse] = useState<any>({})
   const { isModalOpen, closeModal } = useModal()
-  const { authenticate, saveUser } = useContext(AuthContext)
+  const { authenticate, saveUser, checkUserInLocalStorage } =
+    useContext(AuthContext)
   const { register, handleSubmit, watch } = useForm<UserLogin>({
     defaultValues: {
       username: '',
@@ -24,6 +25,13 @@ export default function Login() {
   const username = watch('username')
   const password = watch('password')
   const navigate = useNavigate()
+
+  useEffect(() => {
+    if (checkUserInLocalStorage()) {
+      navigate('/payments')
+    }
+  }, [])
+
   const { mutateAsync } = useMutation(
     (payload: UserLogin) => authenticate(payload.username, payload.password),
     {
@@ -42,6 +50,7 @@ export default function Login() {
       },
     },
   )
+
   function handleLogin(payload: UserLogin) {
     mutateAsync(payload)
   }
