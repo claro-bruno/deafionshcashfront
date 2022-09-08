@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { ModalProps } from '../../../../types/modal'
 
-export default function AddressContractorModal({
+export default function ContractorModalInfos({
   isModalOpen,
   closeModal,
   modalInfos,

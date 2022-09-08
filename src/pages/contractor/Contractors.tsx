@@ -3,7 +3,7 @@ import { useState } from 'react'
 import Header from '../../components/header/Header'
 import useFormate from '../../hooks/useFormate'
 import useModal from '../../hooks/useModal'
-import AddressContractorModal from './components/addressContractorsModal/AddressContractorModal'
+import ContractorModalInfos from './components/contractorsModalInfos/contractorModalInfos'
 import { bodyTableContractors, headerTableContractors } from './constants'
 
 export default function Contractors() {
@@ -87,7 +87,7 @@ export default function Contractors() {
             ))}
           </tbody>
         </table>
-        <AddressContractorModal
+        <ContractorModalInfos
           isModalOpen={isModalOpen}
           closeModal={closeModal}
           modalInfos={contractorInfos}
