@@ -1,34 +1,70 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { ChangeEvent, Fragment, useState } from 'react'
-import { ModalProps } from '../../types/modal'
-import './modal.css'
-
-const WEEKDAYS = [
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday',
-  'Sunday',
-]
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { Fragment, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { axiosCreateClient } from '../../../api/client'
+import '../../../components/modals/modal.css'
+import { ModalProps } from '../../../types/modal'
+import { WEEKDAYS } from '../constants'
 
 export default function NewClientModal({
   isModalOpen,
   closeModal,
 }: ModalProps) {
-  const [isChecked, setIsChecked] = useState(false)
-  function handleCheckboxChange(e: ChangeEvent<HTMLInputElement>) {
-    setIsChecked(e.target.checked)
-  }
-  function handleClose() {
+  const [response, setResponse] = useState<any>({})
+  const { invalidateQueries } = useQueryClient()
+
+  const { mutateAsync, data } = useMutation(axiosCreateClient, {
+    onSuccess: () => {
+      setResponse(data)
+      reset()
+      invalidateQueries(['clients'])
+    },
+    onError: (error) => {
+      console.log(error)
+    },
+  })
+  const { register, handleSubmit, reset, watch } = useForm({
+    defaultValues: {
+      name: '',
+      start: '',
+      end: '',
+      monday: false,
+      tuesday: false,
+      wednesday: false,
+      thursday: false,
+      friday: false,
+      saturday: false,
+      sunday: false,
+    },
+  })
+  const sunday = watch('sunday')
+  const tuesday = watch('tuesday')
+  const saturday = watch('saturday')
+  const monday = watch('monday')
+  const wednesday = watch('wednesday')
+  const thursday = watch('thursday')
+  const friday = watch('friday')
+  const isSomeDayChecked = [
+    sunday,
+    tuesday,
+    wednesday,
+    thursday,
+    friday,
+    monday,
+    saturday,
+  ].every((day) => day === false)
+
+  function handleNewClient(payload: any) {
+    console.log(payload)
+    mutateAsync(payload)
     closeModal()
   }
 
   return (
     <>
       <Transition appear show={isModalOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={handleClose}>
+        <Dialog as="div" className="relative z-10" onClose={closeModal}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -53,7 +89,10 @@ export default function NewClientModal({
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel className="modal">
-                  <form action="">
+                  <form
+                    action="submit"
+                    onSubmit={handleSubmit(handleNewClient)}
+                  >
                     <div
                       tabIndex={0}
                       className="flex items-center focus:outline-none justify-center"
@@ -68,6 +107,7 @@ export default function NewClientModal({
                       <label className="text-zinc-800 flex gap-2 flex-col">
                         Name:
                         <input
+                          {...register('name')}
                           className="inputsDefault"
                           placeholder="Ex: Amazon"
                           type="text"
@@ -79,9 +119,9 @@ export default function NewClientModal({
                           <label className="flex flex-col text-zinc-700 text-sm">
                             Start:
                             <input
+                              {...register('start')}
                               className="outline-brand  p-1 ring-1  ring-zinc-400  rounded"
                               type="time"
-                              name="start"
                               required
                             />
                           </label>
@@ -90,7 +130,7 @@ export default function NewClientModal({
                             <input
                               className="outline-brand  p-1 ring-1  ring-zinc-400  rounded"
                               type="time"
-                              name="end"
+                              {...register('end')}
                               required
                             />
                           </label>
@@ -101,14 +141,9 @@ export default function NewClientModal({
                         {WEEKDAYS.map((day, index) => (
                           <label
                             key={index}
-                            className="flex gap-1 text-sm items-center"
+                            className=" flex gap-1 text-sm uppercase items-center"
                           >
-                            <input
-                              onChange={handleCheckboxChange}
-                              className=""
-                              placeholder="Ex: Amazon"
-                              type="checkbox"
-                            />
+                            <input {...register(`${day}`)} type="checkbox" />
                             {day}
                           </label>
                         ))}
@@ -117,10 +152,9 @@ export default function NewClientModal({
 
                     <div className="pt-7 flex flex-col items-center gap-5">
                       <button
-                        disabled={!isChecked}
+                        disabled={isSomeDayChecked}
                         type="submit"
                         className="buttonStyle1 px-3"
-                        onClick={closeModal}
                       >
                         Create
                       </button>

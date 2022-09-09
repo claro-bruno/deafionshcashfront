@@ -6,23 +6,20 @@ export const INITIAL_NEW_CONTRACTOR_STATE: NewContractor = {
   lastName: '',
   email: '',
   ein: '',
+  acceptTerms: true,
   birthDate: '',
   phone: '',
   ssnOrItin: '',
-  acceptTerms: true,
-  dateCreated: new Date(),
-  address: {
+  primaryAddress: {
     address: '',
     city: '',
     state: '',
-    street: '',
-    zip: '',
+    zipcode: '',
   },
   secondaryAddress: {
     address: '',
     city: '',
     state: '',
-    street: '',
-    zip: '',
+    zipcode: '',
   },
 }

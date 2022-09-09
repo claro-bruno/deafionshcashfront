@@ -17,19 +17,34 @@ export type NewContractor = {
   ssnOrItin: string
   ein?: string
   acceptTerms: boolean
-  dateCreated: Date
-  address: {
+  primaryAddress: {
     address: string
     city: string
     state: string
-    street: string
-    zip: string
+    zipcode: string
   }
   secondaryAddress?: {
     address?: string
     city?: string
     state?: string
-    street?: string
-    zip?: string
+    zipcode?: string
   }
+}
+export type ContractorPaymentInfos = {
+  id: number
+  contractor: { name: string; id: number }
+  status: string
+  month: string
+  year: string
+  payments: {
+    type: string
+    identifier: string
+    quarter: number
+    value: string
+  }[]
+}
+export type InputsFiles = {
+  profile: File | {}
+  documentProof: File | {}
+  residenceProof: File | {}
 }

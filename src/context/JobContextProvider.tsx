@@ -1,4 +1,9 @@
-import React, { createContext, PropsWithChildren, useState } from 'react'
+import React, {
+  createContext,
+  PropsWithChildren,
+  useMemo,
+  useState,
+} from 'react'
 import useModal from '../hooks/useModal'
 import { bodyTable } from '../pages/job/constants'
 import { Job } from '../types/job'
@@ -36,16 +41,20 @@ export default function JobContextProvider(props: PropsWithChildren) {
     }
     closeModal()
   }
-  const valueToProvide = {
-    jobToEdit,
-    handleEditJob,
-    currentInputJobValue,
-    handleCurrentInputJobValue,
-    handleCloseModal,
-    isModalOpen,
-    handleSetUsers,
-    users,
-  }
+  const valueToProvide = useMemo(
+    () => ({
+      jobToEdit,
+      handleEditJob,
+      currentInputJobValue,
+      handleCurrentInputJobValue,
+      handleCloseModal,
+      isModalOpen,
+      handleSetUsers,
+      users,
+    }),
+    [jobToEdit, currentInputJobValue, isModalOpen, users],
+  )
+
   return (
     <jobsContext.Provider value={valueToProvide}>
       {props.children}

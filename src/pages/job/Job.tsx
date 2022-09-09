@@ -1,5 +1,5 @@
 import { GearSix, Plus } from 'phosphor-react'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import Header from '../../components/header/Header'
 import {
   fortnightListBox,
@@ -9,8 +9,9 @@ import {
 import SelectFilter from '../../components/listboxes/SelectFilter'
 import NewJob from './components/NewJob'
 import { jobsContext } from '../../context/JobContextProvider'
-import DayInputsTableLine from './components/DayInputsTableLine'
 import { headerTable, months } from './constants'
+import { useParams } from 'react-router-dom'
+import JobTableLine from './components/JobTableLine'
 
 export interface DaysObj {
   dayNum: number
@@ -21,11 +22,25 @@ export default function Job() {
   const [monthName, setMonthName] = useState('January')
   const [yearName, setYearName] = useState('2022')
   const [filterContractor, setFilterContractor] = useState('')
-  const { handleCloseModal, users } = useContext(jobsContext)
+  const [fortnightDays, setFortnightDays] = useState<DaysObj[]>(
+    addWeakDayName().splice(0, 15),
+  )
+  const { handleCloseModal, users, handleSetUsers } = useContext(jobsContext)
+  const { id } = useParams()
+  /* console.log(id) */
+
+  useEffect(() => {
+    if (id) {
+      const userFilteredById = users.filter((user) => user.id === Number(id))
+      handleSetUsers(userFilteredById)
+    }
+  }, [])
+
   function tableFilters(item: { contractor: string; month: string }) {
     const filterByContractor = item.contractor
       .toLowerCase()
       .includes(filterContractor.toLowerCase())
+
     const filterByDate = item.month
       .toLowerCase()
       .includes(monthName.toLowerCase())
@@ -36,7 +51,6 @@ export default function Job() {
     const getMonthNumberByName = months.indexOf(monthName) + 1
     const date = new Date()
     const days = new Date(date.getFullYear(), getMonthNumberByName, 0).getDate()
-
     return [...Array(days).keys()].map((i) => i + 1)
   }
 
@@ -51,18 +65,15 @@ export default function Job() {
     })
     return weakDaysNamed
   }
-  const [fortnightDays, setFortnightDays] = useState<DaysObj[]>(
-    addWeakDayName().splice(0, 15),
-  )
-  function formatFortnightDays(period: string) {
+
+  function formatFortnightDays(quarter: string) {
     const fortnight =
-      period === 'Quinzena 1'
+      quarter === 'Quinzena 1'
         ? addWeakDayName().splice(0, 15)
         : addWeakDayName().splice(15)
 
     setFortnightDays(fortnight)
   }
-  console.log('rendering')
 
   return (
     <div>
@@ -83,8 +94,8 @@ export default function Job() {
           />
         </div>
       </Header>
-      <div>
-        <div className="tableContainer items-center flex flex-col overflow-auto ">
+      <div className="2xl:flex 2xl:items-center 2xl:justify-center">
+        <div className="tableContainer 2xl:w-[80vw] items-center flex flex-col overflow-auto ">
           <span className="relative h-10 flex gap-2 my-1 items-center font-extrabold text-xl self-center">
             {`${yearName} ${monthName}`}
 
@@ -121,13 +132,17 @@ export default function Job() {
                     )
                   }
                   return (
-                    <th scope="col" key={index} className=" first:pl-6 ">
+                    <th
+                      scope="col"
+                      key={index}
+                      className=" first:pl-6 last:text-pink-500 "
+                    >
                       {item}
                     </th>
                   )
                 })}
-                <th>
-                  <GearSix className="relative left-3" size={24} />
+                <th className="tableLine">
+                  <GearSix size={24} />
                 </th>
               </tr>
             </thead>
@@ -135,26 +150,10 @@ export default function Job() {
               {users.map((contractor) => {
                 if (tableFilters(contractor)) {
                   return (
-                    <tr key={contractor.id} className="bg-white border-b ">
-                      <td className="tableLine relative flex flex-wrap max-w-[9rem]">
-                        {contractor.contractor}
-                      </td>
-                      <td className="">{contractor.client}</td>
-
-                      <DayInputsTableLine
-                        contractor={contractor}
-                        fortnightDays={fortnightDays}
-                      />
-
-                      <td className="tableLine">{contractor.hours}</td>
-                      <td className="tableLine relative right-5">
-                        $ {contractor.pHour}
-                      </td>
-                      <td className="tableLine relative right-4">
-                        $ {Number(contractor.pHour) * Number(contractor.hours)}
-                      </td>
-                      <td className=" tableLine">{''} </td>
-                    </tr>
+                    <JobTableLine
+                      contractor={contractor}
+                      fortnightDays={fortnightDays}
+                    />
                   )
                 } else {
                   return []

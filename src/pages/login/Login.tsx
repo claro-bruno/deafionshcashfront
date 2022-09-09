@@ -1,6 +1,59 @@
-import { Link } from 'react-router-dom'
+import { useMutation } from '@tanstack/react-query'
+import { useContext, useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { Link, useNavigate } from 'react-router-dom'
+import AlertModal from '../../components/modals/AlertModal'
+import { AuthContext } from '../../context/AuthProvider'
+import useModal from '../../hooks/useModal'
+
+export type UserLogin = {
+  username: string
+  password: string
+}
 
 export default function Login() {
+  const [response, setResponse] = useState<any>({})
+  const { isModalOpen, closeModal } = useModal()
+  const { authenticate, saveUser, checkUserInLocalStorage } =
+    useContext(AuthContext)
+  const { register, handleSubmit, watch } = useForm<UserLogin>({
+    defaultValues: {
+      username: '',
+      password: '',
+    },
+  })
+  const username = watch('username')
+  const password = watch('password')
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (checkUserInLocalStorage()) {
+      navigate('/payments')
+    }
+  }, [])
+
+  const { mutateAsync } = useMutation(
+    (payload: UserLogin) => authenticate(payload.username, payload.password),
+    {
+      onSuccess: (response) => {
+        console.log()
+        saveUser(response.data)
+        navigate('/payments')
+      },
+      onError: (error: { response: any }) => {
+        console.log(error.response?.data)
+        setResponse({
+          isContractorCreated: false,
+          message: error.response.data,
+        })
+        closeModal()
+      },
+    },
+  )
+
+  function handleLogin(payload: UserLogin) {
+    mutateAsync(payload)
+  }
   return (
     <div className="flex  min-w-screen min-h-screen">
       <div className="flex-1 flex items-center flex-col object-cover justify-center  bg-brand ">
@@ -20,24 +73,32 @@ export default function Login() {
             src="https://www.globaljanitorialservices.com/assets/images/resources/welcome-two-small-img.png"
             alt="globaljanitorialservices logo"
           />
-          <form className="flex flex-col items-center justify-center gap-4 px-4 h-72 w-auto">
+          <form
+            onSubmit={handleSubmit(handleLogin)}
+            className="flex flex-col items-center justify-center gap-4 px-4 h-72 w-auto"
+          >
             <label className="labelsDefault">
               Username
-              <input name="Username" className="inputsDefault" type="text" />
+              <input
+                {...register('username')}
+                className="inputsDefault"
+                type="text"
+              />
             </label>
             <label className="labelsDefault">
               Password
               <input
-                name="password"
+                {...register('password')}
                 className="inputsDefault"
                 type="password"
               />
             </label>
             <button
-              className="disabled:cursor-not-allowed bg-brand2 ring text-sm ring-transparent hover:ring-brand2 border border-transparent hover:border-white mt-3 px-2 py-[0.15rem]  rounded text-white font-bold transition-colors"
+              disabled={!username || password.length < 5}
+              className="buttonStyle2 px-3"
               type="submit"
             >
-              <Link to="/main">Sign in</Link>
+              Sign in
             </button>
           </form>
           <span className="text-sm mt-2 text-gray-400">
@@ -50,6 +111,11 @@ export default function Login() {
           </span>
         </div>
       </div>
+      <AlertModal
+        modalInfos={response}
+        closeModal={closeModal}
+        isModalOpen={isModalOpen}
+      />
     </div>
   )
 }
