@@ -1,18 +1,20 @@
+import { useQuery } from '@tanstack/react-query'
 import { Circle, PlusCircle } from 'phosphor-react'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import Header from '../../components/header/Header'
-import NewCompanyModal from './components/NewClientModal'
-import useModal from '../../hooks/useModal'
-import { bodyTable, headerTable } from './constants'
-import { useMutation, useQuery } from '@tanstack/react-query'
 import { axiosGetAllClients } from '../../api/client'
+import Header from '../../components/header/Header'
+import useModal from '../../hooks/useModal'
+import NewCompanyModal from './components/NewClientModal'
+import { bodyTable, headerTable } from './constants'
 
 export default function Client() {
   const { name } = useParams()
   const [filterClient, setFilterClient] = useState(name ?? '')
   const { closeModal, isModalOpen } = useModal()
   const { data } = useQuery(['clients'], axiosGetAllClients)
+  console.log(data?.data)
+
   function tableFilters(item: { name: string }) {
     return item.name.toUpperCase().includes(filterClient.toUpperCase())
   }

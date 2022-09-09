@@ -46,7 +46,7 @@ export default function ContractorModalInfos({
                     as="h3"
                     className="text-2xl font-bold  text-center leading-6 text-gray-900"
                   >
-                    {modalInfos.address ? 'Address' : 'Document'}
+                    {modalInfos.address ? 'Address' : 'ITIN/SSN/EIN'}
                   </Dialog.Title>
                   <div className="mt-2 flex flex-col gap-6 items-center justify-center">
                     {modalInfos.address && (
@@ -82,7 +82,7 @@ export default function ContractorModalInfos({
                     )}
                     <img
                       className=" object-contain w-[300px] h-[300px] hover:scale-125 hover:h-[500px] ease-in duration-200"
-                      src={modalInfos.address ? modalInfos.src : modalInfos}
+                      src={modalInfos.src}
                       alt="proof address"
                     />
                   </div>

@@ -49,10 +49,8 @@ export default function PaymentsInfos(payInfos: ContractorPaymentInfos) {
       </td>
       {payInfos.payments.map((payment, i) => (
         <>
-          <td className="w-[7rem]  px-5">
-            $ {formatMoney(Number(payment.value))}
-          </td>
-          <td className="tableLine flex flex-col items-center justify-center">
+          <td className="tableLine">$ {formatMoney(Number(payment.value))}</td>
+          <td className="tableLine">
             <select
               className="rounded bg-white border w-[4.9rem] outline-none text-xs py-1"
               {...register(`payments[${i}].type`)}
@@ -64,7 +62,7 @@ export default function PaymentsInfos(payInfos: ContractorPaymentInfos) {
               <option value="Others">Venmo</option>
             </select>
           </td>
-          <td className=" w-[7rem] ">
+          <td className=" tableLine">
             <input
               {...register(`payments[${i}].identifier`)}
               title="identificação do pagamento"

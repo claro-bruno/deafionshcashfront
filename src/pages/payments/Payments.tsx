@@ -68,7 +68,7 @@ export default function Payments() {
           <h2>{yearName}</h2>
           <h2>{monthName}</h2>
         </div>
-        <div className="w-full ml-2">
+        <div className="w-full my-2">
           <div className="tableContainer overflow-auto mt-8">
             <table className="table ">
               <thead className="tableHead">

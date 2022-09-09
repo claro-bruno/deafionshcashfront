@@ -29,22 +29,22 @@ export default function NewClientModal({
       name: '',
       start: '',
       end: '',
-      Monday: false,
-      Tuesday: false,
-      Wednesday: false,
-      Thursday: false,
-      Friday: false,
-      Saturday: false,
-      Sunday: false,
+      monday: false,
+      tuesday: false,
+      wednesday: false,
+      thursday: false,
+      friday: false,
+      saturday: false,
+      sunday: false,
     },
   })
-  const sunday = watch('Sunday')
-  const tuesday = watch('Tuesday')
-  const saturday = watch('Saturday')
-  const monday = watch('Monday')
-  const wednesday = watch('Wednesday')
-  const thursday = watch('Thursday')
-  const friday = watch('Friday')
+  const sunday = watch('sunday')
+  const tuesday = watch('tuesday')
+  const saturday = watch('saturday')
+  const monday = watch('monday')
+  const wednesday = watch('wednesday')
+  const thursday = watch('thursday')
+  const friday = watch('friday')
   const isSomeDayChecked = [
     sunday,
     tuesday,
@@ -56,7 +56,9 @@ export default function NewClientModal({
   ].every((day) => day === false)
 
   function handleNewClient(payload: any) {
+    console.log(payload)
     mutateAsync(payload)
+    closeModal()
   }
 
   return (
@@ -139,7 +141,7 @@ export default function NewClientModal({
                         {WEEKDAYS.map((day, index) => (
                           <label
                             key={index}
-                            className="flex gap-1 text-sm items-center"
+                            className=" flex gap-1 text-sm uppercase items-center"
                           >
                             <input {...register(`${day}`)} type="checkbox" />
                             {day}
@@ -153,7 +155,6 @@ export default function NewClientModal({
                         disabled={isSomeDayChecked}
                         type="submit"
                         className="buttonStyle1 px-3"
-                        onClick={closeModal}
                       >
                         Create
                       </button>

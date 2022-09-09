@@ -17,9 +17,9 @@ export default function ProtectedLayout({
       navigate('/login')
       console.log('voce nao tem acesso')
     }
-    console.log(token)
-
-    saveUser(user)
+    if (user?.token && user?.access) {
+      saveUser(user)
+    }
   }, [])
   if (!token || !access) {
     return null

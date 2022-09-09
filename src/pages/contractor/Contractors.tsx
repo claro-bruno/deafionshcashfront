@@ -23,8 +23,8 @@ export default function Contractors() {
           type="text"
         />
       </Header>
-      <main className="mt-10 px-12">
-        <table className="table ">
+      <main className="mt-10 px-12  flex justify-center items-center">
+        <table className="table max-w-[77vw] ">
           <thead className="tableHead">
             <tr>
               {headerTableContractors.map((item, index) => (
@@ -58,16 +58,13 @@ export default function Contractors() {
                   <span className="relative left-4">
                     {formatSsnOrItin(user['itin/ssn/ein'].value)}
                   </span>
-                </td>
-                <td className="px-4">
                   <button
-                    onClick={() => handleModalInfos(user.document)}
+                    onClick={() => handleModalInfos(user['itin/ssn/ein'])}
                     className="buttonStyle1 relative left-2 text-xs py-[0.09rem] px-2"
                   >
                     Document img
                   </button>
                 </td>
-
                 <td className="px-4">{formatPhone(user.phone)}</td>
                 <td className="px-4">
                   <button

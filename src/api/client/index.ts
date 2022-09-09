@@ -1,21 +1,21 @@
-import axios from 'axios'
+import { Api } from '..'
 import { Client, NewClient } from '../../types/client'
 
 export async function axiosGetAllClients() {
-  return await axios.get('rota')
+  return await Api.get('client')
 }
 export async function axiosGetClientById(id: Client) {
-  return await axios.get('rota', id)
+  return await Api.get(`client/${id}`)
 }
 export async function axiosCreateClient(payload: NewClient) {
-  return await axios.post('rota', payload, {
+  return await Api.post('client', payload, {
     headers: {
       'Content-Type': 'application/json',
     },
   })
 }
 export async function axiosUpdateClient(payload: Partial<NewClient>) {
-  return await axios.put('rota', payload, {
+  return await Api.put('rota', payload, {
     headers: {
       'Content-Type': 'application/json',
     },
