@@ -1,5 +1,10 @@
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { GearSix } from 'phosphor-react'
 import { useState } from 'react'
+import {
+  axiosGetAllContractors,
+  axiosUpdateContractorStatus,
+} from '../../api/contractor'
 import Header from '../../components/header/Header'
 import useFormate from '../../hooks/useFormate'
 import useModal from '../../hooks/useModal'
@@ -10,6 +15,22 @@ export default function Contractors() {
   const { formatPhone, formatSsnOrItin } = useFormate()
   const { switchModalView, isModalOpen } = useModal()
   const [contractorInfos, setContractorInfos] = useState({})
+  const { data } = useQuery([`contractors`], axiosGetAllContractors)
+  console.log(data)
+  const { invalidateQueries } = useQueryClient()
+  const { mutateAsync } = useMutation(axiosUpdateContractorStatus, {
+    onSuccess: (response) => {
+      console.log(response)
+      invalidateQueries(['contractors'])
+    },
+    onError: (error: { response: any }) => {
+      console.log(error.response)
+    },
+  })
+
+  function handleUpdateContractor(payload: any) {
+    mutateAsync({ id: payload.id, status: payload.status })
+  }
   function handleModalInfos(infos: {}) {
     switchModalView()
     setContractorInfos(infos)
@@ -76,7 +97,7 @@ export default function Contractors() {
                 </td>
                 <td className="px-4">
                   <button
-                    onClick={() => console.log(user.address)}
+                    onClick={handleUpdateContractor}
                     className="buttonStyle1 text-xs py-[0.09rem] px-2"
                     type="button"
                   >

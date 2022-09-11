@@ -1,9 +1,12 @@
+import { useQuery } from '@tanstack/react-query'
 import React, {
   createContext,
   PropsWithChildren,
+  useEffect,
   useMemo,
   useState,
 } from 'react'
+import { axiosGetAllJobs } from '../api/jobs'
 import useModal from '../hooks/useModal'
 import { bodyTable } from '../pages/job/constants'
 import { Job } from '../types/job'
@@ -13,29 +16,35 @@ interface JobContext {
   handleEditJob: (job: Job) => void
   currentInputJobValue: string
   handleCurrentInputJobValue: (value: string) => void
-  handleswitchModalView: () => void
+  handleSwitchModalView: () => void
   isModalOpen: boolean
-  users: Job[]
-  handleSetUsers: (users: Job[]) => void
+  jobs: Job[]
+  handleSetJobs: (jobs: Job[]) => void
 }
-
 export const jobsContext = createContext({} as JobContext)
-
 export default function JobContextProvider(props: PropsWithChildren) {
   const [jobToEdit, setJobToEdit] = useState<Job>({} as Job)
   const [currentInputJobValue, setCurrentInputJobValue] = useState('')
-  const [users, setUsers] = useState<Job[]>(bodyTable)
+  const [jobs, setJobs] = useState<Job[]>(bodyTable)
   const { switchModalView, isModalOpen } = useModal()
+  const { data } = useQuery<any>(['jobs'], axiosGetAllJobs)
+
+  useEffect(() => {
+    if (data) {
+      setJobs(data.data)
+    }
+  }, [])
+
   function handleEditJob(job: any) {
     setJobToEdit(job)
   }
-  function handleSetUsers(data: Job[]) {
-    setUsers(data)
+  function handleSetJobs(data: Job[]) {
+    setJobs(data)
   }
   function handleCurrentInputJobValue(value: string) {
     setCurrentInputJobValue(value)
   }
-  function handleswitchModalView() {
+  function handleSwitchModalView() {
     if (isModalOpen && jobToEdit) {
       setJobToEdit({} as Job)
     }
@@ -47,12 +56,12 @@ export default function JobContextProvider(props: PropsWithChildren) {
       handleEditJob,
       currentInputJobValue,
       handleCurrentInputJobValue,
-      handleswitchModalView,
+      handleSwitchModalView,
       isModalOpen,
-      handleSetUsers,
-      users,
+      handleSetJobs,
+      jobs,
     }),
-    [jobToEdit, currentInputJobValue, isModalOpen, users],
+    [jobToEdit, currentInputJobValue, isModalOpen, jobs],
   )
 
   return (

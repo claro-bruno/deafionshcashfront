@@ -25,15 +25,14 @@ export default function Job() {
   const [fortnightDays, setFortnightDays] = useState<DaysObj[]>(
     addWeakDayName().splice(0, 15),
   )
-  const { handleswitchModalView, users, handleSetUsers } =
-    useContext(jobsContext)
+  const { handleSwitchModalView, jobs, handleSetJobs } = useContext(jobsContext)
   const { id } = useParams()
   /* console.log(id) */
 
   useEffect(() => {
     if (id) {
-      const userFilteredById = users.filter((user) => user.id === Number(id))
-      handleSetUsers(userFilteredById)
+      const jobsFilteredByUserId = jobs.filter((user) => user.id === Number(id))
+      handleSetJobs(jobsFilteredByUserId)
     }
   }, [])
 
@@ -108,7 +107,7 @@ export default function Job() {
           </span>
           <button
             type="button"
-            onClick={handleswitchModalView}
+            onClick={handleSwitchModalView}
             className="w-10 absolute left-[93%] mt-2  flex justify-center  px-2 buttonStyle1"
           >
             <Plus size={20} color={'white'} />
@@ -148,7 +147,7 @@ export default function Job() {
               </tr>
             </thead>
             <tbody>
-              {users.map((contractor) => {
+              {jobs.map((contractor) => {
                 if (tableFilters(contractor)) {
                   return (
                     <JobTableLine

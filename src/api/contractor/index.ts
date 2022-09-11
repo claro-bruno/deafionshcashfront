@@ -31,17 +31,29 @@ export function axiosCreateNewContractor(
 }
 
 export async function axiosUpdateNewContractor(payload) {
-  return await Api.put('rota', payload)
+  return await Api.put('rota', payload, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
 }
 export async function axiosGetAllContractors() {
-  return await Api.get('rota')
+  return await Api.get('contractor')
 }
-export async function axiosGetContractorsById(payload) {
-  return await Api.get('rota', payload)
+export async function axiosGetContractorsById(id: number) {
+  return await Api.get(`contractor/${id}`)
 }
-export async function axiosUpdateContractorStatus(payload) {
-  return await Api.post('rota', payload)
+export async function axiosUpdateContractorStatus(payload: any) {
+  return await Api.patch(`contractor/${payload.id}`, payload, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
 }
 export async function axiosUpdateContractorPassword(payload) {
-  return await Api.put('rota', payload)
+  return await Api.put('rota', payload, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
 }

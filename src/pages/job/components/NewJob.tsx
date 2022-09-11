@@ -2,25 +2,31 @@ import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useContext, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { jobsContext } from '../../../context/JobContextProvider'
-import { clients, contractors, createObjectDaysByMonth } from '../constants'
+import {
+  mockClients,
+  mockContractors,
+  createObjectDaysByMonth,
+} from '../constants'
 import '../../../components/modals/modal.css'
-
-const WEEKDAYS = [
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday',
-  'Sunday',
-]
+import { WEEKDAYS } from '../../client/constants'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { axiosGetAllClients } from '../../../api/client'
+import { axiosGetAllContractors } from '../../../api/contractor'
+import { axiosCreateNewJob } from '../../../api/jobs'
 
 type NewJobProps = {
   tableDate: { monthName: string; yearName: string }
 }
 
 export default function NewJob({ tableDate }: NewJobProps) {
-  const { jobToEdit, users, handleSetUsers } = useContext(jobsContext)
+  const {
+    jobToEdit,
+    handleCurrentInputJobValue,
+    handleSwitchModalView,
+    isModalOpen,
+    jobs,
+    handleSetJobs,
+  } = useContext(jobsContext)
   const newJob = useForm({
     defaultValues: {
       contractor: '',
@@ -36,8 +42,18 @@ export default function NewJob({ tableDate }: NewJobProps) {
   const { register, handleSubmit, reset } = newJob
   const [hoursWorked, setHoursWorked] = useState('0')
   const [daysWorked, setDaysWorked] = useState<string[]>([])
-  const { handleCurrentInputJobValue, handleswitchModalView, isModalOpen } =
-    useContext(jobsContext)
+  const { data: clients } = useQuery(['clients'], axiosGetAllClients)
+  const { data: contractors } = useQuery(
+    [`contractors`],
+    axiosGetAllContractors,
+  )
+  const { invalidateQueries } = useQueryClient()
+  const { data, mutateAsync } = useMutation(axiosCreateNewJob, {
+    onSuccess() {
+      console.log(data)
+      invalidateQueries(['jobs'])
+    },
+  })
 
   function handleCreateNewJob(data: any) {
     const formattedNewJob = {
@@ -50,11 +66,13 @@ export default function NewJob({ tableDate }: NewJobProps) {
       }),
     }
     handleCurrentInputJobValue(hoursWorked)
+    delete formattedNewJob.hours
     console.log(formattedNewJob)
-    handleSetUsers([...users, formattedNewJob])
+    handleSetJobs([...jobs, formattedNewJob])
+    mutateAsync(formattedNewJob)
     reset()
     setDaysWorked([])
-    handleswitchModalView()
+    handleSwitchModalView()
   }
   function handleEditJob(data: any) {
     const formattedEditedJob = {
@@ -62,12 +80,12 @@ export default function NewJob({ tableDate }: NewJobProps) {
       ...data,
     }
     handleCurrentInputJobValue(hoursWorked)
-    const usersFiltered = users.filter((user) => user.id !== jobToEdit.id)
-    const newUsers = [...usersFiltered, formattedEditedJob]
-    handleSetUsers(newUsers)
+    const jobsFiltered = jobs.filter((user) => user.id !== jobToEdit.id)
+    const newJobs = [...jobsFiltered, formattedEditedJob]
+    handleSetJobs(newJobs)
     reset()
     setDaysWorked([])
-    handleswitchModalView()
+    handleSwitchModalView()
   }
 
   function handleCheckboxAddNewWorkedDay(e: any) {
@@ -85,7 +103,7 @@ export default function NewJob({ tableDate }: NewJobProps) {
         <Dialog
           as="div"
           className="relative z-10"
-          onClose={handleswitchModalView}
+          onClose={handleSwitchModalView}
         >
           <Transition.Child
             as={Fragment}
@@ -133,7 +151,7 @@ export default function NewJob({ tableDate }: NewJobProps) {
                       />
                     </label>
                     <datalist id="contractors">
-                      {contractors.map((contractor, index) => (
+                      {mockContractors.map((contractor, index) => (
                         <option key={index} value={contractor} />
                       ))}
                     </datalist>
@@ -147,7 +165,7 @@ export default function NewJob({ tableDate }: NewJobProps) {
                       />
                     </label>
                     <datalist id="clients">
-                      {clients.map((client, index) => (
+                      {mockClients.map((client, index) => (
                         <option key={index} value={client} />
                       ))}
                     </datalist>
@@ -176,7 +194,7 @@ export default function NewJob({ tableDate }: NewJobProps) {
                             {WEEKDAYS.map((day, index) => (
                               <label
                                 key={index}
-                                className="flex gap-1 text-sm items-center"
+                                className="flex  gap-1 text-sm items-center"
                               >
                                 <input
                                   value={day}
@@ -185,7 +203,9 @@ export default function NewJob({ tableDate }: NewJobProps) {
                                   }
                                   type="checkbox"
                                 />
-                                {day}
+                                <span className="first-letter:uppercase">
+                                  {day}
+                                </span>
                               </label>
                             ))}
                           </div>

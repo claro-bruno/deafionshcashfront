@@ -16,9 +16,9 @@ export default function JobTableLine({
     handleCurrentInputJobValue,
     currentInputJobValue,
     handleEditJob,
-    handleswitchModalView,
+    handleSwitchModalView,
   } = useContext(jobsContext)
-  console.log(contractor)
+
   function handleChange(
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
     options?: string,
@@ -108,7 +108,7 @@ export default function JobTableLine({
   function handleEditContractor() {
     handleEditJob(contractorWorkedInfos)
     console.log(contractorWorkedInfos)
-    handleswitchModalView()
+    handleSwitchModalView()
   }
 
   return (

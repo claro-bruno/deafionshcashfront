@@ -12,8 +12,8 @@ export default function Client() {
   const { name } = useParams()
   const [filterClient, setFilterClient] = useState(name ?? '')
   const { switchModalView, isModalOpen } = useModal()
-  /*   const { data } = useQuery(['clients'], axiosGetAllClients)
-  console.log(data?.data) */
+  const { data } = useQuery(['clients'], axiosGetAllClients)
+  console.log(data?.data)
   const [isEditable, setIsEditable] = useState({})
 
   function tableFilters(item: { name: string }) {

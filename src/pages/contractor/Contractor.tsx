@@ -1,5 +1,7 @@
+import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { axiosGetContractorsById } from '../../api/contractor'
 import Header from '../../components/header/Header'
 import { monthsListbox } from '../../components/listboxes/constants'
 import SelectFilter from '../../components/listboxes/SelectFilter'
@@ -31,6 +33,10 @@ export default function Contractor() {
   const [visibilityWorkedInfos, setVisibilityWorkedInfos] = useState(
     INITIAL_VISIBILITY_WORKED_INFOS,
   )
+  const { data } = useQuery(['contractor', id], () => {
+    axiosGetContractorsById(Number(id))
+  })
+  console.log(data)
   const paymentsArray = bodyTableContractor.map((item) => {
     if (tableFilters(item)) {
       return (Number(item.hourlyPay) * Number(item.workedHours)).toFixed(2)

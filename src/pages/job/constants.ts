@@ -22,8 +22,8 @@ export const months = [
   'December',
 ]
 
-export const clients = ['Multilaser', 'Big', 'Apple', 'Amazon', 'Google']
-export const contractors = ['John', 'Paul', 'George', 'Ringo']
+export const mockClients = ['Multilaser', 'Big', 'Apple', 'Amazon', 'Google']
+export const mockContractors = ['John', 'Paul', 'George', 'Ringo']
 
 function formatDate(date: Date): string {
   const day = date.getDate()
