@@ -12,8 +12,8 @@ export default function Client() {
   const { name } = useParams()
   const [filterClient, setFilterClient] = useState(name ?? '')
   const { switchModalView, isModalOpen } = useModal()
-  const { data } = useQuery(['clients'], axiosGetAllClients)
-  console.log(data?.data)
+  /*   const { data } = useQuery(['clients'], axiosGetAllClients)
+  console.log(data?.data) */
   const [isEditable, setIsEditable] = useState({})
 
   function tableFilters(item: { name: string }) {
@@ -21,6 +21,9 @@ export default function Client() {
   }
 
   function handleEditClient(item: any) {
+    if ('id' in isEditable) {
+      setIsEditable({})
+    }
     setIsEditable(item)
     switchModalView()
   }
@@ -70,12 +73,53 @@ export default function Client() {
                     </th>
                     <td className="tableLine">{item.name}</td>
                     <td className="tableLine">
-                      {`${item.weekdays[0]} - ${
-                        item.weekdays[item.weekdays.length - 1]
-                      }`}
+                      <ul className="flex flex-wrap gap-1">
+                        {item.sunday && (
+                          <li className="flex items-center gap-1">
+                            <Circle size={5} color="black" weight="fill" />
+                            Sun
+                          </li>
+                        )}
+                        {item.monday && (
+                          <li className="flex items-center gap-1">
+                            <Circle size={5} color="black" weight="fill" />
+                            Mon
+                          </li>
+                        )}
+                        {item.tuesday && (
+                          <li className="flex items-center gap-1">
+                            <Circle size={5} color="black" weight="fill" />
+                            Tues
+                          </li>
+                        )}
+                        {item.wednesday && (
+                          <li className="flex items-center gap-1">
+                            <Circle size={5} color="black" weight="fill" />
+                            Wed
+                          </li>
+                        )}
+                        {item.thursday && (
+                          <li className="flex items-center gap-1">
+                            <Circle size={5} color="black" weight="fill" />
+                            Thur
+                          </li>
+                        )}
+                        {item.friday && (
+                          <li className="flex items-center gap-1">
+                            <Circle size={5} color="black" weight="fill" />
+                            Fri
+                          </li>
+                        )}
+                        {item.saturday && (
+                          <li className="flex items-center gap-1">
+                            <Circle size={5} color="black" weight="fill" />
+                            Sat
+                          </li>
+                        )}
+                      </ul>
                     </td>
                     <td className="tableLine">
-                      {`${item.workingHours.start}h - ${item.workingHours.end}h`}
+                      {`${item.start}h - ${item.end}h`}
                     </td>
                     <td className="tableLine">
                       <button
@@ -96,7 +140,7 @@ export default function Client() {
       </div>
       <NewCompanyModal
         isModalOpen={isModalOpen}
-        switchModalView={() => switchModalView()}
+        switchModalView={() => handleEditClient(isEditable)}
         modalInfos={isEditable}
       />
     </div>

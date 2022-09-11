@@ -2,22 +2,27 @@ export type NewClient = {
   name: string
   start: string
   end: string
-  Monday: boolean
-  Tuesday: boolean
-  Wednesday: boolean
-  Thursday: boolean
-  Friday: boolean
-  Saturday: boolean
-  Sunday: boolean
+  monday: boolean
+  tuesday: boolean
+  wednesday: boolean
+  thursday: boolean
+  friday: boolean
+  saturday: boolean
+  sunday: boolean
 }
 
 export type Client = {
-  id: string
-  status: string
+  id?: string
   name: string
   start: string
   end: string
-  daysWorked: string[]
+  monday: boolean
+  tuesday: boolean
+  wednesday: boolean
+  thursday: boolean
+  friday: boolean
+  saturday: boolean
+  sunday: boolean
 }
 
 export type Clients = Client[]

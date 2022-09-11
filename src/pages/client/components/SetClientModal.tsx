@@ -1,35 +1,55 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { Fragment, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { FormEvent, Fragment, useState } from 'react'
 import { axiosCreateClient, axiosUpdateClient } from '../../../api/client'
 import '../../../components/modals/modal.css'
+import useHandleChange from '../../../hooks/useHandleChange'
+import { Client } from '../../../types/client'
 import { ModalProps } from '../../../types/modal'
 import { WEEKDAYS } from '../constants'
 
 export default function SetClientModal({
   isModalOpen,
   switchModalView,
+  modalInfos,
 }: ModalProps) {
+  const isEditMode = 'id' in modalInfos
   const [response, setResponse] = useState<any>({})
   const { invalidateQueries } = useQueryClient()
+  const INITIAL_MODAL_CLIENT_STATES = {
+    name: '',
+    start: '',
+    end: '',
+    monday: false,
+    tuesday: false,
+    wednesday: false,
+    thursday: false,
+    friday: false,
+    saturday: false,
+    sunday: false,
+  }
+
+  const [states, handleChange] = useHandleChange<Client>(
+    INITIAL_MODAL_CLIENT_STATES,
+  )
 
   const { mutateAsync, data } = useMutation(axiosCreateClient, {
     onSuccess: () => {
       setResponse(data)
-      reset()
+
       invalidateQueries(['clients'])
     },
     onError: (error) => {
       console.log(error)
     },
   })
+
   const { mutateAsync: updateMutateAsync, data: updateData } = useMutation(
     axiosUpdateClient,
     {
       onSuccess: () => {
         setResponse(updateData)
-        reset()
+
         invalidateQueries(['clients'])
       },
       onError: (error) => {
@@ -37,45 +57,44 @@ export default function SetClientModal({
       },
     },
   )
-  const { register, handleSubmit, reset, watch } = useForm({
-    defaultValues: {
-      name: '',
-      start: '',
-      end: '',
-      monday: false,
-      tuesday: false,
-      wednesday: false,
-      thursday: false,
-      friday: false,
-      saturday: false,
-      sunday: false,
-    },
-  })
-  const sunday = watch('sunday')
-  const tuesday = watch('tuesday')
-  const saturday = watch('saturday')
-  const monday = watch('monday')
-  const wednesday = watch('wednesday')
-  const thursday = watch('thursday')
-  const friday = watch('friday')
-  const isSomeDayChecked = [
-    sunday,
-    tuesday,
-    wednesday,
-    thursday,
-    friday,
-    monday,
-    saturday,
-  ].every((day) => day === false)
-
-  function handleNewClient(payload: any) {
-    console.log(payload)
-    mutateAsync(payload)
-    switchModalView()
-  }
-  function handleUpdateClient(payload: any) {
-    console.log(payload)
-    updateMutateAsync(payload)
+  function handleSubmitClient(e: FormEvent<EventTarget>) {
+    const payload = {
+      name: states.name === '' && isEditMode ? modalInfos.name : states.name,
+      start:
+        states.start === '' && isEditMode ? modalInfos.start : states.start,
+      end: states.end === '' && isEditMode ? modalInfos.end : states.end,
+      monday:
+        states.monday === false && isEditMode
+          ? modalInfos.monday
+          : states.monday,
+      tuesday:
+        states.tuesday === false && isEditMode
+          ? modalInfos.tuesday
+          : states.tuesday,
+      wednesday:
+        states.wednesday === false && isEditMode
+          ? modalInfos.wednesday
+          : states.wednesday,
+      thursday:
+        states.thursday === false && isEditMode
+          ? modalInfos.thursday
+          : states.thursday,
+      friday:
+        states.friday === false && isEditMode
+          ? modalInfos.friday
+          : states.friday,
+      saturday:
+        states.saturday === false && isEditMode
+          ? modalInfos.saturday
+          : states.saturday,
+      sunday:
+        states.sunday === false && isEditMode
+          ? modalInfos.sunday
+          : states.sunday,
+    }
+    console.log(payload, isEditMode)
+    e.preventDefault()
+    isEditMode ? updateMutateAsync(states) : mutateAsync(states)
     switchModalView()
   }
 
@@ -107,10 +126,7 @@ export default function SetClientModal({
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel className="modal">
-                  <form
-                    action="submit"
-                    onSubmit={handleSubmit(handleNewClient)}
-                  >
+                  <form action="submit" onSubmit={handleSubmitClient}>
                     <div
                       tabIndex={0}
                       className="flex items-center focus:outline-none justify-center"
@@ -119,16 +135,19 @@ export default function SetClientModal({
                       as="h3"
                       className="text-xl text-center py-4 font-medium leading-6 text-gray-900"
                     >
-                      New Company
+                      {isEditMode ? 'Edit Client' : 'New Client'}
                     </Dialog.Title>
                     <div className="mt-2 flex flex-col gap-4 items-center justify-center">
                       <label className="text-zinc-800 flex gap-2 flex-col">
                         Name:
                         <input
-                          {...register('name')}
+                          onChange={handleChange}
+                          name="name"
+                          defaultValue={modalInfos.name}
                           className="inputsDefault"
                           placeholder="Ex: Amazon"
                           type="text"
+                          required
                         />
                       </label>
                       <div className="flex  flex-col gap-2">
@@ -137,7 +156,9 @@ export default function SetClientModal({
                           <label className="flex flex-col text-zinc-700 text-sm">
                             Start:
                             <input
-                              {...register('start')}
+                              onChange={handleChange}
+                              name="start"
+                              defaultValue={modalInfos.start}
                               className="outline-brand  p-1 ring-1  ring-zinc-400  rounded"
                               type="time"
                               required
@@ -146,9 +167,11 @@ export default function SetClientModal({
                           <label className="flex flex-col text-zinc-700 text-sm">
                             End:
                             <input
+                              onChange={handleChange}
+                              name="end"
+                              defaultValue={modalInfos.end}
                               className="outline-brand  p-1 ring-1  ring-zinc-400  rounded"
                               type="time"
-                              {...register('end')}
                               required
                             />
                           </label>
@@ -161,7 +184,12 @@ export default function SetClientModal({
                             key={index}
                             className=" flex gap-1 text-sm uppercase items-center"
                           >
-                            <input {...register(`${day}`)} type="checkbox" />
+                            <input
+                              onChange={(e) => handleChange(e, true)}
+                              name={day}
+                              defaultChecked={modalInfos[day]}
+                              type="checkbox"
+                            />
                             {day}
                           </label>
                         ))}
@@ -170,11 +198,12 @@ export default function SetClientModal({
 
                     <div className="pt-7 flex flex-col items-center gap-5">
                       <button
-                        disabled={isSomeDayChecked}
                         type="submit"
-                        className="buttonStyle1 px-3"
+                        className={`${
+                          isEditMode ? 'buttonStyle2 ' : 'buttonStyle1'
+                        } px-3`}
                       >
-                        Create
+                        {isEditMode ? 'Edit ' : 'Create'}
                       </button>
                     </div>
                   </form>
