@@ -13,7 +13,7 @@ export type UserLogin = {
 
 export default function Login() {
   const [response, setResponse] = useState<any>({})
-  const { isModalOpen, closeModal } = useModal()
+  const { isModalOpen, switchModalView } = useModal()
   const { authenticate, saveUser, checkUserInLocalStorage } =
     useContext(AuthContext)
   const { register, handleSubmit, watch } = useForm<UserLogin>({
@@ -46,7 +46,7 @@ export default function Login() {
           isContractorCreated: false,
           message: error.response.data,
         })
-        closeModal()
+        switchModalView()
       },
     },
   )
@@ -113,7 +113,7 @@ export default function Login() {
       </div>
       <AlertModal
         modalInfos={response}
-        closeModal={closeModal}
+        switchModalView={switchModalView}
         isModalOpen={isModalOpen}
       />
     </div>

@@ -9,14 +9,14 @@ export default function TermModal({
   title,
   pdfUrl,
   isModalOpen,
-  closeModal,
+  switchModalView,
 }: TermModalProps) {
   const [isChecked, setIsChecked] = useState(false)
   function handleCheckboxChange(e: ChangeEvent<HTMLInputElement>) {
     setIsChecked(e.target.checked)
   }
   function handleClose() {
-    closeModal()
+    switchModalView()
   }
 
   return (

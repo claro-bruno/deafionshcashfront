@@ -13,7 +13,7 @@ interface JobContext {
   handleEditJob: (job: Job) => void
   currentInputJobValue: string
   handleCurrentInputJobValue: (value: string) => void
-  handleCloseModal: () => void
+  handleswitchModalView: () => void
   isModalOpen: boolean
   users: Job[]
   handleSetUsers: (users: Job[]) => void
@@ -25,7 +25,7 @@ export default function JobContextProvider(props: PropsWithChildren) {
   const [jobToEdit, setJobToEdit] = useState<Job>({} as Job)
   const [currentInputJobValue, setCurrentInputJobValue] = useState('')
   const [users, setUsers] = useState<Job[]>(bodyTable)
-  const { closeModal, isModalOpen } = useModal()
+  const { switchModalView, isModalOpen } = useModal()
   function handleEditJob(job: any) {
     setJobToEdit(job)
   }
@@ -35,11 +35,11 @@ export default function JobContextProvider(props: PropsWithChildren) {
   function handleCurrentInputJobValue(value: string) {
     setCurrentInputJobValue(value)
   }
-  function handleCloseModal() {
+  function handleswitchModalView() {
     if (isModalOpen && jobToEdit) {
       setJobToEdit({} as Job)
     }
-    closeModal()
+    switchModalView()
   }
   const valueToProvide = useMemo(
     () => ({
@@ -47,7 +47,7 @@ export default function JobContextProvider(props: PropsWithChildren) {
       handleEditJob,
       currentInputJobValue,
       handleCurrentInputJobValue,
-      handleCloseModal,
+      handleswitchModalView,
       isModalOpen,
       handleSetUsers,
       users,

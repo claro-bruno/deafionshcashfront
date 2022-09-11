@@ -5,7 +5,7 @@ import { ModalProps } from '../../types/modal'
 
 export default function AlertModal({
   isModalOpen,
-  closeModal,
+  switchModalView,
   modalInfos,
 }: ModalProps) {
   console.log(modalInfos)
@@ -13,7 +13,7 @@ export default function AlertModal({
   return (
     <>
       <Transition appear show={isModalOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeModal}>
+        <Dialog as="div" className="relative z-10" onClose={switchModalView}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -59,7 +59,7 @@ export default function AlertModal({
                     <button
                       type="button"
                       className="px-3 buttonStyle1 self-center"
-                      onClick={closeModal}
+                      onClick={switchModalView}
                     >
                       Close
                     </button>

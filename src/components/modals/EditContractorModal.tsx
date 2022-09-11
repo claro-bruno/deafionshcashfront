@@ -6,10 +6,10 @@ import './modal.css'
 
 export default function NewContractorModal({
   isModalOpen,
-  closeModal,
+  switchModalView,
 }: ModalProps) {
   function handleClose() {
-    closeModal()
+    switchModalView()
   }
   const { formatEIN, formatPhone } = useFormate()
   return (
@@ -149,7 +149,7 @@ export default function NewContractorModal({
                     <button
                       type="button"
                       className=" buttonStyle1 px-3"
-                      onClick={closeModal}
+                      onClick={switchModalView}
                     >
                       Save
                     </button>

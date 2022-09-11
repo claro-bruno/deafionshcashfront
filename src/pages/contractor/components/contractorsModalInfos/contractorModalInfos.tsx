@@ -4,11 +4,11 @@ import { ModalProps } from '../../../../types/modal'
 
 export default function ContractorModalInfos({
   isModalOpen,
-  closeModal,
+  switchModalView,
   modalInfos,
 }: ModalProps) {
   function handleClose() {
-    closeModal()
+    switchModalView()
   }
   return (
     <>
@@ -90,7 +90,7 @@ export default function ContractorModalInfos({
                     <button
                       type="button"
                       className=" buttonStyle1 px-3"
-                      onClick={closeModal}
+                      onClick={switchModalView}
                     >
                       Save
                     </button>

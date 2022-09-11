@@ -36,7 +36,7 @@ export default function NewJob({ tableDate }: NewJobProps) {
   const { register, handleSubmit, reset } = newJob
   const [hoursWorked, setHoursWorked] = useState('0')
   const [daysWorked, setDaysWorked] = useState<string[]>([])
-  const { handleCurrentInputJobValue, handleCloseModal, isModalOpen } =
+  const { handleCurrentInputJobValue, handleswitchModalView, isModalOpen } =
     useContext(jobsContext)
 
   function handleCreateNewJob(data: any) {
@@ -54,7 +54,7 @@ export default function NewJob({ tableDate }: NewJobProps) {
     handleSetUsers([...users, formattedNewJob])
     reset()
     setDaysWorked([])
-    handleCloseModal()
+    handleswitchModalView()
   }
   function handleEditJob(data: any) {
     const formattedEditedJob = {
@@ -67,7 +67,7 @@ export default function NewJob({ tableDate }: NewJobProps) {
     handleSetUsers(newUsers)
     reset()
     setDaysWorked([])
-    handleCloseModal()
+    handleswitchModalView()
   }
 
   function handleCheckboxAddNewWorkedDay(e: any) {
@@ -82,7 +82,11 @@ export default function NewJob({ tableDate }: NewJobProps) {
   return (
     <>
       <Transition appear show={isModalOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={handleCloseModal}>
+        <Dialog
+          as="div"
+          className="relative z-10"
+          onClose={handleswitchModalView}
+        >
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"

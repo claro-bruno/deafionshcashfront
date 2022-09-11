@@ -25,7 +25,7 @@ const INITIAL_VISIBILITY_WORKED_INFOS = {
 export default function Contractor() {
   const { id } = useParams()
   console.log(id)
-  const { closeModal, isModalOpen } = useModal()
+  const { switchModalView, isModalOpen } = useModal()
   const [filterCompany, setFilterCompany] = useState('')
   const [monthName, setMonthName] = useState('')
   const [visibilityWorkedInfos, setVisibilityWorkedInfos] = useState(
@@ -89,7 +89,7 @@ export default function Contractor() {
         </div>
       </Header>
       <main className="flex flex-col">
-        <CardContractor setIsModalOpen={() => closeModal()} />
+        <CardContractor setIsModalOpen={() => switchModalView()} />
         <div className="tableContainer relative left-2 flex gap-4 w-[75%] max-h-[80vh] overflow-auto">
           <table className="table">
             <thead className="tableHead">
@@ -134,7 +134,7 @@ export default function Contractor() {
       </main>
       <NewContractorModal
         isModalOpen={isModalOpen}
-        closeModal={() => closeModal()}
+        switchModalView={() => switchModalView()}
       />
     </div>
   )

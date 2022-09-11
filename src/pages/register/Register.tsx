@@ -7,7 +7,7 @@ import NewContractorForm from './components/NewContractorForm'
 import { INITIAL_NEW_CONTRACTOR_STATE } from './constants'
 
 export default function Register() {
-  const { closeModal, isModalOpen } = useModal()
+  const { switchModalView, isModalOpen } = useModal()
 
   const newContractorForm = useForm<NewContractor>({
     defaultValues: INITIAL_NEW_CONTRACTOR_STATE,
@@ -19,7 +19,10 @@ export default function Register() {
         <FormProvider {...newContractorForm}>
           <NewContractorForm />
         </FormProvider>
-        <AlertModal isModalOpen={isModalOpen} closeModal={closeModal} />
+        <AlertModal
+          isModalOpen={isModalOpen}
+          switchModalView={switchModalView}
+        />
       </main>
     </div>
   )

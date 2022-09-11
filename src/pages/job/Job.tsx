@@ -25,7 +25,8 @@ export default function Job() {
   const [fortnightDays, setFortnightDays] = useState<DaysObj[]>(
     addWeakDayName().splice(0, 15),
   )
-  const { handleCloseModal, users, handleSetUsers } = useContext(jobsContext)
+  const { handleswitchModalView, users, handleSetUsers } =
+    useContext(jobsContext)
   const { id } = useParams()
   /* console.log(id) */
 
@@ -107,7 +108,7 @@ export default function Job() {
           </span>
           <button
             type="button"
-            onClick={handleCloseModal}
+            onClick={handleswitchModalView}
             className="w-10 absolute left-[93%] mt-2  flex justify-center  px-2 buttonStyle1"
           >
             <Plus size={20} color={'white'} />

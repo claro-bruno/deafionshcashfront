@@ -1,22 +1,28 @@
 import { useQuery } from '@tanstack/react-query'
-import { Circle, PlusCircle } from 'phosphor-react'
+import { Circle, Plus } from 'phosphor-react'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { axiosGetAllClients } from '../../api/client'
 import Header from '../../components/header/Header'
 import useModal from '../../hooks/useModal'
-import NewCompanyModal from './components/NewClientModal'
+import NewCompanyModal from './components/SetClientModal'
 import { bodyTable, headerTable } from './constants'
 
 export default function Client() {
   const { name } = useParams()
   const [filterClient, setFilterClient] = useState(name ?? '')
-  const { closeModal, isModalOpen } = useModal()
+  const { switchModalView, isModalOpen } = useModal()
   const { data } = useQuery(['clients'], axiosGetAllClients)
   console.log(data?.data)
+  const [isEditable, setIsEditable] = useState({})
 
   function tableFilters(item: { name: string }) {
     return item.name.toUpperCase().includes(filterClient.toUpperCase())
+  }
+
+  function handleEditClient(item: any) {
+    setIsEditable(item)
+    switchModalView()
   }
 
   return (
@@ -41,12 +47,11 @@ export default function Client() {
               ))}
               <th scope="col" className="tableLine">
                 <button
-                  onClick={() => closeModal()}
-                  className="text-brand relative left-10"
-                  title="Add company"
                   type="button"
+                  onClick={switchModalView}
+                  className=" relative left-8 mt-2 flex justify-center px-2 buttonStyle1"
                 >
-                  <PlusCircle size={25} />
+                  <Plus size={20} color={'white'} />
                 </button>
               </th>
             </tr>
@@ -73,7 +78,10 @@ export default function Client() {
                       {`${item.workingHours.start}h - ${item.workingHours.end}h`}
                     </td>
                     <td className="tableLine">
-                      <button className="buttonStyle2 px-3 relative left-7">
+                      <button
+                        onClick={() => handleEditClient(item)}
+                        className="buttonStyle2 px-3 relative left-7"
+                      >
                         Edit
                       </button>
                     </td>
@@ -88,7 +96,8 @@ export default function Client() {
       </div>
       <NewCompanyModal
         isModalOpen={isModalOpen}
-        closeModal={() => closeModal()}
+        switchModalView={() => switchModalView()}
+        modalInfos={isEditable}
       />
     </div>
   )

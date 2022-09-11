@@ -8,10 +8,10 @@ import { bodyTableContractors, headerTableContractors } from './constants'
 
 export default function Contractors() {
   const { formatPhone, formatSsnOrItin } = useFormate()
-  const { closeModal, isModalOpen } = useModal()
+  const { switchModalView, isModalOpen } = useModal()
   const [contractorInfos, setContractorInfos] = useState({})
   function handleModalInfos(infos: {}) {
-    closeModal()
+    switchModalView()
     setContractorInfos(infos)
   }
   return (
@@ -89,7 +89,7 @@ export default function Contractors() {
         </table>
         <ContractorModalInfos
           isModalOpen={isModalOpen}
-          closeModal={closeModal}
+          switchModalView={switchModalView}
           modalInfos={contractorInfos}
         />
       </main>

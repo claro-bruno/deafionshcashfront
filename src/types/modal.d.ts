@@ -1,5 +1,5 @@
 export type ModalProps = {
   modalInfos?: any
   isModalOpen: boolean
-  closeModal: () => void
+  switchModalView: () => void
 }

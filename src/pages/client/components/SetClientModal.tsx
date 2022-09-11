@@ -2,14 +2,14 @@ import { Dialog, Transition } from '@headlessui/react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Fragment, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { axiosCreateClient } from '../../../api/client'
+import { axiosCreateClient, axiosUpdateClient } from '../../../api/client'
 import '../../../components/modals/modal.css'
 import { ModalProps } from '../../../types/modal'
 import { WEEKDAYS } from '../constants'
 
-export default function NewClientModal({
+export default function SetClientModal({
   isModalOpen,
-  closeModal,
+  switchModalView,
 }: ModalProps) {
   const [response, setResponse] = useState<any>({})
   const { invalidateQueries } = useQueryClient()
@@ -24,6 +24,19 @@ export default function NewClientModal({
       console.log(error)
     },
   })
+  const { mutateAsync: updateMutateAsync, data: updateData } = useMutation(
+    axiosUpdateClient,
+    {
+      onSuccess: () => {
+        setResponse(updateData)
+        reset()
+        invalidateQueries(['clients'])
+      },
+      onError: (error) => {
+        console.log(error)
+      },
+    },
+  )
   const { register, handleSubmit, reset, watch } = useForm({
     defaultValues: {
       name: '',
@@ -58,13 +71,18 @@ export default function NewClientModal({
   function handleNewClient(payload: any) {
     console.log(payload)
     mutateAsync(payload)
-    closeModal()
+    switchModalView()
+  }
+  function handleUpdateClient(payload: any) {
+    console.log(payload)
+    updateMutateAsync(payload)
+    switchModalView()
   }
 
   return (
     <>
       <Transition appear show={isModalOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeModal}>
+        <Dialog as="div" className="relative z-10" onClose={switchModalView}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"

@@ -18,7 +18,7 @@ export default function NewContractorForm() {
     residenceProof: {},
   })
   const [response, setResponse] = useState<any>({})
-  const { isModalOpen, closeModal } = useModal()
+  const { isModalOpen, switchModalView } = useModal()
 
   const { mutateAsync } = useMutation(
     (payload: [NewContractor, InputsFiles]) =>
@@ -26,7 +26,7 @@ export default function NewContractorForm() {
     {
       onSuccess: (response) => {
         setResponse({ isContractorCreated: true, ...response?.data })
-        closeModal()
+        switchModalView()
         reset()
       },
       onError: (error: { response: any }) => {
@@ -34,7 +34,7 @@ export default function NewContractorForm() {
           isContractorCreated: false,
           message: error.response.data.message,
         })
-        closeModal()
+        switchModalView()
       },
     },
   )
@@ -231,7 +231,7 @@ export default function NewContractorForm() {
       </form>
       <AlertModal
         isModalOpen={isModalOpen}
-        closeModal={closeModal}
+        switchModalView={switchModalView}
         modalInfos={response}
       />
     </>

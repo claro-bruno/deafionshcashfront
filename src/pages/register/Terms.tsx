@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import useModal from '../../hooks/useModal'
 
 export default function Terms() {
-  const { closeModal, isModalOpen } = useModal()
+  const { switchModalView, isModalOpen } = useModal()
   const [pdfInfos, setPdfInfos] = useState<{ title: string; url: string }>({
     title: '',
     url: '',
@@ -33,7 +33,7 @@ export default function Terms() {
     })
   }
   function handleClickPdf(pdfName: string) {
-    closeModal()
+    switchModalView()
     if (pdfName === 'Anti-Bribery and Corruption') {
       setPdfInfos({
         title: 'Anti-Bribery and Corruption',
@@ -128,7 +128,7 @@ export default function Terms() {
       </button>
       <TermModal
         isModalOpen={isModalOpen}
-        closeModal={() => closeModal()}
+        switchModalView={() => switchModalView()}
         title={pdfInfos.title}
         pdfUrl={pdfInfos.url}
       />
