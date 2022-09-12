@@ -1,17 +1,53 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { Fragment } from 'react'
-import useFormate from '../../hooks/useFormate'
-import { ModalProps } from '../../types/modal'
-import './modal.css'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { FormEvent, Fragment } from 'react'
+import { axiosUpdateContractor } from '../../../../api/contractor'
+import useFormate from '../../../../hooks/useFormate'
+import useHandleChange from '../../../../hooks/useHandleChange'
+import { EditContractor, InputsFiles } from '../../../../types/contractor'
+import { ModalProps } from '../../../../types/modal'
+import '../../../../components/modals/modal.css'
 
-export default function NewContractorModal({
+export default function EditContractorModal({
   isModalOpen,
   switchModalView,
+  modalInfos,
 }: ModalProps) {
+  const { formatSsnOrItin, formatPhone } = useFormate()
+  const { inputsFiles, handleInputsFiles } = useHandleChange<InputsFiles>({
+    profile: {},
+    documentProof: {},
+    residenceProof: {},
+  })
+  const { state, handleChange } = useHandleChange<EditContractor>({
+    id: modalInfos.id ?? '',
+    email: modalInfos.email ?? '',
+    phone: modalInfos.phone ?? '',
+    ssnOrItin: modalInfos.ssnOrItin ?? '',
+  })
+  const { invalidateQueries } = useQueryClient()
+  const { mutateAsync, data } = useMutation(
+    (payload: [EditContractor, InputsFiles]) =>
+      axiosUpdateContractor(payload[0], payload[1]),
+    {
+      onSuccess() {
+        invalidateQueries(['contractor', modalInfos.id])
+        console.log(data)
+      },
+    },
+  )
+
+  console.log(modalInfos)
+
   function handleClose() {
     switchModalView()
   }
-  const { formatEIN, formatPhone } = useFormate()
+  function handleSubmitEditedContractor(e: FormEvent<EventTarget>) {
+    e.preventDefault()
+    console.log(state, inputsFiles)
+    mutateAsync([state, inputsFiles])
+    switchModalView()
+  }
   return (
     <>
       <Transition appear show={isModalOpen} as={Fragment}>
@@ -39,94 +75,76 @@ export default function NewContractorModal({
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="modal min-h-[70vh] max-w-[75vw]">
+                <Dialog.Panel className="modal min-h-[60vh] max-w-[75vw]">
                   <div
                     tabIndex={0}
                     className="flex items-center focus:outline-none justify-center"
                   ></div>
                   <Dialog.Title
                     as="h3"
-                    className="text-xl text-center  font-medium leading-6 text-gray-900"
+                    className="text-xl text-center  font-bold leading-6 text-gray-700"
                   >
                     Edit Contractor
                   </Dialog.Title>
-                  <div className="mt-6 flex flex-col gap-6 items-center justify-center">
+                  <form
+                    onSubmit={handleSubmitEditedContractor}
+                    className="mt-6 flex flex-col gap-6 items-center justify-center"
+                  >
                     <label className="flex  flex-col gap-4 items-center">
                       <img
-                        className="h-20 w-20 rounded-md"
+                        className="h-[8rem] w-[8rem] rounded-md"
                         src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
                         alt="profile "
                       />
                     </label>
-                    <select className="outline-brand3 bg-slate-50 border border-zinc-400 rounded p-1">
-                      <option>Active</option>
-                      <option>Inactive</option>
-                    </select>
-                    <div className="flex gap-4">
-                      <label className="labelsDefault">
-                        First name:
-                        <input
-                          className="inputsDefault"
-                          type="text"
-                          value="Bruno"
-                        />
-                      </label>
-                      <label className="labelsDefault">
-                        Middle name:
-                        <input
-                          className="inputsDefault"
-                          type="text"
-                          value="alves"
-                        />
-                      </label>
-                      <label className="labelsDefault">
-                        Last name:
-                        <input
-                          className="inputsDefault"
-                          type="text"
-                          value="fay"
-                        />
-                      </label>
-                    </div>
+                    <h2>Active</h2>
                     <div className="flex gap-4">
                       <label className="labelsDefault">
                         Email:
                         <input
+                          onChange={handleChange}
                           className="inputsDefault"
+                          name="email"
                           type="text"
-                          value="brunofay1@hotmail.com"
+                          value={state.email}
                         />
                       </label>
                       <label className="labelsDefault">
                         Phone:
                         <input
+                          onChange={handleChange}
                           className="inputsDefault"
                           type="text"
                           name="phone"
                           inputMode="numeric"
-                          pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}"
                           maxLength={11}
-                          value={formatPhone('51985473129')}
+                          value={formatPhone(state.phone)}
                         />
                       </label>
                       <label className="labelsDefault">
-                        <div className="flex items-start">EIN</div>
+                        <div className="flex items-start">ITIN/SSN</div>
                         <input
                           title="Employer Identification Number (EIN)"
                           placeholder="00-0000000"
                           maxLength={9}
                           className="inputsDefault"
                           type="text"
+                          onChange={handleChange}
+                          name="ssnOrItin"
                           inputMode="numeric"
-                          value={formatEIN('000000000')}
+                          value={formatSsnOrItin(state.ssnOrItin)}
                         />
                       </label>
                     </div>
+
                     <div className="flex ml-[6rem] ">
                       <label className="labelsDefault ">
                         Document Photo
                         <input
                           accept="image/*"
+                          onChange={(e) =>
+                            handleInputsFiles(e, 'documentProof')
+                          }
                           type="file"
                           className=" file:py-[0.35rem]  fileInput"
                         />
@@ -135,6 +153,9 @@ export default function NewContractorModal({
                         Residency proof
                         <input
                           type="file"
+                          onChange={(e) =>
+                            handleInputsFiles(e, 'residenceProof')
+                          }
                           className="fileInput file:py-[0.35rem] "
                         />
                       </label>
@@ -142,21 +163,19 @@ export default function NewContractorModal({
                         Profile Image
                         <input
                           accept="image/*"
+                          onChange={(e) => handleInputsFiles(e, 'profile')}
                           type="file"
                           className="fileInput file:py-[0.30rem]"
                         />
                       </label>
                     </div>
-                  </div>
-                  <div className="relative top-16 text-sm flex flex-col items-center gap-5">
                     <button
-                      type="button"
-                      className=" buttonStyle1 px-4 font-bold"
-                      onClick={switchModalView}
+                      type="submit"
+                      className=" buttonStyle2 px-4 mt-10 font-bold"
                     >
-                      Save
+                      Edit
                     </button>
-                  </div>
+                  </form>
                 </Dialog.Panel>
               </Transition.Child>
             </div>

@@ -2,6 +2,7 @@ import { ChangeEvent, useState } from 'react'
 
 export default function useHandleChange<t>(initialState: t) {
   const [state, setState] = useState<t>(initialState)
+  const [inputsFiles, setInputsFiles] = useState<t>(initialState)
   function handleChange(
     event: ChangeEvent<HTMLInputElement>,
     checkbox = false,
@@ -17,5 +18,11 @@ export default function useHandleChange<t>(initialState: t) {
         [event.target.name]: event.target.value,
       })
   }
-  return [state, handleChange] as const
+  function handleInputsFiles(
+    e: ChangeEvent<HTMLInputElement>,
+    inputName: string,
+  ) {
+    setInputsFiles({ ...inputsFiles, [inputName]: e.target.files![0] })
+  }
+  return { state, handleChange, inputsFiles, handleInputsFiles }
 }

@@ -59,7 +59,9 @@ export default function PaymentsInfos(payInfos: ContractorPaymentInfos) {
       </td>
       {payInfos.payments.map((payment, i) => (
         <>
-          <td className="tableLine">$ {formatMoney(Number(payment.value))}</td>
+          <td className="tableLine w-[9 rem] ">
+            $ {formatMoney(Number(payment.value))}
+          </td>
           <td className="tableLine">
             <select
               className="rounded bg-white border w-[4.9rem] outline-none text-xs py-1"
@@ -83,7 +85,7 @@ export default function PaymentsInfos(payInfos: ContractorPaymentInfos) {
           </td>
         </>
       ))}
-      <td className="w-[7rem]  px-5">
+      <td className="w-[7rem]  px-2">
         ${' '}
         {formatMoney(
           payInfos.payments.reduce((acc, curr) => acc + Number(curr.value), 0),

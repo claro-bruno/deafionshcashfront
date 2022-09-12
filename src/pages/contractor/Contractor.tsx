@@ -3,9 +3,12 @@ import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { axiosGetContractorsById } from '../../api/contractor'
 import Header from '../../components/header/Header'
-import { monthsListbox } from '../../components/listboxes/constants'
+import {
+  monthsListbox,
+  yearsListBox,
+} from '../../components/listboxes/constants'
 import SelectFilter from '../../components/listboxes/SelectFilter'
-import NewContractorModal from '../../components/modals/EditContractorModal'
+import EditContractorModal from './components/editContractorModal/EditContractorModal'
 import useModal from '../../hooks/useModal'
 import { ContractorWorkedInfo } from '../../types/contractor'
 import CardContractor from './components/cardContractor/CardContractor'
@@ -30,13 +33,16 @@ export default function Contractor() {
   const { switchModalView, isModalOpen } = useModal()
   const [filterCompany, setFilterCompany] = useState('')
   const [monthName, setMonthName] = useState('')
+  const [yearName, setYearName] = useState('2022')
   const [visibilityWorkedInfos, setVisibilityWorkedInfos] = useState(
     INITIAL_VISIBILITY_WORKED_INFOS,
   )
+  const [contractor, setContractor] = useState({})
   const { data } = useQuery(['contractor', id], () => {
     axiosGetContractorsById(Number(id))
   })
-  console.log(data)
+  console.log(data, contractor)
+  /* setContractor(data) */
   const paymentsArray = bodyTableContractor.map((item) => {
     if (tableFilters(item)) {
       return (Number(item.hourlyPay) * Number(item.workedHours)).toFixed(2)
@@ -80,6 +86,7 @@ export default function Contractor() {
     <div className="flex flex-col min-h-screen bg-gray-100">
       <Header>
         <div className="relative left-20 mx-auto flex items-center gap-2">
+          <SelectFilter setFilter={setYearName} selectOptions={yearsListBox} />
           <SelectFilter
             setFilter={setMonthName}
             selectOptions={monthsListbox}
@@ -138,7 +145,8 @@ export default function Contractor() {
           />
         </div>
       </main>
-      <NewContractorModal
+      <EditContractorModal
+        modalInfos={contractor}
         isModalOpen={isModalOpen}
         switchModalView={() => switchModalView()}
       />

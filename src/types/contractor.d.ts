@@ -30,6 +30,12 @@ export type NewContractor = {
     zipcode?: string
   }
 }
+export type EditContractor = {
+  id: string
+  email: string
+  phone: string
+  ssnOrItin: string
+}
 export type ContractorPaymentInfos = {
   id: number
   contractor: { name: string; id: number }

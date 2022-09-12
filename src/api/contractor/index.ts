@@ -1,6 +1,10 @@
 import { Api } from '..'
 
-import { InputsFiles, NewContractor } from '../../types/contractor'
+import {
+  EditContractor,
+  InputsFiles,
+  NewContractor,
+} from '../../types/contractor'
 
 export function axiosCreateNewContractor(
   payload: NewContractor,
@@ -30,17 +34,41 @@ export function axiosCreateNewContractor(
   })
 }
 
-export async function axiosUpdateNewContractor(payload) {
-  return await Api.put('rota', payload, {
+export function axiosUpdateContractor(
+  payload: EditContractor,
+  inputsFiles: InputsFiles,
+) {
+  const jsonToString = JSON.stringify(payload)
+  let objToAPI: any = { body: jsonToString }
+
+  if (inputsFiles.documentProof instanceof File) {
+    objToAPI = { ...objToAPI, documentProof: inputsFiles.documentProof }
+  }
+  if (inputsFiles.residenceProof instanceof File) {
+    objToAPI = {
+      ...objToAPI,
+      primaryResidencyProof: inputsFiles.residenceProof,
+    }
+  }
+  if (inputsFiles.profile instanceof File) {
+    objToAPI = { ...objToAPI, profile: inputsFiles.profile }
+  }
+  console.log(objToAPI)
+
+  return Api.put(`account/contractor/access/${payload.id}`, objToAPI, {
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'multipart/form-data',
     },
   })
 }
+
 export async function axiosGetAllContractors() {
   return await Api.get('contractor')
 }
 export async function axiosGetContractorsById(id: number) {
+  return await Api.get(`contractor/${id}`)
+}
+export async function axiosGetContractorJobsById(id: number) {
   return await Api.get(`contractor/${id}`)
 }
 export async function axiosUpdateContractorStatus(payload: any) {
