@@ -1,23 +1,34 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { ChangeEvent, KeyboardEvent, useContext, useState } from 'react'
+import { axiosUpdateNewJob } from '../../../api/jobs'
 import { jobsContext } from '../../../context/JobContextProvider'
-import { Job } from '../../../types/job'
+import { TJob } from '../../../types/job'
 import { DaysObj } from '../Job'
 
 export default function JobTableLine({
   fortnightDays,
-  contractor,
+  job,
 }: {
   fortnightDays: DaysObj[]
-  contractor: Job
+  job: TJob
 }) {
-  const [contractorWorkedInfos, setContractorWorkedInfos] =
-    useState<Job>(contractor)
+  const [contractorWorkedInfos, setContractorWorkedInfos] = useState<TJob>(job)
   const {
     handleCurrentInputJobValue,
     currentInputJobValue,
     handleEditJob,
     handleSwitchModalView,
   } = useContext(jobsContext)
+  const { invalidateQueries } = useQueryClient()
+  const { mutateAsync, data } = useMutation(axiosUpdateNewJob, {
+    onSuccess() {
+      invalidateQueries(['jobs'])
+      console.log(data)
+    },
+    onError(error) {
+      console.log(error)
+    },
+  })
 
   function handleChange(
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -88,7 +99,7 @@ export default function JobTableLine({
     const dayName = currentContractor[1].day
     return dayName
   }
-  function handleUpdateJob(jobInfos: Job) {
+  function handleUpdateJob(jobInfos: TJob) {
     const fistDayOfQuarter = fortnightDays[0].dayNum
     const lastDayOfQuarter = fortnightDays[fortnightDays.length - 1].dayNum
     const isQuarterOne = fistDayOfQuarter === 1
@@ -96,6 +107,7 @@ export default function JobTableLine({
       id: jobInfos.id,
       month: jobInfos.month,
       pHour: jobInfos.pHour,
+      status: jobInfos.status,
       year: jobInfos.year,
       quarter: isQuarterOne ? 1 : 2,
       workedDaysInfos: isQuarterOne
@@ -104,7 +116,9 @@ export default function JobTableLine({
     }
 
     console.log(jobToUpdateFormatted)
+    mutateAsync(jobToUpdateFormatted)
   }
+
   function handleEditContractor() {
     handleEditJob(contractorWorkedInfos)
     console.log(contractorWorkedInfos)
@@ -112,19 +126,19 @@ export default function JobTableLine({
   }
 
   return (
-    <tr key={contractor.id} className=" bg-white border-b ">
+    <tr key={job.id} className=" bg-white border-b ">
       <td className="pl-4 ">
         <select
           onChange={handleChange}
           className="rounded bg-white border outline-none p-1"
-          name="jobStatus"
+          name="status"
         >
           <option value="active">active</option>
           <option value="inactive">inactive</option>
         </select>
       </td>
-      <td className="max-w-[9rem]">{contractor.contractor}</td>
-      <td>{contractor.client}</td>
+      <td className="max-w-[9rem]">{job.contractor}</td>
+      <td>{job.client}</td>
       <td className="flex items-center justify-center">
         <p className="flex justify-center py-2 gap-1">
           {fortnightDays.map((day: DaysObj) => (

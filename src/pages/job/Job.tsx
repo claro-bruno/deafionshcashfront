@@ -147,13 +147,10 @@ export default function Job() {
               </tr>
             </thead>
             <tbody>
-              {jobs.map((contractor) => {
-                if (tableFilters(contractor)) {
+              {jobs.map((job) => {
+                if (tableFilters(job)) {
                   return (
-                    <JobTableLine
-                      contractor={contractor}
-                      fortnightDays={fortnightDays}
-                    />
+                    <JobTableLine job={job} fortnightDays={fortnightDays} />
                   )
                 } else {
                   return []
