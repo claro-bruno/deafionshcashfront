@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { GearSix } from 'phosphor-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { axiosGetAllPayments } from '../../api/payments'
 import Header from '../../components/header/Header'
 import {
@@ -19,7 +19,13 @@ export default function Payments() {
   const [filterContractor, setFilterContractor] = useState('')
   const { formatMoney } = useFormate()
   const { data } = useQuery(['payments', axiosGetAllPayments])
-  console.log(data)
+  const [payments, setPayments] = useState<any>([])
+  console.log(payments)
+  useEffect(() => {
+    if (data) {
+      setPayments(data)
+    }
+  }, [data])
 
   const outlay: { type: string; quarter: number; value: string }[] = bodyTable
     .filter((item) => item.month === monthName.toLowerCase())

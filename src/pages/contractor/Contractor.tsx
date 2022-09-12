@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { axiosGetContractorsById } from '../../api/contractor'
 import Header from '../../components/header/Header'
@@ -15,6 +15,7 @@ import CardContractor from './components/cardContractor/CardContractor'
 import ContractorAsideInfos from './components/contractorAsideInfos/ContractorAsideInfos'
 import { bodyTableContractor, headerTableContractor } from './constants'
 import './contractor.css'
+import { axiosGetAllJobsById } from '../../api/jobs'
 
 export interface VisibilityWorkedInfos {
   quinzena1: boolean
@@ -38,11 +39,24 @@ export default function Contractor() {
     INITIAL_VISIBILITY_WORKED_INFOS,
   )
   const [contractor, setContractor] = useState({})
+  const [contractorJobs, setContractorJobs] = useState([])
   const { data } = useQuery(['contractor', id], () => {
     axiosGetContractorsById(Number(id))
   })
-  console.log(data, contractor)
-  /* setContractor(data) */
+
+  console.log(data, contractor, contractorJobs)
+
+  const { data: jobs } = useQuery(['contractorJobs', id], () => {
+    axiosGetAllJobsById(Number(id))
+  })
+  useEffect(() => {
+    if (data) {
+      setContractor(data)
+    }
+    if (jobs) {
+      setContractorJobs(jobs)
+    }
+  }, [data, jobs])
   const paymentsArray = bodyTableContractor.map((item) => {
     if (tableFilters(item)) {
       return (Number(item.hourlyPay) * Number(item.workedHours)).toFixed(2)

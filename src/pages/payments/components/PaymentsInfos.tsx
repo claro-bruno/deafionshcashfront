@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Circle } from 'phosphor-react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
@@ -29,10 +29,12 @@ export default function PaymentsInfos(payInfos: ContractorPaymentInfos) {
       ],
     },
   })
+  const { invalidateQueries } = useQueryClient()
   const { register, handleSubmit } = paymentContractorInfos
   const { data, mutateAsync } = useMutation(axiosUpdatePayments, {
     onSuccess() {
       console.log(data)
+      invalidateQueries(['payments'])
     },
     onError(error: { response: any }) {
       console.log(error.response)

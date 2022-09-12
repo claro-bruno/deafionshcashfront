@@ -4,6 +4,9 @@ import { Job } from '../../types/job'
 export async function axiosGetAllJobs() {
   return await Api.get('job')
 }
+export async function axiosGetAllJobsById(id: number) {
+  return await Api.get(`job/contractor/${id}`)
+}
 export async function axiosCreateNewJob(payload: Job) {
   return await Api.post('job', payload, {
     headers: {
