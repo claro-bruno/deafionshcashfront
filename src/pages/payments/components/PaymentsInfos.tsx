@@ -1,12 +1,13 @@
+import { useMutation } from '@tanstack/react-query'
 import { Circle } from 'phosphor-react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
+import { axiosUpdatePayments } from '../../../api/payments'
 import useFormate from '../../../hooks/useFormate'
 import { ContractorPaymentInfos } from '../../../types/contractor'
 
 export default function PaymentsInfos(payInfos: ContractorPaymentInfos) {
   const { formatMoney } = useFormate()
-
   const paymentContractorInfos = useForm<any>({
     defaultValues: {
       contractorId: payInfos.contractor.id,
@@ -29,8 +30,17 @@ export default function PaymentsInfos(payInfos: ContractorPaymentInfos) {
     },
   })
   const { register, handleSubmit } = paymentContractorInfos
+  const { data, mutateAsync } = useMutation(axiosUpdatePayments, {
+    onSuccess() {
+      console.log(data)
+    },
+    onError(error: { response: any }) {
+      console.log(error.response)
+    },
+  })
   function handleUpdatePayment(data: any) {
-    console.log({ ...data })
+    console.log(data)
+    mutateAsync(data)
   }
 
   return (

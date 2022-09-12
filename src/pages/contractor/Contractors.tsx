@@ -8,7 +8,7 @@ import {
 import Header from '../../components/header/Header'
 import useFormate from '../../hooks/useFormate'
 import useModal from '../../hooks/useModal'
-import ContractorModalInfos from './components/contractorsModalInfos/contractorModalInfos'
+import ContractorModalInfos from './components/contractorsModalInfos/ContractorsModalInfos'
 import { bodyTableContractors, headerTableContractors } from './constants'
 
 export default function Contractors() {

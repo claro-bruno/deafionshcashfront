@@ -1,5 +1,7 @@
+import { useQuery } from '@tanstack/react-query'
 import { GearSix } from 'phosphor-react'
 import { useState } from 'react'
+import { axiosGetAllPayments } from '../../api/payments'
 import Header from '../../components/header/Header'
 import {
   monthsListbox,
@@ -16,13 +18,15 @@ export default function Payments() {
   const [yearName, setYearName] = useState('2022')
   const [filterContractor, setFilterContractor] = useState('')
   const { formatMoney } = useFormate()
+  const { data } = useQuery(['payments', axiosGetAllPayments])
+  console.log(data)
 
   const outlay: { type: string; quarter: number; value: string }[] = bodyTable
     .filter((item) => item.month === monthName.toLowerCase())
     .map((item) => item.payments)
     .flat()
 
-  function forthnight(quarter: number) {
+  function forthright(quarter: number) {
     return Number(
       outlay
         .filter((item) => item.quarter === quarter)
@@ -30,9 +34,9 @@ export default function Payments() {
     )
   }
 
-  const fortnight1Formated = formatMoney(forthnight(1))
-  const fortnight2Formated = formatMoney(forthnight(2))
-  const total = forthnight(1) + forthnight(2)
+  const fortnight1Formatted = formatMoney(forthright(1))
+  const fortnight2Formatted = formatMoney(forthright(2))
+  const total = forthright(1) + forthright(2)
   const totalFormatted = formatMoney(total)
 
   function tableFilters(item: ContractorPaymentInfos) {
@@ -110,10 +114,10 @@ export default function Payments() {
           </h1>
           <article className="flex flex-col gap-8 fixed right-4 mt-8">
             <div className="bg-gray-50 shadow-md flex items-center gap-2 flex-col rounded h-20 w-[10vw] py-2">
-              Forthnight 1<strong className="">$ {fortnight1Formated}</strong>
+              Forthnight 1<strong className="">$ {fortnight1Formatted}</strong>
             </div>
             <div className="bg-gray-50 shadow-md flex items-center gap-2 flex-col rounded h-20 w-[10vw] py-2">
-              Forthnight 2<strong className="">$ {fortnight2Formated}</strong>
+              Forthnight 2<strong className="">$ {fortnight2Formatted}</strong>
             </div>
             <div className="bg-gray-50 shadow-md flex items-center gap-2 flex-col rounded h-20 w-[10vw] py-2">
               Total month
