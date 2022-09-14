@@ -118,7 +118,7 @@ export default function Payments() {
           <h1 className="text-2xl w-[10vw] relative right-4 text-center  font-bold text-zinc-700">
             Outlay
           </h1>
-          <article className="flex flex-col gap-8 fixed right-4 mt-8">
+          <article className="flex flex-col gap-8 relative bottom-6 right-4 mt-8">
             <div className="bg-gray-50 shadow-md flex items-center gap-2 flex-col rounded h-20 w-[10vw] py-2">
               Forthnight 1<strong className="">$ {fortnight1Formatted}</strong>
             </div>

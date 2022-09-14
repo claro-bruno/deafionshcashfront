@@ -10,7 +10,7 @@ export default function AlertModal({
   switchModalView,
 }: ModalProps) {
   const navigate = useNavigate()
-  function handleswitchModalView() {
+  function handleSwitchModalView() {
     modalInfos.isContractorCreated && navigate('/')
     switchModalView()
   }
@@ -21,7 +21,7 @@ export default function AlertModal({
         <Dialog
           as="div"
           className="relative z-10"
-          onClose={() => handleswitchModalView()}
+          onClose={() => handleSwitchModalView()}
         >
           <Transition.Child
             as={Fragment}
@@ -97,7 +97,7 @@ export default function AlertModal({
                     <button
                       type="button"
                       className="buttonStyle1 px-3 "
-                      onClick={() => handleswitchModalView()}
+                      onClick={() => handleSwitchModalView()}
                     >
                       Close
                     </button>

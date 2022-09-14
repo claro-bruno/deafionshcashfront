@@ -29,7 +29,7 @@ export default function SetClientModal({
     sunday: false,
   }
 
-  const [states, handleChange] = useHandleChange<Client>(
+  const { state: clientState, handleChange } = useHandleChange<Client>(
     INITIAL_MODAL_CLIENT_STATES,
   )
 
@@ -94,7 +94,7 @@ export default function SetClientModal({
     }
     console.log(payload, isEditMode)
     e.preventDefault()
-    isEditMode ? updateMutateAsync(states) : mutateAsync(states)
+    isEditMode ? updateMutateAsync(clientState) : mutateAsync(clientState)
     switchModalView()
   }
 

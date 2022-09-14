@@ -4,7 +4,7 @@ export interface TJob {
   client: string
   pHour: string
   hours: string
-  status: string
+  status: boolean
   year: number
   month: string
   workedDaysInfos: any[]

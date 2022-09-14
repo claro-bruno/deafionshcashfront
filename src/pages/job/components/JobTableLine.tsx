@@ -107,7 +107,7 @@ export default function JobTableLine({
       id: jobInfos.id,
       month: jobInfos.month,
       pHour: jobInfos.pHour,
-      status: jobInfos.status,
+      status: jobInfos.status !== false,
       year: jobInfos.year,
       quarter: isQuarterOne ? 1 : 2,
       workedDaysInfos: isQuarterOne
@@ -129,12 +129,13 @@ export default function JobTableLine({
     <tr key={job.id} className=" bg-white border-b ">
       <td className="pl-4 ">
         <select
-          onChange={handleChange}
+          onChange={(e) => handleChange(e, 'editStatus')}
           className="rounded bg-white border outline-none p-1"
           name="status"
+          defaultValue={job.status.toString()}
         >
-          <option value="active">active</option>
-          <option value="inactive">inactive</option>
+          <option value="true">active</option>
+          <option value="false">inactive</option>
         </select>
       </td>
       <td className="max-w-[9rem]">{job.contractor}</td>

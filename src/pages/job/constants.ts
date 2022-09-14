@@ -85,7 +85,7 @@ export const jobs = [
     id: 5,
     contractor: 'bruno fay',
     month: 'January',
-    status: 'inactive',
+    status: false,
     year: 2022,
     client: 'amazon',
     hours: '0',
@@ -94,7 +94,7 @@ export const jobs = [
   {
     id: 5,
     contractor: 'bruno fay',
-    status: 'active',
+    status: true,
     month: 'January',
     year: 2022,
     client: 'Big',
@@ -105,7 +105,7 @@ export const jobs = [
     id: 12,
     contractor: 'james brown',
     month: 'February',
-    status: 'active',
+    status: true,
     year: 2022,
     client: 'amazon',
     hours: '0',
@@ -114,7 +114,7 @@ export const jobs = [
   {
     id: 13,
     contractor: 'angela borges ',
-    status: 'active',
+    status: true,
     month: 'January',
     year: 2022,
     client: 'amazon',
@@ -124,7 +124,7 @@ export const jobs = [
   {
     id: 14,
     contractor: 'john doe ',
-    status: 'active',
+    status: true,
     month: 'January',
     year: 2022,
     client: 'amazon',
@@ -134,7 +134,7 @@ export const jobs = [
   {
     id: 15,
     contractor: 'bruno fay',
-    status: 'active',
+    status: true,
     month: 'February',
     year: 2022,
     client: 'amazon',
