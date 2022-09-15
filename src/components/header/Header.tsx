@@ -24,6 +24,9 @@ export default function Header(props: PropsWithChildren) {
       {!location.pathname.includes('/register') ? (
         <>
           <nav className="flex self-center relative right-3 gap-4 ">
+            <NavLink to="/home" className="headerLink">
+              Home
+            </NavLink>
             <NavLink to="/payments" className="headerLink">
               Payments
             </NavLink>

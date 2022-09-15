@@ -4,6 +4,7 @@ import JobContextProvider from './context/JobContextProvider'
 import Client from './pages/client/Client'
 import Contractor from './pages/contractor/Contractor'
 import Contractors from './pages/contractor/Contractors'
+import Home from './pages/home/Home'
 import Job from './pages/job/Job'
 import Login from './pages/login/Login'
 import Payments from './pages/payments/Payments'
@@ -15,6 +16,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/home" element={<Home />} />
       <Route path="/register">
         <Route index element={<Register />} />
         <Route path="terms" element={<Terms />} />

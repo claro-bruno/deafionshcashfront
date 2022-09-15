@@ -114,7 +114,7 @@ export default function Payments() {
             </table>
           </div>
         </div>
-        <div className="flex flex-col items-center  ">
+        <div className="flex flex-col  items-center  ">
           <h1 className="text-2xl w-[10vw] relative right-4 text-center  font-bold text-zinc-700">
             Outlay
           </h1>
