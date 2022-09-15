@@ -8,18 +8,25 @@ import {
   yearsListBox,
 } from '../../components/listboxes/constants'
 import SelectFilter from '../../components/listboxes/SelectFilter'
+import { useDateFilter } from '../../hooks/useDateFIlter'
 import useFormate from '../../hooks/useFormate'
-import { ContractorPaymentInfos } from '../../types/contractor'
+import { Payment } from '../../types/payments'
 import PaymentsInfos from './components/PaymentsInfos'
 import { bodyTable, getLastDayOfMonth, headerTable } from './constants'
 
 export default function Payments() {
-  const [monthName, setMonthName] = useState('January')
-  const [yearName, setYearName] = useState('2022')
-  const [filterContractor, setFilterContractor] = useState('')
   const { formatMoney } = useFormate()
-  const { data } = useQuery(['payments', axiosGetAllPayments])
-  const [payments, setPayments] = useState<any>([])
+  const { data } = useQuery<Payment[]>(['payments', axiosGetAllPayments])
+  const [payments, setPayments] = useState<Payment[]>([])
+  const {
+    handleFilters,
+    monthName,
+    yearName,
+    filterContractor,
+    setYearName,
+    setMonthName,
+    setFilterContractor,
+  } = useDateFilter()
   console.log(payments)
   useEffect(() => {
     if (data) {
@@ -28,7 +35,11 @@ export default function Payments() {
   }, [data])
 
   const outlay: { type: string; quarter: number; value: string }[] = bodyTable
-    .filter((item) => item.month === monthName.toLowerCase())
+    .filter(
+      (item) =>
+        item.month === monthName.toLowerCase() &&
+        item.year === yearName.toLowerCase(),
+    )
     .map((item) => item.payments)
     .flat()
 
@@ -44,14 +55,6 @@ export default function Payments() {
   const fortnight2Formatted = formatMoney(forthright(2))
   const total = forthright(1) + forthright(2)
   const totalFormatted = formatMoney(total)
-
-  function tableFilters(item: ContractorPaymentInfos) {
-    const filterByContractor = item.contractor.name
-      .toLowerCase()
-      .includes(filterContractor.toLowerCase())
-    const filterByDate = item.month.includes(monthName.toLowerCase())
-    return filterByContractor && filterByDate
-  }
 
   return (
     <div className="flex flex-col">
@@ -86,7 +89,7 @@ export default function Payments() {
                   {headerTable.map((item, index) => {
                     if (item === 'quinzena 2') {
                       return (
-                        <th scope="col" key={index} className="tableLine">
+                        <th scope="col" key={index} className="tableLine ">
                           {`16 - ${getLastDayOfMonth(monthName)}`}
                         </th>
                       )
@@ -98,13 +101,13 @@ export default function Payments() {
                     )
                   })}
                   <th scope="col" className="tableLine">
-                    <GearSix className="relative left-3" size={24} />
+                    <GearSix className="relative left-8" size={24} />
                   </th>
                 </tr>
               </thead>
               <tbody>
-                {bodyTable.map((payments: ContractorPaymentInfos) => {
-                  if (tableFilters(payments)) {
+                {bodyTable.map((payments: Payment) => {
+                  if (handleFilters(payments)) {
                     return <PaymentsInfos {...payments} />
                   } else {
                     return []

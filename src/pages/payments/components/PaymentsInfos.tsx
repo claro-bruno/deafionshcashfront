@@ -54,14 +54,14 @@ export default function PaymentsInfos(payInfos: ContractorPaymentInfos) {
           color={payInfos.status === 'active' ? 'green' : 'gray'}
         />
       </th>
-      <td className="tableLine max-w-[9rem]">
+      <td className="tableLine min-w-[9rem]">
         <Link to={`/contractors/${payInfos.id}`}>
           {payInfos.contractor.name}
         </Link>
       </td>
       {payInfos.payments.map((payment, i) => (
         <>
-          <td className="tableLine w-[9 rem] ">
+          <td className="tableLine min-w-[7rem]">
             $ {formatMoney(Number(payment.value))}
           </td>
           <td className="tableLine">
@@ -82,7 +82,7 @@ export default function PaymentsInfos(payInfos: ContractorPaymentInfos) {
               title="identificação do pagamento"
               type="text"
               className={`
-              border rounded ml-5 focus:ml-0 focus:w-[7rem] w-[4rem] px-2 py-1 outline-brand`}
+              border rounded focus:ml-0 focus:w-[7rem] w-[4rem] px-2 py-1 outline-brand`}
             />
           </td>
         </>

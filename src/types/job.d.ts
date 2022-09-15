@@ -1,11 +1,11 @@
 export interface TJob {
   id?: number
-  contractor: string
-  client: string
+  contractor: { name: string; id?: number }
+  client: { name: string; id?: number }
   pHour: string
   hours: string
   status: boolean
-  year: number
+  year: string
   month: string
   workedDaysInfos: any[]
 }

@@ -43,12 +43,17 @@ body {
 .tableHead {
   @apply  text-xs bg-gray-50 text-gray-700 uppercase dark:bg-gray-700 dark:text-gray-400 ;
 }
+
 .tableLine {
-  @apply py-4 px-6;
+  @apply py-4 px-4 w-auto;
+}
+.tableLine:first-child {
+@apply  relative text-center;
 }
 
+
 .tableBodyTh{
-  @apply tableLine font-medium text-gray-900 whitespace-nowrap dark:text-white ;
+  @apply flex relative top-1 justify-center font-medium text-gray-900 whitespace-nowrap dark:text-white ;
 }
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {

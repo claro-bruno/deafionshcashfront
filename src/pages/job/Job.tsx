@@ -12,6 +12,7 @@ import { jobsContext } from '../../context/JobContextProvider'
 import { headerTable, months } from './constants'
 import { useParams } from 'react-router-dom'
 import JobTableLine from './components/JobTableLine'
+import { useDateFilter } from '../../hooks/useDateFIlter'
 
 export interface DaysObj {
   dayNum: number
@@ -19,33 +20,29 @@ export interface DaysObj {
 }
 
 export default function Job() {
-  const [monthName, setMonthName] = useState('January')
-  const [yearName, setYearName] = useState('2022')
-  const [filterContractor, setFilterContractor] = useState('')
+  const {
+    setMonthName,
+    monthName,
+    setYearName,
+    yearName,
+    handleFilters,
+    setFilterContractor,
+    filterContractor,
+  } = useDateFilter()
   const [fortnightDays, setFortnightDays] = useState<DaysObj[]>(
     addWeakDayName().splice(0, 15),
   )
   const { handleSwitchModalView, jobs, handleSetJobs } = useContext(jobsContext)
   const { id } = useParams()
   /* console.log(id) */
-
   useEffect(() => {
     if (id) {
-      const jobsFilteredByUserId = jobs.filter((user) => user.id === Number(id))
+      const jobsFilteredByUserId = jobs.filter(
+        (user) => user.contractor.id === Number(id),
+      )
       handleSetJobs(jobsFilteredByUserId)
     }
   }, [])
-
-  function tableFilters(item: { contractor: string; month: string }) {
-    const filterByContractor = item.contractor
-      .toLowerCase()
-      .includes(filterContractor.toLowerCase())
-
-    const filterByDate = item.month
-      .toLowerCase()
-      .includes(monthName.toLowerCase())
-    return filterByContractor && filterByDate
-  }
 
   function getDaysOfMonth() {
     const getMonthNumberByName = months.indexOf(monthName) + 1
@@ -148,7 +145,7 @@ export default function Job() {
             </thead>
             <tbody>
               {jobs.map((job) => {
-                if (tableFilters(job)) {
+                if (handleFilters(job)) {
                   return (
                     <JobTableLine job={job} fortnightDays={fortnightDays} />
                   )

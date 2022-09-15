@@ -28,7 +28,7 @@ export default function Login() {
 
   useEffect(() => {
     if (checkUserInLocalStorage()) {
-      navigate('/payments')
+      navigate('/home')
     }
   }, [])
 
@@ -38,7 +38,7 @@ export default function Login() {
       onSuccess: (response) => {
         console.log()
         saveUser(response.data)
-        navigate('/payments')
+        navigate('/home')
       },
       onError: (error: { response: any }) => {
         console.log(error.response?.data)

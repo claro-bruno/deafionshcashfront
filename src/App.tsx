@@ -16,7 +16,14 @@ function App() {
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/home" element={<Home />} />
+      <Route
+        path="/home"
+        element={
+          <ProtectedLayout>
+            <Home />
+          </ProtectedLayout>
+        }
+      />
       <Route path="/register">
         <Route index element={<Register />} />
         <Route path="terms" element={<Terms />} />
@@ -33,26 +40,51 @@ function App() {
         <Route
           index
           element={
-            <JobContextProvider>
-              <Job />
-            </JobContextProvider>
+            <ProtectedLayout>
+              <JobContextProvider>
+                <Job />
+              </JobContextProvider>
+            </ProtectedLayout>
           }
         />
         <Route
           path=":id"
           element={
-            <JobContextProvider>
-              <Job />
-            </JobContextProvider>
+            <ProtectedLayout>
+              <JobContextProvider>
+                <Job />
+              </JobContextProvider>
+            </ProtectedLayout>
           }
         />
       </Route>
-      <Route path="/clients" element={<Client />}>
+      <Route
+        path="/clients"
+        element={
+          <ProtectedLayout>
+            <Client />
+          </ProtectedLayout>
+        }
+      >
         <Route path=":name" element={<Client />} />
       </Route>
       <Route path="/contractors">
-        <Route index element={<Contractors />} />
-        <Route path=":id" element={<Contractor />} />
+        <Route
+          index
+          element={
+            <ProtectedLayout>
+              <Contractors />
+            </ProtectedLayout>
+          }
+        />
+        <Route
+          path=":id"
+          element={
+            <ProtectedLayout>
+              <Contractor />
+            </ProtectedLayout>
+          }
+        />
       </Route>
     </Routes>
   )

@@ -138,8 +138,8 @@ export default function JobTableLine({
           <option value="false">inactive</option>
         </select>
       </td>
-      <td className="max-w-[9rem]">{job.contractor}</td>
-      <td>{job.client}</td>
+      <td className="max-w-[9rem]">{job.contractor.name}</td>
+      <td>{job.client.name}</td>
       <td className="flex items-center justify-center">
         <p className="flex justify-center py-2 gap-1">
           {fortnightDays.map((day: DaysObj) => (
