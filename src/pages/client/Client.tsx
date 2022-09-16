@@ -64,7 +64,10 @@ export default function Client() {
               if (tableFilters(item)) {
                 return (
                   <tr key={item.id} className="bg-white border-b ">
-                    <th scope="row" className="tableBodyTh">
+                    <th
+                      scope="row"
+                      className="flex relative top-[1.35rem] justify-center"
+                    >
                       <Circle
                         weight="fill"
                         size={15}

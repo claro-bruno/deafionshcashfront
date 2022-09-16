@@ -36,7 +36,7 @@ export default function Login() {
     (payload: UserLogin) => authenticate(payload.username, payload.password),
     {
       onSuccess: (response) => {
-        console.log()
+        console.log(response)
         saveUser(response.data)
         navigate('/home')
       },
@@ -44,7 +44,7 @@ export default function Login() {
         console.log(error.response?.data)
         setResponse({
           isContractorCreated: false,
-          message: error.response.data,
+          message: error.response?.data,
         })
         switchModalView()
       },

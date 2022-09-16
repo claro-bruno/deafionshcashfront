@@ -19,7 +19,7 @@ export interface DaysObj {
   weakDayName: string
 }
 
-export default function Job() {
+export default function Jobs() {
   const {
     setMonthName,
     monthName,
@@ -32,12 +32,13 @@ export default function Job() {
   const [fortnightDays, setFortnightDays] = useState<DaysObj[]>(
     addWeakDayName().splice(0, 15),
   )
-  const { handleSwitchModalView, jobs, handleSetJobs } = useContext(jobsContext)
+  const { handleSwitchModalView, jobsArr, handleSetJobs } =
+    useContext(jobsContext)
   const { id } = useParams()
   /* console.log(id) */
   useEffect(() => {
     if (id) {
-      const jobsFilteredByUserId = jobs.filter(
+      const jobsFilteredByUserId = jobsArr.filter(
         (user) => user.contractor.id === Number(id),
       )
       handleSetJobs(jobsFilteredByUserId)
@@ -144,10 +145,14 @@ export default function Job() {
               </tr>
             </thead>
             <tbody>
-              {jobs.map((job) => {
+              {jobsArr.map((job) => {
                 if (handleFilters(job)) {
                   return (
-                    <JobTableLine job={job} fortnightDays={fortnightDays} />
+                    <JobTableLine
+                      key={job.id}
+                      job={job}
+                      fortnightDays={fortnightDays}
+                    />
                   )
                 } else {
                   return []

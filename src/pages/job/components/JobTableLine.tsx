@@ -1,9 +1,10 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { ChangeEvent, KeyboardEvent, useContext, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { axiosUpdateNewJob } from '../../../api/jobs'
 import { jobsContext } from '../../../context/JobContextProvider'
 import { TJob } from '../../../types/job'
-import { DaysObj } from '../Job'
+import { DaysObj } from '../Jobs'
 
 export default function JobTableLine({
   fortnightDays,
@@ -126,7 +127,7 @@ export default function JobTableLine({
   }
 
   return (
-    <tr key={job.id} className=" bg-white border-b ">
+    <tr className=" bg-white border-b ">
       <td className="pl-4 ">
         <select
           onChange={(e) => handleChange(e, 'editStatus')}
@@ -138,7 +139,11 @@ export default function JobTableLine({
           <option value="false">inactive</option>
         </select>
       </td>
-      <td className="max-w-[9rem]">{job.contractor.name}</td>
+      <td className="max-w-[9rem]">
+        <Link to={`/contractors/${job.contractor.id}`}>
+          {job.contractor.name}
+        </Link>
+      </td>
       <td>{job.client.name}</td>
       <td className="flex items-center justify-center">
         <p className="flex justify-center py-2 gap-1">
