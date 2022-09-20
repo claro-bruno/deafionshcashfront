@@ -8,14 +8,14 @@ export async function axiosGetAllJobsById(id: number) {
   return await Api.get(`job/contractor/${id}`)
 }
 export async function axiosCreateNewJob(payload: TJob) {
-  return await Api.post('job', payload, {
+  return await Api.post('job', JSON.stringify(payload), {
     headers: {
       'Content-Type': 'application/json',
     },
   })
 }
 export async function axiosUpdateNewJob(payload: Partial<TJob>) {
-  return await Api.put(`job/${payload.id}`, payload, {
+  return await Api.put(`job/${payload.id}`, JSON.stringify(payload), {
     headers: {
       'Content-Type': 'application/json',
     },

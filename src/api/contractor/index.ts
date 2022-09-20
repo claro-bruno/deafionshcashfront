@@ -72,14 +72,14 @@ export async function axiosGetContractorJobsById(id: number) {
   return await Api.get(`contractor/${id}`)
 }
 export async function axiosUpdateContractorStatus(payload: any) {
-  return await Api.patch(`contractor/${payload.id}`, payload, {
+  return await Api.patch(`contractor/${payload.id}`, JSON.stringify(payload), {
     headers: {
       'Content-Type': 'application/json',
     },
   })
 }
-export async function axiosUpdateContractorPassword(payload) {
-  return await Api.put('rota', payload, {
+export async function axiosUpdateContractorPassword(payload: any) {
+  return await Api.put('rota', JSON.stringify(payload), {
     headers: {
       'Content-Type': 'application/json',
     },
