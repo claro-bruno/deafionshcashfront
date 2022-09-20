@@ -1,36 +1,19 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { GearSix } from 'phosphor-react'
 import { useState } from 'react'
-import {
-  axiosGetAllContractors,
-  axiosUpdateContractorStatus,
-} from '../../api/contractor'
+import { axiosGetAllContractors } from '../../api/contractor'
 import Header from '../../components/header/Header'
-import useFormate from '../../hooks/useFormate'
 import useModal from '../../hooks/useModal'
+import ContractorsLine from './components/contractorsLine/ContractorsLine'
 import ContractorModalInfos from './components/contractorsModalInfos/ContractorsModalInfos'
 import { bodyTableContractors, headerTableContractors } from './constants'
 
 export default function Contractors() {
-  const { formatPhone, formatSsnOrItin } = useFormate()
   const { switchModalView, isModalOpen } = useModal()
   const [contractorInfos, setContractorInfos] = useState({})
   const { data } = useQuery([`contractors`], axiosGetAllContractors)
   console.log(data)
-  const { invalidateQueries } = useQueryClient()
-  const { mutateAsync } = useMutation(axiosUpdateContractorStatus, {
-    onSuccess: (response) => {
-      console.log(response)
-      invalidateQueries(['contractors'])
-    },
-    onError: (error: { response: any }) => {
-      console.log(error.response)
-    },
-  })
 
-  function handleUpdateContractor(payload: any) {
-    mutateAsync({ id: payload.id, status: payload.status })
-  }
   function handleModalInfos(infos: {}) {
     switchModalView()
     setContractorInfos(infos)
@@ -59,52 +42,12 @@ export default function Contractors() {
             </tr>
           </thead>
           <tbody>
-            {bodyTableContractors.map((user) => (
-              <tr key={user.id} className=" bg-white  border-b  ">
-                <td>
-                  <select
-                    className="rounded bg-white  border ml-3 outline-none p-1"
-                    value={user.status}
-                  >
-                    <option value="active">Active</option>
-                    <option value="inactive">Inactive</option>
-                    <option value="pending">Pending</option>
-                  </select>
-                </td>
-                <td className="px-4">
-                  {' '}
-                  {`${user.firstname} ${user.lastname}`}
-                </td>
-                <td className="px-2 my-2  h-16 flex items-start gap-2 justify-center flex-col">
-                  <span className="relative left-4">
-                    {formatSsnOrItin(user['itin/ssn/ein'].value)}
-                  </span>
-                  <button
-                    onClick={() => handleModalInfos(user['itin/ssn/ein'])}
-                    className="buttonStyle1 relative left-2 text-xs py-[0.09rem] px-2"
-                  >
-                    Document img
-                  </button>
-                </td>
-                <td className="px-4">{formatPhone(user.phone)}</td>
-                <td className="px-4">
-                  <button
-                    onClick={() => handleModalInfos(user.address)}
-                    className="buttonStyle1 text-xs py-[0.09rem] px-2"
-                  >
-                    Address infos
-                  </button>
-                </td>
-                <td className="px-4">
-                  <button
-                    onClick={handleUpdateContractor}
-                    className="buttonStyle1 text-xs py-[0.09rem] px-2"
-                    type="button"
-                  >
-                    Save
-                  </button>
-                </td>
-              </tr>
+            {bodyTableContractors.map((contractor) => (
+              <ContractorsLine
+                key={contractor.id}
+                handleModalInfos={handleModalInfos}
+                contractor={contractor}
+              />
             ))}
           </tbody>
         </table>

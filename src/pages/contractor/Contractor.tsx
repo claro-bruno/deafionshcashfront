@@ -133,9 +133,9 @@ export default function Contractor() {
                 if (tableFilters(item)) {
                   return (
                     <tr key={item.id} className="bg-white border-b ">
-                      <th scope="row" className="tableBodyTh">
+                      <td scope="row" className="tableLine">
                         {item.date.toDateString()}
-                      </th>
+                      </td>
                       <td className="tableLine flex flex-wrap max-w-[9rem]">
                         <Link to={`/clients/${item.client}`}>
                           {item.client}
