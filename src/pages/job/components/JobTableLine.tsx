@@ -97,8 +97,10 @@ export default function JobTableLine({
     const currentContractor = contractorArr.find(
       (_, index) => index + 1 === day,
     ) as [string, { day: string; weekday: string; workedHours: string }]
-    const dayName = currentContractor[1].day
-    return dayName
+    if (currentContractor) {
+      const dayName = currentContractor[1].day
+      return dayName
+    }
   }
   function handleUpdateJob(jobInfos: TJob) {
     const fistDayOfQuarter = fortnightDays[0].dayNum
@@ -107,8 +109,8 @@ export default function JobTableLine({
     const jobToUpdateFormatted = {
       id: jobInfos.id,
       month: jobInfos.month,
-      pHour: jobInfos.pHour,
-      status: jobInfos.status !== false,
+      value_hours: jobInfos.value_hours,
+      status: jobInfos.status,
       year: jobInfos.year,
       quarter: isQuarterOne ? 1 : 2,
       workedDaysInfos: isQuarterOne
@@ -125,7 +127,6 @@ export default function JobTableLine({
     console.log(contractorWorkedInfos)
     handleSwitchModalView()
   }
-
   return (
     <tr className=" bg-white border-b ">
       <td className="pl-4 ">
@@ -135,8 +136,8 @@ export default function JobTableLine({
           name="status"
           defaultValue={job.status.toString()}
         >
-          <option value="true">active</option>
-          <option value="false">inactive</option>
+          <option value="Active">Active</option>
+          <option value="Inactive">Inactive</option>
         </select>
       </td>
       <td className="max-w-[9rem]">
@@ -150,7 +151,6 @@ export default function JobTableLine({
           {fortnightDays.map((day: DaysObj) => (
             <input
               key={getWorkedDayName(day.dayNum)}
-              placeholder="0"
               name={getWorkedDayName(day.dayNum)}
               value={getWorkedDayValue(day.dayNum)}
               onChange={handleChange}
@@ -169,14 +169,14 @@ export default function JobTableLine({
         $
         <input
           onChange={(e) => handleChange(e, 'pHour')}
-          name="pHour"
+          name="value_hours"
           className="w-[2.1rem] border ml-1 p-1"
-          value={contractorWorkedInfos.pHour}
+          value={contractorWorkedInfos.value_hours}
         />
       </td>
       <td>
         ${' '}
-        {Number(contractorWorkedInfos.pHour) *
+        {Number(contractorWorkedInfos.value_hours) *
           Number(contractorWorkedInfos.hours)}
       </td>
 

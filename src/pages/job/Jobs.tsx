@@ -29,20 +29,27 @@ export default function Jobs() {
     setFilterContractor,
     filterContractor,
   } = useDateFilter()
-  const [fortnightDays, setFortnightDays] = useState<DaysObj[]>(
-    addWeakDayName().splice(0, 15),
-  )
-  const { handleSwitchModalView, jobsArr, handleSetJobs } =
-    useContext(jobsContext)
+  const [fortnightDays, setFortnightDays] = useState<DaysObj[]>([])
+  const { handleSwitchModalView, jobs, handleSetJobs } = useContext(jobsContext)
   const { id } = useParams()
   /* console.log(id) */
+  function formatFortnightDays(quarter: string) {
+    const fortnight =
+      quarter === 'Quinzena 1'
+        ? addWeakDayName().splice(0, 15)
+        : addWeakDayName().splice(15)
+
+    setFortnightDays(fortnight)
+  }
+
   useEffect(() => {
     if (id) {
-      const jobsFilteredByUserId = jobsArr.filter(
+      const jobsFilteredByUserId = jobs.filter(
         (user) => user.contractor.id === Number(id),
       )
       handleSetJobs(jobsFilteredByUserId)
     }
+    formatFortnightDays('Quinzena 1')
   }, [])
 
   function getDaysOfMonth() {
@@ -62,15 +69,6 @@ export default function Jobs() {
       }
     })
     return weakDaysNamed
-  }
-
-  function formatFortnightDays(quarter: string) {
-    const fortnight =
-      quarter === 'Quinzena 1'
-        ? addWeakDayName().splice(0, 15)
-        : addWeakDayName().splice(15)
-
-    setFortnightDays(fortnight)
   }
 
   return (
@@ -145,7 +143,7 @@ export default function Jobs() {
               </tr>
             </thead>
             <tbody>
-              {jobsArr.map((job) => {
+              {jobs.map((job) => {
                 if (handleFilters(job)) {
                   return (
                     <JobTableLine

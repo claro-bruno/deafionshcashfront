@@ -31,7 +31,7 @@ export default function NewJob({ tableDate }: NewJobProps) {
     defaultValues: {
       contractor: '',
       client: '',
-      pHour: '',
+      value_hours: '',
       hours: '0',
       year: tableDate.yearName,
       month: tableDate.monthName,
@@ -172,7 +172,7 @@ export default function NewJob({ tableDate }: NewJobProps) {
                     <label className="labelsDefault">
                       P/Hour:
                       <input
-                        {...register('pHour')}
+                        {...register('value_hours')}
                         className="inputsDefault"
                         type="number"
                       />
