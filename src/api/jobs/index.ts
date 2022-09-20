@@ -1,5 +1,5 @@
 import { Api } from '..'
-import { TJob } from '../../types/job'
+import { NewJob, TJob } from '../../types/job'
 
 export async function axiosGetAllJobs() {
   return await Api.get('job')
@@ -7,7 +7,7 @@ export async function axiosGetAllJobs() {
 export async function axiosGetAllJobsById(id: number) {
   return await Api.get(`job/contractor/${id}`)
 }
-export async function axiosCreateNewJob(payload: TJob) {
+export async function axiosCreateNewJob(payload: NewJob) {
   return await Api.post('job', JSON.stringify(payload), {
     headers: {
       'Content-Type': 'application/json',

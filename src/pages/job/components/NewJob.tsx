@@ -1,38 +1,28 @@
 import { Dialog, Transition } from '@headlessui/react'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Fragment, useContext, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { jobsContext } from '../../../context/JobContextProvider'
-import {
-  mockClients,
-  mockContractors,
-  createObjectDaysByMonth,
-} from '../constants'
-import '../../../components/modals/modal.css'
-import { WEEKDAYS } from '../../client/constants'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { axiosGetAllClients } from '../../../api/client'
 import { axiosGetAllContractors } from '../../../api/contractor'
 import { axiosCreateNewJob } from '../../../api/jobs'
+import '../../../components/modals/modal.css'
+import { jobsContext } from '../../../context/JobContextProvider'
+import { WEEKDAYS } from '../../client/constants'
+import { mockClients, mockContractors } from '../constants'
 
 type NewJobProps = {
   tableDate: { monthName: string; yearName: string }
 }
 
 export default function NewJob({ tableDate }: NewJobProps) {
-  const {
-    jobToEdit,
-    handleCurrentInputJobValue,
-    handleSwitchModalView,
-    isModalOpen,
-    jobs,
-    handleSetJobs,
-  } = useContext(jobsContext)
+  const { jobToEdit, handleSwitchModalView, isModalOpen, jobs, handleSetJobs } =
+    useContext(jobsContext)
   const newJob = useForm({
     defaultValues: {
       contractor: '',
       client: '',
-      value_hours: '',
-      hours: '0',
+      value_hour: '',
+      hours: '',
       year: tableDate.yearName,
       month: tableDate.monthName,
       workedDaysInfos: {},
@@ -40,7 +30,6 @@ export default function NewJob({ tableDate }: NewJobProps) {
   })
 
   const { register, handleSubmit, reset } = newJob
-  const [hoursWorked, setHoursWorked] = useState('0')
   const [daysWorked, setDaysWorked] = useState<string[]>([])
   const { data: clients } = useQuery(['clients'], axiosGetAllClients)
   const { data: contractors } = useQuery(
@@ -57,18 +46,19 @@ export default function NewJob({ tableDate }: NewJobProps) {
 
   function handleCreateNewJob(data: any) {
     const formattedNewJob = {
-      ...data,
-      month: tableDate.monthName,
-      year: Number(tableDate.yearName),
-      workedDaysInfos: createObjectDaysByMonth(data.month, data.year, {
-        hours: hoursWorked,
-        days: daysWorked,
-      }),
+      id_contractor: Number(data.contractor.replace(/[^0-9]+/g, '')),
+      id_client: Number(data.client.replace(/[^0-9]+/g, '')),
+      value_hour: Number(data.value_hour),
+      hours: Number(data.hours),
+      monday: daysWorked.some((day) => day.toLowerCase() === 'monday'),
+      tuesday: daysWorked.some((day) => day.toLowerCase() === 'tuesday'),
+      wednesday: daysWorked.some((day) => day.toLowerCase() === 'wednesday'),
+      thursday: daysWorked.some((day) => day.toLowerCase() === 'thursday'),
+      friday: daysWorked.some((day) => day.toLowerCase() === 'friday'),
+      saturday: daysWorked.some((day) => day.toLowerCase() === 'saturday'),
+      sunday: daysWorked.some((day) => day.toLowerCase() === 'sunday'),
     }
-    handleCurrentInputJobValue(hoursWorked)
-    delete formattedNewJob.hours
     console.log(formattedNewJob)
-    handleSetJobs([...jobs, formattedNewJob])
     mutateAsync(formattedNewJob)
     reset()
     setDaysWorked([])
@@ -79,7 +69,6 @@ export default function NewJob({ tableDate }: NewJobProps) {
       id: jobToEdit.id,
       ...data,
     }
-    handleCurrentInputJobValue(hoursWorked)
     const jobsFiltered = jobs.filter((user) => user.id !== jobToEdit.id)
     const newJobs = [...jobsFiltered, formattedEditedJob]
     handleSetJobs(newJobs)
@@ -151,8 +140,10 @@ export default function NewJob({ tableDate }: NewJobProps) {
                       />
                     </label>
                     <datalist id="contractors">
-                      {mockContractors.map((contractor, index) => (
-                        <option key={index} value={contractor} />
+                      {mockContractors.map((contractor) => (
+                        <option key={contractor.id}>
+                          {`${contractor.id} - ${contractor.name}`}
+                        </option>
                       ))}
                     </datalist>
                     <label className="labelsDefault">
@@ -164,15 +155,18 @@ export default function NewJob({ tableDate }: NewJobProps) {
                         {...register('client')}
                       />
                     </label>
-                    <datalist id="clients">
-                      {mockClients.map((client, index) => (
-                        <option key={index} value={client} />
+                    <datalist id="clients" className="text-sm">
+                      {mockClients.map((client) => (
+                        <option
+                          value={`${client.id} - ${client.name}`}
+                          key={client.id}
+                        />
                       ))}
                     </datalist>
                     <label className="labelsDefault">
                       P/Hour:
                       <input
-                        {...register('value_hours')}
+                        {...register('value_hour')}
                         className="inputsDefault"
                         type="number"
                       />
@@ -183,7 +177,7 @@ export default function NewJob({ tableDate }: NewJobProps) {
                         <label className="labelsDefault">
                           Hours:
                           <input
-                            onChange={(e) => setHoursWorked(e.target.value)}
+                            {...register('hours')}
                             className="inputsDefault"
                             type="number"
                           />

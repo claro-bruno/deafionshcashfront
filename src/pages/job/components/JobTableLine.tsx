@@ -109,7 +109,7 @@ export default function JobTableLine({
     const jobToUpdateFormatted = {
       id: jobInfos.id,
       month: jobInfos.month,
-      value_hours: jobInfos.value_hours,
+      value_hour: jobInfos.value_hour,
       status: jobInfos.status,
       year: jobInfos.year,
       quarter: isQuarterOne ? 1 : 2,
@@ -169,14 +169,14 @@ export default function JobTableLine({
         $
         <input
           onChange={(e) => handleChange(e, 'pHour')}
-          name="value_hours"
+          name="value_hour"
           className="w-[2.1rem] border ml-1 p-1"
-          value={contractorWorkedInfos.value_hours}
+          value={contractorWorkedInfos.value_hour}
         />
       </td>
       <td>
         ${' '}
-        {Number(contractorWorkedInfos.value_hours) *
+        {Number(contractorWorkedInfos.value_hour) *
           Number(contractorWorkedInfos.hours)}
       </td>
 
