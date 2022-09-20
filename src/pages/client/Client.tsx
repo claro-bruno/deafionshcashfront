@@ -23,8 +23,9 @@ export default function Client() {
   function handleEditClient(item: any) {
     if ('id' in isEditable) {
       setIsEditable({})
+    } else {
+      setIsEditable(item)
     }
-    setIsEditable(item)
     switchModalView()
   }
 

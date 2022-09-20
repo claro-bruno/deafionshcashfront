@@ -2,9 +2,9 @@ export interface TJob {
   id?: number
   contractor: { name: string; id?: number }
   client: { name: string; id?: number }
-  pHour: string
+  value_hours: string
   hours: string
-  status: boolean
+  status: string
   year: string
   month: string
   workedDaysInfos: any[]
