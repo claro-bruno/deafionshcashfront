@@ -2,20 +2,20 @@ import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { axiosGetContractorsById } from '../../api/contractor'
+import { axiosGetAllJobsById } from '../../api/jobs'
 import Header from '../../components/header/Header'
 import {
   monthsListbox,
-  yearsListBox,
+  yearsListBox
 } from '../../components/listboxes/constants'
 import SelectFilter from '../../components/listboxes/SelectFilter'
-import EditContractorModal from './components/editContractorModal/EditContractorModal'
 import useModal from '../../hooks/useModal'
 import { ContractorWorkedInfo } from '../../types/contractor'
 import CardContractor from './components/cardContractor/CardContractor'
 import ContractorAsideInfos from './components/contractorAsideInfos/ContractorAsideInfos'
+import EditContractorModal from './components/editContractorModal/EditContractorModal'
 import { bodyTableContractor, headerTableContractor } from './constants'
 import './contractor.css'
-import { axiosGetAllJobsById } from '../../api/jobs'
 
 export interface VisibilityWorkedInfos {
   quinzena1: boolean

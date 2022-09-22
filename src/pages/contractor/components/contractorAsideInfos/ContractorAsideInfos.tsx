@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { AuthContext } from '../../../../context/AuthProvider'
 import useFormate from '../../../../hooks/useFormate'
 import { articleInfos } from '../../constants'
 import { VisibilityWorkedInfos } from '../../Contractor'
@@ -17,6 +18,8 @@ export default function ContractorAsideInfos({
   visibilityWorkedInfos,
 }: ContractorAsideInfosProps) {
   const { formatMoney } = useFormate()
+  const { access } = useContext(AuthContext)
+
   function contractorPayment(payment: string, multiplier: number = 1) {
     return formatMoney(Number(payment) * multiplier)
   }
@@ -27,37 +30,41 @@ export default function ContractorAsideInfos({
 
   return (
     <article className="w-[24%] mx-2 flex flex-col fixed right-0 gap-8 items-center">
-      <div className="flex w-[95%] relative left-7 justify-between">
-        <button
-          onClick={() =>
-            handleVisibilityWorkedInfos({
-              quinzena1: !visibilityWorkedInfos.quinzena1,
-            })
-          }
-          className="px-2 contractorBtns buttonStyle1"
-        >
-          fortnight 1{' '}
-        </button>
-        <button
-          onClick={() =>
-            handleVisibilityWorkedInfos({
-              quinzena2: !visibilityWorkedInfos.quinzena2,
-            })
-          }
-          className="px-2 contractorBtns buttonStyle1"
-        >
-          fortnight 2
-        </button>
-        <button
-          disabled={!visibilityWorkedInfos.quinzena2}
-          onClick={() =>
-            handleVisibilityWorkedInfos({ total: !visibilityWorkedInfos.total })
-          }
-          className="px-2 contractorBtns buttonStyle1"
-        >
-          Total month
-        </button>
-      </div>
+      {access === 'ADMIN' && (
+        <div className="flex w-[95%] relative left-7 justify-between">
+          <button
+            onClick={() =>
+              handleVisibilityWorkedInfos({
+                quinzena1: !visibilityWorkedInfos.quinzena1,
+              })
+            }
+            className="px-2 contractorBtns buttonStyle1"
+          >
+            fortnight 1{' '}
+          </button>
+          <button
+            onClick={() =>
+              handleVisibilityWorkedInfos({
+                quinzena2: !visibilityWorkedInfos.quinzena2,
+              })
+            }
+            className="px-2 contractorBtns buttonStyle1"
+          >
+            fortnight 2
+          </button>
+          <button
+            disabled={!visibilityWorkedInfos.quinzena2}
+            onClick={() =>
+              handleVisibilityWorkedInfos({
+                total: !visibilityWorkedInfos.total,
+              })
+            }
+            className="px-2 contractorBtns buttonStyle1"
+          >
+            Total month
+          </button>
+        </div>
+      )}
       {articleInfos.map((section) => (
         <div
           key={section}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Header from '../../components/header/Header'
 import AntiBriberyandCorruption from '../../assets/AntiBriberyandCorruption.pdf'
 import CodeofConduct from '../../assets/CodeofConduct.pdf'
@@ -7,6 +7,7 @@ import TermModal from '../../components/modals/TermModal'
 import { File } from 'phosphor-react'
 import { useNavigate } from 'react-router-dom'
 import useModal from '../../hooks/useModal'
+import { AuthContext } from '../../context/AuthProvider'
 
 export default function Terms() {
   const { switchModalView, isModalOpen } = useModal()
@@ -20,6 +21,7 @@ export default function Terms() {
     codeofConduct: false,
     codeofEthicalBehavior: false,
   })
+  const { access } = useContext(AuthContext)
   const IsAllTermsChecked =
     !isChecked.antiBrbery ||
     !isChecked.codeofConduct ||
@@ -60,7 +62,7 @@ export default function Terms() {
     <div className="flex  bg-gray-100 min-h-screen flex-col">
       <Header />
       <div className="flex items-center mt-10 justify-around ">
-        <div className="flex flex-col bg-gray-50 shadow-lg justify-between border p-4 rounded-lg mb-[9rem] h-[15rem] items-center">
+        <div className="flex flex-col bg-gray-50 shadow-lg justify-around border p-4 rounded-lg mb-[9rem] h-[15rem] items-center">
           <h3 className="">Anti-Bribery and Corruption</h3>
           <File
             className="cursor-pointer"
@@ -69,17 +71,19 @@ export default function Terms() {
             size={62}
             weight="fill"
           />
-          <label className="flex text-sm items-center gap-2">
-            <input
-              name="antiBrbery"
-              onChange={handleChange}
-              type="checkbox"
-              checked={isChecked.antiBrbery}
-            />
-            accept terms and conditions
-          </label>
+          {!access && (
+            <label className="flex text-sm items-center gap-2">
+              <input
+                name="antiBrbery"
+                onChange={handleChange}
+                type="checkbox"
+                checked={isChecked.antiBrbery}
+              />
+              accept terms and conditions
+            </label>
+          )}
         </div>
-        <div className="flex flex-col bg-gray-50 shadow-lg justify-between border p-4 rounded-lg mb-[9rem] h-[15rem] items-center">
+        <div className="flex flex-col bg-gray-50 shadow-lg justify-around border p-4 rounded-lg mb-[9rem] h-[15rem] items-center">
           <h3 className="">Employee Code of Conduct</h3>
           <File
             className="cursor-pointer"
@@ -88,17 +92,19 @@ export default function Terms() {
             size={62}
             weight="fill"
           />
-          <label className="flex text-sm items-center gap-2">
-            <input
-              name="codeofConduct"
-              onChange={handleChange}
-              type="checkbox"
-              checked={isChecked.codeofConduct}
-            />
-            accept terms and conditions
-          </label>
+          {!access && (
+            <label className="flex text-sm items-center gap-2">
+              <input
+                name="codeofConduct"
+                onChange={handleChange}
+                type="checkbox"
+                checked={isChecked.codeofConduct}
+              />
+              accept terms and conditions
+            </label>
+          )}
         </div>
-        <div className="flex flex-col bg-gray-50 shadow-lg justify-between border p-4 rounded-lg mb-[9rem] h-[15rem] items-center">
+        <div className="flex flex-col bg-gray-50 shadow-lg justify-around border p-4 rounded-lg mb-[9rem] h-[15rem] items-center">
           <h3 className="">Code of Ethical Behavior</h3>
           <File
             className="cursor-pointer"
@@ -107,25 +113,29 @@ export default function Terms() {
             size={62}
             weight="fill"
           />
-          <label className="flex text-sm items-center gap-2">
-            <input
-              name="codeofEthicalBehavior"
-              onChange={handleChange}
-              type="checkbox"
-              checked={isChecked.codeofEthicalBehavior}
-            />
-            accept terms and conditions
-          </label>
+          {!access && (
+            <label className="flex text-sm items-center gap-2">
+              <input
+                name="codeofEthicalBehavior"
+                onChange={handleChange}
+                type="checkbox"
+                checked={isChecked.codeofEthicalBehavior}
+              />
+              accept terms and conditions
+            </label>
+          )}
         </div>
       </div>
-      <button
-        onClick={navigateToRegisterPage}
-        disabled={IsAllTermsChecked}
-        className="buttonStyle1 px-3 flex items-center justify-center self-center"
-        type="button"
-      >
-        Register
-      </button>
+      {!access && (
+        <button
+          onClick={navigateToRegisterPage}
+          disabled={IsAllTermsChecked}
+          className="buttonStyle1 px-3 flex items-center justify-center self-center"
+          type="button"
+        >
+          Register
+        </button>
+      )}
       <TermModal
         isModalOpen={isModalOpen}
         switchModalView={() => switchModalView()}

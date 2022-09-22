@@ -1,8 +1,9 @@
-import { ChangeEvent, Fragment, useState } from 'react'
+import { ChangeEvent, Fragment, useContext, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { WarningCircle } from 'phosphor-react'
 import { ModalProps } from '../../types/modal'
 import './modal.css'
+import { AuthContext } from '../../context/AuthProvider'
 
 type TermModalProps = ModalProps & { title: string; pdfUrl: string }
 export default function TermModal({
@@ -12,6 +13,7 @@ export default function TermModal({
   switchModalView,
 }: TermModalProps) {
   const [isChecked, setIsChecked] = useState(false)
+  const { access } = useContext(AuthContext)
   function handleCheckboxChange(e: ChangeEvent<HTMLInputElement>) {
     setIsChecked(e.target.checked)
   }
@@ -67,25 +69,37 @@ export default function TermModal({
                     ></iframe>
                   </div>
 
-                  <div className="pt-7 flex flex-col items-center gap-5">
-                    <label className="flex items-center text-sm gap-3">
-                      <input
-                        onChange={handleCheckboxChange}
-                        className="form-radio-input h-4 w-4 "
-                        type="checkbox"
-                      />
-                      I declare that I have read and am aware that I must comply
-                      with the rules contained in the regulation.
-                    </label>
-                    <button
-                      disabled={!isChecked}
-                      type="button"
-                      className="buttonStyle1 text-sm px-4"
-                      onClick={handleClose}
-                    >
-                      Send
-                    </button>
-                  </div>
+                  {!access ? (
+                    <div className="pt-7 flex flex-col items-center gap-5">
+                      <label className="flex items-center text-sm gap-3">
+                        <input
+                          onChange={handleCheckboxChange}
+                          className="form-radio-input h-4 w-4 "
+                          type="checkbox"
+                        />
+                        I declare that I have read and am aware that I must
+                        comply with the rules contained in the regulation.
+                      </label>
+                      <button
+                        disabled={!isChecked}
+                        type="button"
+                        className="buttonStyle1 text-sm px-4"
+                        onClick={handleClose}
+                      >
+                        Send
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="pt-7 flex flex-col items-center gap-5">
+                      <button
+                        type="button"
+                        className="buttonStyle1 text-sm px-4"
+                        onClick={handleClose}
+                      >
+                        close
+                      </button>
+                    </div>
+                  )}
                 </Dialog.Panel>
               </Transition.Child>
             </div>

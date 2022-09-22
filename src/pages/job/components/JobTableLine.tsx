@@ -30,7 +30,7 @@ export default function JobTableLine({
       console.log(error)
     },
   })
-
+  console.log(job)
   function handleChange(
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
     options?: string,

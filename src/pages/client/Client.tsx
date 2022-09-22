@@ -1,9 +1,10 @@
 import { useQuery } from '@tanstack/react-query'
 import { Circle, Plus } from 'phosphor-react'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { axiosGetAllClients } from '../../api/client'
 import Header from '../../components/header/Header'
+import { AuthContext } from '../../context/AuthProvider'
 import useModal from '../../hooks/useModal'
 import NewCompanyModal from './components/SetClientModal'
 import { bodyTable, headerTable } from './constants'
@@ -11,6 +12,7 @@ import { bodyTable, headerTable } from './constants'
 export default function Client() {
   const { name } = useParams()
   const [filterClient, setFilterClient] = useState(name ?? '')
+  const { access } = useContext(AuthContext)
   const { switchModalView, isModalOpen } = useModal()
   const { data } = useQuery(['clients'], axiosGetAllClients)
   console.log(data?.data)
@@ -49,15 +51,17 @@ export default function Client() {
                   {item}
                 </th>
               ))}
-              <th scope="col" className="tableLine">
-                <button
-                  type="button"
-                  onClick={switchModalView}
-                  className=" relative left-8 mt-2 flex justify-center px-2 buttonStyle1"
-                >
-                  <Plus size={20} color={'white'} />
-                </button>
-              </th>
+              {access === 'ADMIN' && (
+                <th scope="col" className="tableLine">
+                  <button
+                    type="button"
+                    onClick={switchModalView}
+                    className=" relative left-8 mt-2 flex justify-center px-2 buttonStyle1"
+                  >
+                    <Plus size={20} color={'white'} />
+                  </button>
+                </th>
+              )}
             </tr>
           </thead>
           <tbody>
@@ -125,14 +129,16 @@ export default function Client() {
                     <td className="tableLine">
                       {`${item.start}h - ${item.end}h`}
                     </td>
-                    <td className="tableLine">
-                      <button
-                        onClick={() => handleEditClient(item)}
-                        className="buttonStyle2 px-3 relative left-7"
-                      >
-                        Edit
-                      </button>
-                    </td>
+                    {access === 'ADMIN' && (
+                      <td className="tableLine">
+                        <button
+                          onClick={() => handleEditClient(item)}
+                          className="buttonStyle2 px-3 relative left-7"
+                        >
+                          Edit
+                        </button>
+                      </td>
+                    )}
                   </tr>
                 )
               } else {

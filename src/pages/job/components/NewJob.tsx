@@ -23,9 +23,6 @@ export default function NewJob({ tableDate }: NewJobProps) {
       client: '',
       value_hour: '',
       hours: '',
-      year: tableDate.yearName,
-      month: tableDate.monthName,
-      workedDaysInfos: {},
     },
   })
 
