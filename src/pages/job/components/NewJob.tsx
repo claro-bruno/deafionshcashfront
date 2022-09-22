@@ -7,7 +7,7 @@ import { axiosGetAllContractors } from '../../../api/contractor'
 import { axiosCreateNewJob } from '../../../api/jobs'
 import '../../../components/modals/modal.css'
 import { jobsContext } from '../../../context/JobContextProvider'
-import { WEEKDAYS } from '../../client/constants'
+import { WEEKDAYS } from '../../../helpers/constants'
 import { mockClients, mockContractors } from '../constants'
 
 type NewJobProps = {

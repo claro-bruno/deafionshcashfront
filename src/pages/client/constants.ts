@@ -1,4 +1,3 @@
-export const headerTable = ['Status', 'Name', 'Working Days', 'Working Hours']
 export const bodyTable = [
   {
     id: 1,
@@ -56,23 +55,4 @@ export const bodyTable = [
     start: '08:00',
     end: '17:00',
   },
-]
-
-export type Weekdays = [
-  'monday',
-  'tuesday',
-  'wednesday',
-  'thursday',
-  'friday',
-  'saturday',
-  'sunday',
-]
-export const WEEKDAYS: Weekdays = [
-  'monday',
-  'tuesday',
-  'wednesday',
-  'thursday',
-  'friday',
-  'saturday',
-  'sunday',
 ]

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { AuthContext } from '../../../../context/AuthProvider'
+import { articleInfos } from '../../../../helpers/constants'
 import useFormate from '../../../../hooks/useFormate'
-import { articleInfos } from '../../constants'
 import { VisibilityWorkedInfos } from '../../Contractor'
 
 interface ContractorAsideInfosProps {

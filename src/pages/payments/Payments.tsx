@@ -3,16 +3,15 @@ import { GearSix } from 'phosphor-react'
 import { useEffect, useState } from 'react'
 import { axiosGetAllPayments } from '../../api/payments'
 import Header from '../../components/header/Header'
-import {
-  monthsListbox,
-  yearsListBox,
-} from '../../components/listboxes/constants'
 import SelectFilter from '../../components/listboxes/SelectFilter'
+import { monthsListBox, yearsListBox } from '../../helpers/constants'
+import { getLastDayOfMonth } from '../../helpers/functions'
+import { headerTablePayments } from '../../helpers/headersTables'
 import { useDateFilter } from '../../hooks/useDateFIlter'
 import useFormate from '../../hooks/useFormate'
 import { Payment } from '../../types/payments'
 import PaymentsInfos from './components/PaymentsInfos'
-import { bodyTable, getLastDayOfMonth, headerTable } from './constants'
+import { bodyTable } from './constants'
 
 export default function Payments() {
   const { formatMoney } = useFormate()
@@ -63,7 +62,7 @@ export default function Payments() {
           <SelectFilter setFilter={setYearName} selectOptions={yearsListBox} />
           <SelectFilter
             setFilter={setMonthName}
-            selectOptions={monthsListbox}
+            selectOptions={monthsListBox}
             listCSS="w-[8rem]"
           />
           <input
@@ -86,7 +85,7 @@ export default function Payments() {
             <table className="table ">
               <thead className="tableHead">
                 <tr>
-                  {headerTable.map((item, index) => {
+                  {headerTablePayments.map((item, index) => {
                     if (item === 'quinzena 2') {
                       return (
                         <th scope="col" key={index} className="tableLine ">

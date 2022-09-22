@@ -3,10 +3,10 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { FormEvent, Fragment, useState } from 'react'
 import { axiosCreateClient, axiosUpdateClient } from '../../../api/client'
 import '../../../components/modals/modal.css'
+import { WEEKDAYS } from '../../../helpers/constants'
 import useHandleChange from '../../../hooks/useHandleChange'
 import { Client } from '../../../types/client'
 import { ModalProps } from '../../../types/modal'
-import { WEEKDAYS } from '../constants'
 
 export default function SetClientModal({
   isModalOpen,

@@ -1,23 +1,3 @@
-export const headerTableContractor = [
-  'Date',
-  'Client',
-  'Worked Hours',
-  'P/Hour',
-]
-export const months = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-]
 export const bodyTableContractor = [
   {
     id: 1,
@@ -76,13 +56,7 @@ export const bodyTableContractor = [
     hourlyPay: '20',
   },
 ]
-export const headerTableContractors = [
-  'status',
-  'fullname',
-  'ITIN/SSN/EIN',
-  'Phone',
-  'address',
-]
+
 export const bodyTableContractors = [
   {
     id: 3,
@@ -123,4 +97,3 @@ export const bodyTableContractors = [
     },
   },
 ]
-export const articleInfos = ['Payment', ' Worked Hours']

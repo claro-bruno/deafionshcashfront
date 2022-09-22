@@ -1,18 +1,19 @@
 import { GearSix, Plus } from 'phosphor-react'
 import { useContext, useEffect, useState } from 'react'
 import Header from '../../components/header/Header'
-import {
-  fortnightListBox,
-  monthsListbox,
-  yearsListBox,
-} from '../../components/listboxes/constants'
 import SelectFilter from '../../components/listboxes/SelectFilter'
 import NewJob from './components/NewJob'
 import { jobsContext } from '../../context/JobContextProvider'
-import { headerTable, months } from './constants'
 import { useParams } from 'react-router-dom'
 import JobTableLine from './components/JobTableLine'
 import { useDateFilter } from '../../hooks/useDateFIlter'
+import { headerTableJobs } from '../../helpers/headersTables'
+import {
+  fortnightListBox,
+  MONTHS,
+  monthsListBox,
+  yearsListBox,
+} from '../../helpers/constants'
 
 export interface DaysObj {
   dayNum: number
@@ -53,7 +54,7 @@ export default function Jobs() {
   }, [])
 
   function getDaysOfMonth() {
-    const getMonthNumberByName = months.indexOf(monthName) + 1
+    const getMonthNumberByName = MONTHS.indexOf(monthName) + 1
     const date = new Date()
     const days = new Date(date.getFullYear(), getMonthNumberByName, 0).getDate()
     return [...Array(days).keys()].map((i) => i + 1)
@@ -78,7 +79,7 @@ export default function Jobs() {
           <SelectFilter setFilter={setYearName} selectOptions={yearsListBox} />
           <SelectFilter
             setFilter={setMonthName}
-            selectOptions={monthsListbox}
+            selectOptions={monthsListBox}
             listCSS="w-[8rem]"
           />
           <input
@@ -111,7 +112,7 @@ export default function Jobs() {
           <table className="table">
             <thead className="tableHead  ">
               <tr className="">
-                {headerTable.map((item, index) => {
+                {headerTableJobs.map((item, index) => {
                   if (item === 'Month') {
                     return (
                       <th key={index} className="flex gap-1 justify-center">

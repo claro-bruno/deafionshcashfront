@@ -1,16 +1,3 @@
-import { months } from '../job/constants'
-
-export const headerTable = [
-  'status',
-  'Contractor',
-  '1 - 15',
-  'Payment Type',
-  'Payment Identifier',
-  'quinzena 2',
-  'Payment Type',
-  'Payment Identifier',
-  'Total Month',
-]
 export const bodyTable = [
   {
     id: 1,
@@ -253,9 +240,3 @@ export const bodyTable = [
     ],
   },
 ]
-
-export function getLastDayOfMonth(month: string) {
-  const findMonthIndex = months.findIndex((item) => item === month)
-  const lastDayOfMonth = new Date(2020, findMonthIndex + 1, 0).getDate()
-  return lastDayOfMonth
-}

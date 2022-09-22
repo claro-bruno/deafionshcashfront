@@ -1,26 +1,4 @@
-export const headerTable = [
-  'status',
-  'Contractor',
-  'client',
-  'Month',
-  ' total hours',
-  'P/Hour',
-  'total payment',
-]
-export const months = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-]
+import { createObjectDaysByMonth } from '../../helpers/functions'
 
 export const mockClients = [
   { name: 'Multilaser', id: 2 },
@@ -35,51 +13,6 @@ export const mockContractors = [
   { name: 'George', id: 14 },
   { name: 'Ringo', id: 15 },
 ]
-
-function formatDate(date: Date): string {
-  const day = date.getDate()
-  const month = date.getMonth() + 1
-  const year = date.getFullYear()
-  return `${year}-${month}-${day}`
-}
-
-export function createObjectDaysByMonth(
-  month: string,
-  year: number = new Date().getFullYear(),
-  options?: { days?: string[]; hours?: string },
-) {
-  const getMonthNumberByName = months.indexOf(month)
-  const getNumberOfDaysInMonth = new Date(
-    year,
-    getMonthNumberByName,
-    0,
-  ).getDate()
-
-  const days = new Array(getNumberOfDaysInMonth).fill(0)
-
-  const objectDays = days.reduce((acc, _, index) => {
-    const day = index + 1
-    const date = new Date(year, getMonthNumberByName, day)
-    const weekDayName = new Date(
-      year,
-      getMonthNumberByName,
-      day,
-    ).toLocaleDateString('en-US', { weekday: 'long' })
-
-    const dateFormatted = formatDate(date)
-    /* console.log(options?.days, weekDayName) */
-    return (acc = [
-      ...acc,
-      {
-        day: dateFormatted,
-        weekDay: weekDayName,
-        workedHours: 0,
-      },
-    ])
-  }, [])
-
-  return objectDays
-}
 
 export const jobs = [
   {

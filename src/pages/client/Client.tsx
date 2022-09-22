@@ -5,9 +5,10 @@ import { useParams } from 'react-router-dom'
 import { axiosGetAllClients } from '../../api/client'
 import Header from '../../components/header/Header'
 import { AuthContext } from '../../context/AuthProvider'
+import { headerTableClients } from '../../helpers/headersTables'
 import useModal from '../../hooks/useModal'
 import NewCompanyModal from './components/SetClientModal'
-import { bodyTable, headerTable } from './constants'
+import { bodyTable } from './constants'
 
 export default function Client() {
   const { name } = useParams()
@@ -46,7 +47,7 @@ export default function Client() {
         <table className="table">
           <thead className="tableHead">
             <tr>
-              {headerTable.map((item, index) => (
+              {headerTableClients.map((item, index) => (
                 <th scope="col" key={index} className="tableLine">
                   {item}
                 </th>

@@ -4,17 +4,15 @@ import { Link, useParams } from 'react-router-dom'
 import { axiosGetContractorsById } from '../../api/contractor'
 import { axiosGetAllJobsById } from '../../api/jobs'
 import Header from '../../components/header/Header'
-import {
-  monthsListbox,
-  yearsListBox
-} from '../../components/listboxes/constants'
 import SelectFilter from '../../components/listboxes/SelectFilter'
+import { monthsListBox, yearsListBox } from '../../helpers/constants'
+import { headerTableContractor } from '../../helpers/headersTables'
 import useModal from '../../hooks/useModal'
 import { ContractorWorkedInfo } from '../../types/contractor'
 import CardContractor from './components/cardContractor/CardContractor'
 import ContractorAsideInfos from './components/contractorAsideInfos/ContractorAsideInfos'
 import EditContractorModal from './components/editContractorModal/EditContractorModal'
-import { bodyTableContractor, headerTableContractor } from './constants'
+import { bodyTableContractor } from './constants'
 import './contractor.css'
 
 export interface VisibilityWorkedInfos {
@@ -103,7 +101,7 @@ export default function Contractor() {
           <SelectFilter setFilter={setYearName} selectOptions={yearsListBox} />
           <SelectFilter
             setFilter={setMonthName}
-            selectOptions={monthsListbox}
+            selectOptions={monthsListBox}
             listCSS="w-[8rem]"
           />
           <input

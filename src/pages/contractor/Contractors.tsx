@@ -3,10 +3,11 @@ import { GearSix } from 'phosphor-react'
 import { useState } from 'react'
 import { axiosGetAllContractors } from '../../api/contractor'
 import Header from '../../components/header/Header'
+import { headerTableContractors } from '../../helpers/headersTables'
 import useModal from '../../hooks/useModal'
 import ContractorsLine from './components/contractorsLine/ContractorsLine'
 import ContractorModalInfos from './components/contractorsModalInfos/ContractorsModalInfos'
-import { bodyTableContractors, headerTableContractors } from './constants'
+import { bodyTableContractors } from './constants'
 
 export default function Contractors() {
   const { switchModalView, isModalOpen } = useModal()
