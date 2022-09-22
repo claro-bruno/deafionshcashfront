@@ -11,10 +11,13 @@ import { useContext } from 'react'
 import { NavLink } from 'react-router-dom'
 import Header from '../../components/header/Header'
 import { AuthContext } from '../../context/AuthProvider'
+import useModal from '../../hooks/useModal'
+import ChangeModalPassword from './components/ChangeModalPassword'
 import './home.css'
 
 export default function Home() {
   const { access } = useContext(AuthContext)
+  const { isModalOpen, switchModalView } = useModal()
   return (
     <div className="flex  flex-col">
       <Header />
@@ -91,6 +94,10 @@ export default function Home() {
           )}
         </nav>
       </main>
+      <ChangeModalPassword
+        isModalOpen={true}
+        switchModalView={switchModalView}
+      />
     </div>
   )
 }

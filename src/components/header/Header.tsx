@@ -31,6 +31,11 @@ export default function Header(props: PropsWithChildren) {
             <NavLink to="/clients" className="headerLink">
               Clients
             </NavLink>
+            {access === 'CONTRACTOR' && (
+              <NavLink to="/contractors/1" className="headerLink">
+                Balance
+              </NavLink>
+            )}
             {access === 'ADMIN' && (
               <>
                 <NavLink to="/contractors" className="headerLink">

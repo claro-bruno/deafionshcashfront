@@ -62,6 +62,21 @@ export function axiosUpdateContractor(
   })
 }
 
+export async function axiosUpdateContractorPassword(payload: {
+  password: string
+  id: number
+}) {
+  return await Api.put(
+    `account/contractor/password/${payload.id}`,
+    JSON.stringify(payload.password),
+    {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+  )
+}
+
 export async function axiosGetAllContractors() {
   return await Api.get('contractor')
 }
@@ -73,13 +88,6 @@ export async function axiosGetContractorJobsById(id: number) {
 }
 export async function axiosUpdateContractorStatus(payload: any) {
   return await Api.patch(`contractor/${payload.id}`, JSON.stringify(payload), {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-}
-export async function axiosUpdateContractorPassword(payload: any) {
-  return await Api.put('rota', JSON.stringify(payload), {
     headers: {
       'Content-Type': 'application/json',
     },
