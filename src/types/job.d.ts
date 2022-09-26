@@ -2,12 +2,23 @@ export interface TJob {
   id?: number
   contractor: { name: string; id?: number }
   client: { name: string; id?: number }
-  value_hour: number
-  hours: string
   status: string
-  year: string
-  month: string
-  workedDaysInfos: any[]
+  quarters: [
+    {
+      month: string
+      year: number
+      value_hour: number
+      hours: number
+      appointments: { date: string; value: number }[]
+    },
+    {
+      month: string
+      year: number
+      value_hour: number
+      hours: number
+      appointments: { date: string; value: number }[]
+    },
+  ]
 }
 
 export interface NewJob {

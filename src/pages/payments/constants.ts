@@ -5,7 +5,7 @@ export const bodyTable = [
       name: 'bruno fay',
       id: 5,
     },
-    status: 'active',
+    status: 'ACTIVE',
     month: 'january',
     year: '2022',
     payments: [
@@ -29,7 +29,7 @@ export const bodyTable = [
       name: 'renata',
       id: 51,
     },
-    status: 'active',
+    status: 'ACTIVE',
     month: 'january',
     year: '2022',
     payments: [
@@ -53,7 +53,7 @@ export const bodyTable = [
       name: 'bruno fay',
       id: 52,
     },
-    status: 'active',
+    status: 'ACTIVE',
     month: 'april',
     year: '2022',
     payments: [
@@ -77,7 +77,7 @@ export const bodyTable = [
       name: 'bruno fay',
       id: 53,
     },
-    status: 'active',
+    status: 'ACTIVE',
     month: 'may',
     year: '2022',
     payments: [
@@ -101,7 +101,7 @@ export const bodyTable = [
       name: 'james',
       id: 54,
     },
-    status: 'inative',
+    status: 'INACTIVE',
     month: 'january',
     year: '2022',
     payments: [
@@ -125,7 +125,7 @@ export const bodyTable = [
       name: 'maria',
       id: 55,
     },
-    status: 'inative',
+    status: 'INACTIVE',
     month: 'january',
     year: '2022',
     payments: [
@@ -149,7 +149,7 @@ export const bodyTable = [
       name: 'james',
       id: 56,
     },
-    status: 'inative',
+    status: 'INACTIVE',
     month: 'april',
     year: '2022',
     payments: [
@@ -173,7 +173,7 @@ export const bodyTable = [
       name: 'bruno augusto',
       id: 57,
     },
-    status: 'active',
+    status: 'ACTIVE',
     month: 'january',
     year: '2022',
     payments: [
@@ -197,7 +197,7 @@ export const bodyTable = [
       name: 'bruno augusto silva pereira',
       id: 58,
     },
-    status: 'active',
+    status: 'ACTIVE',
     month: 'april',
     year: '2022',
     payments: [
@@ -221,7 +221,7 @@ export const bodyTable = [
       name: 'bruno augusto',
       id: 599,
     },
-    status: 'inative',
+    status: 'INACTIVE',
     month: 'february',
     year: '2022',
     payments: [

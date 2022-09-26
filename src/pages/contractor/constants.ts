@@ -61,7 +61,7 @@ export const bodyTableContractors = [
   {
     id: 3,
     firstname: 'jamal',
-    status: 'active',
+    status: 'ACTIVE',
     lastname: 'hub',
     phone: '11632585432',
     'itin/ssn/ein': {
@@ -80,7 +80,7 @@ export const bodyTableContractors = [
   {
     id: 4,
     firstname: 'joana',
-    status: 'inactive',
+    status: 'INACTIVE',
     lastname: 'hub',
     phone: '20672571623',
     'itin/ssn/ein': {

@@ -2,7 +2,7 @@ export const bodyTable = [
   {
     id: 1,
     name: 'apple',
-    status: 'Active',
+    status: 'ACTIVE',
     monday: false,
     tuesday: false,
     wednesday: false,
@@ -16,7 +16,7 @@ export const bodyTable = [
   {
     id: 11,
     name: 'Big',
-    status: 'Active',
+    status: 'ACTIVE',
     monday: true,
     tuesday: true,
     wednesday: true,
@@ -30,7 +30,7 @@ export const bodyTable = [
   {
     id: 12,
     name: 'amazon',
-    status: 'Active',
+    status: 'ACTIVE',
     monday: true,
     tuesday: true,
     wednesday: true,
@@ -44,7 +44,7 @@ export const bodyTable = [
   {
     id: 14,
     name: 'multilaser',
-    status: 'Inactive',
+    status: 'INACTIVE',
     monday: true,
     tuesday: true,
     wednesday: true,

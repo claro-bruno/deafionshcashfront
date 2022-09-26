@@ -19,7 +19,7 @@ export const jobs = [
     id: 5,
     contractor: { name: 'bruno fay', id: 12 },
     month: 'January',
-    status: 'Inactive',
+    status: 'INACTIVE',
     year: '2022',
     client: { name: 'amazon', id: 1 },
     hours: '0',
@@ -28,7 +28,7 @@ export const jobs = [
   {
     id: 51,
     contractor: { name: 'bruno fay', id: 12 },
-    status: 'Active',
+    status: 'ACTIVE',
     month: 'january',
     year: '2022',
     client: { name: 'Big' },
@@ -85,6 +85,7 @@ export const jobsATT = [
     quarters: [
       {
         month: 'January',
+        hours: 12,
         year: 2022,
         value_hour: 20,
         appointments: [
@@ -107,6 +108,7 @@ export const jobsATT = [
       },
       {
         month: 'January',
+        hours: 12,
         year: 2022,
         value_hour: 17,
         appointments: [
@@ -139,6 +141,7 @@ export const jobsATT = [
       {
         month: 'January',
         year: 2022,
+        hours: 12,
         value_hour: 20,
         appointments: [
           { date: '01/01/2022', value: 0 },
@@ -161,6 +164,7 @@ export const jobsATT = [
       {
         month: 'January',
         year: 2022,
+        hours: 32,
         value_hour: 17,
         appointments: [
           { date: '01/16/2022', value: 0 },

@@ -10,10 +10,10 @@ export default function JobTableLine({
   fortnightDays,
   job,
 }: {
-  fortnightDays: any
-  job: any
+  fortnightDays: DaysObj[]
+  job: TJob
 }) {
-  const [contractorWorkedInfos, setContractorWorkedInfos] = useState<any>(job)
+  const [contractorWorkedInfos, setContractorWorkedInfos] = useState<TJob>(job)
   const {
     handleCurrentInputJobValue,
     currentInputJobValue,
@@ -38,6 +38,10 @@ export default function JobTableLine({
     fortnightDays[0]?.dayNum === 1
       ? contractorWorkedInfos.quarters[0].appointments
       : contractorWorkedInfos.quarters[1].appointments
+  const isFirstQuarter = daysInputs[daysInputs.length - 1].date.includes('/15/')
+  const hoursValue = isFirstQuarter
+    ? contractorWorkedInfos.quarters[0].hours
+    : contractorWorkedInfos.quarters[1].hours
 
   function handleChange(
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -46,29 +50,28 @@ export default function JobTableLine({
     const { name, value } = e.target
     const quarter1 = contractorWorkedInfos.quarters[0]
     const quarter2 = contractorWorkedInfos.quarters[1]
-    const lastQuarterDay = daysInputs.length - 1
     handleCurrentInputJobValue(value)
     console.log(name, value)
     if (options) {
-      setContractorWorkedInfos((state: any) => ({
+      setContractorWorkedInfos((state) => ({
         ...state,
-        quarters: daysInputs[lastQuarterDay].date.includes('/15/')
-          ? [{ ...quarter1, [name]: value }, quarter2]
-          : [quarter1, { ...quarter2, [name]: value }],
+        quarters: isFirstQuarter
+          ? [{ ...quarter1, [name]: Number(value) }, quarter2]
+          : [quarter1, { ...quarter2, [name]: Number(value) }],
       }))
       return
     }
 
-    setContractorWorkedInfos((state: any) => {
-      const handleJobArray = daysInputs.map((obj: any) => {
+    setContractorWorkedInfos((state) => {
+      const handleJobArray = daysInputs.map((obj) => {
         if (obj.date === name) {
-          return { ...obj, value }
+          return { ...obj, value: Number(value) }
         }
         return obj
       })
       return {
         ...state,
-        quarters: daysInputs[lastQuarterDay].date.includes('/15/')
+        quarters: isFirstQuarter
           ? [{ ...quarter1, appointments: handleJobArray }, quarter2]
           : [quarter1, { ...quarter2, appointments: handleJobArray }],
       }
@@ -82,18 +85,17 @@ export default function JobTableLine({
     const isKeyTab = e.key === 'Tab'
     const quarter1 = contractorWorkedInfos.quarters[0]
     const quarter2 = contractorWorkedInfos.quarters[1]
-    const lastQuarterDay = daysInputs.length - 1
     if (isKeyTab) {
-      setContractorWorkedInfos((state: any) => {
-        const handleJobArray = daysInputs.map((obj: any) => {
+      setContractorWorkedInfos((state) => {
+        const handleJobArray = daysInputs.map((obj) => {
           if (obj.date === name) {
-            return { ...obj, value: currentInputJobValue }
+            return { ...obj, value: Number(currentInputJobValue) }
           }
           return obj
         })
         return {
           ...state,
-          quarters: daysInputs[lastQuarterDay].date.includes('/15/')
+          quarters: isFirstQuarter
             ? [{ ...quarter1, appointments: handleJobArray }, quarter2]
             : [quarter1, { ...quarter2, appointments: handleJobArray }],
         }
@@ -108,19 +110,14 @@ export default function JobTableLine({
   }
 
   function handleUpdateJob(jobInfos: TJob) {
-    const fistDayOfQuarter = fortnightDays[0].dayNum
-    const lastDayOfQuarter = fortnightDays[fortnightDays.length - 1].dayNum
-    const isQuarterOne = fistDayOfQuarter === 1
     const jobToUpdateFormatted = {
       id: jobInfos.id,
-      month: jobInfos.month,
-      value_hour: jobInfos.value_hour,
+      month: jobInfos.quarters[0].month,
+      value_hour: pHourValue,
       status: jobInfos.status,
-      year: jobInfos.year,
-      quarter: isQuarterOne ? 1 : 2,
-      workedDaysInfos: isQuarterOne
-        ? jobInfos.workedDaysInfos.slice(0, lastDayOfQuarter)
-        : jobInfos.workedDaysInfos.slice(15, lastDayOfQuarter),
+      year: jobInfos.quarters[0].year,
+      quarter: isFirstQuarter ? 1 : 2,
+      workedDaysInfos: daysInputs,
     }
 
     console.log(jobToUpdateFormatted)
@@ -155,7 +152,7 @@ export default function JobTableLine({
       <td className="flex items-center justify-center">
         {
           <p className="flex justify-center py-2 gap-1">
-            {daysInputs.map((day: any) => (
+            {daysInputs.map((day) => (
               <input
                 key={day.date}
                 name={day.date}
@@ -163,7 +160,7 @@ export default function JobTableLine({
                 onChange={handleChange}
                 onKeyUp={handleKeyPress}
                 type="number"
-                max={3}
+                title={day.value.toString()}
                 className={`${
                   getDayByDate(day.date) === 'S' && 'bg-zinc-500 text-white'
                 } w-[1.529rem] outline-none ring-1 ring-transparent focus:ring-brand text-center h-10 border text-[0.7rem] `}
@@ -172,7 +169,7 @@ export default function JobTableLine({
           </p>
         }
       </td>
-      <td>{contractorWorkedInfos.hours}</td>
+      <td>{hoursValue}</td>
       <td className="w-[5rem]">
         $
         <input
@@ -182,7 +179,7 @@ export default function JobTableLine({
           value={pHourValue}
         />
       </td>
-      <td>$ {pHourValue * Number(contractorWorkedInfos.hours)}</td>
+      <td>$ {pHourValue * hoursValue}</td>
 
       <td className=" flex gap-1">
         <button

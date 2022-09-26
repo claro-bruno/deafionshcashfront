@@ -18,15 +18,15 @@ interface JobContext {
   handleCurrentInputJobValue: (value: string) => void
   handleSwitchModalView: () => void
   isModalOpen: boolean
-  jobs: any
-  handleSetJobs: (jobs: any) => void
+  jobs: TJob[]
+  handleSetJobs: (jobs: TJob[]) => void
 }
 
 export const jobsContext = createContext({} as JobContext)
 export default function JobContextProvider(props: PropsWithChildren) {
   const [jobToEdit, setJobToEdit] = useState<TJob>({} as TJob)
   const [currentInputJobValue, setCurrentInputJobValue] = useState('0')
-  const [jobs, setJobs] = useState(jobsATT)
+  const [jobs, setJobs] = useState<TJob[]>(jobsATT as TJob[])
   const { switchModalView, isModalOpen } = useModal()
   const { data } = useQuery<any>(['jobs'], axiosGetAllJobs)
 
@@ -38,10 +38,10 @@ export default function JobContextProvider(props: PropsWithChildren) {
     }
   }, [data])
 
-  function handleEditJob(job: any) {
+  function handleEditJob(job: TJob) {
     setJobToEdit(job)
   }
-  function handleSetJobs(data: any) {
+  function handleSetJobs(data: TJob[]) {
     setJobs(data)
   }
   function handleCurrentInputJobValue(value: string) {
