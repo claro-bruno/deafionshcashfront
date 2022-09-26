@@ -38,30 +38,39 @@ export default function JobTableLine({
     fortnightDays[0]?.dayNum === 1
       ? contractorWorkedInfos.quarters[0].appointments
       : contractorWorkedInfos.quarters[1].appointments
+
   function handleChange(
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
     options?: string,
   ) {
     const { name, value } = e.target
+    const quarter1 = contractorWorkedInfos.quarters[0]
+    const quarter2 = contractorWorkedInfos.quarters[1]
+    const lastQuarterDay = daysInputs.length - 1
     handleCurrentInputJobValue(value)
+    console.log(name, value)
     if (options) {
-      setContractorWorkedInfos({
-        ...contractorWorkedInfos,
-        [name]: value,
-      })
+      setContractorWorkedInfos((state: any) => ({
+        ...state,
+        quarters: daysInputs[lastQuarterDay].date.includes('/15/')
+          ? [{ ...quarter1, [name]: value }, quarter2]
+          : [quarter1, { ...quarter2, [name]: value }],
+      }))
       return
     }
 
     setContractorWorkedInfos((state: any) => {
-      const handleJobArray = state.workedDaysInfos.map((e: any) => {
-        if (e.day === name) {
-          return { ...e, workedHours: value }
+      const handleJobArray = daysInputs.map((obj: any) => {
+        if (obj.date === name) {
+          return { ...obj, value }
         }
-        return e
+        return obj
       })
       return {
         ...state,
-        workedDaysInfos: handleJobArray,
+        quarters: daysInputs[lastQuarterDay].date.includes('/15/')
+          ? [{ ...quarter1, appointments: handleJobArray }, quarter2]
+          : [quarter1, { ...quarter2, appointments: handleJobArray }],
       }
     })
   }
@@ -71,17 +80,22 @@ export default function JobTableLine({
   ) {
     const { name } = e.target
     const isKeyTab = e.key === 'Tab'
+    const quarter1 = contractorWorkedInfos.quarters[0]
+    const quarter2 = contractorWorkedInfos.quarters[1]
+    const lastQuarterDay = daysInputs.length - 1
     if (isKeyTab) {
       setContractorWorkedInfos((state: any) => {
-        const handleJobArray = state.workedDaysInfos.map((e: any) => {
-          if (e.day === name) {
-            return { ...e, workedHours: currentInputJobValue }
+        const handleJobArray = daysInputs.map((obj: any) => {
+          if (obj.date === name) {
+            return { ...obj, value: currentInputJobValue }
           }
-          return e
+          return obj
         })
         return {
           ...state,
-          workedDaysInfos: handleJobArray,
+          quarters: daysInputs[lastQuarterDay].date.includes('/15/')
+            ? [{ ...quarter1, appointments: handleJobArray }, quarter2]
+            : [quarter1, { ...quarter2, appointments: handleJobArray }],
         }
       })
     }
@@ -89,7 +103,6 @@ export default function JobTableLine({
   function getDayByDate(date: string) {
     const day = new Date(date)
     const weekdayName = day.toLocaleString('en-us', { weekday: 'narrow' })
-    console.log(weekdayName)
 
     return weekdayName
   }
@@ -119,6 +132,7 @@ export default function JobTableLine({
     console.log(contractorWorkedInfos)
     handleSwitchModalView()
   }
+
   return (
     <tr className=" bg-white border-b ">
       <td className="pl-4 ">
@@ -143,15 +157,15 @@ export default function JobTableLine({
           <p className="flex justify-center py-2 gap-1">
             {daysInputs.map((day: any) => (
               <input
-                key={day.data}
-                name={day.data}
+                key={day.date}
+                name={day.date}
                 value={day.value}
                 onChange={handleChange}
                 onKeyUp={handleKeyPress}
                 type="number"
                 max={3}
                 className={`${
-                  getDayByDate(day.data) === 'S' && 'bg-zinc-500 text-white'
+                  getDayByDate(day.date) === 'S' && 'bg-zinc-500 text-white'
                 } w-[1.529rem] outline-none ring-1 ring-transparent focus:ring-brand text-center h-10 border text-[0.7rem] `}
               />
             ))}

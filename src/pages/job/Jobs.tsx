@@ -71,7 +71,6 @@ export default function Jobs() {
     })
     return weakDaysNamed
   }
-  console.log(jobs)
 
   return (
     <div>
