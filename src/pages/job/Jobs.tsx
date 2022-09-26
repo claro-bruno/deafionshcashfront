@@ -71,6 +71,7 @@ export default function Jobs() {
     })
     return weakDaysNamed
   }
+  console.log(jobs)
 
   return (
     <div>
@@ -144,7 +145,7 @@ export default function Jobs() {
               </tr>
             </thead>
             <tbody>
-              {jobs.map((job) => {
+              {jobs.map((job: any) => {
                 if (handleFilters(job)) {
                   return (
                     <JobTableLine

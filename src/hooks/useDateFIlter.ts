@@ -7,7 +7,7 @@ type DateFilterProps = {
 export function useDateFilter() {
   const [filterContractor, setFilterContractor] = useState('')
   const [monthName, setMonthName] = useState('January')
-  const [yearName, setYearName] = useState(2022)
+  const [yearName, setYearName] = useState('2022')
 
   function handleFilters(obj: DateFilterProps) {
     const filterByContractor = obj.contractor.name
@@ -16,7 +16,9 @@ export function useDateFilter() {
     const filterByMonth = obj.quarters[0].month
       .toLowerCase()
       .includes(monthName.toLowerCase())
-    const filterByYear = obj.quarters[0].year === yearName
+    const filterByYear = obj.quarters[0].year
+      .toString()
+      .includes(yearName.toLowerCase())
     return filterByContractor && filterByMonth && filterByYear
   }
 

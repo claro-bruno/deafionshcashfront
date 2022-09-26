@@ -10,10 +10,10 @@ export default function JobTableLine({
   fortnightDays,
   job,
 }: {
-  fortnightDays: DaysObj[]
-  job: TJob
+  fortnightDays: any
+  job: any
 }) {
-  const [contractorWorkedInfos, setContractorWorkedInfos] = useState<TJob>(job)
+  const [contractorWorkedInfos, setContractorWorkedInfos] = useState<any>(job)
   const {
     handleCurrentInputJobValue,
     currentInputJobValue,
@@ -30,7 +30,14 @@ export default function JobTableLine({
       console.log(error)
     },
   })
-  console.log(job)
+  const pHourValue =
+    fortnightDays[0]?.dayNum === 1
+      ? contractorWorkedInfos.quarters[0].value_hour
+      : contractorWorkedInfos.quarters[1].value_hour
+  const daysInputs =
+    fortnightDays[0]?.dayNum === 1
+      ? contractorWorkedInfos.quarters[0].appointments
+      : contractorWorkedInfos.quarters[1].appointments
   function handleChange(
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
     options?: string,
@@ -79,29 +86,14 @@ export default function JobTableLine({
       })
     }
   }
+  function getDayByDate(date: string) {
+    const day = new Date(date)
+    const weekdayName = day.toLocaleString('en-us', { weekday: 'narrow' })
+    console.log(weekdayName)
 
-  function getWorkedDayValue(day: number) {
-    const contractorArr = Object.entries(contractorWorkedInfos.workedDaysInfos)
-    const currentContractor = contractorArr.find(
-      (_, index) => index + 1 === day,
-    ) as [string, { day: string; weekday: string; workedHours: string }]
-
-    if (currentContractor) {
-      const value = currentContractor[1].workedHours
-      return value
-    }
+    return weekdayName
   }
 
-  function getWorkedDayName(day: number) {
-    const contractorArr = Object.entries(contractorWorkedInfos.workedDaysInfos)
-    const currentContractor = contractorArr.find(
-      (_, index) => index + 1 === day,
-    ) as [string, { day: string; weekday: string; workedHours: string }]
-    if (currentContractor) {
-      const dayName = currentContractor[1].day
-      return dayName
-    }
-  }
   function handleUpdateJob(jobInfos: TJob) {
     const fistDayOfQuarter = fortnightDays[0].dayNum
     const lastDayOfQuarter = fortnightDays[fortnightDays.length - 1].dayNum
@@ -134,10 +126,10 @@ export default function JobTableLine({
           onChange={(e) => handleChange(e, 'editStatus')}
           className="rounded bg-white border outline-none p-1"
           name="status"
-          defaultValue={job.status.toString()}
+          defaultValue={job.status}
         >
-          <option value="Active">Active</option>
-          <option value="Inactive">Inactive</option>
+          <option value="ACTIVE">Active</option>
+          <option value="INACTIVE">Inactive</option>
         </select>
       </td>
       <td className="max-w-[9rem]">
@@ -147,22 +139,24 @@ export default function JobTableLine({
       </td>
       <td>{job.client.name}</td>
       <td className="flex items-center justify-center">
-        <p className="flex justify-center py-2 gap-1">
-          {fortnightDays.map((day: DaysObj) => (
-            <input
-              key={getWorkedDayName(day.dayNum)}
-              name={getWorkedDayName(day.dayNum)}
-              value={getWorkedDayValue(day.dayNum)}
-              onChange={handleChange}
-              onKeyUp={handleKeyPress}
-              type="number"
-              max={3}
-              className={`${
-                day.weakDayName === 'S' && 'bg-zinc-500 text-white'
-              } w-[1.529rem] outline-none ring-1 ring-transparent focus:ring-brand text-center h-10 border text-[0.7rem] `}
-            />
-          ))}
-        </p>
+        {
+          <p className="flex justify-center py-2 gap-1">
+            {daysInputs.map((day: any) => (
+              <input
+                key={day.data}
+                name={day.data}
+                value={day.value}
+                onChange={handleChange}
+                onKeyUp={handleKeyPress}
+                type="number"
+                max={3}
+                className={`${
+                  getDayByDate(day.data) === 'S' && 'bg-zinc-500 text-white'
+                } w-[1.529rem] outline-none ring-1 ring-transparent focus:ring-brand text-center h-10 border text-[0.7rem] `}
+              />
+            ))}
+          </p>
+        }
       </td>
       <td>{contractorWorkedInfos.hours}</td>
       <td className="w-[5rem]">
@@ -171,14 +165,10 @@ export default function JobTableLine({
           onChange={(e) => handleChange(e, 'pHour')}
           name="value_hour"
           className="w-[2.1rem] border ml-1 p-1"
-          value={contractorWorkedInfos.value_hour}
+          value={pHourValue}
         />
       </td>
-      <td>
-        ${' '}
-        {Number(contractorWorkedInfos.value_hour) *
-          Number(contractorWorkedInfos.hours)}
-      </td>
+      <td>$ {pHourValue * Number(contractorWorkedInfos.hours)}</td>
 
       <td className=" flex gap-1">
         <button
