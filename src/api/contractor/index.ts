@@ -68,7 +68,7 @@ export async function axiosUpdateContractorPassword(payload: {
 }) {
   return await Api.put(
     `account/contractor/password/${payload.id}`,
-    JSON.stringify(payload.password),
+    JSON.stringify({ password: payload.password }),
     {
       headers: {
         'Content-Type': 'application/json',

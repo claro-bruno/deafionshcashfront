@@ -95,7 +95,7 @@ export default function Home() {
         </nav>
       </main>
       <ChangeModalPassword
-        isModalOpen={true}
+        isModalOpen={false}
         switchModalView={switchModalView}
       />
     </div>

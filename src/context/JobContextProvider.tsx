@@ -8,7 +8,7 @@ import React, {
 } from 'react'
 import { axiosGetAllJobs } from '../api/jobs'
 import useModal from '../hooks/useModal'
-import { bodyTable } from '../pages/job/constants'
+import { jobsATT } from '../pages/job/constants'
 import { TJob } from '../types/job'
 
 interface JobContext {
@@ -18,14 +18,15 @@ interface JobContext {
   handleCurrentInputJobValue: (value: string) => void
   handleSwitchModalView: () => void
   isModalOpen: boolean
-  jobs: TJob[]
-  handleSetJobs: (jobs: TJob[]) => void
+  jobs: any
+  handleSetJobs: (jobs: any) => void
 }
+
 export const jobsContext = createContext({} as JobContext)
 export default function JobContextProvider(props: PropsWithChildren) {
   const [jobToEdit, setJobToEdit] = useState<TJob>({} as TJob)
   const [currentInputJobValue, setCurrentInputJobValue] = useState('0')
-  const [jobs, setJobs] = useState<TJob[]>(bodyTable)
+  const [jobs, setJobs] = useState(jobsATT)
   const { switchModalView, isModalOpen } = useModal()
   const { data } = useQuery<any>(['jobs'], axiosGetAllJobs)
 
@@ -40,7 +41,7 @@ export default function JobContextProvider(props: PropsWithChildren) {
   function handleEditJob(job: any) {
     setJobToEdit(job)
   }
-  function handleSetJobs(data: TJob[]) {
+  function handleSetJobs(data: any) {
     setJobs(data)
   }
   function handleCurrentInputJobValue(value: string) {
