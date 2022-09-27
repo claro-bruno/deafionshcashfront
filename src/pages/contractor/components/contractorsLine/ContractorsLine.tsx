@@ -12,12 +12,12 @@ export default function ContractorsLine({
   handleModalInfos,
 }: ContractorsLineProps) {
   const { formatPhone, formatSsnOrItin } = useFormate()
-  const { invalidateQueries } = useQueryClient()
+  const queryClient = useQueryClient()
   const [contractorStatus, setContractorStatus] = useState(contractor.status)
   const { mutateAsync } = useMutation(axiosUpdateContractorStatus, {
     onSuccess: (response) => {
       console.log(response)
-      invalidateQueries(['contractors'])
+      queryClient.invalidateQueries(['contractors'])
     },
     onError: (error: { response: any }) => {
       console.log(error.response)

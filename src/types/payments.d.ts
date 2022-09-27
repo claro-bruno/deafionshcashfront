@@ -6,7 +6,7 @@ export type Payment = {
   }
   status: string
   month: string
-  year: string
+  year: number
   payments: {
     type: string
     identifier: string

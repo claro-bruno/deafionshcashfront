@@ -25,13 +25,13 @@ export default function EditContractorModal({
     phone: modalInfos.phone ?? '',
     ssnOrItin: modalInfos.ssnOrItin ?? '',
   })
-  const { invalidateQueries } = useQueryClient()
+  const queryClient = useQueryClient()
   const { mutateAsync, data } = useMutation(
     (payload: [EditContractor, InputsFiles]) =>
       axiosUpdateContractor(payload[0], payload[1]),
     {
       onSuccess() {
-        invalidateQueries(['contractor', modalInfos.id])
+        queryClient.invalidateQueries(['contractor', modalInfos.id])
         console.log(data)
       },
     },

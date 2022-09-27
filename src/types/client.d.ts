@@ -1,4 +1,5 @@
 export type NewClient = {
+  id?: number
   name: string
   start: string
   end: string
@@ -12,11 +13,12 @@ export type NewClient = {
 }
 
 export type Client = {
-  id?: string
+  id?: number
   name: string
   start: string
   end: string
   monday: boolean
+  status: string | boolean
   tuesday: boolean
   wednesday: boolean
   thursday: boolean

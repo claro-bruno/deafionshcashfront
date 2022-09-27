@@ -20,10 +20,10 @@ export default function JobTableLine({
     handleEditJob,
     handleSwitchModalView,
   } = useContext(jobsContext)
-  const { invalidateQueries } = useQueryClient()
+  const queryClient = useQueryClient()
   const { mutateAsync, data } = useMutation(axiosUpdateNewJob, {
     onSuccess() {
-      invalidateQueries(['jobs'])
+      queryClient.invalidateQueries(['jobs'])
       console.log(data)
     },
     onError(error) {

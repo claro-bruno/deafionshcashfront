@@ -7,7 +7,7 @@ export const bodyTable = [
     },
     status: 'ACTIVE',
     month: 'january',
-    year: '2022',
+    year: 2022,
     payments: [
       {
         type: '',
@@ -31,7 +31,7 @@ export const bodyTable = [
     },
     status: 'ACTIVE',
     month: 'january',
-    year: '2022',
+    year: 2022,
     payments: [
       {
         type: 'Transfer',
@@ -55,7 +55,7 @@ export const bodyTable = [
     },
     status: 'ACTIVE',
     month: 'april',
-    year: '2022',
+    year: 2022,
     payments: [
       {
         type: 'Transfer',
@@ -79,7 +79,7 @@ export const bodyTable = [
     },
     status: 'ACTIVE',
     month: 'may',
-    year: '2022',
+    year: 2022,
     payments: [
       {
         type: 'Transfer',
@@ -103,7 +103,7 @@ export const bodyTable = [
     },
     status: 'INACTIVE',
     month: 'january',
-    year: '2022',
+    year: 2022,
     payments: [
       {
         type: 'Transfer',
@@ -127,7 +127,7 @@ export const bodyTable = [
     },
     status: 'INACTIVE',
     month: 'january',
-    year: '2022',
+    year: 2022,
     payments: [
       {
         type: '',
@@ -151,7 +151,7 @@ export const bodyTable = [
     },
     status: 'INACTIVE',
     month: 'april',
-    year: '2022',
+    year: 2022,
     payments: [
       {
         type: 'Transfer',
@@ -175,7 +175,7 @@ export const bodyTable = [
     },
     status: 'ACTIVE',
     month: 'january',
-    year: '2022',
+    year: 2022,
     payments: [
       {
         type: 'Transfer',
@@ -199,7 +199,7 @@ export const bodyTable = [
     },
     status: 'ACTIVE',
     month: 'april',
-    year: '2022',
+    year: 2022,
     payments: [
       {
         type: 'Transfer',
@@ -223,7 +223,7 @@ export const bodyTable = [
     },
     status: 'INACTIVE',
     month: 'february',
-    year: '2022',
+    year: 2022,
     payments: [
       {
         type: 'Transfer',

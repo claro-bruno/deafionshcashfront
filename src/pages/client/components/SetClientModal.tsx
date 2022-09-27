@@ -15,12 +15,13 @@ export default function SetClientModal({
 }: ModalProps) {
   const isEditMode = 'id' in modalInfos
   const [response, setResponse] = useState<any>({})
-  const { invalidateQueries } = useQueryClient()
+  const queryClient = useQueryClient()
   const INITIAL_MODAL_CLIENT_STATES = {
     name: '',
     start: '',
     end: '',
     monday: false,
+    status: true,
     tuesday: false,
     wednesday: false,
     thursday: false,
@@ -29,7 +30,7 @@ export default function SetClientModal({
     sunday: false,
   }
 
-  const { state: clientState, handleChange } = useHandleChange<Client>(
+  const { state: clientState, handleChange } = useHandleChange(
     INITIAL_MODAL_CLIENT_STATES,
   )
 
@@ -37,7 +38,7 @@ export default function SetClientModal({
     onSuccess: () => {
       setResponse(data)
 
-      invalidateQueries(['clients'])
+      queryClient.invalidateQueries(['clients'])
     },
     onError: (error) => {
       console.log(error)
@@ -50,7 +51,7 @@ export default function SetClientModal({
       onSuccess: () => {
         setResponse(updateData)
 
-        invalidateQueries(['clients'])
+        queryClient.invalidateQueries(['clients'])
       },
       onError: (error) => {
         console.log(error)
@@ -58,43 +59,53 @@ export default function SetClientModal({
     },
   )
   function handleSubmitClient(e: FormEvent<EventTarget>) {
+    e.preventDefault()
     const payload = {
-      name: states.name === '' && isEditMode ? modalInfos.name : states.name,
+      name:
+        clientState.name === '' && isEditMode
+          ? modalInfos.name
+          : clientState.name,
       start:
-        states.start === '' && isEditMode ? modalInfos.start : states.start,
-      end: states.end === '' && isEditMode ? modalInfos.end : states.end,
+        clientState.start === '' && isEditMode
+          ? modalInfos.start
+          : clientState.start,
+      end:
+        clientState.end === '' && isEditMode ? modalInfos.end : clientState.end,
       monday:
-        states.monday === false && isEditMode
+        clientState.monday === false && isEditMode
           ? modalInfos.monday
-          : states.monday,
+          : clientState.monday,
       tuesday:
-        states.tuesday === false && isEditMode
+        clientState.tuesday === false && isEditMode
           ? modalInfos.tuesday
-          : states.tuesday,
+          : clientState.tuesday,
       wednesday:
-        states.wednesday === false && isEditMode
+        clientState.wednesday === false && isEditMode
           ? modalInfos.wednesday
-          : states.wednesday,
+          : clientState.wednesday,
       thursday:
-        states.thursday === false && isEditMode
+        clientState.thursday === false && isEditMode
           ? modalInfos.thursday
-          : states.thursday,
+          : clientState.thursday,
       friday:
-        states.friday === false && isEditMode
+        clientState.friday === false && isEditMode
           ? modalInfos.friday
-          : states.friday,
+          : clientState.friday,
       saturday:
-        states.saturday === false && isEditMode
+        clientState.saturday === false && isEditMode
           ? modalInfos.saturday
-          : states.saturday,
+          : clientState.saturday,
       sunday:
-        states.sunday === false && isEditMode
+        clientState.sunday === false && isEditMode
           ? modalInfos.sunday
-          : states.sunday,
+          : clientState.sunday,
+      status: true,
     }
     console.log(payload, isEditMode)
     e.preventDefault()
-    isEditMode ? updateMutateAsync(clientState) : mutateAsync(clientState)
+    isEditMode
+      ? updateMutateAsync({ ...clientState, id: modalInfos.id })
+      : mutateAsync(clientState)
     switchModalView()
   }
 
@@ -126,7 +137,7 @@ export default function SetClientModal({
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel className="modal">
-                  <form action="submit" onSubmit={handleSubmitClient}>
+                  <form onSubmit={handleSubmitClient}>
                     <div
                       tabIndex={0}
                       className="flex items-center focus:outline-none justify-center"

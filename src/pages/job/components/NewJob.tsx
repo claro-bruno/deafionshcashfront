@@ -33,11 +33,11 @@ export default function NewJob({ tableDate }: NewJobProps) {
     [`contractors`],
     axiosGetAllContractors,
   )
-  const { invalidateQueries } = useQueryClient()
+  const queryClient = useQueryClient()
   const { data, mutateAsync } = useMutation(axiosCreateNewJob, {
     onSuccess() {
       console.log(data)
-      invalidateQueries(['jobs'])
+      queryClient.invalidateQueries(['jobs'])
     },
   })
 

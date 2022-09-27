@@ -1,23 +1,30 @@
 import { useQuery } from '@tanstack/react-query'
 import { Circle, Plus } from 'phosphor-react'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { axiosGetAllClients } from '../../api/client'
 import Header from '../../components/header/Header'
 import { AuthContext } from '../../context/AuthProvider'
 import { headerTableClients } from '../../helpers/headersTables'
 import useModal from '../../hooks/useModal'
-import NewCompanyModal from './components/SetClientModal'
-import { bodyTable } from './constants'
+import SetClientModal from './components/SetClientModal'
+import { Client } from '../../types/client'
 
-export default function Client() {
+export default function ClientPage() {
   const { name } = useParams()
   const [filterClient, setFilterClient] = useState(name ?? '')
   const { access } = useContext(AuthContext)
   const { switchModalView, isModalOpen } = useModal()
+  const [clients, setClients] = useState<Client[] | []>([])
   const { data } = useQuery(['clients'], axiosGetAllClients)
   console.log(data?.data)
   const [isEditable, setIsEditable] = useState({})
+
+  useEffect(() => {
+    if (data?.data) {
+      setClients(data?.data)
+    }
+  }, [data])
 
   function tableFilters(item: { name: string }) {
     return item.name.toUpperCase().includes(filterClient.toUpperCase())
@@ -66,7 +73,7 @@ export default function Client() {
             </tr>
           </thead>
           <tbody>
-            {bodyTable.map((item) => {
+            {clients.map((item) => {
               if (tableFilters(item)) {
                 return (
                   <tr key={item.id} className="bg-white border-b ">
@@ -77,7 +84,7 @@ export default function Client() {
                       <Circle
                         weight="fill"
                         size={15}
-                        color={item.status === 'Active' ? 'green' : 'gray'}
+                        color={item.status === 'ACTIVE' ? 'green' : 'gray'}
                       />
                     </th>
                     <td className="tableLine">{item.name}</td>
@@ -149,7 +156,7 @@ export default function Client() {
           </tbody>
         </table>
       </div>
-      <NewCompanyModal
+      <SetClientModal
         isModalOpen={isModalOpen}
         switchModalView={() => handleEditClient(isEditable)}
         modalInfos={isEditable}

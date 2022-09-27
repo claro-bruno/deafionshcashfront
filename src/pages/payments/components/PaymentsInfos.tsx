@@ -29,12 +29,12 @@ export default function PaymentsInfos(payInfos: ContractorPaymentInfos) {
       ],
     },
   })
-  const { invalidateQueries } = useQueryClient()
+  const queryClient = useQueryClient()
   const { register, handleSubmit } = paymentContractorInfos
   const { data, mutateAsync } = useMutation(axiosUpdatePayments, {
     onSuccess() {
       console.log(data)
-      invalidateQueries(['payments'])
+      queryClient.invalidateQueries(['payments'])
     },
     onError(error: { response: any }) {
       console.log(error.response)
