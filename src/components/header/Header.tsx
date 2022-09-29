@@ -17,7 +17,7 @@ export default function Header(props: PropsWithChildren) {
       <div className="">
         <img
           className="h-16"
-          src="https://www.globaljanitorialservices.com/assets/images/resources/logo-3.png"
+          src="www.globaljanitorialservices.com/assets/images/resources/logo-3.png"
           alt="global janitorial services logo"
         />
       </div>

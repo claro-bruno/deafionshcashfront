@@ -1,23 +1,28 @@
 import { useQuery } from '@tanstack/react-query'
 import { GearSix } from 'phosphor-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { axiosGetAllContractors } from '../../api/contractor'
 import Header from '../../components/header/Header'
 import { headerTableContractors } from '../../helpers/headersTables'
 import useModal from '../../hooks/useModal'
+import { Contractor } from '../../types/contractor'
 import ContractorsLine from './components/contractorsLine/ContractorsLine'
 import ContractorModalInfos from './components/contractorsModalInfos/ContractorsModalInfos'
-import { bodyTableContractors } from './constants'
 
 export default function Contractors() {
   const { switchModalView, isModalOpen } = useModal()
   const [contractorInfos, setContractorInfos] = useState({})
   const { data } = useQuery([`contractors`], axiosGetAllContractors)
-  console.log(data)
-
-  function handleModalInfos(infos: {}) {
+  const [allContractors, setAllContractors] = useState<Contractor[]>([])
+  console.log(data?.data)
+  useEffect(() => {
+    if (data?.data) {
+      setAllContractors(data?.data)
+    }
+  }, [data])
+  function handleModalInfos(infos: {}, src: string) {
     switchModalView()
-    setContractorInfos(infos)
+    setContractorInfos({ ...infos, src })
   }
   return (
     <>
@@ -43,7 +48,7 @@ export default function Contractors() {
             </tr>
           </thead>
           <tbody>
-            {bodyTableContractors.map((contractor) => (
+            {allContractors.map((contractor) => (
               <ContractorsLine
                 key={contractor.id}
                 handleModalInfos={handleModalInfos}

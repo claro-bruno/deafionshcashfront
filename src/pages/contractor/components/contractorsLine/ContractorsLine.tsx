@@ -1,17 +1,16 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { axiosUpdateContractorStatus } from '../../../../api/contractor'
-import useFormate from '../../../../hooks/useFormate'
+import { Contractor } from '../../../../types/contractor'
 
 type ContractorsLineProps = {
-  contractor: any
-  handleModalInfos: (info: any) => void
+  contractor: Contractor
+  handleModalInfos: (info: any, src: string) => void
 }
 export default function ContractorsLine({
   contractor,
   handleModalInfos,
 }: ContractorsLineProps) {
-  const { formatPhone, formatSsnOrItin } = useFormate()
   const queryClient = useQueryClient()
   const [contractorStatus, setContractorStatus] = useState(contractor.status)
   const { mutateAsync } = useMutation(axiosUpdateContractorStatus, {
@@ -38,30 +37,38 @@ export default function ContractorsLine({
           defaultValue={contractor.status}
           onChange={(e) => setContractorStatus(e.target.value)}
         >
-          <option value="Active">Active</option>
-          <option value="Inactive">Inactive</option>
-          <option value="Pending">Pending</option>
+          <option value="ACTIVE">Active</option>
+          <option value="INACTIVE">Inactive</option>
+          <option value="PENDING">Pending</option>
         </select>
       </td>
       <td className="px-4">
         {' '}
-        {`${contractor.firstname} ${contractor.lastname}`}
+        {`${contractor.first_name} ${contractor.last_name}`}
       </td>
       <td className="px-2 my-2  h-16 flex items-start gap-2 justify-center flex-col">
-        <span className="relative left-4">
-          {formatSsnOrItin(contractor['itin/ssn/ein'].value)}
-        </span>
+        <span className="relative left-4">{contractor.identification}</span>
         <button
-          onClick={() => handleModalInfos(contractor['itin/ssn/ein'])}
+          onClick={() =>
+            handleModalInfos(
+              contractor.identification,
+              contractor.urlDocumentProof,
+            )
+          }
           className="buttonStyle1 relative left-2 text-xs py-[0.09rem] px-2"
         >
           Document img
         </button>
       </td>
-      <td className="px-4">{formatPhone(contractor.phone)}</td>
+      <td className="px-4">{contractor.telephone}</td>
       <td className="px-4">
         <button
-          onClick={() => handleModalInfos(contractor.address)}
+          onClick={() =>
+            handleModalInfos(
+              contractor.address[0],
+              contractor.urlPrimaryResidencyProof,
+            )
+          }
           className="buttonStyle1 text-xs py-[0.09rem] px-2"
         >
           Address infos

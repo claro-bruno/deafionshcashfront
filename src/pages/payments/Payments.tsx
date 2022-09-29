@@ -37,7 +37,7 @@ export default function Payments() {
     .filter(
       (item) =>
         item.month === monthName.toLowerCase() &&
-        item.year === yearName.toLowerCase(),
+        item.year === Number(yearName),
     )
     .map((item) => item.payments)
     .flat()

@@ -30,6 +30,27 @@ export type NewContractor = {
     zipcode?: string
   }
 }
+export type Contractor = {
+  acceptTerms: boolean
+  address: {}[]
+  created_at: Date
+  dob: Date
+  ein: string
+  email: string
+  first_name: string
+  fk_id_account: number
+  id: number
+  identification: string
+  last_name: string
+  middle_name: null
+  status: string
+  telephone: string
+  urlDocumentProof: string
+  urlPrimaryResidencyProof: string
+  urlProfile: string
+  urlSecondaryResidencyProof: string
+}
+
 export type EditContractor = {
   id: string
   email: string

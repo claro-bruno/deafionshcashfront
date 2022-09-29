@@ -10,6 +10,7 @@ export default function ContractorModalInfos({
   function handleClose() {
     switchModalView()
   }
+
   return (
     <>
       <Transition appear show={isModalOpen} as={Fragment}>
@@ -62,7 +63,7 @@ export default function ContractorModalInfos({
                             Zip-code:
                           </span>
 
-                          {modalInfos.zip}
+                          {modalInfos.zipcode}
                         </p>
                         <p className="flex items-center text-sm gap-1">
                           <span className="font-semibold text-lg text-gray-500">
@@ -82,7 +83,10 @@ export default function ContractorModalInfos({
                     )}
                     <img
                       className=" object-contain w-[300px] h-[300px] hover:scale-125 hover:h-[500px] ease-in duration-200"
-                      src={modalInfos.src}
+                      src={
+                        modalInfos.src ||
+                        'https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg'
+                      }
                       alt="proof address"
                     />
                   </div>

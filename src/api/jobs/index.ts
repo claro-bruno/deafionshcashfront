@@ -1,7 +1,7 @@
 import { Api } from '..'
 import { NewJob, TJob } from '../../types/job'
 
-export async function axiosGetAllJobs() {
+export async function axiosGetAllJobs(date?: { year: number; month: string }) {
   return await Api.get('job')
 }
 export async function axiosGetAllJobsById(id: number) {

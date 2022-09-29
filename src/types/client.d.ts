@@ -18,7 +18,7 @@ export type Client = {
   start: string
   end: string
   monday: boolean
-  status: string | boolean
+  status: string
   tuesday: boolean
   wednesday: boolean
   thursday: boolean

@@ -51,7 +51,7 @@ export default function PaymentsInfos(payInfos: ContractorPaymentInfos) {
         <Circle
           weight="fill"
           size={15}
-          color={payInfos.status === 'active' ? 'green' : 'gray'}
+          color={payInfos.status === 'ACTIVE' ? 'green' : 'gray'}
         />
       </th>
       <td className="tableLine min-w-[9rem]">
