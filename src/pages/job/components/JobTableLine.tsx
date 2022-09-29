@@ -3,6 +3,7 @@ import { ChangeEvent, KeyboardEvent, useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { axiosUpdateNewJob } from '../../../api/jobs'
 import { jobsContext } from '../../../context/JobContextProvider'
+import useFormate from '../../../hooks/useFormate'
 import { TJob } from '../../../types/job'
 import { DaysObj } from '../Jobs'
 
@@ -20,6 +21,7 @@ export default function JobTableLine({
     handleEditJob,
     handleSwitchModalView,
   } = useContext(jobsContext)
+  const { formatDate, formatMoney } = useFormate()
   const queryClient = useQueryClient()
   const { mutateAsync, data } = useMutation(axiosUpdateNewJob, {
     onSuccess() {
@@ -38,7 +40,10 @@ export default function JobTableLine({
     fortnightDays[0]?.dayNum === 1
       ? contractorWorkedInfos.quarters[0].appointments
       : contractorWorkedInfos.quarters[1].appointments
-  const isFirstQuarter = daysInputs[daysInputs.length - 1].date.includes('/15/')
+  const isFirstQuarter = formatDate(
+    daysInputs[daysInputs.length - 1].date,
+  ).includes('/15/')
+
   const hoursValue = isFirstQuarter
     ? contractorWorkedInfos.quarters[0].hours
     : contractorWorkedInfos.quarters[1].hours
@@ -154,8 +159,8 @@ export default function JobTableLine({
           <p className="flex justify-center py-2 gap-1">
             {daysInputs.map((day) => (
               <input
-                key={day.date}
-                name={day.date}
+                key={formatDate(day.date)}
+                name={formatDate(day.date)}
                 value={day.value}
                 onChange={handleChange}
                 onKeyUp={handleKeyPress}
@@ -179,7 +184,7 @@ export default function JobTableLine({
           value={pHourValue}
         />
       </td>
-      <td>$ {pHourValue * hoursValue}</td>
+      <td>{formatMoney(pHourValue * hoursValue)}</td>
 
       <td className=" flex gap-1">
         <button

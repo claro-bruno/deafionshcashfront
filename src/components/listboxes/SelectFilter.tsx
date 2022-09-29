@@ -14,7 +14,19 @@ export default function SelectFilter({
   listCSS?: string
   selectedIcon?: boolean
 }) {
-  const [selected, setSelected] = useState(selectOptions[0])
+  function setSelectedOptions() {
+    const currentDate = new Date()
+    if (selectOptions.length === 12) {
+      const currentMonthNumber = currentDate.getMonth()
+      return selectOptions[currentMonthNumber]
+    }
+    if (selectOptions.length === 5) {
+      const currentYear = currentDate.getFullYear()
+      return selectOptions.filter((y) => Number(y.name) === currentYear)[0]
+    }
+    return selectOptions[0]
+  }
+  const [selected, setSelected] = useState(setSelectedOptions())
   useEffect(() => {
     setFilter && setFilter(selected.name)
   }, [selected])

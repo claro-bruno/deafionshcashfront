@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { axiosUpdateContractorStatus } from '../../../../api/contractor'
 import { Contractor } from '../../../../types/contractor'
 
@@ -43,7 +44,9 @@ export default function ContractorsLine({
       </td>
       <td className="px-4">
         {' '}
-        {`${contractor.first_name} ${contractor.last_name}`}
+        <Link to={`/contractors/${contractor.id}`}>
+          {`${contractor.first_name} ${contractor.last_name}`}
+        </Link>
       </td>
       <td className="px-2 my-2  h-16 flex items-start gap-2 justify-center flex-col">
         <span className="relative left-4">{contractor.identification}</span>

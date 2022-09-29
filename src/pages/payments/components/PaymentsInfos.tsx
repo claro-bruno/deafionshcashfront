@@ -62,7 +62,7 @@ export default function PaymentsInfos(payInfos: ContractorPaymentInfos) {
       {payInfos.payments.map((payment, i) => (
         <>
           <td className="tableLine min-w-[7rem]">
-            $ {formatMoney(Number(payment.value))}
+            {formatMoney(Number(payment.value))}
           </td>
           <td className="tableLine">
             <select

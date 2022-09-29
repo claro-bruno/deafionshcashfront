@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import React, {
+import {
   createContext,
   PropsWithChildren,
   useEffect,
@@ -8,7 +8,6 @@ import React, {
 } from 'react'
 import { axiosGetAllJobs } from '../api/jobs'
 import useModal from '../hooks/useModal'
-import { jobsATT } from '../pages/job/constants'
 import { TJob } from '../types/job'
 
 interface JobContext {
@@ -26,15 +25,13 @@ export const jobsContext = createContext({} as JobContext)
 export default function JobContextProvider(props: PropsWithChildren) {
   const [jobToEdit, setJobToEdit] = useState<TJob>({} as TJob)
   const [currentInputJobValue, setCurrentInputJobValue] = useState('0')
-  const [jobs, setJobs] = useState<TJob[]>(jobsATT as TJob[])
+  const [jobs, setJobs] = useState<TJob[]>([])
   const { switchModalView, isModalOpen } = useModal()
   const { data } = useQuery<any>(['jobs'], axiosGetAllJobs)
 
   useEffect(() => {
     if (data) {
-      console.log(data)
-      /* setar o que vem da api
-      setJobs(data.data) */
+      setJobs(data.data)
     }
   }, [data])
 
@@ -59,7 +56,6 @@ export default function JobContextProvider(props: PropsWithChildren) {
       handleEditJob,
       currentInputJobValue,
       handleCurrentInputJobValue,
-      handleSwitchModalView,
       isModalOpen,
       handleSetJobs,
       jobs,
@@ -68,7 +64,7 @@ export default function JobContextProvider(props: PropsWithChildren) {
   )
 
   return (
-    <jobsContext.Provider value={valueToProvide}>
+    <jobsContext.Provider value={{ ...valueToProvide, handleSwitchModalView }}>
       {props.children}
     </jobsContext.Provider>
   )

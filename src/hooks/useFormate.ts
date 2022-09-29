@@ -1,6 +1,15 @@
 export default function useFormate() {
   function formatMoney(payload: number) {
-    return payload.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+    const priceFormatter = new Intl.NumberFormat('USD', {
+      style: 'currency',
+      currency: 'USD',
+    })
+    return priceFormatter.format(payload)
+  }
+  function formatDate(payload: string) {
+    const date = new Date(payload)
+    const dateFormatter = new Intl.DateTimeFormat('US')
+    return dateFormatter.format(date)
   }
   function formatPhone(payload: string) {
     return payload
@@ -36,5 +45,6 @@ export default function useFormate() {
     formatEIN,
     formatZipCode,
     removeEmptyValuesFromObj,
+    formatDate,
   }
 }

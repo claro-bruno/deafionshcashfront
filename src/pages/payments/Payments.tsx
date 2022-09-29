@@ -122,14 +122,14 @@ export default function Payments() {
           </h1>
           <article className="flex flex-col gap-8 relative bottom-6 right-4 mt-8">
             <div className="bg-gray-50 shadow-md flex items-center gap-2 flex-col rounded h-20 w-[10vw] py-2">
-              Forthnight 1<strong className="">$ {fortnight1Formatted}</strong>
+              Forthnight 1<strong className=""> {fortnight1Formatted}</strong>
             </div>
             <div className="bg-gray-50 shadow-md flex items-center gap-2 flex-col rounded h-20 w-[10vw] py-2">
-              Forthnight 2<strong className="">$ {fortnight2Formatted}</strong>
+              Forthnight 2<strong className=""> {fortnight2Formatted}</strong>
             </div>
             <div className="bg-gray-50 shadow-md flex items-center gap-2 flex-col rounded h-20 w-[10vw] py-2">
               Total month
-              <strong className="">$ {totalFormatted}</strong>
+              <strong className=""> {totalFormatted}</strong>
             </div>
           </article>
         </div>
