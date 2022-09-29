@@ -44,7 +44,6 @@
     }
   ],
   "job": [
-
     {
       "id": 1,
       "clients": {
@@ -532,7 +531,7 @@
       "urlDocumentProof": "",
       "urlPrimaryResidencyProof": "",
       "urlSecondaryResidencyProof": "",
-      "status": "ACTIVE",
+      "status": "INACTIVE",
       "ein": "",
       "acceptTerms": true,
       "identification": "111-11-1111",

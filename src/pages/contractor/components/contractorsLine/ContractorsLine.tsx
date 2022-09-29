@@ -14,8 +14,7 @@ export default function ContractorsLine({
   const queryClient = useQueryClient()
   const [contractorStatus, setContractorStatus] = useState(contractor.status)
   const { mutateAsync } = useMutation(axiosUpdateContractorStatus, {
-    onSuccess: (response) => {
-      console.log(response)
+    onSuccess: () => {
       queryClient.invalidateQueries(['contractors'])
     },
     onError: (error: { response: any }) => {
@@ -23,7 +22,7 @@ export default function ContractorsLine({
     },
   })
   function handleUpdateContractor(payload: any) {
-    const contractorObj = { contractorId: payload.id, status: contractorStatus }
+    const contractorObj = { id: payload.id, status: contractorStatus }
     console.log(contractorObj)
     mutateAsync(contractorObj)
   }

@@ -14,7 +14,7 @@ export default function Contractors() {
   const [contractorInfos, setContractorInfos] = useState({})
   const { data } = useQuery([`contractors`], axiosGetAllContractors)
   const [allContractors, setAllContractors] = useState<Contractor[]>([])
-  console.log(data?.data)
+
   useEffect(() => {
     if (data?.data) {
       setAllContractors(data?.data)
