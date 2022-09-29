@@ -1,19 +1,20 @@
 import { GearSix, Plus } from 'phosphor-react'
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { useContextSelector } from 'use-context-selector'
 import Header from '../../components/header/Header'
 import SelectFilter from '../../components/listboxes/SelectFilter'
-import NewJob from './components/NewJob'
 import { jobsContext } from '../../context/JobContextProvider'
-import { useParams } from 'react-router-dom'
-import JobTableLine from './components/JobTableLine'
-import { useDateFilter } from '../../hooks/useDateFIlter'
-import { headerTableJobs } from '../../helpers/headersTables'
 import {
   fortnightListBox,
   MONTHS,
   monthsListBox,
   yearsListBox,
 } from '../../helpers/constants'
+import { headerTableJobs } from '../../helpers/headersTables'
+import { useDateFilter } from '../../hooks/useDateFIlter'
+import JobTableLine from './components/JobTableLine'
+import NewJob from './components/NewJob'
 
 export interface DaysObj {
   dayNum: number
@@ -31,7 +32,10 @@ export default function Jobs() {
     filterContractor,
   } = useDateFilter()
   const [fortnightDays, setFortnightDays] = useState<DaysObj[]>([])
-  const { handleSwitchModalView, jobs, handleSetJobs } = useContext(jobsContext)
+  const { handleSwitchModalView, jobs, handleSetJobs } = useContextSelector(
+    jobsContext,
+    (context) => context,
+  )
   const { id } = useParams()
   /* console.log(id) */
   function formatFortnightDays(quarter: string) {

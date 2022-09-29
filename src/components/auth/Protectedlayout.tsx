@@ -1,5 +1,6 @@
 import { useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useContextSelector } from 'use-context-selector'
 import { AuthContext } from '../../context/AuthProvider'
 import { getUserFromLocalStorage } from '../../context/AuthProvider/utils'
 
@@ -8,7 +9,10 @@ export default function ProtectedLayout({
 }: {
   children: JSX.Element
 }) {
-  const { token, access, saveUser } = useContext(AuthContext)
+  const { token, access, saveUser } = useContextSelector(
+    AuthContext,
+    (context) => context,
+  )
   const navigate = useNavigate()
 
   useEffect(() => {

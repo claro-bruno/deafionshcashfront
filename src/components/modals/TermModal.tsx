@@ -1,9 +1,10 @@
-import { ChangeEvent, Fragment, useContext, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { WarningCircle } from 'phosphor-react'
+import { ChangeEvent, Fragment, useState } from 'react'
+import { useContextSelector } from 'use-context-selector'
+import { AuthContext } from '../../context/AuthProvider'
 import { ModalProps } from '../../types/modal'
 import './modal.css'
-import { AuthContext } from '../../context/AuthProvider'
 
 type TermModalProps = ModalProps & { title: string; pdfUrl: string }
 export default function TermModal({
@@ -13,7 +14,7 @@ export default function TermModal({
   switchModalView,
 }: TermModalProps) {
   const [isChecked, setIsChecked] = useState(false)
-  const { access } = useContext(AuthContext)
+  const { access } = useContextSelector(AuthContext, (context) => context)
   function handleCheckboxChange(e: ChangeEvent<HTMLInputElement>) {
     setIsChecked(e.target.checked)
   }

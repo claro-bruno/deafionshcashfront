@@ -5,10 +5,10 @@ import {
   CurrencyDollar,
   SuitcaseSimple,
   Ticket,
-  UserList,
+  UserList
 } from 'phosphor-react'
-import { useContext } from 'react'
 import { NavLink } from 'react-router-dom'
+import { useContextSelector } from 'use-context-selector'
 import Header from '../../components/header/Header'
 import { AuthContext } from '../../context/AuthProvider'
 import useModal from '../../hooks/useModal'
@@ -16,7 +16,7 @@ import ChangeModalPassword from './components/ChangeModalPassword'
 import './home.css'
 
 export default function Home() {
-  const { access } = useContext(AuthContext)
+  const access = useContextSelector(AuthContext, (context) => context.access)
   const { isModalOpen, switchModalView } = useModal()
   return (
     <div className="flex  flex-col">

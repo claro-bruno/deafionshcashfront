@@ -1,11 +1,15 @@
 import { SignOut } from 'phosphor-react'
-import { PropsWithChildren, useContext } from 'react'
+import { PropsWithChildren } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
+import { useContextSelector } from 'use-context-selector'
 import { AuthContext } from '../../context/AuthProvider'
 import './header.css'
 export default function Header(props: PropsWithChildren) {
   const navigate = useNavigate()
-  const { logout, access } = useContext(AuthContext)
+  const { logout, access } = useContextSelector(
+    AuthContext,
+    (context) => context,
+  )
 
   function handleLogout() {
     logout()

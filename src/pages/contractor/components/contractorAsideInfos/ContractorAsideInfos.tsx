@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import { useContextSelector } from 'use-context-selector'
 import { AuthContext } from '../../../../context/AuthProvider'
 import { articleInfos } from '../../../../helpers/constants'
 import useFormate from '../../../../hooks/useFormate'
@@ -18,7 +18,7 @@ export default function ContractorAsideInfos({
   visibilityWorkedInfos,
 }: ContractorAsideInfosProps) {
   const { formatMoney } = useFormate()
-  const { access } = useContext(AuthContext)
+  const access = useContextSelector(AuthContext, (context) => context.access)
 
   function contractorPayment(payment: string, multiplier: number = 1) {
     return formatMoney(Number(payment) * multiplier)

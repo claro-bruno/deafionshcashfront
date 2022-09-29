@@ -1,4 +1,5 @@
-import React, { createContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { createContext } from 'use-context-selector'
 import { axiosLogin } from '../../api/login'
 import { IAuthContext, AuthProviderType, User } from '../../types/authProvider'
 import {

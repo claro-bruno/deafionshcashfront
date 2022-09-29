@@ -1,19 +1,20 @@
 import { useQuery } from '@tanstack/react-query'
 import { Circle, Plus } from 'phosphor-react'
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { useContextSelector } from 'use-context-selector'
 import { axiosGetAllClients } from '../../api/client'
 import Header from '../../components/header/Header'
 import { AuthContext } from '../../context/AuthProvider'
 import { headerTableClients } from '../../helpers/headersTables'
 import useModal from '../../hooks/useModal'
-import SetClientModal from './components/SetClientModal'
 import { Client } from '../../types/client'
+import SetClientModal from './components/SetClientModal'
 
 export default function ClientPage() {
   const { name } = useParams()
   const [filterClient, setFilterClient] = useState(name ?? '')
-  const { access } = useContext(AuthContext)
+  const access = useContextSelector(AuthContext, (context) => context.access)
   const { switchModalView, isModalOpen } = useModal()
   const [clients, setClients] = useState<Client[] | []>([])
   const { data } = useQuery(['clients'], axiosGetAllClients)

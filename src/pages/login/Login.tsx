@@ -1,7 +1,8 @@
 import { useMutation } from '@tanstack/react-query'
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
+import { useContextSelector } from 'use-context-selector'
 import AlertModal from '../../components/modals/AlertModal'
 import { AuthContext } from '../../context/AuthProvider'
 import useModal from '../../hooks/useModal'
@@ -15,7 +16,7 @@ export default function Login() {
   const [response, setResponse] = useState<any>({})
   const { isModalOpen, switchModalView } = useModal()
   const { authenticate, saveUser, checkUserInLocalStorage } =
-    useContext(AuthContext)
+    useContextSelector(AuthContext, (context) => context)
   const { register, handleSubmit, watch } = useForm<UserLogin>({
     defaultValues: {
       username: '',

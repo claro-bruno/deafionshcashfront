@@ -1,11 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
-import {
-  createContext,
-  PropsWithChildren,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react'
+import { PropsWithChildren, useEffect, useMemo, useState } from 'react'
+import { createContext } from 'use-context-selector'
 import { axiosGetAllJobs } from '../api/jobs'
 import useModal from '../hooks/useModal'
 import { TJob } from '../types/job'

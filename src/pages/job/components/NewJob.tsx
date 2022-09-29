@@ -1,7 +1,8 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { Fragment, useContext, useState } from 'react'
+import { Fragment, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useContextSelector } from 'use-context-selector'
 import { axiosGetAllClients } from '../../../api/client'
 import { axiosGetAllContractors } from '../../../api/contractor'
 import { axiosCreateNewJob } from '../../../api/jobs'
@@ -16,7 +17,7 @@ type NewJobProps = {
 
 export default function NewJob({ tableDate }: NewJobProps) {
   const { jobToEdit, handleSwitchModalView, isModalOpen, jobs, handleSetJobs } =
-    useContext(jobsContext)
+    useContextSelector(jobsContext, (context) => context)
   const newJob = useForm({
     defaultValues: {
       contractor: '',

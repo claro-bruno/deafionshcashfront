@@ -1,13 +1,14 @@
-import React, { useContext, useState } from 'react'
-import Header from '../../components/header/Header'
+import { File } from 'phosphor-react'
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useContextSelector } from 'use-context-selector'
 import AntiBriberyandCorruption from '../../assets/AntiBriberyandCorruption.pdf'
 import CodeofConduct from '../../assets/CodeofConduct.pdf'
 import CodeofEthicalBehavior from '../../assets/CodeofEthicalBehavior.pdf'
+import Header from '../../components/header/Header'
 import TermModal from '../../components/modals/TermModal'
-import { File } from 'phosphor-react'
-import { useNavigate } from 'react-router-dom'
-import useModal from '../../hooks/useModal'
 import { AuthContext } from '../../context/AuthProvider'
+import useModal from '../../hooks/useModal'
 
 export default function Terms() {
   const { switchModalView, isModalOpen } = useModal()
@@ -21,7 +22,7 @@ export default function Terms() {
     codeofConduct: false,
     codeofEthicalBehavior: false,
   })
-  const { access } = useContext(AuthContext)
+  const access = useContextSelector(AuthContext, (context) => context.access)
   const IsAllTermsChecked =
     !isChecked.antiBrbery ||
     !isChecked.codeofConduct ||

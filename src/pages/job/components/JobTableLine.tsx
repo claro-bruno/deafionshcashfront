@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { ChangeEvent, KeyboardEvent, useContext, useState } from 'react'
+import { ChangeEvent, KeyboardEvent, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useContextSelector } from 'use-context-selector'
 import { axiosUpdateNewJob } from '../../../api/jobs'
 import { jobsContext } from '../../../context/JobContextProvider'
 import useFormate from '../../../hooks/useFormate'
@@ -20,7 +21,7 @@ export default function JobTableLine({
     currentInputJobValue,
     handleEditJob,
     handleSwitchModalView,
-  } = useContext(jobsContext)
+  } = useContextSelector(jobsContext, (context) => context)
   const { formatDate, formatMoney } = useFormate()
   const queryClient = useQueryClient()
   const { mutateAsync, data } = useMutation(axiosUpdateNewJob, {
