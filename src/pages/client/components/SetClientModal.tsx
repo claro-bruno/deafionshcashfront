@@ -1,11 +1,10 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { FormEvent, Fragment, useState } from 'react'
+import { FormEvent, Fragment } from 'react'
 import { axiosCreateClient, axiosUpdateClient } from '../../../api/client'
 import '../../../components/modals/modal.css'
 import { WEEKDAYS } from '../../../helpers/constants'
 import useHandleChange from '../../../hooks/useHandleChange'
-import { Client } from '../../../types/client'
 import { ModalProps } from '../../../types/modal'
 
 export default function SetClientModal({
@@ -14,14 +13,13 @@ export default function SetClientModal({
   modalInfos,
 }: ModalProps) {
   const isEditMode = 'id' in modalInfos
-  const [response, setResponse] = useState<any>({})
   const queryClient = useQueryClient()
   const INITIAL_MODAL_CLIENT_STATES = {
     name: '',
     start: '',
     end: '',
     monday: false,
-    status: true,
+    status: 'ACTIVE',
     tuesday: false,
     wednesday: false,
     thursday: false,
@@ -34,10 +32,8 @@ export default function SetClientModal({
     INITIAL_MODAL_CLIENT_STATES,
   )
 
-  const { mutateAsync, data } = useMutation(axiosCreateClient, {
+  const { mutateAsync } = useMutation(axiosCreateClient, {
     onSuccess: () => {
-      setResponse(data)
-
       queryClient.invalidateQueries(['clients'])
     },
     onError: (error) => {
@@ -45,19 +41,14 @@ export default function SetClientModal({
     },
   })
 
-  const { mutateAsync: updateMutateAsync, data: updateData } = useMutation(
-    axiosUpdateClient,
-    {
-      onSuccess: () => {
-        setResponse(updateData)
-
-        queryClient.invalidateQueries(['clients'])
-      },
-      onError: (error) => {
-        console.log(error)
-      },
+  const { mutateAsync: updateMutateAsync } = useMutation(axiosUpdateClient, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['clients'])
     },
-  )
+    onError: (error) => {
+      console.log(error)
+    },
+  })
   function handleSubmitClient(e: FormEvent<EventTarget>) {
     e.preventDefault()
     const payload = {
@@ -99,7 +90,7 @@ export default function SetClientModal({
         clientState.sunday === false && isEditMode
           ? modalInfos.sunday
           : clientState.sunday,
-      status: true,
+      status: 'ACTIVE',
     }
     console.log(payload, isEditMode)
     e.preventDefault()

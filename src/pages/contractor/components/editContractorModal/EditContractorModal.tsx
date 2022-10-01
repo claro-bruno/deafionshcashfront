@@ -22,10 +22,12 @@ export default function EditContractorModal({
   const { state, handleChange } = useHandleChange<EditContractor>({
     id: modalInfos.id ?? '',
     email: modalInfos.email ?? '',
-    phone: modalInfos.phone ?? '',
-    ssnOrItin: modalInfos.ssnOrItin ?? '',
+    telephone: modalInfos.telephone ?? '',
+    identification: modalInfos.identification ?? '',
   })
   const queryClient = useQueryClient()
+  console.log(state)
+
   const { mutateAsync, data } = useMutation(
     (payload: [EditContractor, InputsFiles]) =>
       axiosUpdateContractor(payload[0], payload[1]),
@@ -36,8 +38,6 @@ export default function EditContractorModal({
       },
     },
   )
-
-  console.log(modalInfos)
 
   function handleClose() {
     switchModalView()
@@ -92,12 +92,17 @@ export default function EditContractorModal({
                   >
                     <label className="flex  flex-col gap-4 items-center">
                       <img
-                        className="h-[8rem] w-[8rem] rounded-md"
-                        src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                        className="max-h-[20rem] max-w-[20rem] rounded-md object-contain"
+                        src={
+                          modalInfos.urlProfile ??
+                          'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+                        }
                         alt="profile "
                       />
                     </label>
-                    <h2>Active</h2>
+                    <h2 className="lowercase first-letter:uppercase">
+                      {modalInfos.status}
+                    </h2>
                     <div className="flex gap-4">
                       <label className="labelsDefault">
                         Email:
@@ -106,7 +111,7 @@ export default function EditContractorModal({
                           className="inputsDefault"
                           name="email"
                           type="text"
-                          value={state.email}
+                          defaultValue={modalInfos.email}
                         />
                       </label>
                       <label className="labelsDefault">
@@ -118,7 +123,7 @@ export default function EditContractorModal({
                           name="phone"
                           inputMode="numeric"
                           maxLength={11}
-                          value={formatPhone(state.phone)}
+                          defaultValue={modalInfos.telephone}
                         />
                       </label>
                       <label className="labelsDefault">
@@ -132,7 +137,7 @@ export default function EditContractorModal({
                           onChange={handleChange}
                           name="ssnOrItin"
                           inputMode="numeric"
-                          value={formatSsnOrItin(state.ssnOrItin)}
+                          defaultValue={modalInfos.identification}
                         />
                       </label>
                     </div>

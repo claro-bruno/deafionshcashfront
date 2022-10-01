@@ -1,14 +1,19 @@
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useContextSelector } from 'use-context-selector'
 import { axiosGetContractorsById } from '../../api/contractor'
 import { axiosGetAllJobsById } from '../../api/jobs'
 import Header from '../../components/header/Header'
 import SelectFilter from '../../components/listboxes/SelectFilter'
+import { AuthContext } from '../../context/AuthProvider'
 import { monthsListBox, yearsListBox } from '../../helpers/constants'
 import { headerTableContractor } from '../../helpers/headersTables'
 import useModal from '../../hooks/useModal'
-import { ContractorWorkedInfo } from '../../types/contractor'
+import {
+  Contractor as ContractorType,
+  ContractorWorkedInfo,
+} from '../../types/contractor'
 import CardContractor from './components/cardContractor/CardContractor'
 import ContractorAsideInfos from './components/contractorAsideInfos/ContractorAsideInfos'
 import EditContractorModal from './components/editContractorModal/EditContractorModal'
@@ -27,8 +32,15 @@ const INITIAL_VISIBILITY_WORKED_INFOS = {
   total: false,
 }
 export default function Contractor() {
-  const { id } = useParams()
-  console.log(id)
+  const id = useContextSelector(AuthContext, (context) => context.contractor_id)
+  const { id: urlId } = useParams()
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (id !== urlId) {
+      navigate(`/contractors/${id}`)
+    }
+  }, [urlId, id])
+
   const { switchModalView, isModalOpen } = useModal()
   const [filterCompany, setFilterCompany] = useState('')
   const [monthName, setMonthName] = useState('')
@@ -36,25 +48,28 @@ export default function Contractor() {
   const [visibilityWorkedInfos, setVisibilityWorkedInfos] = useState(
     INITIAL_VISIBILITY_WORKED_INFOS,
   )
-  const [contractor, setContractor] = useState({})
+  const [contractor, setContractor] = useState<ContractorType>(
+    {} as ContractorType,
+  )
   const [contractorJobs, setContractorJobs] = useState([])
   const { data } = useQuery(['contractor', id], () => {
-    axiosGetContractorsById(Number(id))
+    return axiosGetContractorsById(Number(id))
   })
-
-  console.log(data, contractor, contractorJobs)
 
   const { data: jobs } = useQuery(['contractorJobs', id], () => {
     axiosGetAllJobsById(Number(id))
   })
+
   useEffect(() => {
     if (data) {
-      setContractor(data)
+      setContractor(data.data)
     }
     if (jobs) {
       setContractorJobs(jobs)
     }
   }, [data, jobs])
+
+  console.log(contractorJobs)
   const paymentsArray = bodyTableContractor.map((item) => {
     if (tableFilters(item)) {
       return (Number(item.hourlyPay) * Number(item.workedHours)).toFixed(2)
@@ -92,8 +107,6 @@ export default function Contractor() {
     return filterByClient && filterByDate
   }
 
-  console.log('renderizou')
-
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
       <Header>
@@ -114,7 +127,10 @@ export default function Contractor() {
         </div>
       </Header>
       <main className="flex flex-col">
-        <CardContractor setIsModalOpen={() => switchModalView()} />
+        <CardContractor
+          contractor={contractor}
+          setIsModalOpen={() => switchModalView()}
+        />
         <div className="tableContainer relative left-2 flex gap-4 w-[75%] max-h-[80vh] overflow-auto">
           <table className="table">
             <thead className="tableHead">

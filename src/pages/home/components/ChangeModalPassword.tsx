@@ -4,6 +4,8 @@ import { ModalProps } from '../../../types/modal'
 import useHandleChange from '../../../hooks/useHandleChange'
 import { useMutation } from '@tanstack/react-query'
 import { axiosUpdateContractorPassword } from '../../../api/contractor'
+import { useContextSelector } from 'use-context-selector'
+import { AuthContext } from '../../../context/AuthProvider'
 
 const INITIAL_INPUTS_STATE = {
   password: '',
@@ -14,13 +16,17 @@ export default function ChangeModalPassword({
   switchModalView,
 }: ModalProps) {
   const { state: input, handleChange } = useHandleChange(INITIAL_INPUTS_STATE)
+  const id = useContextSelector(
+    AuthContext,
+    (context) => context.contractor_id,
+  )!
   const { mutateAsync, isLoading, isSuccess } = useMutation(
     axiosUpdateContractorPassword,
     {
       onSuccess() {
-        setInterval(() => {
+        setTimeout(() => {
           switchModalView()
-        }, 1500)
+        }, 1200)
       },
     },
   )
@@ -65,11 +71,13 @@ export default function ChangeModalPassword({
       return stateObj
     })
   }
+  console.log(id)
+
   function handleSubmitNewPassword(e: FormEvent<EventTarget>) {
     e.preventDefault()
     const payload = {
       password: input.password,
-      id: 1,
+      id,
     }
     mutateAsync(payload)
   }
@@ -164,10 +172,9 @@ export default function ChangeModalPassword({
 
                     <div className="pt-7 flex justify-evenly">
                       <button
-                        disabled={isLoading}
+                        disabled={error.confirmPassword !== '' || isLoading}
                         type="submit"
                         className="px-3 buttonStyle1 self-center"
-                        onClick={switchModalView}
                       >
                         Confirm
                       </button>

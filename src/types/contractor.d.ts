@@ -54,8 +54,8 @@ export type Contractor = {
 export type EditContractor = {
   id: string
   email: string
-  phone: string
-  ssnOrItin: string
+  telephone: string
+  identification: string
 }
 
 export type InputsFiles = {

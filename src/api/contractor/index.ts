@@ -83,9 +83,6 @@ export async function axiosGetAllContractors() {
 export async function axiosGetContractorsById(id: number) {
   return await Api.get(`contractor/${id}`)
 }
-export async function axiosGetContractorJobsById(id: number) {
-  return await Api.get(`contractor/${id}`)
-}
 export async function axiosUpdateContractorStatus(payload: any) {
   return await Api.patch(`contractor/${payload.id}`, JSON.stringify(payload), {
     headers: {

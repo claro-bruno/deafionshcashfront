@@ -25,8 +25,12 @@ export function AuthProvider({ children }: AuthProviderType) {
   }, [])
 
   function saveUser(user: User) {
-    const payload = { token: user?.token, access: user?.access }
-    setUser(payload)
+    const payload = {
+      token: user.token,
+      access: user.access,
+      contractor_id: user.contractor_id,
+    }
+    setUser(user)
     setUserToLocalStorage(payload)
   }
 
@@ -41,6 +45,7 @@ export function AuthProvider({ children }: AuthProviderType) {
     setUser(null)
     removeUserFromLocalStorage()
   }
+
   const valueToProvide = {
     ...user,
     authenticate,

@@ -6,6 +6,7 @@ import { useContextSelector } from 'use-context-selector'
 import AlertModal from '../../components/modals/AlertModal'
 import { AuthContext } from '../../context/AuthProvider'
 import useModal from '../../hooks/useModal'
+import Logo from '../../assets/globalLogo.png'
 
 export type UserLogin = {
   username: string
@@ -37,7 +38,6 @@ export default function Login() {
     (payload: UserLogin) => authenticate(payload.username, payload.password),
     {
       onSuccess: (response) => {
-        console.log(response)
         saveUser(response.data)
         navigate('/home')
       },
@@ -71,7 +71,7 @@ export default function Login() {
         <div className="flex items-center mt-3  gap-2 flex-col">
           <img
             className="h-[12rem] object-contain"
-            src="https://www.globaljanitorialservices.com/assets/images/resources/welcome-two-small-img.png"
+            src={Logo}
             alt="globaljanitorialservices logo"
           />
           <form

@@ -6,7 +6,7 @@ export const bodyTable = [
       id: 5,
     },
     status: 'ACTIVE',
-    month: 'january',
+    month: 'september',
     year: 2022,
     payments: [
       {
@@ -30,7 +30,7 @@ export const bodyTable = [
       id: 51,
     },
     status: 'ACTIVE',
-    month: 'january',
+    month: 'september',
     year: 2022,
     payments: [
       {
@@ -102,7 +102,7 @@ export const bodyTable = [
       id: 54,
     },
     status: 'INACTIVE',
-    month: 'january',
+    month: 'september',
     year: 2022,
     payments: [
       {
@@ -126,7 +126,7 @@ export const bodyTable = [
       id: 55,
     },
     status: 'INACTIVE',
-    month: 'january',
+    month: 'september',
     year: 2022,
     payments: [
       {
@@ -174,7 +174,7 @@ export const bodyTable = [
       id: 57,
     },
     status: 'ACTIVE',
-    month: 'january',
+    month: 'september',
     year: 2022,
     payments: [
       {
