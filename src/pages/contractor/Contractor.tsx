@@ -9,6 +9,7 @@ import SelectFilter from '../../components/listboxes/SelectFilter'
 import { AuthContext } from '../../context/AuthProvider'
 import { monthsListBox, yearsListBox } from '../../helpers/constants'
 import { headerTableContractor } from '../../helpers/headersTables'
+import { useDateFilter } from '../../hooks/useDateFIlter'
 import useModal from '../../hooks/useModal'
 import {
   Contractor as ContractorType,
@@ -46,8 +47,7 @@ export default function Contractor() {
 
   const { switchModalView, isModalOpen } = useModal()
   const [filterCompany, setFilterCompany] = useState('')
-  const [monthName, setMonthName] = useState('')
-  const [yearName, setYearName] = useState('2022')
+  const { monthName, setMonthName, setYearName } = useDateFilter()
   const [visibilityWorkedInfos, setVisibilityWorkedInfos] = useState(
     INITIAL_VISIBILITY_WORKED_INFOS,
   )
@@ -134,6 +134,7 @@ export default function Contractor() {
           contractor={contractor}
           setIsModalOpen={() => switchModalView()}
         />
+
         <div className="tableContainer relative left-2 flex gap-4 w-[75%] max-h-[80vh] overflow-auto">
           <table className="table">
             <thead className="tableHead">

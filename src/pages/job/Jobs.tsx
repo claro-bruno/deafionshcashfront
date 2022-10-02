@@ -59,7 +59,7 @@ export default function Jobs() {
           })),
         })),
       }))
-      console.log(jobFormatted)
+      console.log(jobFormatted, data.data)
 
       handleSetJobs(jobFormatted)
     }

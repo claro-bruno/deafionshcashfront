@@ -1,5 +1,7 @@
 import { Circle, Envelope, PencilSimpleLine, Phone } from 'phosphor-react'
 import React, { useEffect, useState } from 'react'
+import { useContextSelector } from 'use-context-selector'
+import { AuthContext } from '../../../../context/AuthProvider'
 import { Contractor } from '../../../../types/contractor'
 
 export default function CardContractor({
@@ -10,6 +12,7 @@ export default function CardContractor({
   contractor: Contractor
 }) {
   const [status, setStatus] = useState({ name: '', color: '' })
+  const access = useContextSelector(AuthContext, (context) => context.access)
   function checkContractorStatus() {
     if (contractor?.status === 'ACTIVE') {
       setStatus({ name: 'Active', color: 'green' })
@@ -44,7 +47,8 @@ export default function CardContractor({
             {`${contractor.first_name} ${contractor.last_name}`}
           </span>
           <span className="contractorCardInfos">
-            <Envelope weight="fill" />${contractor.email}
+            <Envelope weight="fill" />
+            {contractor.email}
           </span>
           <span className="contractorCardInfos">
             <Phone weight="fill" />
@@ -52,13 +56,15 @@ export default function CardContractor({
           </span>
         </div>
       </div>
-      <button
-        type="button"
-        onClick={setIsModalOpen}
-        className="px-4 contractorBtns  buttonStyle2"
-      >
-        Edit
-      </button>
+      {access === 'ADMIN' && (
+        <button
+          type="button"
+          onClick={setIsModalOpen}
+          className="px-4 contractorBtns  buttonStyle2"
+        >
+          Edit
+        </button>
+      )}
     </div>
   )
 }

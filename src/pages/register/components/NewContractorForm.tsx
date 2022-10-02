@@ -111,7 +111,7 @@ export default function NewContractorForm() {
                 />
               </label>
               <label className="labelsDefault ">
-                <div className="flex items-start">Photo</div>
+                <div className="flex items-start">Profile Image</div>
 
                 <input
                   accept="image/*"

@@ -113,7 +113,6 @@ export default function JobTableLine({
   function getDayByDate(date: string) {
     const day = new Date(date)
     const weekdayName = day.toLocaleString('en-us', { weekday: 'narrow' })
-
     return weekdayName
   }
 

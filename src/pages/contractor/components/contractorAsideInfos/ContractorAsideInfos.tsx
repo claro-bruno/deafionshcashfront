@@ -1,5 +1,3 @@
-import { useContextSelector } from 'use-context-selector'
-import { AuthContext } from '../../../../context/AuthProvider'
 import { articleInfos } from '../../../../helpers/constants'
 import useFormate from '../../../../hooks/useFormate'
 import { VisibilityWorkedInfos } from '../../Contractor'
@@ -18,7 +16,6 @@ export default function ContractorAsideInfos({
   visibilityWorkedInfos,
 }: ContractorAsideInfosProps) {
   const { formatMoney } = useFormate()
-  const access = useContextSelector(AuthContext, (context) => context.access)
 
   function contractorPayment(payment: string, multiplier: number = 1) {
     return formatMoney(Number(payment) * multiplier)
@@ -30,41 +27,39 @@ export default function ContractorAsideInfos({
 
   return (
     <article className="w-[24%] mx-2 flex flex-col fixed right-0 gap-8 items-center">
-      {access === 'ADMIN' && (
-        <div className="flex w-[95%] relative left-7 justify-between">
-          <button
-            onClick={() =>
-              handleVisibilityWorkedInfos({
-                quinzena1: !visibilityWorkedInfos.quinzena1,
-              })
-            }
-            className="px-2 contractorBtns buttonStyle1"
-          >
-            fortnight 1{' '}
-          </button>
-          <button
-            onClick={() =>
-              handleVisibilityWorkedInfos({
-                quinzena2: !visibilityWorkedInfos.quinzena2,
-              })
-            }
-            className="px-2 contractorBtns buttonStyle1"
-          >
-            fortnight 2
-          </button>
-          <button
-            disabled={!visibilityWorkedInfos.quinzena2}
-            onClick={() =>
-              handleVisibilityWorkedInfos({
-                total: !visibilityWorkedInfos.total,
-              })
-            }
-            className="px-2 contractorBtns buttonStyle1"
-          >
-            Total month
-          </button>
-        </div>
-      )}
+      <div className="flex w-[95%] relative left-7 justify-between">
+        <button
+          onClick={() =>
+            handleVisibilityWorkedInfos({
+              quinzena1: !visibilityWorkedInfos.quinzena1,
+            })
+          }
+          className="px-2 contractorBtns buttonStyle1"
+        >
+          fortnight 1{' '}
+        </button>
+        <button
+          onClick={() =>
+            handleVisibilityWorkedInfos({
+              quinzena2: !visibilityWorkedInfos.quinzena2,
+            })
+          }
+          className="px-2 contractorBtns buttonStyle1"
+        >
+          fortnight 2
+        </button>
+        <button
+          disabled={!visibilityWorkedInfos.quinzena2}
+          onClick={() =>
+            handleVisibilityWorkedInfos({
+              total: !visibilityWorkedInfos.total,
+            })
+          }
+          className="px-2 contractorBtns buttonStyle1"
+        >
+          Total month
+        </button>
+      </div>
       {articleInfos.map((section) => (
         <div
           key={section}
@@ -76,7 +71,7 @@ export default function ContractorAsideInfos({
               <div className="flex flex-col gap-1">
                 <span className="text-sm">Fortnight 1</span>
                 {section === 'Payment'
-                  ? ` $ ${contractorPayment(payment, 0.7)}`
+                  ? ` ${contractorPayment(payment, 0.7)}`
                   : `${contractorWorkedHours(workedHours, 0.7)} h`}
               </div>
             )}
@@ -84,7 +79,7 @@ export default function ContractorAsideInfos({
               <div className="flex flex-col gap-1">
                 <span className="text-sm">Fortnight 2</span>
                 {section === 'Payment'
-                  ? ` $ ${contractorPayment(payment, 0.3)}`
+                  ? ` ${contractorPayment(payment, 0.3)}`
                   : `${contractorWorkedHours(workedHours, 0.3)} h`}
               </div>
             )}
@@ -92,7 +87,7 @@ export default function ContractorAsideInfos({
               <div className="flex flex-col gap-1">
                 <span className="text-sm">Total</span>
                 {section === 'Payment'
-                  ? ` $ ${contractorPayment(payment)}`
+                  ? `  ${contractorPayment(payment)}`
                   : `${contractorWorkedHours(workedHours)} h`}
               </div>
             )}

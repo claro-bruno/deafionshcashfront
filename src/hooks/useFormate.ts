@@ -8,7 +8,11 @@ export default function useFormate() {
   }
   function formatDate(payload: string) {
     const date = new Date(payload)
-    const dateFormatter = new Intl.DateTimeFormat('US')
+    const dateFormatter = new Intl.DateTimeFormat('en-US', {
+      month: '2-digit',
+      day: '2-digit',
+      year: 'numeric',
+    })
     return dateFormatter.format(date)
   }
   function formatPhone(payload: string) {
