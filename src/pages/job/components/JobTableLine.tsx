@@ -22,7 +22,7 @@ export default function JobTableLine({
     handleEditJob,
     handleSwitchModalView,
   } = useContextSelector(jobsContext, (context) => context)
-  const { formatDate, formatMoney } = useFormate()
+  const { formatMoney } = useFormate()
   const queryClient = useQueryClient()
   const { mutateAsync, data } = useMutation(axiosUpdateNewJob, {
     onSuccess() {
@@ -35,33 +35,35 @@ export default function JobTableLine({
   })
   const pHourValue =
     fortnightDays[0]?.dayNum === 1
-      ? contractorWorkedInfos.quarters[0].value_hour
-      : contractorWorkedInfos.quarters[1].value_hour
+      ? contractorWorkedInfos.quarter[0].value_hour
+      : contractorWorkedInfos.quarter[1].value_hour
   const daysInputs =
     fortnightDays[0]?.dayNum === 1
-      ? contractorWorkedInfos.quarters[0].appointments
-      : contractorWorkedInfos.quarters[1].appointments
-  const isFirstQuarter = formatDate(
-    daysInputs[daysInputs.length - 1].date,
-  ).includes('/15/')
+      ? contractorWorkedInfos.quarter[0].appointment
+      : contractorWorkedInfos.quarter[1].appointment
+
+  const isFirstQuarter = daysInputs[daysInputs.length - 1].date.includes('/15/')
 
   const hoursValue = isFirstQuarter
-    ? contractorWorkedInfos.quarters[0].hours
-    : contractorWorkedInfos.quarters[1].hours
+    ? contractorWorkedInfos.quarter[0].total_hours
+    : contractorWorkedInfos.quarter[1].total_hours
+  const totalPaymentValue = isFirstQuarter
+    ? contractorWorkedInfos.quarter[0].total
+    : contractorWorkedInfos.quarter[1].total
 
   function handleChange(
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
     options?: string,
   ) {
     const { name, value } = e.target
-    const quarter1 = contractorWorkedInfos.quarters[0]
-    const quarter2 = contractorWorkedInfos.quarters[1]
+    const quarter1 = contractorWorkedInfos.quarter[0]
+    const quarter2 = contractorWorkedInfos.quarter[1]
     handleCurrentInputJobValue(value)
-    console.log(name, value)
+    console.log(name, value, quarter1)
     if (options) {
       setContractorWorkedInfos((state) => ({
         ...state,
-        quarters: isFirstQuarter
+        quarter: isFirstQuarter
           ? [{ ...quarter1, [name]: Number(value) }, quarter2]
           : [quarter1, { ...quarter2, [name]: Number(value) }],
       }))
@@ -77,9 +79,9 @@ export default function JobTableLine({
       })
       return {
         ...state,
-        quarters: isFirstQuarter
-          ? [{ ...quarter1, appointments: handleJobArray }, quarter2]
-          : [quarter1, { ...quarter2, appointments: handleJobArray }],
+        quarter: isFirstQuarter
+          ? [{ ...quarter1, appointment: handleJobArray }, quarter2]
+          : [quarter1, { ...quarter2, appointment: handleJobArray }],
       }
     })
   }
@@ -89,8 +91,8 @@ export default function JobTableLine({
   ) {
     const { name } = e.target
     const isKeyTab = e.key === 'Tab'
-    const quarter1 = contractorWorkedInfos.quarters[0]
-    const quarter2 = contractorWorkedInfos.quarters[1]
+    const quarter1 = contractorWorkedInfos.quarter[0]
+    const quarter2 = contractorWorkedInfos.quarter[1]
     if (isKeyTab) {
       setContractorWorkedInfos((state) => {
         const handleJobArray = daysInputs.map((obj) => {
@@ -101,9 +103,9 @@ export default function JobTableLine({
         })
         return {
           ...state,
-          quarters: isFirstQuarter
-            ? [{ ...quarter1, appointments: handleJobArray }, quarter2]
-            : [quarter1, { ...quarter2, appointments: handleJobArray }],
+          quarter: isFirstQuarter
+            ? [{ ...quarter1, appointment: handleJobArray }, quarter2]
+            : [quarter1, { ...quarter2, appointment: handleJobArray }],
         }
       })
     }
@@ -118,10 +120,10 @@ export default function JobTableLine({
   function handleUpdateJob(jobInfos: TJob) {
     const jobToUpdateFormatted = {
       id: jobInfos.id,
-      month: jobInfos.quarters[0].month,
+      month: jobInfos.quarter[0].month,
       value_hour: pHourValue,
       status: jobInfos.status,
-      year: jobInfos.quarters[0].year,
+      year: jobInfos.quarter[0].year,
       quarter: isFirstQuarter ? 1 : 2,
       workedDaysInfos: daysInputs,
     }
@@ -160,8 +162,8 @@ export default function JobTableLine({
           <p className="flex justify-center py-2 gap-1">
             {daysInputs.map((day) => (
               <input
-                key={formatDate(day.date)}
-                name={formatDate(day.date)}
+                key={day.date}
+                name={day.date}
                 value={day.value}
                 onChange={handleChange}
                 onKeyUp={handleKeyPress}
@@ -185,7 +187,7 @@ export default function JobTableLine({
           value={pHourValue}
         />
       </td>
-      <td>{formatMoney(pHourValue * hoursValue)}</td>
+      <td>{formatMoney(totalPaymentValue)}</td>
 
       <td className=" flex gap-1">
         <button

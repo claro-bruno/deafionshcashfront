@@ -32,11 +32,14 @@ const INITIAL_VISIBILITY_WORKED_INFOS = {
   total: false,
 }
 export default function Contractor() {
-  const id = useContextSelector(AuthContext, (context) => context.contractor_id)
+  const { contractor_id: id, access } = useContextSelector(
+    AuthContext,
+    (context) => context,
+  )
   const { id: urlId } = useParams()
   const navigate = useNavigate()
   useEffect(() => {
-    if (id !== urlId) {
+    if (id !== urlId && access === 'CONTRACTOR') {
       navigate(`/contractors/${id}`)
     }
   }, [urlId, id])
@@ -52,8 +55,8 @@ export default function Contractor() {
     {} as ContractorType,
   )
   const [contractorJobs, setContractorJobs] = useState([])
-  const { data } = useQuery(['contractor', id], () => {
-    return axiosGetContractorsById(Number(id))
+  const { data } = useQuery(['contractor', urlId], () => {
+    return axiosGetContractorsById(Number(urlId))
   })
 
   const { data: jobs } = useQuery(['contractorJobs', id], () => {

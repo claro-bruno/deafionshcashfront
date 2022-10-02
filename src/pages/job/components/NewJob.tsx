@@ -1,6 +1,6 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useContextSelector } from 'use-context-selector'
 import { axiosGetAllClients } from '../../../api/client'
@@ -9,7 +9,8 @@ import { axiosCreateNewJob } from '../../../api/jobs'
 import '../../../components/modals/modal.css'
 import { jobsContext } from '../../../context/JobContextProvider'
 import { WEEKDAYS } from '../../../helpers/constants'
-import { mockClients, mockContractors } from '../constants'
+import { Clients } from '../../../types/client'
+import { Contractor } from '../../../types/contractor'
 
 type NewJobProps = {
   tableDate: { monthName: string; yearName: string }
@@ -34,6 +35,8 @@ export default function NewJob({ tableDate }: NewJobProps) {
     [`contractors`],
     axiosGetAllContractors,
   )
+  const [contractorsList, setContractorsList] = useState<Contractor[]>([])
+  const [clientsList, setClientsList] = useState<Clients>([])
   const queryClient = useQueryClient()
   const { data, mutateAsync } = useMutation(axiosCreateNewJob, {
     onSuccess() {
@@ -41,6 +44,15 @@ export default function NewJob({ tableDate }: NewJobProps) {
       queryClient.invalidateQueries(['jobs'])
     },
   })
+
+  useEffect(() => {
+    if (clients) {
+      setClientsList(clients.data)
+    }
+    if (contractors) {
+      setContractorsList(contractors.data)
+    }
+  }, [clients, contractors])
 
   function handleCreateNewJob(data: any) {
     const formattedNewJob = {
@@ -138,9 +150,9 @@ export default function NewJob({ tableDate }: NewJobProps) {
                       />
                     </label>
                     <datalist id="contractors">
-                      {mockContractors.map((contractor) => (
+                      {contractorsList.map((contractor) => (
                         <option key={contractor.id}>
-                          {`${contractor.id} - ${contractor.name}`}
+                          {`${contractor.id} - ${contractor.first_name} ${contractor.last_name}`}
                         </option>
                       ))}
                     </datalist>
@@ -154,7 +166,7 @@ export default function NewJob({ tableDate }: NewJobProps) {
                       />
                     </label>
                     <datalist id="clients" className="text-sm">
-                      {mockClients.map((client) => (
+                      {clientsList.map((client) => (
                         <option
                           value={`${client.id} - ${client.name}`}
                           key={client.id}

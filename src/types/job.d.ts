@@ -3,20 +3,22 @@ export interface TJob {
   contractor: { name: string; id?: number }
   client: { name: string; id?: number }
   status: string
-  quarters: [
+  quarter: [
     {
+      total: number
+      total_hours: number
       month: string
       year: number
       value_hour: number
-      hours: number
-      appointments: { date: string; value: number }[]
+      appointment: { date: string; value: number }[]
     },
     {
+      total: number
+      total_hours: number
       month: string
       year: number
       value_hour: number
-      hours: number
-      appointments: { date: string; value: number }[]
+      appointment: { date: string; value: number }[]
     },
   ]
 }

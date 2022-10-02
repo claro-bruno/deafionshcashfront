@@ -1,7 +1,9 @@
+import { useQuery } from '@tanstack/react-query'
 import { GearSix, Plus } from 'phosphor-react'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useContextSelector } from 'use-context-selector'
+import { axiosGetAllJobs } from '../../api/jobs'
 import Header from '../../components/header/Header'
 import SelectFilter from '../../components/listboxes/SelectFilter'
 import { jobsContext } from '../../context/JobContextProvider'
@@ -13,6 +15,7 @@ import {
 } from '../../helpers/constants'
 import { headerTableJobs } from '../../helpers/headersTables'
 import { useDateFilter } from '../../hooks/useDateFIlter'
+import useFormate from '../../hooks/useFormate'
 import JobTableLine from './components/JobTableLine'
 import NewJob from './components/NewJob'
 
@@ -36,8 +39,32 @@ export default function Jobs() {
     jobsContext,
     (context) => context,
   )
+  const { formatDate } = useFormate()
   const { id } = useParams()
   /* console.log(id) */
+
+  const { data } = useQuery<any>(['jobs'], () =>
+    axiosGetAllJobs({ month: monthName, year: yearName }),
+  )
+
+  useEffect(() => {
+    if (data) {
+      const jobFormatted = data.data.map((job: any) => ({
+        ...job,
+        quarter: job.quarter.map((quarter: any) => ({
+          ...quarter,
+          appointment: quarter.appointment.map((appointment: any) => ({
+            ...appointment,
+            date: formatDate(appointment.date),
+          })),
+        })),
+      }))
+      console.log(jobFormatted)
+
+      handleSetJobs(jobFormatted)
+    }
+  }, [data])
+
   function formatFortnightDays(quarter: string) {
     const fortnight =
       quarter === 'Quinzena 1'

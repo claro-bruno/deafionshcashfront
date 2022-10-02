@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { PropsWithChildren, useEffect, useMemo, useState } from 'react'
 import { createContext } from 'use-context-selector'
 import { axiosGetAllJobs } from '../api/jobs'
+import { useDateFilter } from '../hooks/useDateFIlter'
 import useModal from '../hooks/useModal'
 import { TJob } from '../types/job'
 
@@ -22,13 +23,6 @@ export default function JobContextProvider(props: PropsWithChildren) {
   const [currentInputJobValue, setCurrentInputJobValue] = useState('0')
   const [jobs, setJobs] = useState<TJob[]>([])
   const { switchModalView, isModalOpen } = useModal()
-  const { data } = useQuery<any>(['jobs'], axiosGetAllJobs)
-
-  useEffect(() => {
-    if (data) {
-      setJobs(data.data)
-    }
-  }, [data])
 
   function handleEditJob(job: TJob) {
     setJobToEdit(job)

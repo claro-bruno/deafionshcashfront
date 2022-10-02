@@ -55,13 +55,14 @@
         "name": "bruno fay",
         "id": 1
       },
-      "quarters": [
+      "quarter": [
         {
           "month": "September",
           "year": 2022,
           "value_hour": 20,
-          "hours":12,
-          "appointments": [
+          "total_hours":12,
+          "total":1,
+          "appointment": [
             {
               "date": "2022-09-01T22:38:56.193Z",
               "value": 0
@@ -128,8 +129,9 @@
           "month": "September",
           "year": 2022,
           "value_hour": 57,
-          "hours":12,
-          "appointments": [
+          "total_hours":12,
+          "total":1,
+          "appointment": [
             {
               "date": "2022-09-16T22:38:56.193Z",
               "value": 0
@@ -205,13 +207,14 @@
         "name": "bruno fay",
         "id": 144
       },
-      "quarters": [
+      "quarter": [
         {
           "month": "September",
           "year": 2022,
           "value_hour": 20,
-          "hours":12,
-          "appointments": [
+          "total_hours":12,
+          "total":1,
+          "appointment": [
             {
               "date": "2022-09-01T22:38:56.193Z",
               "value": 0
@@ -278,8 +281,9 @@
           "month": "September",
           "year": 2022,
           "value_hour": 17,
-          "hours":12,
-          "appointments": [
+          "total_hours":12,
+          "total":1,
+          "appointment": [
             {
               "date": "2022-09-16T22:38:56.193Z",
               "value": 0
@@ -355,13 +359,14 @@
         "name": "jamila doe",
         "id": 2
       },
-      "quarters": [
+      "quarter": [
         {
           "month": "September",
           "year": 2022,
           "value_hour": 20,
-          "hours":12,
-          "appointments": [
+          "total_hours":12,
+          "total":1,
+          "appointment": [
             {
               "date": "2022-09-01T22:38:56.193Z",
               "value": 0
@@ -428,8 +433,9 @@
           "month": "September",
           "year": 2022,
           "value_hour": 17,
-          "hours":12,
-          "appointments": [
+          "total_hours":12,
+          "total":1,
+          "appointment": [
             {
               "date": "2022-09-16T22:38:56.193Z",
               "value": 0
