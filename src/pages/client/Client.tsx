@@ -18,7 +18,6 @@ export default function ClientPage() {
   const { switchModalView, isModalOpen } = useModal()
   const [clients, setClients] = useState<Client[] | []>([])
   const { data } = useQuery(['clients'], axiosGetAllClients)
-  console.log(data?.data)
   const [isEditable, setIsEditable] = useState({})
 
   useEffect(() => {

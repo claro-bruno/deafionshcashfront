@@ -15,8 +15,6 @@ import { bodyTable } from './constants'
 
 export default function Payments() {
   const { formatMoney } = useFormate()
-  const { data } = useQuery<Payment[]>(['payments', axiosGetAllPayments])
-  const [payments, setPayments] = useState<Payment[]>([])
   const {
     handleFilters,
     monthName,
@@ -26,7 +24,13 @@ export default function Payments() {
     setMonthName,
     setFilterContractor,
   } = useDateFilter()
+  const { data } = useQuery<Payment[]>([
+    'payments',
+    () => axiosGetAllPayments({ month: monthName, year: yearName }),
+  ])
+  const [payments, setPayments] = useState<Payment[]>([])
   console.log(payments)
+
   useEffect(() => {
     if (data) {
       setPayments(data)
@@ -105,7 +109,7 @@ export default function Payments() {
                 </tr>
               </thead>
               <tbody>
-                {bodyTable.map((payments: Payment) => {
+                {bodyTable.map((payments: any) => {
                   if (handleFilters(payments)) {
                     return <PaymentsInfos {...payments} />
                   } else {

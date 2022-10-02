@@ -1,5 +1,5 @@
-import { useContext, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useContextSelector } from 'use-context-selector'
 import { AuthContext } from '../../context/AuthProvider'
 import { getUserFromLocalStorage } from '../../context/AuthProvider/utils'
@@ -14,7 +14,8 @@ export default function ProtectedLayout({
     (context) => context,
   )
   const navigate = useNavigate()
-
+  const location = useLocation()
+  const urlsProtected = ['/jobs', '/payments', '/contractors']
   useEffect(() => {
     const user = getUserFromLocalStorage()
     if (!user?.token || !user?.access) {
@@ -24,7 +25,14 @@ export default function ProtectedLayout({
     if (user?.token && user?.access) {
       saveUser(user)
     }
-  }, [])
+  }, [navigate, saveUser])
+  useEffect(() => {
+    if (urlsProtected.includes(location.pathname) && access === 'CONTRACTOR') {
+      navigate('/home')
+      console.log('NAO TENHO ACESSO')
+    }
+  }, [location, access, navigate])
+
   if (!token || !access) {
     return null
   }

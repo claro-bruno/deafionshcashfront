@@ -71,7 +71,6 @@ export default function ChangeModalPassword({
       return stateObj
     })
   }
-  console.log(id)
 
   function handleSubmitNewPassword(e: FormEvent<EventTarget>) {
     e.preventDefault()

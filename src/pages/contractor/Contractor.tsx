@@ -47,7 +47,7 @@ export default function Contractor() {
 
   const { switchModalView, isModalOpen } = useModal()
   const [filterCompany, setFilterCompany] = useState('')
-  const { monthName, setMonthName, setYearName } = useDateFilter()
+  const { monthName, setMonthName, setYearName, yearName } = useDateFilter()
   const [visibilityWorkedInfos, setVisibilityWorkedInfos] = useState(
     INITIAL_VISIBILITY_WORKED_INFOS,
   )
@@ -60,7 +60,7 @@ export default function Contractor() {
   })
 
   const { data: jobs } = useQuery(['contractorJobs', id], () => {
-    axiosGetAllJobsById(Number(id))
+    axiosGetAllJobsById(Number(id), { month: monthName, year: yearName })
   })
 
   useEffect(() => {
