@@ -38,7 +38,7 @@ body {
 }
 
 .table{
-  @apply text-sm text-left text-gray-500 dark:text-gray-400 w-[98%] ;
+  @apply text-sm text-left text-gray-500 dark:text-gray-400 w-[98%];
 }
 .tableHead {
   @apply  text-xs bg-gray-50 text-gray-700 uppercase dark:bg-gray-700 dark:text-gray-400 ;

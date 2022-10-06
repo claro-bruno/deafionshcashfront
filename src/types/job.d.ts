@@ -1,6 +1,6 @@
 export interface TJob {
   id?: number
-  contractor: { name: string; id?: number }
+  contractor: { last_name: string; first_name: string; id?: number }
   client: { name: string; id?: number }
   status: string
   quarter: [

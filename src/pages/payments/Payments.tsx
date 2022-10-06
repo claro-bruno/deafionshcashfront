@@ -11,7 +11,6 @@ import { useDateFilter } from '../../hooks/useDateFIlter'
 import useFormate from '../../hooks/useFormate'
 import { Payment } from '../../types/payments'
 import PaymentsInfos from './components/PaymentsInfos'
-import { bodyTable } from './constants'
 
 export default function Payments() {
   const { formatMoney } = useFormate()
@@ -24,40 +23,19 @@ export default function Payments() {
     setMonthName,
     setFilterContractor,
   } = useDateFilter()
-  const { data } = useQuery<Payment[]>([
-    'payments',
-    () => axiosGetAllPayments({ month: monthName, year: yearName }),
-  ])
+  const { data } = useQuery(['payments'], () =>
+    axiosGetAllPayments({ month: monthName, year: yearName }),
+  )
   const [payments, setPayments] = useState<Payment[]>([])
-  console.log(payments)
+  const [total, setTotal] = useState<any>([])
 
   useEffect(() => {
     if (data) {
-      setPayments(data)
+      console.log(data.data.payments)
+      setPayments(data.data.payments)
+      setTotal(data.data.total)
     }
   }, [data])
-
-  const outlay: { type: string; quarter: number; value: string }[] = bodyTable
-    .filter(
-      (item) =>
-        item.month === monthName.toLowerCase() &&
-        item.year === Number(yearName),
-    )
-    .map((item) => item.payments)
-    .flat()
-
-  function forthright(quarter: number) {
-    return Number(
-      outlay
-        .filter((item) => item.quarter === quarter)
-        .reduce((acc, curr) => acc + Number(curr.value), 0),
-    )
-  }
-
-  const fortnight1Formatted = formatMoney(forthright(1))
-  const fortnight2Formatted = formatMoney(forthright(2))
-  const total = forthright(1) + forthright(2)
-  const totalFormatted = formatMoney(total)
 
   return (
     <div className="flex flex-col">
@@ -109,9 +87,9 @@ export default function Payments() {
                 </tr>
               </thead>
               <tbody>
-                {bodyTable.map((payments: any) => {
-                  if (handleFilters(payments)) {
-                    return <PaymentsInfos {...payments} />
+                {payments.map((payment: any, i) => {
+                  if (handleFilters(payment)) {
+                    return <PaymentsInfos key={i} {...payment} />
                   } else {
                     return []
                   }
@@ -126,14 +104,22 @@ export default function Payments() {
           </h1>
           <article className="flex flex-col gap-8 relative bottom-6 right-4 mt-8">
             <div className="bg-gray-50 shadow-md flex items-center gap-2 flex-col rounded h-20 w-[10vw] py-2">
-              Forthnight 1<strong className=""> {fortnight1Formatted}</strong>
+              Forthnight 1
+              <strong className="">
+                {' '}
+                {formatMoney(total[1]?.total_1quarter)}
+              </strong>
             </div>
             <div className="bg-gray-50 shadow-md flex items-center gap-2 flex-col rounded h-20 w-[10vw] py-2">
-              Forthnight 2<strong className=""> {fortnight2Formatted}</strong>
+              Forthnight 2
+              <strong className="">
+                {' '}
+                {formatMoney(total[2]?.total_2quarter)}
+              </strong>
             </div>
             <div className="bg-gray-50 shadow-md flex items-center gap-2 flex-col rounded h-20 w-[10vw] py-2">
               Total month
-              <strong className=""> {totalFormatted}</strong>
+              <strong className=""> {formatMoney(total[0]?.total)}</strong>
             </div>
           </article>
         </div>

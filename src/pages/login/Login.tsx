@@ -68,7 +68,7 @@ export default function Login() {
         />
       </div>
       <div className="flex-1 flex flex-col w-[100%] bg-gray-100 min-h-full  items-center  ">
-        <div className="flex items-center mt-3  gap-2 flex-col">
+        <div className="flex items-center mt-[10vh]  gap-2 flex-col">
           <img
             className="h-[12rem] object-contain"
             src={Logo}

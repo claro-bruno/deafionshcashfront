@@ -49,6 +49,7 @@ export default function Jobs() {
 
   useEffect(() => {
     if (data) {
+      console.log(data);
       const jobFormatted = data.data.map((job: any) => ({
         ...job,
         quarter: job.quarter.map((quarter: any) => ({

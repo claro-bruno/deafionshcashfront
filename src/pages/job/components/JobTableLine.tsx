@@ -117,6 +117,9 @@ export default function JobTableLine({
   }
 
   function handleUpdateJob(jobInfos: TJob) {
+    const formattedWorkedDaysInfos = daysInputs.map((day) => ({
+      [day.date]: day.value,
+    }))
     const jobToUpdateFormatted = {
       id: jobInfos.id,
       month: jobInfos.quarter[0].month,
@@ -124,7 +127,7 @@ export default function JobTableLine({
       status: jobInfos.status,
       year: jobInfos.quarter[0].year,
       quarter: isFirstQuarter ? 1 : 2,
-      workedDaysInfos: daysInputs,
+      workedDaysInfos: formattedWorkedDaysInfos,
     }
 
     console.log(jobToUpdateFormatted)
@@ -152,7 +155,7 @@ export default function JobTableLine({
       </td>
       <td className="max-w-[9rem]">
         <Link to={`/contractors/${job.contractor.id}`}>
-          {job.contractor.name}
+          {`${job.contractor.first_name} ${job.contractor.last_name}`}
         </Link>
       </td>
       <td>{job.client.name}</td>

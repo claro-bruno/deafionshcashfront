@@ -1,9 +1,14 @@
-export type ContractorWorkedInfo = {
+export type ContractorJob = {
   id: number
-  date: Date
-  workedHours: string
-  client: string
-  hourlyPay: string
+  quarter: {
+    appointment: { date: string; value: number }[]
+    month: string
+    total: number
+    total_hours: number
+    value_hour: number
+    year: number
+  }[]
+  client: { name: string; id: number }
 }
 
 export type NewContractor = {

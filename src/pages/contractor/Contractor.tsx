@@ -10,15 +10,15 @@ import { AuthContext } from '../../context/AuthProvider'
 import { monthsListBox, yearsListBox } from '../../helpers/constants'
 import { headerTableContractor } from '../../helpers/headersTables'
 import { useDateFilter } from '../../hooks/useDateFIlter'
+import useFormate from '../../hooks/useFormate'
 import useModal from '../../hooks/useModal'
 import {
   Contractor as ContractorType,
-  ContractorWorkedInfo,
+  ContractorJob,
 } from '../../types/contractor'
 import CardContractor from './components/cardContractor/CardContractor'
 import ContractorAsideInfos from './components/contractorAsideInfos/ContractorAsideInfos'
 import EditContractorModal from './components/editContractorModal/EditContractorModal'
-import { bodyTableContractor } from './constants'
 import './contractor.css'
 
 export interface VisibilityWorkedInfos {
@@ -27,11 +27,6 @@ export interface VisibilityWorkedInfos {
   total: boolean
 }
 
-const INITIAL_VISIBILITY_WORKED_INFOS = {
-  quinzena1: true,
-  quinzena2: false,
-  total: false,
-}
 export default function Contractor() {
   const { contractor_id: id, access } = useContextSelector(
     AuthContext,
@@ -46,65 +41,39 @@ export default function Contractor() {
   }, [urlId, id])
 
   const { switchModalView, isModalOpen } = useModal()
+  const { formatDate, formatMoney } = useFormate()
   const [filterCompany, setFilterCompany] = useState('')
-  const { monthName, setMonthName, setYearName, yearName } = useDateFilter()
-  const [visibilityWorkedInfos, setVisibilityWorkedInfos] = useState(
-    INITIAL_VISIBILITY_WORKED_INFOS,
-  )
+  const [contractorJobs, setContractorJobs] = useState<ContractorJob[]>([])
+  const [totalsJobsInfos, setTotalsJobsInfos] = useState([])
+
   const [contractor, setContractor] = useState<ContractorType>(
     {} as ContractorType,
   )
-  const [contractorJobs, setContractorJobs] = useState([])
-  const { data } = useQuery(['contractor', urlId], () => {
-    return axiosGetContractorsById(Number(urlId))
-  })
+  const { monthName, setMonthName, setYearName, yearName } = useDateFilter()
 
-  const { data: jobs } = useQuery(['contractorJobs', id], () => {
-    axiosGetAllJobsById(Number(id), { month: monthName, year: yearName })
-  })
+  const { data } = useQuery(['contractor', urlId], () =>
+    axiosGetContractorsById(Number(urlId)),
+  )
+  const { data: jobs } = useQuery(['contractorJobs', urlId], () =>
+    axiosGetAllJobsById(Number(urlId), { month: monthName, year: yearName }),
+  )
 
   useEffect(() => {
     if (data) {
       setContractor(data.data)
     }
     if (jobs) {
-      setContractorJobs(jobs)
+      console.log(jobs.data.totals)
+      setContractorJobs(jobs.data.contractor_jobs)
+      setTotalsJobsInfos(jobs.data.totals)
     }
   }, [data, jobs])
 
-  console.log(contractorJobs)
-  const paymentsArray = bodyTableContractor.map((item) => {
-    if (tableFilters(item)) {
-      return (Number(item.hourlyPay) * Number(item.workedHours)).toFixed(2)
-    }
-    return '0'
-  })
-
-  const payment = paymentsArray
-    .reduce((acc, curr) => acc + Number(curr), 0)
-    .toFixed(2)
-
-  const hoursArray = bodyTableContractor.map((item) => {
-    if (tableFilters(item)) {
-      return item.workedHours
-    }
-    return '0'
-  })
-
-  const workedHours = hoursArray
-    .reduce((acc, curr) => acc + Number(curr), 0)
-    .toString()
-
-  function handleVisibilityWorkedInfos(period: Partial<VisibilityWorkedInfos>) {
-    setVisibilityWorkedInfos((state) => ({ ...state, ...period }))
-  }
-
-  function tableFilters(item: ContractorWorkedInfo) {
-    const filterByClient = item.client
+  function tableFilters(item: ContractorJob) {
+    const filterByClient = item.client.name
       .toLowerCase()
       .includes(filterCompany.toLowerCase())
-    const filterByDate = item.date
-      .toLocaleString('default', { month: 'long' })
+    const filterByDate = item.quarter[0].month
       .toLowerCase()
       .includes(monthName.toLowerCase())
     return filterByClient && filterByDate
@@ -135,7 +104,7 @@ export default function Contractor() {
           setIsModalOpen={() => switchModalView()}
         />
 
-        <div className="tableContainer relative left-2 flex gap-4 w-[75%] max-h-[80vh] overflow-auto">
+        <div className="tableContainer relative left-2 flex gap-4 w-[75%] max-h-[70vh] overflow-auto">
           <table className="table">
             <thead className="tableHead">
               <tr>
@@ -147,21 +116,40 @@ export default function Contractor() {
               </tr>
             </thead>
             <tbody>
-              {bodyTableContractor.map((item) => {
-                if (tableFilters(item)) {
+              {contractorJobs.map((job) => {
+                if (tableFilters(job)) {
                   return (
-                    <tr key={item.id} className="bg-white border-b ">
-                      <td scope="row" className="tableLine">
-                        {item.date.toDateString()}
-                      </td>
-                      <td className="tableLine flex flex-wrap max-w-[9rem]">
-                        <Link to={`/clients/${item.client}`}>
-                          {item.client}
-                        </Link>
-                      </td>
-                      <td className="tableLine ">{item.workedHours} h</td>
-                      <td className="tableLine">$ {item.hourlyPay}</td>
-                    </tr>
+                    <>
+                      {job.quarter.map((quarter) => (
+                        <>
+                          {quarter.appointment.map((day) => {
+                            if (day.value > 0) {
+                              return (
+                                <tr
+                                  key={day.date}
+                                  className="bg-white border-b "
+                                >
+                                  <td scope="row" className="tableLine">
+                                    {formatDate(day.date)}
+                                  </td>
+                                  <td className="tableLine flex flex-wrap max-w-[9rem]">
+                                    <Link to={`/clients/${job.client.id}`}>
+                                      {job.client.name}
+                                    </Link>
+                                  </td>
+                                  <td className="tableLine ">{day.value} h</td>
+                                  <td className="tableLine">
+                                    {formatMoney(quarter.value_hour)}
+                                  </td>
+                                </tr>
+                              )
+                            } else {
+                              return null
+                            }
+                          })}
+                        </>
+                      ))}
+                    </>
                   )
                 } else {
                   return []
@@ -169,12 +157,7 @@ export default function Contractor() {
               })}
             </tbody>
           </table>
-          <ContractorAsideInfos
-            handleVisibilityWorkedInfos={handleVisibilityWorkedInfos}
-            visibilityWorkedInfos={visibilityWorkedInfos}
-            payment={payment}
-            workedHours={workedHours}
-          />
+          {<ContractorAsideInfos totals={totalsJobsInfos} />}
         </div>
       </main>
       <EditContractorModal

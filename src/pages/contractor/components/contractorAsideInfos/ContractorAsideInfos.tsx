@@ -1,28 +1,32 @@
+import { useState } from 'react'
 import { articleInfos } from '../../../../helpers/constants'
 import useFormate from '../../../../hooks/useFormate'
 import { VisibilityWorkedInfos } from '../../Contractor'
 
 interface ContractorAsideInfosProps {
-  workedHours: string
-  payment: string
-  handleVisibilityWorkedInfos: (s: Partial<VisibilityWorkedInfos>) => void
-  visibilityWorkedInfos: VisibilityWorkedInfos
+  totals: any
 }
-
+const INITIAL_VISIBILITY_WORKED_INFOS = {
+  quinzena1: true,
+  quinzena2: false,
+  total: false,
+}
 export default function ContractorAsideInfos({
-  workedHours,
-  payment,
-  handleVisibilityWorkedInfos,
-  visibilityWorkedInfos,
+  totals,
 }: ContractorAsideInfosProps) {
   const { formatMoney } = useFormate()
-
-  function contractorPayment(payment: string, multiplier: number = 1) {
-    return formatMoney(Number(payment) * multiplier)
+  const [visibilityWorkedInfos, setVisibilityWorkedInfos] = useState(
+    INITIAL_VISIBILITY_WORKED_INFOS,
+  )
+  function handleVisibilityWorkedInfos(period: Partial<VisibilityWorkedInfos>) {
+    setVisibilityWorkedInfos((state) => ({ ...state, ...period }))
+  }
+  function contractorPayment(payment: string) {
+    return formatMoney(Number(payment))
   }
 
-  function contractorWorkedHours(hours: string, multiplier: number = 1) {
-    return (Number(hours) * multiplier).toFixed(2)
+  function contractorWorkedHours(hours: string) {
+    return Number(hours).toFixed(1)
   }
 
   return (
@@ -71,24 +75,24 @@ export default function ContractorAsideInfos({
               <div className="flex flex-col gap-1">
                 <span className="text-sm">Fortnight 1</span>
                 {section === 'Payment'
-                  ? ` ${contractorPayment(payment, 0.7)}`
-                  : `${contractorWorkedHours(workedHours, 0.7)} h`}
+                  ? ` ${contractorPayment(totals[1]?.total_1quarter)}`
+                  : `${contractorWorkedHours(totals[1]?.total_1hours)} h`}
               </div>
             )}
             {visibilityWorkedInfos.quinzena2 && (
               <div className="flex flex-col gap-1">
                 <span className="text-sm">Fortnight 2</span>
                 {section === 'Payment'
-                  ? ` ${contractorPayment(payment, 0.3)}`
-                  : `${contractorWorkedHours(workedHours, 0.3)} h`}
+                  ? ` ${contractorPayment(totals[2]?.total_2quarter)}`
+                  : `${contractorWorkedHours(totals[2]?.total_2hours)} h`}
               </div>
             )}
             {visibilityWorkedInfos.total && (
               <div className="flex flex-col gap-1">
                 <span className="text-sm">Total</span>
                 {section === 'Payment'
-                  ? `  ${contractorPayment(payment)}`
-                  : `${contractorWorkedHours(workedHours)} h`}
+                  ? `  ${contractorPayment(totals[0]?.total)}`
+                  : `${contractorWorkedHours(totals[0]?.total_hours)} h`}
               </div>
             )}
           </div>

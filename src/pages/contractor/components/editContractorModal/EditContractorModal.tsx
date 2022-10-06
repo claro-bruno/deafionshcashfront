@@ -2,18 +2,16 @@ import { Dialog, Transition } from '@headlessui/react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { FormEvent, Fragment } from 'react'
 import { axiosUpdateContractor } from '../../../../api/contractor'
-import useFormate from '../../../../hooks/useFormate'
+import '../../../../components/modals/modal.css'
 import useHandleChange from '../../../../hooks/useHandleChange'
 import { EditContractor, InputsFiles } from '../../../../types/contractor'
 import { ModalProps } from '../../../../types/modal'
-import '../../../../components/modals/modal.css'
 
 export default function EditContractorModal({
   isModalOpen,
   switchModalView,
   modalInfos,
 }: ModalProps) {
-  const { formatSsnOrItin, formatPhone } = useFormate()
   const { inputsFiles, handleInputsFiles } = useHandleChange<InputsFiles>({
     profile: {},
     documentProof: {},
@@ -26,7 +24,6 @@ export default function EditContractorModal({
     identification: modalInfos.identification ?? '',
   })
   const queryClient = useQueryClient()
-  console.log(state)
 
   const { mutateAsync, data } = useMutation(
     (payload: [EditContractor, InputsFiles]) =>
