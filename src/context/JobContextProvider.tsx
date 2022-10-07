@@ -43,14 +43,14 @@ export default function JobContextProvider(props: PropsWithChildren) {
       currentInputJobValue,
       handleCurrentInputJobValue,
       isModalOpen,
-      handleSetJobs,
-      jobs,
     }),
-    [jobToEdit, currentInputJobValue, isModalOpen, jobs],
+    [jobToEdit, currentInputJobValue, isModalOpen],
   )
 
   return (
-    <jobsContext.Provider value={{ ...valueToProvide, handleSwitchModalView }}>
+    <jobsContext.Provider
+      value={{ ...valueToProvide, handleSwitchModalView, jobs, handleSetJobs }}
+    >
       {props.children}
     </jobsContext.Provider>
   )

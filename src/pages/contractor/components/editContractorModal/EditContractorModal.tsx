@@ -17,11 +17,22 @@ export default function EditContractorModal({
     documentProof: {},
     residenceProof: {},
   })
+  const address = Array.isArray(modalInfos.address) && modalInfos.address[0]
+
   const { state, handleChange } = useHandleChange<EditContractor>({
     id: modalInfos.id ?? '',
     email: modalInfos.email ?? '',
     telephone: modalInfos.telephone ?? '',
     identification: modalInfos.identification ?? '',
+    first_name: modalInfos.first_name ?? '',
+    last_name: modalInfos.last_name ?? '',
+    middle_name: modalInfos.middle_name ?? '',
+    status: modalInfos.status ?? '',
+    address: address.address ?? '',
+    city: address.city ?? '',
+    state: address.state ?? '',
+    zipcode: address.zipcode ?? '',
+    ein: modalInfos.ein ?? '',
   })
   const queryClient = useQueryClient()
 
@@ -91,7 +102,7 @@ export default function EditContractorModal({
                       <img
                         className="max-h-[20rem] max-w-[20rem] rounded-md object-contain"
                         src={
-                          modalInfos.urlProfile ??
+                          modalInfos.urlProfile ||
                           'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
                         }
                         alt="profile "
@@ -100,6 +111,36 @@ export default function EditContractorModal({
                     <h2 className="lowercase first-letter:uppercase">
                       {modalInfos.status}
                     </h2>
+                    <div className="flex gap-4">
+                      <label className="labelsDefault">
+                        First name
+                        <input
+                          placeholder="Ex: John  "
+                          className="inputsDefault"
+                          type="text"
+                          defaultValue={modalInfos.first_name}
+                        />
+                      </label>
+                      <label className="labelsDefault">
+                        <div className="flex items-start">Middle name</div>
+                        <input
+                          placeholder="Ex: Doe  "
+                          className="inputsDefault"
+                          type="text"
+                          defaultValue={modalInfos.middle_name}
+                        />
+                      </label>
+                      <label className="labelsDefault">
+                        Last name
+                        <input
+                          type="text"
+                          placeholder="Ex: Smith  "
+                          className="inputsDefault"
+                          defaultValue={modalInfos.last_name}
+                        />
+                      </label>
+                    </div>
+
                     <div className="flex gap-4">
                       <label className="labelsDefault">
                         Email:
@@ -124,6 +165,17 @@ export default function EditContractorModal({
                         />
                       </label>
                       <label className="labelsDefault">
+                        Birthday
+                        <input
+                          min="1940-12-31"
+                          max="2022-12-31"
+                          className="inputsDefault"
+                          type="date"
+                        />
+                      </label>
+                    </div>
+                    <div className="flex gap-4">
+                      <label className="labelsDefault">
                         <div className="flex items-start">ITIN/SSN</div>
                         <input
                           title="Employer Identification Number (EIN)"
@@ -137,13 +189,64 @@ export default function EditContractorModal({
                           defaultValue={modalInfos.identification}
                         />
                       </label>
-                    </div>
 
+                      <label className="labelsDefault">
+                        <div className="flex items-start">EIN</div>
+                        <input
+                          title="Employer Identification Number (EIN)"
+                          placeholder="00-0000000"
+                          maxLength={9}
+                          className="inputsDefault"
+                          type="text"
+                          inputMode="numeric"
+                          defaultValue={modalInfos.ein}
+                        />
+                      </label>
+                      <label className="labelsDefault">
+                        Address
+                        <input
+                          inputMode="numeric"
+                          maxLength={120}
+                          className="inputsDefault"
+                          type="text"
+                          defaultValue={address.address}
+                        />
+                      </label>
+                    </div>
+                    <div className="flex gap-4">
+                      <label className="labelsDefault">
+                        State
+                        <input
+                          className="inputsDefault"
+                          maxLength={120}
+                          type="text"
+                          defaultValue={address.state}
+                        />
+                      </label>
+                      <label className="labelsDefault">
+                        Zip-code
+                        <input
+                          className="inputsDefault"
+                          type="text"
+                          maxLength={20}
+                          defaultValue={address.zipcode}
+                        />
+                      </label>
+                      <label className="labelsDefault">
+                        City
+                        <input
+                          className="inputsDefault"
+                          type="text"
+                          maxLength={120}
+                          defaultValue={address.city}
+                        />
+                      </label>
+                    </div>
                     <div className="flex ml-[6rem] ">
                       <label className="labelsDefault ">
                         Document Photo
                         <input
-                          accept="image/*"
+                          accept="image/"
                           onChange={(e) =>
                             handleInputsFiles(e, 'documentProof')
                           }
@@ -164,13 +267,14 @@ export default function EditContractorModal({
                       <label className="labelsDefault ">
                         Profile Image
                         <input
-                          accept="image/*"
+                          accept="image/"
                           onChange={(e) => handleInputsFiles(e, 'profile')}
                           type="file"
                           className="fileInput file:py-[0.30rem]"
                         />
                       </label>
                     </div>
+
                     <button
                       type="submit"
                       className=" buttonStyle2 px-4 mt-10 font-bold"

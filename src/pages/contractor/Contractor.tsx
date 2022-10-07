@@ -63,7 +63,6 @@ export default function Contractor() {
       setContractor(data.data)
     }
     if (jobs) {
-      console.log(jobs.data.totals)
       setContractorJobs(jobs.data.contractor_jobs)
       setTotalsJobsInfos(jobs.data.totals)
     }

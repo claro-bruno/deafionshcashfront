@@ -31,7 +31,6 @@ export default function Payments() {
 
   useEffect(() => {
     if (data) {
-      console.log(data.data.payments)
       setPayments(data.data.payments)
       setTotal(data.data.total)
     }

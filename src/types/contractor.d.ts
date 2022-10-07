@@ -47,7 +47,7 @@ export type Contractor = {
   id: number
   identification: string
   last_name: string
-  middle_name: null
+  middle_name: string
   status: string
   telephone: string
   urlDocumentProof: string
@@ -61,6 +61,15 @@ export type EditContractor = {
   email: string
   telephone: string
   identification: string
+  status: string
+  ein: string
+  first_name: string
+  last_name: string
+  middle_name: string
+  address: string
+  city: string
+  state: string
+  zipcode: string
 }
 
 export type InputsFiles = {

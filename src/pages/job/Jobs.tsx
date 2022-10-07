@@ -46,10 +46,8 @@ export default function Jobs() {
   const { data } = useQuery<any>(['jobs'], () =>
     axiosGetAllJobs({ month: monthName, year: yearName }),
   )
-
   useEffect(() => {
     if (data) {
-      console.log(data);
       const jobFormatted = data.data.map((job: any) => ({
         ...job,
         quarter: job.quarter.map((quarter: any) => ({
@@ -60,7 +58,6 @@ export default function Jobs() {
           })),
         })),
       }))
-      console.log(jobFormatted, data.data)
 
       handleSetJobs(jobFormatted)
     }
