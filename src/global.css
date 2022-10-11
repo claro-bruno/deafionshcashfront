@@ -65,8 +65,8 @@ input[type="number"] {
 }
 .buttonStyle1 {
   @apply disabled:opacity-50 disabled:hover:ring-transparent disabled:hover:border-transparent disabled:cursor-not-allowed hover:ring-brand3 bg-brand3 focus:ring-brand3 transition-colors
-  py-1 rounded border border-transparent hover:border-white text-white ring-2 ring-transparent
+  py-1 rounded border border-transparent hover:border-white text-white ring-2 ring-transparent font-bold
 }
 .buttonStyle2 {
-  @apply disabled:opacity-50 disabled:hover:ring-transparent disabled:hover:border-transparent disabled:cursor-not-allowed hover:ring-brand2 bg-brand2 focus:ring-brand2 transition-colors hover:border-white text-white  py-1 rounded border border-transparent ring-2 ring-transparent
+  @apply disabled:opacity-50 disabled:hover:ring-transparent disabled:hover:border-transparent disabled:cursor-not-allowed hover:ring-brand2 bg-brand2 focus:ring-brand2 transition-colors hover:border-white text-white  py-1 rounded border border-transparent ring-2 ring-transparent font-bold
 }

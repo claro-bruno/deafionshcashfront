@@ -25,6 +25,8 @@ export default function NewJob({ tableDate }: NewJobProps) {
       client: '',
       value_hour: '',
       hours: '',
+      taxes: '',
+      shirts: '',
     },
   })
 
@@ -38,9 +40,8 @@ export default function NewJob({ tableDate }: NewJobProps) {
   const [contractorsList, setContractorsList] = useState<Contractor[]>([])
   const [clientsList, setClientsList] = useState<Clients>([])
   const queryClient = useQueryClient()
-  const { data, mutateAsync } = useMutation(axiosCreateNewJob, {
+  const { mutateAsync } = useMutation(axiosCreateNewJob, {
     onSuccess() {
-      console.log(data)
       queryClient.invalidateQueries(['jobs'])
     },
   })
@@ -60,6 +61,8 @@ export default function NewJob({ tableDate }: NewJobProps) {
       id_client: Number(data.client.replace(/[^0-9]+/g, '')),
       value_hour: Number(data.value_hour),
       hours: Number(data.hours),
+      taxes: Number(data.taxes),
+      shirts: Number(data.shirts),
       monday: daysWorked.some((day) => day.toLowerCase() === 'monday'),
       tuesday: daysWorked.some((day) => day.toLowerCase() === 'tuesday'),
       wednesday: daysWorked.some((day) => day.toLowerCase() === 'wednesday'),
@@ -177,6 +180,22 @@ export default function NewJob({ tableDate }: NewJobProps) {
                       P/Hour:
                       <input
                         {...register('value_hour')}
+                        className="inputsDefault"
+                        type="number"
+                      />
+                    </label>
+                    <label className="labelsDefault">
+                      Taxes:
+                      <input
+                        {...register('taxes')}
+                        className="inputsDefault"
+                        type="number"
+                      />
+                    </label>
+                    <label className="labelsDefault">
+                      Shirts:
+                      <input
+                        {...register('shirts')}
                         className="inputsDefault"
                         type="number"
                       />

@@ -1,16 +1,17 @@
 export type Payment = {
-  id: number
-  contractor: {
-    name: string
-    id?: number
-  }
+  fk_id_contractor: number
+  name: string
   status: string
   month: string
   year: number
+  taxes: number
+  shirts: number
   payments: {
-    type: string
+    method: string
     identifier: string
     quarter: number
-    value: string
+    value: number
+    taxes_job: number
+    shirts_job: number
   }[]
 }

@@ -25,7 +25,7 @@ export default function JobTableLine({
   const { formatMoney } = useFormate()
 
   const queryClient = useQueryClient()
-  const { mutateAsync, isLoading } = useMutation(axiosUpdateNewJob, {
+  const { mutateAsync } = useMutation(axiosUpdateNewJob, {
     onSuccess() {
       queryClient.invalidateQueries(['jobs'])
     },
@@ -38,6 +38,7 @@ export default function JobTableLine({
     fortnightDays[0]?.dayNum === 1
       ? contractorWorkedInfos.quarter[0].value_hour
       : contractorWorkedInfos.quarter[1].value_hour
+
   const daysInputs =
     fortnightDays[0]?.dayNum === 1
       ? contractorWorkedInfos.quarter[0].appointment
@@ -48,9 +49,22 @@ export default function JobTableLine({
   const hoursValue = isFirstQuarter
     ? contractorWorkedInfos.quarter[0].total_hours
     : contractorWorkedInfos.quarter[1].total_hours
+
   const totalPaymentValue = isFirstQuarter
     ? contractorWorkedInfos.quarter[0].total
     : contractorWorkedInfos.quarter[1].total
+
+  const totalStatusPayment = isFirstQuarter
+    ? contractorWorkedInfos.quarter[0].status
+    : contractorWorkedInfos.quarter[1].status
+
+  const taxesValue = isFirstQuarter
+    ? contractorWorkedInfos.quarter[0].taxes
+    : contractorWorkedInfos.quarter[1].taxes
+
+  const shirtsValue = isFirstQuarter
+    ? contractorWorkedInfos.quarter[0].shirts
+    : contractorWorkedInfos.quarter[1].shirts
 
   function handleChange(
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -61,12 +75,23 @@ export default function JobTableLine({
     const quarter2 = contractorWorkedInfos.quarter[1]
     handleCurrentInputJobValue(value)
     if (options) {
+      if (options === 'status_payment') {
+        setContractorWorkedInfos((state) => ({
+          ...state,
+          quarter: isFirstQuarter
+            ? [{ ...quarter1, [name]: value }, quarter2]
+            : [quarter1, { ...quarter2, [name]: value }],
+        }))
+        return
+      }
       setContractorWorkedInfos((state) => ({
         ...state,
+        [name]: value,
         quarter: isFirstQuarter
           ? [{ ...quarter1, [name]: Number(value) }, quarter2]
           : [quarter1, { ...quarter2, [name]: Number(value) }],
       }))
+
       return
     }
 
@@ -127,8 +152,12 @@ export default function JobTableLine({
       status: jobInfos.status,
       year: jobInfos.quarter[0].year,
       quarter: isFirstQuarter ? 1 : 2,
+      status_payment: jobInfos.quarter[0].status,
+      taxes: jobInfos.quarter[0].taxes,
+      shirts: jobInfos.quarter[0].shirts,
       workedDaysInfos: formattedWorkedDaysInfos,
     }
+    console.log(jobToUpdateFormatted)
 
     mutateAsync(jobToUpdateFormatted)
   }
@@ -139,76 +168,105 @@ export default function JobTableLine({
     handleSwitchModalView()
   }
 
-  if (!isLoading) {
-    return (
-      <tr className=" bg-white border-b ">
-        <td className="pl-4 ">
-          <select
-            onChange={(e) => handleChange(e, 'editStatus')}
-            className="rounded bg-white border outline-none p-1"
-            name="status"
-            defaultValue={job.status}
-          >
-            <option value="ACTIVE">Active</option>
-            <option value="INACTIVE">Inactive</option>
-          </select>
-        </td>
-        <td className="max-w-[9rem]">
-          <Link to={`/contractors/${job.contractor.id}`}>
-            {`${job.contractor.first_name} ${job.contractor.last_name}`}
-          </Link>
-        </td>
-        <td>{job.client.name}</td>
-        <td className="flex items-center justify-center">
-          {
-            <p className="flex justify-center py-2 gap-1">
-              {daysInputs.map((day) => (
-                <input
-                  key={day.date}
-                  name={day.date}
-                  value={day.value}
-                  onChange={handleChange}
-                  onKeyUp={handleKeyPress}
-                  type="number"
-                  title={day.value.toString()}
-                  className={`${
-                    getDayByDate(day.date) === 'S' && 'bg-zinc-500 text-white'
-                  } w-[1.529rem] outline-none ring-1 ring-transparent focus:ring-brand text-center h-10 border text-[0.7rem] `}
-                />
-              ))}
-            </p>
-          }
-        </td>
-        <td>{hoursValue}</td>
-        <td className="w-[5rem]">
-          $
-          <input
-            onChange={(e) => handleChange(e, 'pHour')}
-            name="value_hour"
-            className="w-[2.1rem] border ml-1 p-1"
-            value={pHourValue}
-          />
-        </td>
-        <td>{formatMoney(totalPaymentValue)}</td>
-
-        <td className=" flex gap-1">
-          <button
-            onClick={() => handleUpdateJob(contractorWorkedInfos)}
-            className="buttonStyle1 text-xs py-[0.09rem] px-2  "
-            type="button"
-          >
-            Save
-          </button>
-          <button
-            onClick={() => console.log(handleEditContractor())}
-            className="buttonStyle2 text-xs py-[0.09rem] px-2  "
-            type="button"
-          >
-            Edit
-          </button>
-        </td>
-      </tr>
-    )
-  }
-  return null
+  return (
+    <tr
+      className={`${
+        totalStatusPayment === 'PENDING' ? 'bg-white' : 'bg-green-200'
+      } border-b `}
+    >
+      <td className="pl-4 ">
+        <select
+          onChange={(e) => handleChange(e, 'editStatus')}
+          className="rounded bg-white border outline-none p-1"
+          name="status"
+          defaultValue={job.status}
+        >
+          <option value="ACTIVE">Active</option>
+          <option value="INACTIVE">Inactive</option>
+        </select>
+      </td>
+      <td className="max-w-[9rem]">
+        <Link to={`/contractors/${job.contractor.id}`}>
+          {`${job.contractor.first_name} ${job.contractor.last_name}`}
+        </Link>
+      </td>
+      <td>{job.client.name}</td>
+      <td className="flex items-center justify-center">
+        {
+          <p className="flex justify-center py-2 gap-1">
+            {daysInputs.map((day) => (
+              <input
+                key={day.date}
+                name={day.date}
+                value={day.value}
+                onChange={handleChange}
+                onKeyUp={handleKeyPress}
+                type="number"
+                title={day.value.toString()}
+                className={`${
+                  getDayByDate(day.date) === 'S' && 'bg-zinc-500 text-white'
+                } w-[1.529rem] outline-none ring-1 ring-transparent focus:ring-brand text-center h-10 border text-[0.7rem] `}
+              />
+            ))}
+          </p>
+        }
+      </td>
+      <td>{hoursValue}</td>
+      <td className="w-[5rem]">
+        $
+        <input
+          onChange={(e) => handleChange(e, 'pHour')}
+          name="value_hour"
+          className="w-[2.1rem] border ml-1 p-1"
+          value={pHourValue}
+        />
+      </td>
+      <td>
+        $
+        <input
+          onChange={(e) => handleChange(e, 'taxes')}
+          name="taxes"
+          className="w-[2.1rem] border ml-1 p-1"
+          value={taxesValue}
+        />
+      </td>
+      <td>
+        $
+        <input
+          onChange={(e) => handleChange(e, 'shirts')}
+          name="shirts"
+          className="w-[2.1rem] border ml-1 p-1"
+          value={shirtsValue}
+        />
+      </td>
+      <td className="pl-4 ">
+        <select
+          onChange={(e) => handleChange(e, 'status_payment')}
+          className="rounded bg-white border outline-none p-1"
+          name="status"
+          defaultValue={totalStatusPayment}
+        >
+          <option value="PENDING">Pending</option>
+          <option value="REVISED">Revised</option>
+        </select>
+      </td>
+      <td>{formatMoney(totalPaymentValue)}</td>
+      <td className=" flex gap-1">
+        <button
+          onClick={() => handleUpdateJob(contractorWorkedInfos)}
+          className="buttonStyle1 text-xs py-[0.09rem] px-2  "
+          type="button"
+        >
+          Save
+        </button>
+        <button
+          onClick={() => console.log(handleEditContractor())}
+          className="buttonStyle2 text-xs py-[0.09rem] px-2  "
+          type="button"
+        >
+          Edit
+        </button>
+      </td>
+    </tr>
+  )
 }

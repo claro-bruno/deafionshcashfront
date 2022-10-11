@@ -10,7 +10,7 @@ export default function PaymentsInfos(payInfos: any) {
 
   const paymentContractorInfos = useForm<any>({
     defaultValues: {
-      contractorId: payInfos.fk_id_contractor,
+      contractor_id: payInfos.fk_id_contractor,
       month: payInfos.month,
       year: payInfos.year,
       payments: [
@@ -31,28 +31,34 @@ export default function PaymentsInfos(payInfos: any) {
   })
   const queryClient = useQueryClient()
   const { register, handleSubmit } = paymentContractorInfos
-  const { data, mutateAsync } = useMutation(axiosUpdatePayments, {
-    onSuccess() {
-      console.log(data)
+  const { mutateAsync } = useMutation(axiosUpdatePayments, {
+    onSuccess(response) {
+      console.log(response)
       queryClient.invalidateQueries(['payments'])
     },
     onError(error: { response: any }) {
       console.log(error.response)
     },
   })
-  function handleUpdatePayment(data: any) {
-    console.log(data)
-    mutateAsync(data)
+  function handleUpdatePayment(payload: any) {
+    console.log(payload)
+    mutateAsync(payload)
   }
-
+  function setStatusPayment() {
+    const paymentQuarter1 = payInfos.payments[0].identifier
+    const paymentQuarter2 = payInfos.payments[1].identifier
+    if (paymentQuarter1 && paymentQuarter2) {
+      return 'green'
+    } else if (paymentQuarter1 || paymentQuarter2) {
+      return 'yellow'
+    } else {
+      return 'red'
+    }
+  }
   return (
     <tr className="bg-white border-b">
       <th scope="row" className="tableBodyTh">
-        <Circle
-          weight="fill"
-          size={15}
-          color={payInfos.status === 'ACTIVE' ? 'green' : 'gray'}
-        />
+        <Circle weight="fill" size={15} color={setStatusPayment()} />
       </th>
       <td className="tableLine min-w-[9rem]">
         <Link to={`/contractors/${payInfos.fk_id_contractor}`}>
@@ -87,6 +93,8 @@ export default function PaymentsInfos(payInfos: any) {
           </td>
         </>
       ))}
+      <td className="w-[7rem]  px-2">{formatMoney(payInfos.taxes)}</td>
+      <td className="w-[7rem]  px-2">{formatMoney(payInfos.shirts)}</td>
       <td className="w-[7rem]  px-2">
         {formatMoney(
           payInfos.payments.reduce(

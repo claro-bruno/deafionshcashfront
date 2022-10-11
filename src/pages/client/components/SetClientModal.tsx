@@ -27,7 +27,6 @@ export default function SetClientModal({
     saturday: false,
     sunday: false,
   }
-
   const { state: clientState, handleChange } = useHandleChange(
     INITIAL_MODAL_CLIENT_STATES,
   )

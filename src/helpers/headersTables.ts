@@ -24,6 +24,9 @@ export const headerTableJobs = [
   'Month',
   ' total hours',
   'P/Hour',
+  'Taxes',
+  'Shirts',
+  'Status Payment',
   'total payment',
 ]
 export const headerTablePayments = [
@@ -35,5 +38,7 @@ export const headerTablePayments = [
   'quinzena 2',
   'Payment Type',
   'Payment Identifier',
+  'total taxes',
+  'total shirts',
   'Total Month',
 ]

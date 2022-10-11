@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { GearSix, Plus } from 'phosphor-react'
+import { GearSix } from 'phosphor-react'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useContextSelector } from 'use-context-selector'
@@ -43,7 +43,7 @@ export default function Jobs() {
   const { id } = useParams()
   /* console.log(id) */
 
-  const { data } = useQuery<any>(['jobs'], () =>
+  const { data, isRefetching } = useQuery<any>(['jobs'], () =>
     axiosGetAllJobs({ month: monthName, year: yearName }),
   )
   useEffect(() => {
@@ -58,10 +58,12 @@ export default function Jobs() {
           })),
         })),
       }))
-
       handleSetJobs(jobFormatted)
     }
-  }, [data])
+    if (isRefetching) {
+      handleSetJobs([])
+    }
+  }, [data, isRefetching])
 
   function formatFortnightDays(quarter: string) {
     const fortnight =
@@ -134,9 +136,9 @@ export default function Jobs() {
           <button
             type="button"
             onClick={handleSwitchModalView}
-            className="w-10 absolute left-[93%] mt-2  flex justify-center  px-2 buttonStyle1"
+            className="w-28 text-xs absolute left-[90%] mt-2  flex justify-center break-words buttonStyle1"
           >
-            <Plus size={20} color={'white'} />
+            Add new Contractor/work
           </button>
           <table className="table">
             <thead className="tableHead  ">

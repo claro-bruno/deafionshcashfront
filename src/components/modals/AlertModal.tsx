@@ -39,7 +39,7 @@ export default function AlertModal({
               >
                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                   <div className="flex items-center justify-center">
-                    {modalInfos.isContractorCreated === false && (
+                    {modalInfos?.isContractorCreated === false && (
                       <Warning size={36} color={'red'} />
                     )}
                   </div>

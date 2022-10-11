@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { Circle, Plus } from 'phosphor-react'
+import { Circle } from 'phosphor-react'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useContextSelector } from 'use-context-selector'
@@ -64,9 +64,9 @@ export default function ClientPage() {
                   <button
                     type="button"
                     onClick={switchModalView}
-                    className=" relative left-8 mt-2 flex justify-center px-2 buttonStyle1"
+                    className=" relative left-2 mt-2 flex justify-center px-2 buttonStyle1"
                   >
-                    <Plus size={20} color={'white'} />
+                    Add new Client
                   </button>
                 </th>
               )}
