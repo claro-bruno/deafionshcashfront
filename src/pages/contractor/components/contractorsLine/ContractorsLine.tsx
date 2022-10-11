@@ -1,7 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useContext } from 'use-context-selector'
 import { axiosUpdateContractorStatus } from '../../../../api/contractor'
+import { alertContext } from '../../../../context/AlertProvider/AlertContextProvider'
 import { Contractor } from '../../../../types/contractor'
 
 type ContractorsLineProps = {
@@ -14,19 +16,26 @@ export default function ContractorsLine({
 }: ContractorsLineProps) {
   const queryClient = useQueryClient()
   const [contractorStatus, setContractorStatus] = useState(contractor.status)
+  const { changeAlertModalState, getAlertMessage } = useContext(alertContext)
   const { mutateAsync } = useMutation(axiosUpdateContractorStatus, {
     onSuccess: () => {
       queryClient.invalidateQueries(['contractors'])
     },
     onError: (error: { response: any }) => {
-      console.log(error.response)
+      console.log(error.response?.data)
+      getAlertMessage({
+        message: error.response?.data,
+      })
+      changeAlertModalState()
     },
   })
+
   function handleUpdateContractor(payload: any) {
     const contractorObj = { id: payload.id, status: contractorStatus }
     console.log(contractorObj)
     mutateAsync(contractorObj)
   }
+
   return (
     <tr key={contractor.id} className=" bg-white  border-b  ">
       <td>

@@ -6,7 +6,7 @@ import { useContextSelector } from 'use-context-selector'
 import { axiosGetAllJobs } from '../../api/jobs'
 import Header from '../../components/header/Header'
 import SelectFilter from '../../components/listboxes/SelectFilter'
-import { jobsContext } from '../../context/JobContextProvider'
+import { jobsContext } from '../../context/JobProvider/JobContextProvider'
 import {
   fortnightListBox,
   MONTHS,

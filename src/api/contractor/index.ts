@@ -90,3 +90,11 @@ export async function axiosUpdateContractorStatus(payload: any) {
     },
   })
 }
+
+export async function axiosRecoveryPassword(payload: any) {
+  return await Api.post('account/contractor/reset', JSON.stringify(payload), {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+}

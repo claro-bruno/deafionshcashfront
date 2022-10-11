@@ -2,12 +2,13 @@ import { Dialog, Transition } from '@headlessui/react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Fragment, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useContextSelector } from 'use-context-selector'
+import { useContext, useContextSelector } from 'use-context-selector'
 import { axiosGetAllClients } from '../../../api/client'
 import { axiosGetAllContractors } from '../../../api/contractor'
 import { axiosCreateNewJob } from '../../../api/jobs'
 import '../../../components/modals/modal.css'
-import { jobsContext } from '../../../context/JobContextProvider'
+import { alertContext } from '../../../context/AlertProvider/AlertContextProvider'
+import { jobsContext } from '../../../context/JobProvider/JobContextProvider'
 import { WEEKDAYS } from '../../../helpers/constants'
 import { Clients } from '../../../types/client'
 import { Contractor } from '../../../types/contractor'
@@ -32,6 +33,7 @@ export default function NewJob({ tableDate }: NewJobProps) {
 
   const { register, handleSubmit, reset } = newJob
   const [daysWorked, setDaysWorked] = useState<string[]>([])
+  const { changeAlertModalState, getAlertMessage } = useContext(alertContext)
   const { data: clients } = useQuery(['clients'], axiosGetAllClients)
   const { data: contractors } = useQuery(
     [`contractors`],
@@ -43,6 +45,13 @@ export default function NewJob({ tableDate }: NewJobProps) {
   const { mutateAsync } = useMutation(axiosCreateNewJob, {
     onSuccess() {
       queryClient.invalidateQueries(['jobs'])
+    },
+    onError: (error: { response: any }) => {
+      console.log(error.response?.data)
+      getAlertMessage({
+        message: error.response?.data,
+      })
+      changeAlertModalState()
     },
   })
 

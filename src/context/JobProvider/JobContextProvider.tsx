@@ -1,7 +1,7 @@
 import { PropsWithChildren, useMemo, useState } from 'react'
 import { createContext } from 'use-context-selector'
-import useModal from '../hooks/useModal'
-import { TJob } from '../types/job'
+import useModal from '../../hooks/useModal'
+import { TJob } from '../../types/job'
 
 interface JobContext {
   jobToEdit: TJob

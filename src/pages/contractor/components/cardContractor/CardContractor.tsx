@@ -27,7 +27,7 @@ export default function CardContractor({
     checkContractorStatus()
   }, [contractor])
   return (
-    <div className="h-[21vh] flex items-center justify-between p-2">
+    <div className="h-[21vh] overflow-clip flex items-center justify-between p-2">
       <div className="flex gap-4 rounded w-[20rem] bg-zinc-50 shadow-lg py-4 px-4">
         <img
           className="h-20 w-20 object-cover rounded-md"

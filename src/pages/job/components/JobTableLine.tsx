@@ -1,9 +1,10 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { ChangeEvent, KeyboardEvent, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useContextSelector } from 'use-context-selector'
+import { useContext, useContextSelector } from 'use-context-selector'
 import { axiosUpdateNewJob } from '../../../api/jobs'
-import { jobsContext } from '../../../context/JobContextProvider'
+import { alertContext } from '../../../context/AlertProvider/AlertContextProvider'
+import { jobsContext } from '../../../context/JobProvider/JobContextProvider'
 import useFormate from '../../../hooks/useFormate'
 import { TJob } from '../../../types/job'
 import { DaysObj } from '../Jobs'
@@ -16,6 +17,7 @@ export default function JobTableLine({
   job: TJob
 }) {
   const [contractorWorkedInfos, setContractorWorkedInfos] = useState<TJob>(job)
+  const { changeAlertModalState, getAlertMessage } = useContext(alertContext)
   const {
     handleCurrentInputJobValue,
     currentInputJobValue,
@@ -29,8 +31,12 @@ export default function JobTableLine({
     onSuccess() {
       queryClient.invalidateQueries(['jobs'])
     },
-    onError(error) {
-      console.log(error)
+    onError: (error: { response: any }) => {
+      console.log(error.response?.data)
+      getAlertMessage({
+        message: error.response?.data,
+      })
+      changeAlertModalState()
     },
   })
 

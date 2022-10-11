@@ -2,11 +2,14 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Circle } from 'phosphor-react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
+import { useContext } from 'use-context-selector'
 import { axiosUpdatePayments } from '../../../api/payments'
+import { alertContext } from '../../../context/AlertProvider/AlertContextProvider'
 import useFormate from '../../../hooks/useFormate'
 
 export default function PaymentsInfos(payInfos: any) {
   const { formatMoney } = useFormate()
+  const { changeAlertModalState, getAlertMessage } = useContext(alertContext)
 
   const paymentContractorInfos = useForm<any>({
     defaultValues: {
@@ -36,8 +39,12 @@ export default function PaymentsInfos(payInfos: any) {
       console.log(response)
       queryClient.invalidateQueries(['payments'])
     },
-    onError(error: { response: any }) {
-      console.log(error.response)
+    onError: (error: { response: any }) => {
+      console.log(error.response?.data)
+      getAlertMessage({
+        message: error.response?.data,
+      })
+      changeAlertModalState()
     },
   })
   function handleUpdatePayment(payload: any) {

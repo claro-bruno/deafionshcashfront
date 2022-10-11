@@ -1,12 +1,12 @@
 import { useMutation } from '@tanstack/react-query'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
-import { useContextSelector } from 'use-context-selector'
-import AlertModal from '../../components/modals/AlertModal'
-import { AuthContext } from '../../context/AuthProvider'
-import useModal from '../../hooks/useModal'
+import { useContext, useContextSelector } from 'use-context-selector'
 import Logo from '../../assets/globalLogo.png'
+import { alertContext } from '../../context/AlertProvider/AlertContextProvider'
+import { AuthContext } from '../../context/AuthProvider'
+import RecoveryPassword from './RecoveryPasswordComponent/RecoveryPassword'
 
 export type UserLogin = {
   username: string
@@ -14,8 +14,8 @@ export type UserLogin = {
 }
 
 export default function Login() {
-  const [response, setResponse] = useState<any>({})
-  const { isModalOpen, switchModalView } = useModal()
+  const { changeAlertModalState, getAlertMessage, isModalOpen } =
+    useContext(alertContext)
   const { authenticate, saveUser, checkUserInLocalStorage } =
     useContextSelector(AuthContext, (context) => context)
   const { register, handleSubmit, watch } = useForm<UserLogin>({
@@ -32,7 +32,7 @@ export default function Login() {
     if (checkUserInLocalStorage()) {
       navigate('/home')
     }
-  }, [])
+  }, [checkUserInLocalStorage, navigate])
 
   const { mutateAsync } = useMutation(
     (payload: UserLogin) => authenticate(payload.username, payload.password),
@@ -43,11 +43,10 @@ export default function Login() {
       },
       onError: (error: { response: any }) => {
         console.log(error.response?.data)
-        setResponse({
-          isContractorCreated: false,
+        getAlertMessage({
           message: error.response?.data,
         })
-        switchModalView()
+        changeAlertModalState()
       },
     },
   )
@@ -110,13 +109,20 @@ export default function Login() {
               </Link>
             }
           </span>
+          <span className="text-sm mt-2 text-gray-400">
+            Forgot your password ?{' '}
+            {
+              <button className="text-blue-500" onClick={changeAlertModalState}>
+                Recover
+              </button>
+            }
+          </span>
         </div>
+        <RecoveryPassword
+          isModalOpen={isModalOpen}
+          switchModalView={changeAlertModalState}
+        />
       </div>
-      <AlertModal
-        modalInfos={response}
-        switchModalView={switchModalView}
-        isModalOpen={isModalOpen}
-      />
     </div>
   )
 }

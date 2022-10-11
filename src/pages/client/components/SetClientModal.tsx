@@ -1,8 +1,10 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { FormEvent, Fragment } from 'react'
+import { useContext } from 'use-context-selector'
 import { axiosCreateClient, axiosUpdateClient } from '../../../api/client'
 import '../../../components/modals/modal.css'
+import { alertContext } from '../../../context/AlertProvider/AlertContextProvider'
 import { WEEKDAYS } from '../../../helpers/constants'
 import useHandleChange from '../../../hooks/useHandleChange'
 import { ModalProps } from '../../../types/modal'
@@ -27,16 +29,21 @@ export default function SetClientModal({
     saturday: false,
     sunday: false,
   }
+
   const { state: clientState, handleChange } = useHandleChange(
     INITIAL_MODAL_CLIENT_STATES,
   )
-
+  const { changeAlertModalState, getAlertMessage } = useContext(alertContext)
   const { mutateAsync } = useMutation(axiosCreateClient, {
     onSuccess: () => {
       queryClient.invalidateQueries(['clients'])
     },
-    onError: (error) => {
-      console.log(error)
+    onError: (error: { response: any }) => {
+      console.log(error.response?.data)
+      getAlertMessage({
+        message: error.response?.data,
+      })
+      changeAlertModalState()
     },
   })
 

@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import ProtectedLayout from './components/auth/Protectedlayout'
-import JobContextProvider from './context/JobContextProvider'
+import JobContextProvider from './context/JobProvider/JobContextProvider'
 import Client from './pages/client/Client'
 import Contractor from './pages/contractor/Contractor'
 import Contractors from './pages/contractor/Contractors'

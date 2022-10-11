@@ -1,8 +1,10 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { FormEvent, Fragment } from 'react'
+import { useContext } from 'use-context-selector'
 import { axiosUpdateContractor } from '../../../../api/contractor'
 import '../../../../components/modals/modal.css'
+import { alertContext } from '../../../../context/AlertProvider/AlertContextProvider'
 import useHandleChange from '../../../../hooks/useHandleChange'
 import { EditContractor, InputsFiles } from '../../../../types/contractor'
 import { ModalProps } from '../../../../types/modal'
@@ -35,7 +37,7 @@ export default function EditContractorModal({
     ein: modalInfos.ein ?? '',
   })
   const queryClient = useQueryClient()
-
+  const { changeAlertModalState, getAlertMessage } = useContext(alertContext)
   const { mutateAsync, data } = useMutation(
     (payload: [EditContractor, InputsFiles]) =>
       axiosUpdateContractor(payload[0], payload[1]),
@@ -43,6 +45,13 @@ export default function EditContractorModal({
       onSuccess() {
         queryClient.invalidateQueries(['contractor', modalInfos.id])
         console.log(data)
+      },
+      onError: (error: { response: any }) => {
+        console.log(error.response?.data)
+        getAlertMessage({
+          message: error.response?.data,
+        })
+        changeAlertModalState()
       },
     },
   )
