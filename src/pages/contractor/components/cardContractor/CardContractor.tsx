@@ -2,6 +2,7 @@ import { Circle, Envelope, PencilSimpleLine, Phone } from 'phosphor-react'
 import React, { useEffect, useState } from 'react'
 import { useContextSelector } from 'use-context-selector'
 import { AuthContext } from '../../../../context/AuthProvider'
+import useFormate from '../../../../hooks/useFormate'
 import { Contractor } from '../../../../types/contractor'
 
 export default function CardContractor({
@@ -13,6 +14,8 @@ export default function CardContractor({
 }) {
   const [status, setStatus] = useState({ name: '', color: '' })
   const access = useContextSelector(AuthContext, (context) => context.access)
+  const { formatPhone } = useFormate()
+
   function checkContractorStatus() {
     if (contractor?.status === 'ACTIVE') {
       setStatus({ name: 'Active', color: 'green' })
@@ -26,6 +29,7 @@ export default function CardContractor({
   useEffect(() => {
     checkContractorStatus()
   }, [contractor])
+
   return (
     <div className="h-[21vh] overflow-clip flex items-center justify-between p-2">
       <div className="flex gap-4 rounded w-[20rem] bg-zinc-50 shadow-lg py-4 px-4">
@@ -52,7 +56,7 @@ export default function CardContractor({
           </span>
           <span className="contractorCardInfos">
             <Phone weight="fill" />
-            {contractor.telephone}
+            {formatPhone(contractor.telephone)}
           </span>
         </div>
       </div>

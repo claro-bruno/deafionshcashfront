@@ -185,33 +185,17 @@ export default function NewJob({ tableDate }: NewJobProps) {
                         />
                       ))}
                     </datalist>
-                    <label className="labelsDefault">
-                      P/Hour:
-                      <input
-                        {...register('value_hour')}
-                        className="inputsDefault"
-                        type="number"
-                      />
-                    </label>
-                    <label className="labelsDefault">
-                      Taxes:
-                      <input
-                        {...register('taxes')}
-                        className="inputsDefault"
-                        type="number"
-                      />
-                    </label>
-                    <label className="labelsDefault">
-                      Shirts:
-                      <input
-                        {...register('shirts')}
-                        className="inputsDefault"
-                        type="number"
-                      />
-                    </label>
+
                     {!jobToEdit.contractor && (
                       <>
-                        {' '}
+                        <label className="labelsDefault">
+                          P/Hour:
+                          <input
+                            {...register('value_hour')}
+                            className="inputsDefault"
+                            type="number"
+                          />
+                        </label>
                         <label className="labelsDefault">
                           Hours:
                           <input

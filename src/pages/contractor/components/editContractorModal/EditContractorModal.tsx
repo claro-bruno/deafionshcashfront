@@ -5,6 +5,7 @@ import { useContext } from 'use-context-selector'
 import { axiosUpdateContractor } from '../../../../api/contractor'
 import '../../../../components/modals/modal.css'
 import { alertContext } from '../../../../context/AlertProvider/AlertContextProvider'
+import useFormate from '../../../../hooks/useFormate'
 import useHandleChange from '../../../../hooks/useHandleChange'
 import { EditContractor, InputsFiles } from '../../../../types/contractor'
 import { ModalProps } from '../../../../types/modal'
@@ -29,6 +30,7 @@ export default function EditContractorModal({
     first_name: modalInfos.first_name ?? '',
     last_name: modalInfos.last_name ?? '',
     middle_name: modalInfos.middle_name ?? '',
+    dob: modalInfos.dob ?? '',
     status: modalInfos.status ?? '',
     address: address.address ?? '',
     city: address.city ?? '',
@@ -38,6 +40,7 @@ export default function EditContractorModal({
   })
   const queryClient = useQueryClient()
   const { changeAlertModalState, getAlertMessage } = useContext(alertContext)
+  const { formatDate, formatPhone } = useFormate()
   const { mutateAsync, data } = useMutation(
     (payload: [EditContractor, InputsFiles]) =>
       axiosUpdateContractor(payload[0], payload[1]),
@@ -65,6 +68,7 @@ export default function EditContractorModal({
     mutateAsync([state, inputsFiles])
     switchModalView()
   }
+
   return (
     <>
       <Transition appear show={isModalOpen} as={Fragment}>
@@ -111,14 +115,14 @@ export default function EditContractorModal({
                       <img
                         className="max-h-[20rem] max-w-[20rem] rounded-md object-contain"
                         src={
-                          modalInfos.urlProfile ||
+                          modalInfos?.urlProfile ||
                           'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
                         }
                         alt="profile "
                       />
                     </label>
                     <h2 className="lowercase first-letter:uppercase">
-                      {modalInfos.status}
+                      {modalInfos?.status}
                     </h2>
                     <div className="flex gap-4">
                       <label className="labelsDefault">
@@ -127,7 +131,7 @@ export default function EditContractorModal({
                           placeholder="Ex: John  "
                           className="inputsDefault"
                           type="text"
-                          defaultValue={modalInfos.first_name}
+                          defaultValue={modalInfos?.first_name}
                         />
                       </label>
                       <label className="labelsDefault">
@@ -136,7 +140,7 @@ export default function EditContractorModal({
                           placeholder="Ex: Doe  "
                           className="inputsDefault"
                           type="text"
-                          defaultValue={modalInfos.middle_name}
+                          defaultValue={modalInfos?.middle_name}
                         />
                       </label>
                       <label className="labelsDefault">
@@ -145,7 +149,7 @@ export default function EditContractorModal({
                           type="text"
                           placeholder="Ex: Smith  "
                           className="inputsDefault"
-                          defaultValue={modalInfos.last_name}
+                          defaultValue={modalInfos?.last_name}
                         />
                       </label>
                     </div>
@@ -158,7 +162,7 @@ export default function EditContractorModal({
                           className="inputsDefault"
                           name="email"
                           type="text"
-                          defaultValue={modalInfos.email}
+                          defaultValue={modalInfos?.email}
                         />
                       </label>
                       <label className="labelsDefault">
@@ -170,7 +174,7 @@ export default function EditContractorModal({
                           name="phone"
                           inputMode="numeric"
                           maxLength={11}
-                          defaultValue={modalInfos.telephone}
+                          defaultValue={formatPhone(modalInfos?.telephone)}
                         />
                       </label>
                       <label className="labelsDefault">
@@ -180,6 +184,10 @@ export default function EditContractorModal({
                           max="2022-12-31"
                           className="inputsDefault"
                           type="date"
+                          defaultValue={formatDate(
+                            modalInfos?.dob,
+                            'birthDate',
+                          )}
                         />
                       </label>
                     </div>
@@ -195,7 +203,7 @@ export default function EditContractorModal({
                           onChange={handleChange}
                           name="ssnOrItin"
                           inputMode="numeric"
-                          defaultValue={modalInfos.identification}
+                          defaultValue={modalInfos?.identification}
                         />
                       </label>
 
@@ -208,7 +216,7 @@ export default function EditContractorModal({
                           className="inputsDefault"
                           type="text"
                           inputMode="numeric"
-                          defaultValue={modalInfos.ein}
+                          defaultValue={modalInfos?.ein}
                         />
                       </label>
                       <label className="labelsDefault">

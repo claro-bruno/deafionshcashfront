@@ -65,6 +65,7 @@ export type EditContractor = {
   ein: string
   first_name: string
   last_name: string
+  dob: string
   middle_name: string
   address: string
   city: string

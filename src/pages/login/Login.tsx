@@ -6,6 +6,7 @@ import { useContext, useContextSelector } from 'use-context-selector'
 import Logo from '../../assets/globalLogo.png'
 import { alertContext } from '../../context/AlertProvider/AlertContextProvider'
 import { AuthContext } from '../../context/AuthProvider'
+import useModal from '../../hooks/useModal'
 import RecoveryPassword from './RecoveryPasswordComponent/RecoveryPassword'
 
 export type UserLogin = {
@@ -14,8 +15,7 @@ export type UserLogin = {
 }
 
 export default function Login() {
-  const { changeAlertModalState, getAlertMessage, isModalOpen } =
-    useContext(alertContext)
+  const { changeAlertModalState, getAlertMessage } = useContext(alertContext)
   const { authenticate, saveUser, checkUserInLocalStorage } =
     useContextSelector(AuthContext, (context) => context)
   const { register, handleSubmit, watch } = useForm<UserLogin>({
@@ -27,7 +27,7 @@ export default function Login() {
   const username = watch('username')
   const password = watch('password')
   const navigate = useNavigate()
-
+  const { isModalOpen, switchModalView } = useModal()
   useEffect(() => {
     if (checkUserInLocalStorage()) {
       navigate('/home')
@@ -112,7 +112,7 @@ export default function Login() {
           <span className="text-sm mt-2 text-gray-400">
             Forgot your password ?{' '}
             {
-              <button className="text-blue-500" onClick={changeAlertModalState}>
+              <button className="text-blue-500" onClick={switchModalView}>
                 Recover
               </button>
             }
@@ -120,7 +120,7 @@ export default function Login() {
         </div>
         <RecoveryPassword
           isModalOpen={isModalOpen}
-          switchModalView={changeAlertModalState}
+          switchModalView={switchModalView}
         />
       </div>
     </div>
