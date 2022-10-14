@@ -25,3 +25,10 @@ export async function axiosUpdateNewJob(payload: any) {
     },
   })
 }
+export async function axiosUpdateCreatedJob(payload: any) {
+  return await Api.patch(`job/${payload.id}`, JSON.stringify(payload), {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+}

@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 import { useContext, useContextSelector } from 'use-context-selector'
 import { axiosGetAllClients } from '../../../api/client'
 import { axiosGetAllContractors } from '../../../api/contractor'
-import { axiosCreateNewJob } from '../../../api/jobs'
+import { axiosCreateNewJob, axiosUpdateCreatedJob } from '../../../api/jobs'
 import '../../../components/modals/modal.css'
 import { alertContext } from '../../../context/AlertProvider/AlertContextProvider'
 import { jobsContext } from '../../../context/JobProvider/JobContextProvider'
@@ -13,14 +13,15 @@ import { WEEKDAYS } from '../../../helpers/constants'
 import { Clients } from '../../../types/client'
 import { Contractor } from '../../../types/contractor'
 
-type NewJobProps = {
-  tableDate: { monthName: string; yearName: string }
-}
-
-export default function NewJob({ tableDate }: NewJobProps) {
-  const { jobToEdit, handleSwitchModalView, isModalOpen, jobs, handleSetJobs } =
+export default function NewJob() {
+  const { jobToEdit, handleSwitchModalView, isModalOpen, editJob } =
     useContextSelector(jobsContext, (context) => context)
-  const newJob = useForm({
+  const contractorName =
+    jobToEdit?.contractor &&
+    `${jobToEdit.contractor.first_name} ${jobToEdit.contractor.last_name}`
+  const clientName = jobToEdit?.client && jobToEdit.client.name
+
+  const { register, handleSubmit, reset, watch } = useForm({
     defaultValues: {
       contractor: '',
       client: '',
@@ -30,8 +31,8 @@ export default function NewJob({ tableDate }: NewJobProps) {
       shirts: '',
     },
   })
-
-  const { register, handleSubmit, reset } = newJob
+  const contractorInput = watch('contractor')
+  const clientInput = watch('client')
   const [daysWorked, setDaysWorked] = useState<string[]>([])
   const { changeAlertModalState, getAlertMessage } = useContext(alertContext)
   const { data: clients } = useQuery(['clients'], axiosGetAllClients)
@@ -42,9 +43,29 @@ export default function NewJob({ tableDate }: NewJobProps) {
   const [contractorsList, setContractorsList] = useState<Contractor[]>([])
   const [clientsList, setClientsList] = useState<Clients>([])
   const queryClient = useQueryClient()
+
   const { mutateAsync } = useMutation(axiosCreateNewJob, {
     onSuccess() {
       queryClient.invalidateQueries(['jobs'])
+      reset()
+      setDaysWorked([])
+      handleCloseModal()
+    },
+    onError: (error: { response: any }) => {
+      console.log(error.response?.data)
+      getAlertMessage({
+        message: error.response?.data,
+      })
+      changeAlertModalState()
+    },
+  })
+
+  const { mutateAsync: mutateAsyncEdit } = useMutation(axiosUpdateCreatedJob, {
+    onSuccess() {
+      queryClient.invalidateQueries(['jobs'])
+      reset()
+      setDaysWorked([])
+      handleCloseModal()
     },
     onError: (error: { response: any }) => {
       console.log(error.response?.data)
@@ -64,6 +85,12 @@ export default function NewJob({ tableDate }: NewJobProps) {
     }
   }, [clients, contractors])
 
+  function handleCloseModal() {
+    editJob({})
+    handleSwitchModalView()
+    reset()
+  }
+
   function handleCreateNewJob(data: any) {
     const formattedNewJob = {
       id_contractor: Number(data.contractor.replace(/[^0-9]+/g, '')),
@@ -82,21 +109,17 @@ export default function NewJob({ tableDate }: NewJobProps) {
     }
     console.log(formattedNewJob)
     mutateAsync(formattedNewJob)
-    reset()
-    setDaysWorked([])
-    handleSwitchModalView()
   }
+
   function handleEditJob(data: any) {
     const formattedEditedJob = {
       id: jobToEdit.id,
-      ...data,
+      id_contractor: Number(data.contractor.replace(/[^0-9]+/g, '')),
+      id_client: Number(data.client.replace(/[^0-9]+/g, '')),
     }
-    const jobsFiltered = jobs.filter((user) => user.id !== jobToEdit.id)
-    const newJobs = [...jobsFiltered, formattedEditedJob]
-    handleSetJobs(newJobs)
-    reset()
-    setDaysWorked([])
-    handleSwitchModalView()
+    console.log(formattedEditedJob)
+
+    mutateAsyncEdit(formattedEditedJob)
   }
 
   function handleCheckboxAddNewWorkedDay(e: any) {
@@ -108,14 +131,11 @@ export default function NewJob({ tableDate }: NewJobProps) {
       setDaysWorked((state) => state.filter((d) => d !== day))
     }
   }
+
   return (
     <>
       <Transition appear show={isModalOpen} as={Fragment}>
-        <Dialog
-          as="div"
-          className="relative z-10"
-          onClose={handleSwitchModalView}
-        >
+        <Dialog as="div" className="relative z-10" onClose={handleCloseModal}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -150,7 +170,7 @@ export default function NewJob({ tableDate }: NewJobProps) {
                   >
                     {jobToEdit.contractor ? 'Edit Job' : ' New Job'}
                   </Dialog.Title>
-                  <div className=" flex flex-col gap-4 items-center justify-center">
+                  <form className=" flex flex-col gap-4 items-center justify-center">
                     <label className="flex flex-col gap-4 items-center"></label>
                     <label className="labelsDefault">
                       Contractor:
@@ -158,7 +178,9 @@ export default function NewJob({ tableDate }: NewJobProps) {
                         className="inputsDefault"
                         list="contractors"
                         type="text"
+                        placeholder={contractorName}
                         {...register('contractor')}
+                        required
                       />
                     </label>
                     <datalist id="contractors">
@@ -174,7 +196,9 @@ export default function NewJob({ tableDate }: NewJobProps) {
                         list="clients"
                         className="inputsDefault"
                         type="text"
+                        placeholder={clientName}
                         {...register('client')}
+                        required
                       />
                     </label>
                     <datalist id="clients" className="text-sm">
@@ -194,6 +218,7 @@ export default function NewJob({ tableDate }: NewJobProps) {
                             {...register('value_hour')}
                             className="inputsDefault"
                             type="number"
+                            required
                           />
                         </label>
                         <label className="labelsDefault">
@@ -202,6 +227,7 @@ export default function NewJob({ tableDate }: NewJobProps) {
                             {...register('hours')}
                             className="inputsDefault"
                             type="number"
+                            required
                           />
                         </label>
                         <label className=" w-[16rem] ml-6 self-center gap-1 flex flex-col labelsDefault">
@@ -228,26 +254,28 @@ export default function NewJob({ tableDate }: NewJobProps) {
                         </label>
                       </>
                     )}
-                  </div>
-                  <div className="pt-7 text-sm flex flex-col items-center gap-5">
-                    {jobToEdit.id ? (
-                      <button
-                        type="button"
-                        className="buttonStyle2 px-3"
-                        onClick={handleSubmit(handleEditJob)}
-                      >
-                        Edit
-                      </button>
-                    ) : (
-                      <button
-                        type="button"
-                        className="buttonStyle1 px-3"
-                        onClick={handleSubmit(handleCreateNewJob)}
-                      >
-                        Create
-                      </button>
-                    )}
-                  </div>
+                    <div className="pt-7 text-sm flex flex-col items-center gap-5">
+                      {jobToEdit.id ? (
+                        <button
+                          type="submit"
+                          className="buttonStyle2 px-3"
+                          onClick={handleSubmit(handleEditJob)}
+                          disabled={!contractorInput || !clientInput}
+                        >
+                          Edit
+                        </button>
+                      ) : (
+                        <button
+                          type="submit"
+                          className="buttonStyle1 px-3"
+                          onClick={handleSubmit(handleCreateNewJob)}
+                          disabled={!contractorInput || !clientInput}
+                        >
+                          Create
+                        </button>
+                      )}
+                    </div>
+                  </form>
                 </Dialog.Panel>
               </Transition.Child>
             </div>

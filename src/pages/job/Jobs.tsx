@@ -192,7 +192,7 @@ export default function Jobs() {
           </table>
         </div>
       </div>
-      <NewJob tableDate={{ monthName, yearName }} />
+      <NewJob />
     </div>
   )
 }

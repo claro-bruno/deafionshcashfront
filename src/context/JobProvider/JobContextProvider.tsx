@@ -4,8 +4,8 @@ import useModal from '../../hooks/useModal'
 import { TJob } from '../../types/job'
 
 interface JobContext {
-  jobToEdit: TJob
-  handleEditJob: (job: TJob) => void
+  jobToEdit: any
+  editJob: (job: TJob | {}) => void
   currentInputJobValue: string
   handleCurrentInputJobValue: (value: string) => void
   handleSwitchModalView: () => void
@@ -16,12 +16,12 @@ interface JobContext {
 
 export const jobsContext = createContext({} as JobContext)
 export default function JobContextProvider(props: PropsWithChildren) {
-  const [jobToEdit, setJobToEdit] = useState<TJob>({} as TJob)
+  const [jobToEdit, setJobToEdit] = useState({})
   const [currentInputJobValue, setCurrentInputJobValue] = useState('0')
   const [jobs, setJobs] = useState<TJob[]>([])
   const { switchModalView, isModalOpen } = useModal()
 
-  function handleEditJob(job: TJob) {
+  function editJob(job: TJob | {}) {
     setJobToEdit(job)
   }
   function handleSetJobs(data: TJob[]) {
@@ -39,7 +39,7 @@ export default function JobContextProvider(props: PropsWithChildren) {
   const valueToProvide = useMemo(
     () => ({
       jobToEdit,
-      handleEditJob,
+      editJob,
       currentInputJobValue,
       handleCurrentInputJobValue,
       isModalOpen,

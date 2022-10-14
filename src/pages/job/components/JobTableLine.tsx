@@ -21,7 +21,7 @@ export default function JobTableLine({
   const {
     handleCurrentInputJobValue,
     currentInputJobValue,
-    handleEditJob,
+    editJob,
     handleSwitchModalView,
   } = useContextSelector(jobsContext, (context) => context)
   const { formatMoney } = useFormate()
@@ -42,35 +42,37 @@ export default function JobTableLine({
 
   const pHourValue =
     fortnightDays[0]?.dayNum === 1
-      ? contractorWorkedInfos.quarter[0].value_hour
-      : contractorWorkedInfos.quarter[1].value_hour
+      ? contractorWorkedInfos?.quarter[0].value_hour
+      : contractorWorkedInfos?.quarter[1].value_hour
 
   const daysInputs =
     fortnightDays[0]?.dayNum === 1
-      ? contractorWorkedInfos.quarter[0].appointment
-      : contractorWorkedInfos.quarter[1].appointment
+      ? contractorWorkedInfos?.quarter[0].appointment
+      : contractorWorkedInfos?.quarter[1].appointment
 
   const isFirstQuarter = daysInputs[daysInputs.length - 1].date.includes('/15/')
 
   const hoursValue = isFirstQuarter
-    ? contractorWorkedInfos.quarter[0].total_hours
-    : contractorWorkedInfos.quarter[1].total_hours
+    ? contractorWorkedInfos?.quarter[0].total_hours
+    : contractorWorkedInfos?.quarter[1].total_hours
 
   const totalPaymentValue = isFirstQuarter
-    ? contractorWorkedInfos.quarter[0].total
-    : contractorWorkedInfos.quarter[1].total
+    ? contractorWorkedInfos?.quarter[0].total
+    : contractorWorkedInfos?.quarter[1].total
 
   const totalStatusPayment = isFirstQuarter
-    ? contractorWorkedInfos.quarter[0].status
-    : contractorWorkedInfos.quarter[1].status
+    ? contractorWorkedInfos?.quarter[0].status
+    : contractorWorkedInfos?.quarter[1].status
 
-  const taxesValue = isFirstQuarter
-    ? contractorWorkedInfos.quarter[0].taxes
-    : contractorWorkedInfos.quarter[1].taxes
+  const taxesValue =
+    fortnightDays[0]?.dayNum === 1
+      ? contractorWorkedInfos?.quarter[0].taxes
+      : contractorWorkedInfos?.quarter[1].taxes
 
-  const shirtsValue = isFirstQuarter
-    ? contractorWorkedInfos.quarter[0].shirts
-    : contractorWorkedInfos.quarter[1].shirts
+  const shirtsValue =
+    fortnightDays[0]?.dayNum === 1
+      ? contractorWorkedInfos?.quarter[0].shirts
+      : contractorWorkedInfos?.quarter[1].shirts
 
   function handleChange(
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -82,6 +84,8 @@ export default function JobTableLine({
     handleCurrentInputJobValue(value)
     if (options) {
       if (options === 'status_payment') {
+        console.log('cheguei')
+
         setContractorWorkedInfos((state) => ({
           ...state,
           quarter: isFirstQuarter
@@ -94,8 +98,8 @@ export default function JobTableLine({
         ...state,
         [name]: value,
         quarter: isFirstQuarter
-          ? [{ ...quarter1, [name]: Number(value) }, quarter2]
-          : [quarter1, { ...quarter2, [name]: Number(value) }],
+          ? [{ ...quarter1, [name]: value }, quarter2]
+          : [quarter1, { ...quarter2, [name]: value }],
       }))
 
       return
@@ -158,9 +162,11 @@ export default function JobTableLine({
       status: jobInfos.status,
       year: jobInfos.quarter[0].year,
       quarter: isFirstQuarter ? 1 : 2,
-      status_payment: jobInfos.quarter[0].status,
-      taxes: jobInfos.quarter[0].taxes,
-      shirts: jobInfos.quarter[0].shirts,
+      status_payment: isFirstQuarter
+        ? jobInfos.quarter[0].status
+        : jobInfos.quarter[1].status,
+      taxes: taxesValue,
+      shirts: shirtsValue,
       workedDaysInfos: formattedWorkedDaysInfos,
     }
     console.log(jobToUpdateFormatted)
@@ -169,15 +175,16 @@ export default function JobTableLine({
   }
 
   function handleEditContractor() {
-    handleEditJob(contractorWorkedInfos)
-    console.log(contractorWorkedInfos)
+    editJob(contractorWorkedInfos)
     handleSwitchModalView()
   }
 
   return (
     <tr
       className={`${
-        totalStatusPayment === 'PENDING' ? 'bg-white' : 'bg-green-200'
+        totalStatusPayment && totalStatusPayment === 'REVISED'
+          ? 'bg-green-200'
+          : 'bg-white'
       } border-b `}
     >
       <td className="pl-4 ">
@@ -223,6 +230,7 @@ export default function JobTableLine({
         <input
           onChange={(e) => handleChange(e, 'pHour')}
           name="value_hour"
+          type="number"
           className="w-[2.1rem] border ml-1 p-1"
           value={pHourValue}
         />
@@ -232,6 +240,7 @@ export default function JobTableLine({
         <input
           onChange={(e) => handleChange(e, 'taxes')}
           name="taxes"
+          type="number"
           className="w-[2.1rem] border ml-1 p-1"
           value={taxesValue}
         />
@@ -241,6 +250,7 @@ export default function JobTableLine({
         <input
           onChange={(e) => handleChange(e, 'shirts')}
           name="shirts"
+          type="number"
           className="w-[2.1rem] border ml-1 p-1"
           value={shirtsValue}
         />
@@ -266,7 +276,7 @@ export default function JobTableLine({
           Save
         </button>
         <button
-          onClick={() => console.log(handleEditContractor())}
+          onClick={() => handleEditContractor()}
           className="buttonStyle2 text-xs py-[0.09rem] px-2  "
           type="button"
         >
