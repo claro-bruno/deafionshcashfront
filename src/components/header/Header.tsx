@@ -1,6 +1,6 @@
 import { SignOut } from 'phosphor-react'
 import { PropsWithChildren } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { useContextSelector } from 'use-context-selector'
 import { AuthContext } from '../../context/AuthProvider'
 import Logo from '../../assets/globalLogo.png'
@@ -12,6 +12,7 @@ export default function Header(props: PropsWithChildren) {
     access,
     contractor_id: id,
   } = useContextSelector(AuthContext, (context) => context)
+  const location = useLocation()
 
   function handleLogout() {
     logout()
@@ -33,15 +34,29 @@ export default function Header(props: PropsWithChildren) {
             <NavLink to="/home" className="headerLink">
               Home
             </NavLink>
-            <NavLink to="/clients" className="headerLink">
-              Clients
-            </NavLink>
+            {!location.pathname.includes('/reports') && (
+              <NavLink to="/clients" className="headerLink">
+                Clients
+              </NavLink>
+            )}
             {access === 'CONTRACTOR' && (
               <NavLink to={`/contractors/${id}`} className="headerLink">
                 Balance
               </NavLink>
             )}
-            {access === 'ADMIN' && (
+            {access === 'ADMIN' && location.pathname.includes('/reports') ? (
+              <>
+                <NavLink to="/reports" className="headerLink">
+                  Reports
+                </NavLink>
+                <NavLink to="/reports/months" className="headerLink">
+                  Rep.Months
+                </NavLink>
+                <NavLink to="/reports/invoices" className="headerLink">
+                  Invoices
+                </NavLink>
+              </>
+            ) : (
               <>
                 <NavLink to="/contractors" className="headerLink">
                   Contractors

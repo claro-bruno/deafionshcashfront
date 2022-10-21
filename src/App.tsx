@@ -86,6 +86,32 @@ function App() {
           }
         />
       </Route>
+      <Route path="/reports">
+        <Route
+          index
+          element={
+            <ProtectedLayout>
+              <Contractors />
+            </ProtectedLayout>
+          }
+        />
+        <Route
+          path="invoices"
+          element={
+            <ProtectedLayout>
+              <Contractor />
+            </ProtectedLayout>
+          }
+        />
+        <Route
+          path="months"
+          element={
+            <ProtectedLayout>
+              <Contractor />
+            </ProtectedLayout>
+          }
+        />
+      </Route>
     </Routes>
   )
 }
