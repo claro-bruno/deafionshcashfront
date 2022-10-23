@@ -21,33 +21,30 @@ export default function EditContractorModal({
     residenceProof: {},
   })
   const address = Array.isArray(modalInfos.address) && modalInfos.address[0]
-
   const { state, handleChange } = useHandleChange<EditContractor>({
-    id: modalInfos.id ?? '',
-    email: modalInfos.email ?? '',
-    telephone: modalInfos.telephone ?? '',
-    identification: modalInfos.identification ?? '',
-    first_name: modalInfos.first_name ?? '',
-    last_name: modalInfos.last_name ?? '',
-    middle_name: modalInfos.middle_name ?? '',
-    dob: modalInfos.dob ?? '',
-    status: modalInfos.status ?? '',
-    address: address.address ?? '',
-    city: address.city ?? '',
-    state: address.state ?? '',
-    zipcode: address.zipcode ?? '',
-    ein: modalInfos.ein ?? '',
+    email: '',
+    telephone: '',
+    identification: '',
+    first_name: '',
+    last_name: '',
+    middle_name: '',
+    dob: '',
+    status: '',
+    address: '',
+    city: '',
+    state: '',
+    zipcode: '',
+    ein: '',
   })
   const queryClient = useQueryClient()
   const { changeAlertModalState, getAlertMessage } = useContext(alertContext)
   const { formatDate, formatPhone } = useFormate()
-  const { mutateAsync, data } = useMutation(
+  const { mutateAsync } = useMutation(
     (payload: [EditContractor, InputsFiles]) =>
       axiosUpdateContractor(payload[0], payload[1]),
     {
       onSuccess() {
         queryClient.invalidateQueries(['contractor', modalInfos.id])
-        console.log(data)
       },
       onError: (error: { response: any }) => {
         console.log(error.response?.data)
@@ -64,11 +61,29 @@ export default function EditContractorModal({
   }
   function handleSubmitEditedContractor(e: FormEvent<EventTarget>) {
     e.preventDefault()
-    console.log(state, inputsFiles)
-    mutateAsync([state, inputsFiles])
+    const bodyPayload = {
+      id: modalInfos.id,
+      email: state.email ? state.email : modalInfos.email,
+      telephone: state.telephone ? state.telephone : modalInfos.telephone,
+      identification: state.identification
+        ? state.identification
+        : modalInfos.identification,
+      first_name: state.first_name ? state.first_name : modalInfos.first_name,
+      last_name: state.last_name ? state.last_name : modalInfos.last_name,
+      middle_name: state.middle_name
+        ? state.middle_name
+        : modalInfos.middle_name,
+      dob: state.dob ? state.dob : modalInfos.dob,
+      status: state.status ? state.status : modalInfos.status,
+      address: state.address ? state.address : address.address,
+      city: state.city ? state.city : address.city,
+      state: state.state ? state.state : address.state,
+      zipcode: state.zipcode ? state.zipcode : address.zipcode,
+      ein: state.ein ? state.ein : modalInfos.ein,
+    }
+    mutateAsync([bodyPayload, inputsFiles])
     switchModalView()
   }
-
   return (
     <>
       <Transition appear show={isModalOpen} as={Fragment}>
@@ -128,8 +143,10 @@ export default function EditContractorModal({
                       <label className="labelsDefault">
                         First name
                         <input
+                          onChange={handleChange}
                           placeholder="Ex: John  "
                           className="inputsDefault"
+                          name="first_name"
                           type="text"
                           defaultValue={modalInfos?.first_name}
                         />
@@ -137,8 +154,10 @@ export default function EditContractorModal({
                       <label className="labelsDefault">
                         <div className="flex items-start">Middle name</div>
                         <input
+                          onChange={handleChange}
                           placeholder="Ex: Doe  "
                           className="inputsDefault"
+                          name="middle_name"
                           type="text"
                           defaultValue={modalInfos?.middle_name}
                         />
@@ -146,9 +165,11 @@ export default function EditContractorModal({
                       <label className="labelsDefault">
                         Last name
                         <input
+                          onChange={handleChange}
                           type="text"
                           placeholder="Ex: Smith  "
                           className="inputsDefault"
+                          name="last_name"
                           defaultValue={modalInfos?.last_name}
                         />
                       </label>
@@ -171,7 +192,7 @@ export default function EditContractorModal({
                           onChange={handleChange}
                           className="inputsDefault"
                           type="text"
-                          name="phone"
+                          name="telephone"
                           inputMode="numeric"
                           maxLength={11}
                           defaultValue={formatPhone(modalInfos?.telephone)}
@@ -180,10 +201,12 @@ export default function EditContractorModal({
                       <label className="labelsDefault">
                         Birthday
                         <input
+                          onChange={handleChange}
                           min="1940-12-31"
                           max="2022-12-31"
                           className="inputsDefault"
                           type="date"
+                          name="dob"
                           defaultValue={formatDate(
                             modalInfos?.dob,
                             'birthDate',
@@ -211,6 +234,7 @@ export default function EditContractorModal({
                         <div className="flex items-start">EIN</div>
                         <input
                           title="Employer Identification Number (EIN)"
+                          onChange={handleChange}
                           placeholder="00-0000000"
                           maxLength={9}
                           className="inputsDefault"
@@ -223,6 +247,7 @@ export default function EditContractorModal({
                         Address
                         <input
                           inputMode="numeric"
+                          onChange={handleChange}
                           maxLength={120}
                           className="inputsDefault"
                           type="text"
@@ -235,6 +260,7 @@ export default function EditContractorModal({
                         State
                         <input
                           className="inputsDefault"
+                          onChange={handleChange}
                           maxLength={120}
                           type="text"
                           defaultValue={address.state}
@@ -244,6 +270,7 @@ export default function EditContractorModal({
                         Zip-code
                         <input
                           className="inputsDefault"
+                          onChange={handleChange}
                           type="text"
                           maxLength={20}
                           defaultValue={address.zipcode}
@@ -253,6 +280,7 @@ export default function EditContractorModal({
                         City
                         <input
                           className="inputsDefault"
+                          onChange={handleChange}
                           type="text"
                           maxLength={120}
                           defaultValue={address.city}

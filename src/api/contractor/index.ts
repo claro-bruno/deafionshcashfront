@@ -38,8 +38,7 @@ export function axiosUpdateContractor(
   payload: EditContractor,
   inputsFiles: InputsFiles,
 ) {
-  const jsonToString = JSON.stringify(payload)
-  let objToAPI: any = { body: jsonToString }
+  let objToAPI: any = { body: payload }
 
   if (inputsFiles.documentProof instanceof File) {
     objToAPI = { ...objToAPI, documentProof: inputsFiles.documentProof }

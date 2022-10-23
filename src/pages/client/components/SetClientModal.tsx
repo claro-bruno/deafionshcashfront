@@ -101,7 +101,7 @@ export default function SetClientModal({
     console.log(payload, isEditMode)
     e.preventDefault()
     isEditMode
-      ? updateMutateAsync({ ...clientState, id: modalInfos.id })
+      ? updateMutateAsync({ ...payload, id: modalInfos.id })
       : mutateAsync(clientState)
     switchModalView()
   }
