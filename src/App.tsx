@@ -10,6 +10,9 @@ import Login from './pages/login/Login'
 import Payments from './pages/payments/Payments'
 import Register from './pages/register/Register'
 import Terms from './pages/register/Terms'
+import Invoices from './pages/reports/Invoices'
+import Months from './pages/reports/Months'
+import Reports from './pages/reports/Reports'
 
 function App() {
   return (
@@ -91,7 +94,7 @@ function App() {
           index
           element={
             <ProtectedLayout>
-              <Contractors />
+              <Reports />
             </ProtectedLayout>
           }
         />
@@ -99,7 +102,7 @@ function App() {
           path="invoices"
           element={
             <ProtectedLayout>
-              <Contractor />
+              <Invoices />
             </ProtectedLayout>
           }
         />
@@ -107,7 +110,7 @@ function App() {
           path="months"
           element={
             <ProtectedLayout>
-              <Contractor />
+              <Months />
             </ProtectedLayout>
           }
         />

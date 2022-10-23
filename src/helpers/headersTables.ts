@@ -30,7 +30,6 @@ export const headerTableJobs = [
   'total payment',
 ]
 export const headerTablePayments = [
-  'status',
   'Contractor',
   '1 - 15',
   'Payment Type',
@@ -41,4 +40,48 @@ export const headerTablePayments = [
   'total taxes',
   'total shirts',
   'Total Month',
+]
+
+export const headerTableReports = [
+  'month',
+  'in',
+  'labour payroll',
+  'van/fuel & oil',
+  'fuel & oil',
+  'equipment',
+  'uniform',
+  'repairs & maintenance',
+  'advertisement',
+  'contractors workers',
+  'global',
+  'insurance & tax',
+  'meals',
+  'chemical & consumables',
+  'office expenses',
+  'extras',
+  'general total monthly',
+]
+
+export const headerTableMonthsReports = [
+  'id',
+  'date',
+  'payed for',
+  'payment form',
+  'payment identification',
+  'in',
+  'labour Payroll',
+  'van/fuel & oil',
+  'fuel & oil',
+  'equipment',
+  'uniform',
+  'repairs & maintenance',
+  'advertisement',
+  'contractor workers',
+  'global',
+  'insurance & tax',
+  'meals',
+  'chemical & consumables',
+  'office expenses',
+  'extras',
+  'save',
 ]

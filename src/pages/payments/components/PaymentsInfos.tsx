@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { Circle } from 'phosphor-react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import { useContext } from 'use-context-selector'
@@ -55,18 +54,15 @@ export default function PaymentsInfos(payInfos: any) {
     const paymentQuarter1 = payInfos.payments[0].identifier
     const paymentQuarter2 = payInfos.payments[1].identifier
     if (paymentQuarter1 && paymentQuarter2) {
-      return 'green'
+      return 'bg-green-200'
     } else if (paymentQuarter1 || paymentQuarter2) {
-      return 'yellow'
+      return 'bg-yellow-200'
     } else {
-      return 'red'
+      return 'bg-white'
     }
   }
   return (
-    <tr className="bg-white border-b">
-      <th scope="row" className="tableBodyTh">
-        <Circle weight="fill" size={15} color={setStatusPayment()} />
-      </th>
+    <tr className={`${setStatusPayment()}  border-b`}>
       <td className="tableLine min-w-[9rem]">
         <Link to={`/contractors/${payInfos.fk_id_contractor}`}>
           {payInfos.name}
