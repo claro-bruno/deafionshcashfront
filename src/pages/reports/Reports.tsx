@@ -4,6 +4,7 @@ import SelectFilter from '../../components/listboxes/SelectFilter'
 import { reportsYearBody, yearsListBox } from '../../helpers/constants'
 import { headerTableReports } from '../../helpers/headersTables'
 import { useDateFilter } from '../../hooks/useDateFIlter'
+import YearReportTableLine from './components/YearReportTableLine'
 
 export default function Reports() {
   const { monthName, setYearName, yearName } = useDateFilter()
@@ -78,28 +79,7 @@ export default function Reports() {
                 <td className="tableLine">40,000.00</td>
               </tr>
               {reportsYearBody.map((month) => (
-                <tr
-                  key={month.id}
-                  className="border-b text-center hover:bg-brand2 hover:font-semibold hover:text-white transition-all"
-                >
-                  <td className="tableLine">{month.month}</td>
-                  <td className="tableLine">{month.in}</td>
-                  <td className="tableLine">{month.labourPayroll}</td>
-                  <td className="tableLine">{month.vanFuelAndOil}</td>
-                  <td className="tableLine">{month.fuelAndOil}</td>
-                  <td className="tableLine">{month.equipment}</td>
-                  <td className="tableLine">{month.uniform}</td>
-                  <td className="tableLine">{month.repairsAndMaintenance}</td>
-                  <td className="tableLine">{month.advertisement}</td>
-                  <td className="tableLine">{month.contractorsWorkers}</td>
-                  <td className="tableLine">{month.global}</td>
-                  <td className="tableLine">{month.insuranceAndTax}</td>
-                  <td className="tableLine">{month.meals}</td>
-                  <td className="tableLine">{month.chemicalAndConsumables}</td>
-                  <td className="tableLine">{month.officeExpenses}</td>
-                  <td className="tableLine">{month.extras}</td>
-                  <td className="tableLine">{month.totalMonthly}</td>
-                </tr>
+                <YearReportTableLine key={month.id} report={month} />
               ))}
             </tbody>
           </table>

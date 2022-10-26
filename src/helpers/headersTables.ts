@@ -44,7 +44,7 @@ export const headerTablePayments = [
 
 export const headerTableReports = [
   'month',
-  'in',
+  'invoices',
   'labour payroll',
   'van/fuel & oil',
   'fuel & oil',
@@ -67,8 +67,8 @@ export const headerTableMonthsReports = [
   'date',
   'payed for',
   'payment form',
-  'payment identification',
-  'in',
+  'payment identifier',
+  'invoices',
   'labour Payroll',
   'van/fuel & oil',
   'fuel & oil',

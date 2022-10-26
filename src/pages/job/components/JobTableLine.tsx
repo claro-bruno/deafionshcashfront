@@ -270,7 +270,7 @@ export default function JobTableLine({
       <td className=" flex gap-1">
         <button
           onClick={() => handleUpdateJob(contractorWorkedInfos)}
-          className="buttonStyle1 text-xs py-[0.09rem] px-2  "
+          className="buttonStyle1 text-xs py-[0.09rem] px-2"
           type="button"
         >
           Save

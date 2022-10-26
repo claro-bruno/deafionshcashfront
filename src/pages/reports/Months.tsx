@@ -1,8 +1,15 @@
 import Header from '../../components/header/Header'
 import SelectFilter from '../../components/listboxes/SelectFilter'
-import { monthsListBox, yearsListBox } from '../../helpers/constants'
+import {
+  monthsListBox,
+  reportsMonthBody,
+  yearsListBox,
+} from '../../helpers/constants'
 import { headerTableMonthsReports } from '../../helpers/headersTables'
 import { useDateFilter } from '../../hooks/useDateFIlter'
+import useModal from '../../hooks/useModal'
+import MonthReportTableLine from './components/MonthReportTableLine'
+import NewReportMonth from './components/NewMonthReport'
 
 export default function Months() {
   const {
@@ -14,10 +21,11 @@ export default function Months() {
     setFilterContractor,
     filterContractor,
   } = useDateFilter()
+  const { isModalOpen, switchModalView } = useModal()
   return (
     <div>
       <Header>
-        <div className="relative z-10 left-24 mx-auto flex items-center gap-2">
+        <div className="relative z-10 left-36 mx-auto flex items-center gap-2">
           <SelectFilter setFilter={setYearName} selectOptions={yearsListBox} />
           <SelectFilter
             setFilter={setMonthName}
@@ -37,23 +45,29 @@ export default function Months() {
         <div className=" items-center flex flex-col overflow-auto ">
           <div className="flex justify-between  w-full px-4">
             <div>
-              <span className="relative h-10 flex gap-2 my-1 items-center font-extrabold text-xl self-center">
+              <span className="flex gap-2 my-1 items-center font-extrabold text-lg self-center">
                 Balance past month: $ 595,148.23
               </span>
-              <span className="relative h-10 flex gap-2 my-1 items-center font-extrabold text-xl self-center">
+              <span className="flex gap-2 my-1 items-center font-extrabold text-lg self-center">
                 Balance: $ 595,148.23
               </span>
-            </div>
-            <span className="relative h-10 flex gap-2 my-1 items-center font-extrabold text-xl self-center">
-              {`${yearName} ${monthName}`}
-            </span>
-            <div>
-              <span className="relative h-10 flex gap-2 my-1 items-center font-extrabold text-xl self-center">
+              <span className="flex gap-2 my-1 items-center font-extrabold text-lg self-center">
                 Total Expenses: $ 595,148.23
               </span>
-              <span className="relative h-10 flex gap-2 my-1 items-center font-extrabold text-xl self-center">
+              <span className="flex gap-2 my-1 items-center font-extrabold text-lg self-center">
                 Total Contractors: $ 595,148.23
               </span>
+            </div>
+            <span className=" relative right-10 flex gap-2 my-1 items-center font-extrabold text-xl self-center">
+              {`${yearName} ${monthName}`}
+            </span>
+            <div className="flex items-center">
+              <button
+                onClick={switchModalView}
+                className="buttonStyle1 px-4 text-sm"
+              >
+                Add new Report
+              </button>
             </div>
           </div>
           <table className="table !w-[90vw]">
@@ -63,7 +77,7 @@ export default function Months() {
                   <th
                     key={index}
                     scope="col"
-                    className="tableLine xl:max-xl:max-w-[55px]  "
+                    className="tableLine text-center xl:max-xl:max-w-[55px]  "
                   >
                     {item}
                   </th>
@@ -71,33 +85,39 @@ export default function Months() {
               </tr>
             </thead>
             <tbody>
-              <tr className="bg-black border-b text-white ">
-                <td className="tableLine">xxxxxxxxxxxx</td>
-                <td className="tableLine">janeiro</td>
-                <td className="tableLine">janeiro</td>
-                <td className="tableLine">janeiro</td>
-                <td className="tableLine">janeiro</td>
-                <td className="tableLine">janeiro</td>
-                <td className="tableLine">janeiro</td>
-                <td className="tableLine">janeiro</td>
-                <td className="tableLine">janeiro</td>
-                <td className="tableLine">janeiro</td>
-                <td className="tableLine">janeiro</td>
-                <td className="tableLine">janeiro</td>
-                <td className="tableLine">janeiro</td>
-                <td className="tableLine">janeiro</td>
-                <td className="tableLine">janeiro</td>
-                <td className="tableLine">janeiro</td>
-                <td className="tableLine">janeiro</td>
-                <td className="tableLine">janeiro</td>
-                <td className="tableLine">janeiro</td>
-                <td className="tableLine">
-                  <button className="bg-red-500 px-2 rounded">save</button>
-                </td>
+              <tr className="bg-black text-center font-semibold border-b text-white ">
+                <td className=" ">xxxx</td>
+                <td className=" ">xxxx</td>
+                <td className=" ">xxxx</td>
+                <td className=" ">xxxx</td>
+                <td className=" ">xxxx</td>
+                <td className="w-40 py-4">$99,999.99</td>
+                <td className="w-40 py-4">$99,999.99</td>
+                <td className="w-40 py-4">$99,999.99</td>
+                <td className="w-40 py-4">$99,999.99</td>
+                <td className="w-40 py-4">$99,999.99</td>
+                <td className="w-40 py-4">$99,999.99</td>
+                <td className="w-40 py-4">$99,999.99</td>
+                <td className="w-40 py-4">$99,999.99</td>
+                <td className="w-40 py-4">$99,999.99</td>
+                <td className="w-40 py-4">$99,999.99</td>
+                <td className="w-40 py-4">$99,999.99</td>
+                <td className="w-40 py-4">$99,999.99</td>
+                <td className="w-40 py-4">$99,999.99</td>
+                <td className="w-40 py-4">$99,999.99</td>
+                <td className="w-40 py-4">$99,999.99</td>
+                <td className=" ">xxxx</td>
               </tr>
+              {reportsMonthBody.map((report) => (
+                <MonthReportTableLine key={report.id} report={report} />
+              ))}
             </tbody>
           </table>
         </div>
+        <NewReportMonth
+          switchModalView={switchModalView}
+          isModalOpen={isModalOpen}
+        />
       </div>
     </div>
   )

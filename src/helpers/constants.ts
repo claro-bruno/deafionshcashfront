@@ -538,3 +538,462 @@ export const totalReportsYearBody = {
   extras: '40,000.00',
   totalMonthly: '40,000.00',
 }
+
+export const reportsMonthBody = [
+  {
+    id: 1,
+    date: 'January',
+    payedFor: 'bruno alves fay',
+    paymentForm: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000),
+    in: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    paymentIdentification: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000),
+    labourPayroll: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(
+      2,
+    ),
+    vanFuelAndOil: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(
+      2,
+    ),
+    fuelAndOil: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    equipment: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    uniform: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    repairsAndMaintenance: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    advertisement: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(
+      2,
+    ),
+    contractorsWorkers: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    global: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    insuranceAndTax: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    meals: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    chemicalAndConsumables: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    officeExpenses: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    extras: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+  },
+  {
+    id: 2,
+    date: 'January',
+    payedFor: 'bruno alves fay',
+    paymentForm: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000),
+    paymentIdentification: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000),
+    in: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    labourPayroll: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(
+      2,
+    ),
+    vanFuelAndOil: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(
+      2,
+    ),
+    fuelAndOil: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    equipment: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    uniform: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    repairsAndMaintenance: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    advertisement: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(
+      2,
+    ),
+    contractorsWorkers: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    global: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    insuranceAndTax: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    meals: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    chemicalAndConsumables: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    officeExpenses: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    extras: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+  },
+  {
+    id: 3,
+    date: 'January',
+    payedFor: 'bruno alves fay',
+    paymentForm: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000),
+    paymentIdentification: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000),
+    in: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    labourPayroll: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(
+      2,
+    ),
+    vanFuelAndOil: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(
+      2,
+    ),
+    fuelAndOil: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    equipment: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    uniform: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    repairsAndMaintenance: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    advertisement: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(
+      2,
+    ),
+    contractorsWorkers: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    global: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    insuranceAndTax: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    meals: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    chemicalAndConsumables: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    officeExpenses: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    extras: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+  },
+  {
+    id: 4,
+    date: 'January',
+    payedFor: 'bruno alves fay',
+    paymentForm: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000),
+    paymentIdentification: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000),
+    in: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    labourPayroll: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(
+      2,
+    ),
+    vanFuelAndOil: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(
+      2,
+    ),
+    fuelAndOil: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    equipment: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    uniform: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    repairsAndMaintenance: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    advertisement: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(
+      2,
+    ),
+    contractorsWorkers: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    global: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    insuranceAndTax: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    meals: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    chemicalAndConsumables: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    officeExpenses: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    extras: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+  },
+  {
+    id: 5,
+    date: 'January',
+    payedFor: 'bruno alves fay',
+    paymentForm: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000),
+    paymentIdentification: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000),
+    in: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    labourPayroll: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(
+      2,
+    ),
+    vanFuelAndOil: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(
+      2,
+    ),
+    fuelAndOil: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    equipment: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    uniform: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    repairsAndMaintenance: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    advertisement: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(
+      2,
+    ),
+    contractorsWorkers: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    global: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    insuranceAndTax: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    meals: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    chemicalAndConsumables: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    officeExpenses: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    extras: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+  },
+  {
+    id: 6,
+    date: 'January',
+    payedFor: 'bruno alves fay',
+    paymentForm: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000),
+    paymentIdentification: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000),
+    in: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    labourPayroll: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(
+      2,
+    ),
+    vanFuelAndOil: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(
+      2,
+    ),
+    fuelAndOil: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    equipment: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    uniform: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    repairsAndMaintenance: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    advertisement: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(
+      2,
+    ),
+    contractorsWorkers: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    global: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    insuranceAndTax: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    meals: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    chemicalAndConsumables: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    officeExpenses: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    extras: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+  },
+  {
+    id: 7,
+    date: 'January',
+    payedFor: 'bruno alves fay',
+    paymentForm: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000),
+    paymentIdentification: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000),
+    in: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    labourPayroll: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(
+      2,
+    ),
+    vanFuelAndOil: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(
+      2,
+    ),
+    fuelAndOil: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    equipment: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    uniform: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    repairsAndMaintenance: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    advertisement: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(
+      2,
+    ),
+    contractorsWorkers: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    global: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    insuranceAndTax: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    meals: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    chemicalAndConsumables: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    officeExpenses: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    extras: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+  },
+  {
+    id: 8,
+    date: 'January',
+    payedFor: 'bruno alves fay',
+    paymentForm: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000),
+    paymentIdentification: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000),
+    in: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    labourPayroll: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(
+      2,
+    ),
+    vanFuelAndOil: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(
+      2,
+    ),
+    fuelAndOil: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    equipment: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    uniform: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    repairsAndMaintenance: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    advertisement: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(
+      2,
+    ),
+    contractorsWorkers: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    global: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    insuranceAndTax: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    meals: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    chemicalAndConsumables: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    officeExpenses: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    extras: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+  },
+  {
+    id: 9,
+    date: 'January',
+    payedFor: 'bruno alves fay',
+    paymentForm: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000),
+    paymentIdentification: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000),
+    in: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    labourPayroll: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(
+      2,
+    ),
+    vanFuelAndOil: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(
+      2,
+    ),
+    fuelAndOil: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    equipment: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    uniform: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    repairsAndMaintenance: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    advertisement: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(
+      2,
+    ),
+    contractorsWorkers: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    global: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    insuranceAndTax: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    meals: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    chemicalAndConsumables: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    officeExpenses: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    extras: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+  },
+  {
+    id: 10,
+    date: 'January',
+    payedFor: 'bruno alves fay',
+    paymentForm: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000),
+    paymentIdentification: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000),
+    in: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    labourPayroll: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(
+      2,
+    ),
+    vanFuelAndOil: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(
+      2,
+    ),
+    fuelAndOil: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    equipment: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    uniform: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    repairsAndMaintenance: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    advertisement: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(
+      2,
+    ),
+    contractorsWorkers: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    global: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    insuranceAndTax: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    meals: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    chemicalAndConsumables: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    officeExpenses: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    extras: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+  },
+  {
+    id: 11,
+    date: 'January',
+    payedFor: 'bruno alves fay',
+    paymentForm: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000),
+    paymentIdentification: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000),
+    in: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    labourPayroll: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(
+      2,
+    ),
+    vanFuelAndOil: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(
+      2,
+    ),
+    fuelAndOil: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    equipment: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    uniform: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    repairsAndMaintenance: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    advertisement: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(
+      2,
+    ),
+    contractorsWorkers: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    global: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    insuranceAndTax: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    meals: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    chemicalAndConsumables: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    officeExpenses: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    extras: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+  },
+  {
+    id: 12,
+    date: 'January',
+    payedFor: 'bruno alves fay',
+    paymentForm: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000),
+    paymentIdentification: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000),
+    in: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    labourPayroll: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(
+      2,
+    ),
+    vanFuelAndOil: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(
+      2,
+    ),
+    fuelAndOil: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    equipment: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    uniform: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    repairsAndMaintenance: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    advertisement: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(
+      2,
+    ),
+    contractorsWorkers: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    global: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    insuranceAndTax: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    meals: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+    chemicalAndConsumables: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    officeExpenses: Math.floor(
+      Math.random() * (4000 - 1000 + 1) + 1000,
+    ).toFixed(2),
+    extras: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(2),
+  },
+]

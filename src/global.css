@@ -50,7 +50,9 @@ body {
 .tableLine:first-child {
 @apply  relative text-center;
 }
-
+.tableLineHover{
+@apply hover:bg-brand2 hover:font-semibold hover:text-white;
+}
 
 .tableBodyTh{
   @apply flex relative top-1 justify-center font-medium text-gray-900 whitespace-nowrap dark:text-white ;
