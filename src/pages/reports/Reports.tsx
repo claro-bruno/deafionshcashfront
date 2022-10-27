@@ -25,21 +25,21 @@ export default function Reports() {
         <div className="  items-center flex flex-col overflow-auto ">
           <div className="flex justify-between  w-full px-4">
             <div>
-              <span className="relative h-10 flex gap-2 my-1 items-center font-extrabold text-xl self-center">
+              <span className="relative text-zinc-700  h-10 flex gap-2 my-1 items-center font-extrabold text-xl self-center">
                 Total Labour Payroll: $ 595,148.23
               </span>
-              <span className="relative h-10 flex gap-2 my-1 items-center font-extrabold text-xl self-center">
+              <span className="relative text-zinc-700  h-10 flex gap-2 my-1 items-center font-extrabold text-xl self-center">
                 Total Contractors: $ 595,148.23
               </span>
             </div>
-            <span className="relative my-1 font-extrabold text-xl self-center">
+            <h3 className="relative text-zinc-700  my-1 font-extrabold text-xl self-center">
               {yearName}
-            </span>
+            </h3>
             <div>
-              <span className="relative h-10 flex gap-2 my-1 items-center font-extrabold text-xl self-center">
+              <span className="relative text-zinc-700  h-10 flex gap-2 my-1 items-center font-extrabold text-xl self-center">
                 Total Expenses: $ 595,148.23
               </span>
-              <span className="relative h-10 flex gap-2 my-1 items-center font-extrabold text-xl self-center">
+              <span className="relative text-zinc-700  h-10 flex gap-2 my-1 items-center font-extrabold text-xl self-center">
                 Total: $ 595,148.23
               </span>
             </div>

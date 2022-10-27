@@ -45,22 +45,22 @@ export default function Months() {
         <div className=" items-center flex flex-col overflow-auto ">
           <div className="flex justify-between  w-full px-4">
             <div>
-              <span className="flex gap-2 my-1 items-center font-extrabold text-lg self-center">
+              <span className="flex text-zinc-700 gap-2 my-1 items-center font-extrabold text-lg self-center">
                 Balance past month: $ 595,148.23
               </span>
-              <span className="flex gap-2 my-1 items-center font-extrabold text-lg self-center">
+              <span className="flex text-zinc-700 gap-2 my-1 items-center font-extrabold text-lg self-center">
                 Balance: $ 595,148.23
               </span>
-              <span className="flex gap-2 my-1 items-center font-extrabold text-lg self-center">
+              <span className="flex text-zinc-700 gap-2 my-1 items-center font-extrabold text-lg self-center">
                 Total Expenses: $ 595,148.23
               </span>
-              <span className="flex gap-2 my-1 items-center font-extrabold text-lg self-center">
+              <span className="flex text-zinc-700 gap-2 my-1 items-center font-extrabold text-lg self-center">
                 Total Contractors: $ 595,148.23
               </span>
             </div>
-            <span className=" relative right-10 flex gap-2 my-1 items-center font-extrabold text-xl self-center">
+            <h3 className="text-zinc-700  relative right-10 flex gap-2 my-1 items-center font-extrabold text-xl self-center">
               {`${yearName} ${monthName}`}
-            </span>
+            </h3>
             <div className="flex items-center">
               <button
                 onClick={switchModalView}

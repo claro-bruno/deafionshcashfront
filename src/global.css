@@ -54,7 +54,7 @@ body {
 @apply  relative text-center;
 }
 .tableLineHover{
-@apply hover:bg-zinc-500 hover:font-semibold hover:text-white;
+@apply hover:bg-brand2 hover:font-semibold  hover:text-white;
 }
 
 .tableBodyTh{
