@@ -4,11 +4,11 @@ export default function MonthReportTableLine({ report }: any) {
   return (
     <tr className="bg-white tableLineHover text-center border-b text-zinc-900 ">
       <td className="tableLine">{report.id}</td>
-      <td className="tableLine">{report.date}</td>
+      <td className="">{report.date}</td>
       <td className="w-52">{report.payedFor}</td>
       <td className="tableLine ">{report.paymentForm}</td>
-      <td className="tableLine ">{report.in}</td>
       <td className="tableLine ">{report.paymentIdentification}</td>
+      <td className="tableLine ">{report.in}</td>
       <td className="tableLine ">{report.labourPayroll}</td>
       <td className="tableLine ">{report.vanFuelAndOil}</td>
       <td className="tableLine ">{report.fuelAndOil}</td>

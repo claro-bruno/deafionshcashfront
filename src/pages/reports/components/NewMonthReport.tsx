@@ -1,84 +1,51 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { Fragment, useEffect, useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { Fragment } from 'react'
 import { useForm } from 'react-hook-form'
 import { useContext } from 'use-context-selector'
 import { axiosGetAllClients } from '../../../api/client'
 import { axiosGetAllContractors } from '../../../api/contractor'
-import { axiosCreateNewJob, axiosUpdateCreatedJob } from '../../../api/jobs'
 import '../../../components/modals/modal.css'
 import { alertContext } from '../../../context/AlertProvider/AlertContextProvider'
-import { Clients } from '../../../types/client'
-import { Contractor } from '../../../types/contractor'
 
 export default function NewReportMonth({ isModalOpen, switchModalView }: any) {
   const { register, handleSubmit, reset, watch } = useForm({
     defaultValues: {
-      contractor: '',
-      client: '',
-      value_hour: '',
-      hours: '',
-      taxes: '',
-      shirts: '',
+      payedForm: '',
+      date: '',
+      paymentType: '',
+      paymentIdentifierStatus: '',
+      paymentIdentifier: '',
     },
   })
-  const contractorInput = watch('contractor')
-  const clientInput = watch('client')
-  const [daysWorked, setDaysWorked] = useState<string[]>([])
+
+  const paymentType = watch('paymentType')
+  const paymentIdentifierStatus = watch('paymentIdentifierStatus')
+
+  function validateInputPaymentIdView() {
+    if (
+      (paymentType === 'check' || paymentType === 'app') &&
+      paymentIdentifierStatus === 'ok'
+    ) {
+      return true
+    }
+    return false
+  }
+
   const { changeAlertModalState, getAlertMessage } = useContext(alertContext)
   const { data: clients } = useQuery(['clients'], axiosGetAllClients)
   const { data: contractors } = useQuery(
     [`contractors`],
     axiosGetAllContractors,
   )
-  const [contractorsList, setContractorsList] = useState<Contractor[]>([])
-  const [clientsList, setClientsList] = useState<Clients>([])
-  const queryClient = useQueryClient()
-
-  const { mutateAsync } = useMutation(axiosCreateNewJob, {
-    onSuccess() {
-      queryClient.invalidateQueries(['jobs'])
-      reset()
-      setDaysWorked([])
-      handleCloseModal()
-    },
-    onError: (error: { response: any }) => {
-      console.log(error.response?.data)
-      getAlertMessage({
-        message: error.response?.data,
-      })
-      changeAlertModalState()
-    },
-  })
-
-  const { mutateAsync: mutateAsyncEdit } = useMutation(axiosUpdateCreatedJob, {
-    onSuccess() {
-      queryClient.invalidateQueries(['jobs'])
-      reset()
-      setDaysWorked([])
-      handleCloseModal()
-    },
-    onError: (error: { response: any }) => {
-      console.log(error.response?.data)
-      getAlertMessage({
-        message: error.response?.data,
-      })
-      changeAlertModalState()
-    },
-  })
-
-  useEffect(() => {
-    if (clients) {
-      setClientsList(clients.data)
-    }
-    if (contractors) {
-      setContractorsList(contractors.data)
-    }
-  }, [clients, contractors])
 
   function handleCloseModal() {
     switchModalView()
     reset()
+  }
+  function handleCreateNewReport(data: any) {
+    console.log(data)
+    handleCloseModal()
   }
 
   return (
@@ -127,16 +94,16 @@ export default function NewReportMonth({ isModalOpen, switchModalView }: any) {
                         className="inputsDefault"
                         list="contractors"
                         type="text"
-                        {...register('contractor')}
+                        {...register('payedForm')}
                         required
                       />
                     </label>
                     <label className="labelsDefault">
                       Date
                       <input
-                        {...register('birthDate')}
-                        min="1940-12-31"
-                        max="2022-12-31"
+                        {...register('date')}
+                        min="2022-01-01"
+                        max="2032-01-01"
                         className="inputsDefault"
                         type="date"
                         required
@@ -144,22 +111,67 @@ export default function NewReportMonth({ isModalOpen, switchModalView }: any) {
                     </label>
                     <label className="labelsDefault">
                       Payment Type
-                      <select>
-                        <option value="">Check</option>
-                        <option value="">App</option>
-                        <option value="">Receipt</option>
+                      <select
+                        className="p-2 mb-6 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-brand focus:border-brand "
+                        {...register('paymentType')}
+                        required
+                      >
+                        <option value="check">Check</option>
+                        <option value="app">App</option>
+                        <option value="receipt">Receipt</option>
                       </select>
                     </label>
-                    <label className="labelsDefault">
-                      Payment Identifier:
-                      <input
-                        list="clients"
-                        className="inputsDefault"
-                        type="number"
-                        {...register('client')}
-                        required
-                      />
-                    </label>
+                    <div className="flex flex-col gap-2">
+                      <h3 className="text-zinc-600 dark:text-white">
+                        Payment Identifier status
+                      </h3>
+                      <ul className="w-48 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                        <li className="w-full rounded-t-lg border-b border-gray-200 dark:border-gray-600">
+                          <label className="flex items-center gap-2 py-3 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">
+                            <input
+                              type="radio"
+                              className="inputRadio"
+                              value="ok"
+                              {...register('paymentIdentifierStatus')}
+                            />
+                            Ok
+                          </label>
+                        </li>{' '}
+                        <li className="w-full rounded-t-lg border-b border-gray-200 dark:border-gray-600">
+                          <label className="flex items-center gap-2 py-3 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">
+                            <input
+                              type="radio"
+                              className="inputRadio"
+                              value="pending"
+                              {...register('paymentIdentifierStatus')}
+                            />
+                            Pending
+                          </label>
+                        </li>
+                        <li className="w-full rounded-t-lg border-b border-gray-200 dark:border-gray-600">
+                          <label className="flex items-center gap-2 py-3 ml-2 w-full text-sm font-medium text-gray-900 dark:text-gray-300">
+                            <input
+                              type="radio"
+                              className="inputRadio"
+                              value="unknown"
+                              {...register('paymentIdentifierStatus')}
+                            />
+                            Unknown
+                          </label>
+                        </li>
+                      </ul>
+                    </div>
+                    {validateInputPaymentIdView() && (
+                      <label className="labelsDefault">
+                        Payment Identifier:
+                        <input
+                          list="clients"
+                          className="inputsDefault"
+                          type="text"
+                          {...register('paymentIdentifier')}
+                        />
+                      </label>
+                    )}
 
                     <div className="pt-7 text-sm flex flex-col items-center gap-5">
                       {1 + 1 === 3 ? (
@@ -167,7 +179,11 @@ export default function NewReportMonth({ isModalOpen, switchModalView }: any) {
                           Edit
                         </button>
                       ) : (
-                        <button type="submit" className="buttonStyle1 px-3">
+                        <button
+                          type="submit"
+                          onClick={handleSubmit(handleCreateNewReport)}
+                          className="buttonStyle1 px-3"
+                        >
                           Create
                         </button>
                       )}
