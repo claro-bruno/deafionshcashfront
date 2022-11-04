@@ -545,9 +545,9 @@ export const reportsMonthBody = [
     date: `Oct ${Math.floor(Math.random() * (31 - 1 + 1) + 1)}`,
     payedFor: 'bruno alves fay',
     paymentType: 'RECEIPT',
-    in: 0,
     paymentIdentification: 12,
     paymentIdentifierStatus: 'ok',
+    in: 0,
     labourPayroll: 0,
     vanFuelAndOil: Math.floor(Math.random() * (4000 - 1000 + 1) + 1000).toFixed(
       2,
@@ -829,3 +829,4 @@ export const reportsMonthBody = [
     extras: 0,
   },
 ]
+

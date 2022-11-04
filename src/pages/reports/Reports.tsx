@@ -25,22 +25,34 @@ export default function Reports() {
         <div className="  items-center flex flex-col overflow-auto ">
           <div className="flex justify-between  w-full px-4">
             <div>
-              <span className="relative text-zinc-700  h-10 flex gap-2 my-1 items-center font-extrabold text-xl self-center">
-                Total Labour Payroll: $ 595,148.23
+              <span className="relative text-zinc-500  h-10 flex gap-2 my-1 items-center text-semibold text-lg self-center">
+                Total Labour Payroll:
+                <span className="font-semibold text-zinc-700">
+                  $ 595,148.23
+                </span>
               </span>
-              <span className="relative text-zinc-700  h-10 flex gap-2 my-1 items-center font-extrabold text-xl self-center">
-                Total Contractors: $ 595,148.23
+              <span className="relative text-zinc-500  h-10 flex gap-2 my-1 items-center text-semibold text-lg self-center">
+                Total Contractors:
+                <span className="font-semibold text-zinc-700">
+                  $ 595,148.23
+                </span>
               </span>
             </div>
-            <h3 className="relative text-zinc-700  my-1 font-extrabold text-xl self-center">
+            <h3 className="relative text-zinc-700  my-1 extrabold text-xl self-center">
               {yearName}
             </h3>
             <div>
-              <span className="relative text-zinc-700  h-10 flex gap-2 my-1 items-center font-extrabold text-xl self-center">
-                Total Expenses: $ 595,148.23
+              <span className="relative text-zinc-500  h-10 flex gap-2 my-1 items-center text-semibold text-lg self-center">
+                Total Expenses:
+                <span className="font-semibold text-zinc-700">
+                  $ 595,148.23
+                </span>
               </span>
-              <span className="relative text-zinc-700  h-10 flex gap-2 my-1 items-center font-extrabold text-xl self-center">
-                Total: $ 595,148.23
+              <span className="relative text-zinc-500  h-10 flex gap-2 my-1 items-center text-semibold text-lg self-center">
+                Total:
+                <span className="font-semibold text-zinc-700">
+                  $ 595,148.23
+                </span>
               </span>
             </div>
           </div>

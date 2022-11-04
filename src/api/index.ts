@@ -2,7 +2,7 @@ import axios from 'axios'
 import { getUserFromLocalStorage } from '../context/AuthProvider/utils'
 
 export const Api = axios.create({
-  baseURL: 'http://localhost:3001/',
+  baseURL: import.meta.env.API_ROUTE,
 })
 
 Api.interceptors.request.use(

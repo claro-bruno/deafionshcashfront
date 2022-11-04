@@ -45,17 +45,29 @@ export default function Months() {
         <div className=" items-center flex flex-col overflow-auto ">
           <div className="flex justify-between  w-full px-4">
             <div>
-              <span className="flex text-zinc-700 gap-2 my-1 items-center font-extrabold text-lg self-center">
-                Balance past month: $ 595,148.23
+              <span className="flex text-zinc-500 gap-2 my-1 items-center font-semibold text-lg self-center">
+                Balance past month:
+                <span className="font-semibold text-zinc-700">
+                  $ 595,148.23
+                </span>
               </span>
-              <span className="flex text-zinc-700 gap-2 my-1 items-center font-extrabold text-lg self-center">
-                Balance: $ 595,148.23
+              <span className="flex text-zinc-500 gap-2 my-1 items-center font-semibold text-lg self-center">
+                Balance:
+                <span className="font-semibold text-zinc-700">
+                  $ 595,148.23
+                </span>
               </span>
-              <span className="flex text-zinc-700 gap-2 my-1 items-center font-extrabold text-lg self-center">
-                Total Expenses: $ 595,148.23
+              <span className="flex text-zinc-500 gap-2 my-1 items-center font-semibold text-lg self-center">
+                Total Expenses:
+                <span className="font-semibold text-zinc-700">
+                  $ 595,148.23
+                </span>
               </span>
-              <span className="flex text-zinc-700 gap-2 my-1 items-center font-extrabold text-lg self-center">
-                Total Contractors: $ 595,148.23
+              <span className="flex text-zinc-500 gap-2 my-1 items-center font-semibold text-lg self-center">
+                Total Contractors:
+                <span className="font-semibold text-zinc-700">
+                  $ 595,148.23
+                </span>
               </span>
             </div>
             <h3 className="text-zinc-700  relative right-10 flex gap-2 my-1 items-center font-extrabold text-xl self-center">
