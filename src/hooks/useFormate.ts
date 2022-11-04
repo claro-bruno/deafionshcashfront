@@ -1,11 +1,39 @@
 export default function useFormate() {
   function formatMoney(payload: number) {
-    return payload.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+    const priceFormatter = new Intl.NumberFormat('USD', {
+      style: 'currency',
+      currency: 'USD',
+    })
+    return priceFormatter.format(payload)
+  }
+  function formatDate(payload: string, type?: string) {
+    if (payload) {
+      const date = new Date(payload)
+      if (type === 'birthDate') {
+        const dateFormatter = new Intl.DateTimeFormat('en-US', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+        })
+        const dateMMDDYYYY = dateFormatter.format(date)
+        const dateYYYYMMDD = dateMMDDYYYY.split('/')
+        return `${dateYYYYMMDD[2]}-${dateYYYYMMDD[1]}-${dateYYYYMMDD[0]}`
+      }
+      const dateFormatter = new Intl.DateTimeFormat('en-US', {
+        month: '2-digit',
+        day: '2-digit',
+        year: 'numeric',
+      })
+      return dateFormatter.format(date)
+    }
   }
   function formatPhone(payload: string) {
-    return payload
-      .replace(/[^0-9]/g, '')
-      .replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3')
+    if (payload) {
+      return payload
+        .replace(/[^0-9]/g, '')
+        .replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3')
+    }
+    return ''
   }
   function formatSsnOrItin(payload: string) {
     return payload
@@ -18,12 +46,24 @@ export default function useFormate() {
   function formatZipCode(payload: string) {
     return payload.replace(/(\d{5})(\d{4})/, '$1-$2')
   }
-
+  function removeEmptyValuesFromObj(obj: any) {
+    Object.keys(obj).forEach((key) => {
+      if (typeof obj[key] === 'object') {
+        removeEmptyValuesFromObj(obj[key])
+      }
+      const isEmpty = Object.keys(obj[key]).length === 0
+      if (obj[key] === '' || (typeof obj[key] === 'object' && isEmpty)) {
+        delete obj[key]
+      }
+    })
+  }
   return {
     formatMoney,
     formatPhone,
     formatSsnOrItin,
     formatEIN,
     formatZipCode,
+    removeEmptyValuesFromObj,
+    formatDate,
   }
 }

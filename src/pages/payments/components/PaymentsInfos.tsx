@@ -1,26 +1,29 @@
-import { Circle } from 'phosphor-react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
+import { useContext } from 'use-context-selector'
+import { axiosUpdatePayments } from '../../../api/payments'
+import { alertContext } from '../../../context/AlertProvider/AlertContextProvider'
 import useFormate from '../../../hooks/useFormate'
-import { ContractorPaymentInfos } from '../../../types/contractor'
 
-export default function PaymentsInfos(payInfos: ContractorPaymentInfos) {
+export default function PaymentsInfos(payInfos: any) {
   const { formatMoney } = useFormate()
+  const { changeAlertModalState, getAlertMessage } = useContext(alertContext)
 
   const paymentContractorInfos = useForm<any>({
     defaultValues: {
-      contractorId: payInfos.contractor.id,
+      contractor_id: payInfos.fk_id_contractor,
       month: payInfos.month,
       year: payInfos.year,
       payments: [
         {
-          type: payInfos.payments[0].type ?? '',
+          method: payInfos.payments[0].method ?? '',
           identifier: payInfos.payments[0].identifier,
           value: payInfos.payments[0].value,
           quarter: payInfos.payments[0].quarter,
         },
         {
-          type: payInfos.payments[1].type ?? '',
+          method: payInfos.payments[1].method ?? '',
           identifier: payInfos.payments[1].identifier,
           value: payInfos.payments[1].value,
           quarter: payInfos.payments[1].quarter,
@@ -28,32 +31,52 @@ export default function PaymentsInfos(payInfos: ContractorPaymentInfos) {
       ],
     },
   })
+  const queryClient = useQueryClient()
   const { register, handleSubmit } = paymentContractorInfos
-  function handleUpdatePayment(data: any) {
-    console.log({ ...data })
+  const { mutateAsync } = useMutation(axiosUpdatePayments, {
+    onSuccess(response) {
+      console.log(response)
+      queryClient.invalidateQueries(['payments'])
+    },
+    onError: (error: { response: any }) => {
+      console.log(error.response?.data)
+      getAlertMessage({
+        message: error.response?.data,
+      })
+      changeAlertModalState()
+    },
+  })
+  function handleUpdatePayment(payload: any) {
+    console.log(payload)
+    mutateAsync(payload)
   }
-
+  function setStatusPayment() {
+    const paymentQuarter1 = payInfos.payments[0].identifier
+    const paymentQuarter2 = payInfos.payments[1].identifier
+    if (paymentQuarter1 && paymentQuarter2) {
+      return 'bg-green-200'
+    } else if (paymentQuarter1 || paymentQuarter2) {
+      return 'bg-yellow-200'
+    } else {
+      return 'bg-white'
+    }
+  }
   return (
-    <tr className="bg-white border-b">
-      <th scope="row" className="tableBodyTh">
-        <Circle
-          weight="fill"
-          size={15}
-          color={payInfos.status === 'active' ? 'green' : 'gray'}
-        />
-      </th>
-      <td className="tableLine max-w-[9rem]">
-        <Link to={`/contractors/${payInfos.id}`}>
-          {payInfos.contractor.name}
+    <tr className={`${setStatusPayment()}  border-b`}>
+      <td className="tableLine min-w-[9rem]">
+        <Link to={`/contractors/${payInfos.fk_id_contractor}`}>
+          {payInfos.name}
         </Link>
       </td>
-      {payInfos.payments.map((payment, i) => (
+      {payInfos.payments.map((payment: any, i: number) => (
         <>
-          <td className="tableLine">$ {formatMoney(Number(payment.value))}</td>
+          <td className="tableLine min-w-[7rem]" key={payment.identifier}>
+            {formatMoney(Number(payment.value))}
+          </td>
           <td className="tableLine">
             <select
               className="rounded bg-white border w-[4.9rem] outline-none text-xs py-1"
-              {...register(`payments[${i}].type`)}
+              {...register(`payments[${i}].method`)}
             >
               <option className="w-20" value="Transfer">
                 Bank Transfer
@@ -68,15 +91,19 @@ export default function PaymentsInfos(payInfos: ContractorPaymentInfos) {
               title="identificação do pagamento"
               type="text"
               className={`
-              border rounded ml-5 focus:ml-0 focus:w-[7rem] w-[4rem] px-2 py-1 outline-brand`}
+              border rounded focus:ml-0 focus:w-[7rem] w-[4rem] px-2 py-1 outline-brand`}
             />
           </td>
         </>
       ))}
-      <td className="w-[7rem]  px-5">
-        ${' '}
+      <td className="w-[7rem]  px-2">{formatMoney(payInfos.taxes)}</td>
+      <td className="w-[7rem]  px-2">{formatMoney(payInfos.shirts)}</td>
+      <td className="w-[7rem]  px-2">
         {formatMoney(
-          payInfos.payments.reduce((acc, curr) => acc + Number(curr.value), 0),
+          payInfos.payments.reduce(
+            (acc: any, curr: any) => acc + Number(curr.value),
+            0,
+          ),
         )}
       </td>
       <td className="tableLine flex gap-1">
@@ -88,7 +115,7 @@ export default function PaymentsInfos(payInfos: ContractorPaymentInfos) {
           Save
         </button>
         <Link
-          to={`/jobs/${payInfos.contractor.id}`}
+          to={`/jobs/${payInfos.fk_id_contractor}`}
           className="buttonStyle2 text-xs py-[0.09rem] px-2  "
         >
           Edit

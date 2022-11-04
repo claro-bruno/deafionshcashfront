@@ -5,7 +5,7 @@ import { ModalProps } from '../../types/modal'
 
 export default function AlertModal({
   isModalOpen,
-  closeModal,
+  switchModalView,
   modalInfos,
 }: ModalProps) {
   console.log(modalInfos)
@@ -13,7 +13,7 @@ export default function AlertModal({
   return (
     <>
       <Transition appear show={isModalOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeModal}>
+        <Dialog as="div" className="relative z-10" onClose={switchModalView}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -39,9 +39,7 @@ export default function AlertModal({
               >
                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                   <div className="flex items-center justify-center">
-                    {modalInfos.isContractorCreated === false && (
-                      <Warning size={36} color={'red'} />
-                    )}
+                    <Warning size={36} color={'red'} />
                   </div>
                   <Dialog.Title
                     as="h3"
@@ -59,7 +57,7 @@ export default function AlertModal({
                     <button
                       type="button"
                       className="px-3 buttonStyle1 self-center"
-                      onClick={closeModal}
+                      onClick={switchModalView}
                     >
                       Close
                     </button>

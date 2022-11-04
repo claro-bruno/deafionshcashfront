@@ -1,54 +1,91 @@
-import { GearSix, Plus } from 'phosphor-react'
-import { useContext, useEffect, useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { GearSix } from 'phosphor-react'
+import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { useContextSelector } from 'use-context-selector'
+import { axiosGetAllJobs } from '../../api/jobs'
 import Header from '../../components/header/Header'
+import SelectFilter from '../../components/listboxes/SelectFilter'
+import { jobsContext } from '../../context/JobProvider/JobContextProvider'
 import {
   fortnightListBox,
-  monthsListbox,
+  MONTHS,
+  monthsListBox,
   yearsListBox,
-} from '../../components/listboxes/constants'
-import SelectFilter from '../../components/listboxes/SelectFilter'
-import NewJob from './components/NewJob'
-import { jobsContext } from '../../context/JobContextProvider'
-import { headerTable, months } from './constants'
-import { useParams } from 'react-router-dom'
+} from '../../helpers/constants'
+import { headerTableJobs } from '../../helpers/headersTables'
+import { useDateFilter } from '../../hooks/useDateFIlter'
+import useFormate from '../../hooks/useFormate'
 import JobTableLine from './components/JobTableLine'
+import NewJob from './components/NewJob'
 
 export interface DaysObj {
   dayNum: number
   weakDayName: string
 }
 
-export default function Job() {
-  const [monthName, setMonthName] = useState('January')
-  const [yearName, setYearName] = useState('2022')
-  const [filterContractor, setFilterContractor] = useState('')
-  const [fortnightDays, setFortnightDays] = useState<DaysObj[]>(
-    addWeakDayName().splice(0, 15),
+export default function Jobs() {
+  const {
+    setMonthName,
+    monthName,
+    setYearName,
+    yearName,
+    handleFilters,
+    setFilterContractor,
+    filterContractor,
+  } = useDateFilter()
+  const [fortnightDays, setFortnightDays] = useState<DaysObj[]>([])
+  const { handleSwitchModalView, jobs, handleSetJobs } = useContextSelector(
+    jobsContext,
+    (context) => context,
   )
-  const { handleCloseModal, users, handleSetUsers } = useContext(jobsContext)
+  const { formatDate } = useFormate()
   const { id } = useParams()
   /* console.log(id) */
 
+  const { data, isRefetching } = useQuery<any>(['jobs'], () =>
+    axiosGetAllJobs({ month: monthName, year: yearName }),
+  )
   useEffect(() => {
-    if (id) {
-      const userFilteredById = users.filter((user) => user.id === Number(id))
-      handleSetUsers(userFilteredById)
+    if (data) {
+      const jobFormatted = data.data.map((job: any) => ({
+        ...job,
+        quarter: job.quarter.map((quarter: any) => ({
+          ...quarter,
+          appointment: quarter.appointment.map((appointment: any) => ({
+            ...appointment,
+            date: formatDate(appointment.date),
+          })),
+        })),
+      }))
+      handleSetJobs(jobFormatted)
     }
-  }, [])
+    if (isRefetching) {
+      handleSetJobs([])
+    }
+  }, [data, isRefetching])
 
-  function tableFilters(item: { contractor: string; month: string }) {
-    const filterByContractor = item.contractor
-      .toLowerCase()
-      .includes(filterContractor.toLowerCase())
+  function formatFortnightDays(quarter: string) {
+    const fortnight =
+      quarter === 'Quinzena 1'
+        ? addWeakDayName().splice(0, 15)
+        : addWeakDayName().splice(15)
 
-    const filterByDate = item.month
-      .toLowerCase()
-      .includes(monthName.toLowerCase())
-    return filterByContractor && filterByDate
+    setFortnightDays(fortnight)
   }
 
+  useEffect(() => {
+    if (id) {
+      const jobsFilteredByUserId = jobs.filter(
+        (user) => user.contractor.id === Number(id),
+      )
+      handleSetJobs(jobsFilteredByUserId)
+    }
+    formatFortnightDays('Quinzena 1')
+  }, [])
+
   function getDaysOfMonth() {
-    const getMonthNumberByName = months.indexOf(monthName) + 1
+    const getMonthNumberByName = MONTHS.indexOf(monthName) + 1
     const date = new Date()
     const days = new Date(date.getFullYear(), getMonthNumberByName, 0).getDate()
     return [...Array(days).keys()].map((i) => i + 1)
@@ -66,15 +103,6 @@ export default function Job() {
     return weakDaysNamed
   }
 
-  function formatFortnightDays(quarter: string) {
-    const fortnight =
-      quarter === 'Quinzena 1'
-        ? addWeakDayName().splice(0, 15)
-        : addWeakDayName().splice(15)
-
-    setFortnightDays(fortnight)
-  }
-
   return (
     <div>
       <Header>
@@ -82,7 +110,7 @@ export default function Job() {
           <SelectFilter setFilter={setYearName} selectOptions={yearsListBox} />
           <SelectFilter
             setFilter={setMonthName}
-            selectOptions={monthsListbox}
+            selectOptions={monthsListBox}
             listCSS="w-[8rem]"
           />
           <input
@@ -107,15 +135,15 @@ export default function Job() {
           </span>
           <button
             type="button"
-            onClick={handleCloseModal}
-            className="w-10 absolute left-[93%] mt-2  flex justify-center  px-2 buttonStyle1"
+            onClick={handleSwitchModalView}
+            className="w-28 text-xs absolute left-[90%] mt-2  flex justify-center break-words buttonStyle1"
           >
-            <Plus size={20} color={'white'} />
+            Add new Contractor/work
           </button>
           <table className="table">
             <thead className="tableHead  ">
               <tr className="">
-                {headerTable.map((item, index) => {
+                {headerTableJobs.map((item, index) => {
                   if (item === 'Month') {
                     return (
                       <th key={index} className="flex gap-1 justify-center">
@@ -147,11 +175,12 @@ export default function Job() {
               </tr>
             </thead>
             <tbody>
-              {users.map((contractor) => {
-                if (tableFilters(contractor)) {
+              {jobs.map((job: any) => {
+                if (handleFilters(job)) {
                   return (
                     <JobTableLine
-                      contractor={contractor}
+                      key={job.id}
+                      job={job}
                       fortnightDays={fortnightDays}
                     />
                   )
@@ -163,7 +192,7 @@ export default function Job() {
           </table>
         </div>
       </div>
-      <NewJob tableDate={{ monthName, yearName }} />
+      <NewJob />
     </div>
   )
 }

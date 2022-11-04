@@ -4,10 +4,33 @@ import AlertModal from './components/AlertModal'
 import useModal from '../../hooks/useModal'
 import { NewContractor } from '../../types/contractor'
 import NewContractorForm from './components/NewContractorForm'
-import { INITIAL_NEW_CONTRACTOR_STATE } from './constants'
+
+export const INITIAL_NEW_CONTRACTOR_STATE: NewContractor = {
+  firstName: '',
+  middleName: '',
+  lastName: '',
+  email: '',
+  ein: '',
+  acceptTerms: true,
+  birthDate: '',
+  phone: '',
+  ssnOrItin: '',
+  primaryAddress: {
+    address: '',
+    city: '',
+    state: '',
+    zipcode: '',
+  },
+  secondaryAddress: {
+    address: '',
+    city: '',
+    state: '',
+    zipcode: '',
+  },
+}
 
 export default function Register() {
-  const { closeModal, isModalOpen } = useModal()
+  const { switchModalView, isModalOpen } = useModal()
 
   const newContractorForm = useForm<NewContractor>({
     defaultValues: INITIAL_NEW_CONTRACTOR_STATE,
@@ -19,7 +42,10 @@ export default function Register() {
         <FormProvider {...newContractorForm}>
           <NewContractorForm />
         </FormProvider>
-        <AlertModal isModalOpen={isModalOpen} closeModal={closeModal} />
+        <AlertModal
+          isModalOpen={isModalOpen}
+          switchModalView={switchModalView}
+        />
       </main>
     </div>
   )

@@ -1,10 +1,13 @@
 import { useMutation } from '@tanstack/react-query'
-import { useContext, useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
-import AlertModal from '../../components/modals/AlertModal'
+import { useContext, useContextSelector } from 'use-context-selector'
+import Logo from '../../assets/globalLogo.png'
+import { alertContext } from '../../context/AlertProvider/AlertContextProvider'
 import { AuthContext } from '../../context/AuthProvider'
 import useModal from '../../hooks/useModal'
+import RecoveryPassword from './RecoveryPasswordComponent/RecoveryPassword'
 
 export type UserLogin = {
   username: string
@@ -12,10 +15,9 @@ export type UserLogin = {
 }
 
 export default function Login() {
-  const [response, setResponse] = useState<any>({})
-  const { isModalOpen, closeModal } = useModal()
+  const { changeAlertModalState, getAlertMessage } = useContext(alertContext)
   const { authenticate, saveUser, checkUserInLocalStorage } =
-    useContext(AuthContext)
+    useContextSelector(AuthContext, (context) => context)
   const { register, handleSubmit, watch } = useForm<UserLogin>({
     defaultValues: {
       username: '',
@@ -25,28 +27,26 @@ export default function Login() {
   const username = watch('username')
   const password = watch('password')
   const navigate = useNavigate()
-
+  const { isModalOpen, switchModalView } = useModal()
   useEffect(() => {
     if (checkUserInLocalStorage()) {
-      navigate('/payments')
+      navigate('/home')
     }
-  }, [])
+  }, [checkUserInLocalStorage, navigate])
 
   const { mutateAsync } = useMutation(
     (payload: UserLogin) => authenticate(payload.username, payload.password),
     {
       onSuccess: (response) => {
-        console.log()
         saveUser(response.data)
-        navigate('/payments')
+        navigate('/home')
       },
       onError: (error: { response: any }) => {
         console.log(error.response?.data)
-        setResponse({
-          isContractorCreated: false,
-          message: error.response.data,
+        getAlertMessage({
+          message: error.response?.data,
         })
-        closeModal()
+        changeAlertModalState()
       },
     },
   )
@@ -67,10 +67,10 @@ export default function Login() {
         />
       </div>
       <div className="flex-1 flex flex-col w-[100%] bg-gray-100 min-h-full  items-center  ">
-        <div className="flex items-center mt-3  gap-2 flex-col">
+        <div className="flex items-center mt-[10vh]  gap-2 flex-col">
           <img
             className="h-[12rem] object-contain"
-            src="https://www.globaljanitorialservices.com/assets/images/resources/welcome-two-small-img.png"
+            src={Logo}
             alt="globaljanitorialservices logo"
           />
           <form
@@ -109,13 +109,20 @@ export default function Login() {
               </Link>
             }
           </span>
+          <span className="text-sm mt-2 text-gray-400">
+            Forgot your password ?{' '}
+            {
+              <button className="text-blue-500" onClick={switchModalView}>
+                Recover
+              </button>
+            }
+          </span>
         </div>
+        <RecoveryPassword
+          isModalOpen={isModalOpen}
+          switchModalView={switchModalView}
+        />
       </div>
-      <AlertModal
-        modalInfos={response}
-        closeModal={closeModal}
-        isModalOpen={isModalOpen}
-      />
     </div>
   )
 }

@@ -1,73 +1,125 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { Fragment, useContext, useState } from 'react'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { Fragment, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { jobsContext } from '../../../context/JobContextProvider'
-import { clients, contractors, createObjectDaysByMonth } from '../constants'
+import { useContext, useContextSelector } from 'use-context-selector'
+import { axiosGetAllClients } from '../../../api/client'
+import { axiosGetAllContractors } from '../../../api/contractor'
+import { axiosCreateNewJob, axiosUpdateCreatedJob } from '../../../api/jobs'
 import '../../../components/modals/modal.css'
+import { alertContext } from '../../../context/AlertProvider/AlertContextProvider'
+import { jobsContext } from '../../../context/JobProvider/JobContextProvider'
+import { WEEKDAYS } from '../../../helpers/constants'
+import { Clients } from '../../../types/client'
+import { Contractor } from '../../../types/contractor'
 
-const WEEKDAYS = [
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday',
-  'Sunday',
-]
+export default function NewJob() {
+  const { jobToEdit, handleSwitchModalView, isModalOpen, editJob } =
+    useContextSelector(jobsContext, (context) => context)
+  const contractorName =
+    jobToEdit?.contractor &&
+    `${jobToEdit.contractor.first_name} ${jobToEdit.contractor.last_name}`
+  const clientName = jobToEdit?.client && jobToEdit.client.name
 
-type NewJobProps = {
-  tableDate: { monthName: string; yearName: string }
-}
-
-export default function NewJob({ tableDate }: NewJobProps) {
-  const { jobToEdit, users, handleSetUsers } = useContext(jobsContext)
-  const newJob = useForm({
+  const { register, handleSubmit, reset, watch } = useForm({
     defaultValues: {
       contractor: '',
       client: '',
-      pHour: '',
-      hours: '0',
-      year: tableDate.yearName,
-      month: tableDate.monthName,
-      workedDaysInfos: {},
+      value_hour: '',
+      hours: '',
+      taxes: '',
+      shirts: '',
+    },
+  })
+  const contractorInput = watch('contractor')
+  const clientInput = watch('client')
+  const [daysWorked, setDaysWorked] = useState<string[]>([])
+  const { changeAlertModalState, getAlertMessage } = useContext(alertContext)
+  const { data: clients } = useQuery(['clients'], axiosGetAllClients)
+  const { data: contractors } = useQuery(
+    [`contractors`],
+    axiosGetAllContractors,
+  )
+  const [contractorsList, setContractorsList] = useState<Contractor[]>([])
+  const [clientsList, setClientsList] = useState<Clients>([])
+  const queryClient = useQueryClient()
+
+  const { mutateAsync } = useMutation(axiosCreateNewJob, {
+    onSuccess() {
+      queryClient.invalidateQueries(['jobs'])
+      reset()
+      setDaysWorked([])
+      handleCloseModal()
+    },
+    onError: (error: { response: any }) => {
+      console.log(error.response?.data)
+      getAlertMessage({
+        message: error.response?.data,
+      })
+      changeAlertModalState()
     },
   })
 
-  const { register, handleSubmit, reset } = newJob
-  const [hoursWorked, setHoursWorked] = useState('0')
-  const [daysWorked, setDaysWorked] = useState<string[]>([])
-  const { handleCurrentInputJobValue, handleCloseModal, isModalOpen } =
-    useContext(jobsContext)
+  const { mutateAsync: mutateAsyncEdit } = useMutation(axiosUpdateCreatedJob, {
+    onSuccess() {
+      queryClient.invalidateQueries(['jobs'])
+      reset()
+      setDaysWorked([])
+      handleCloseModal()
+    },
+    onError: (error: { response: any }) => {
+      console.log(error.response?.data)
+      getAlertMessage({
+        message: error.response?.data,
+      })
+      changeAlertModalState()
+    },
+  })
+
+  useEffect(() => {
+    if (clients) {
+      setClientsList(clients.data)
+    }
+    if (contractors) {
+      setContractorsList(contractors.data)
+    }
+  }, [clients, contractors])
+
+  function handleCloseModal() {
+    editJob({})
+    handleSwitchModalView()
+    reset()
+  }
 
   function handleCreateNewJob(data: any) {
     const formattedNewJob = {
-      ...data,
-      month: tableDate.monthName,
-      year: Number(tableDate.yearName),
-      workedDaysInfos: createObjectDaysByMonth(data.month, data.year, {
-        hours: hoursWorked,
-        days: daysWorked,
-      }),
+      id_contractor: Number(data.contractor.replace(/[^0-9]+/g, '')),
+      id_client: Number(data.client.replace(/[^0-9]+/g, '')),
+      value_hour: Number(data.value_hour),
+      hours: Number(data.hours),
+      taxes: Number(data.taxes),
+      shirts: Number(data.shirts),
+      monday: daysWorked.some((day) => day.toLowerCase() === 'monday'),
+      tuesday: daysWorked.some((day) => day.toLowerCase() === 'tuesday'),
+      wednesday: daysWorked.some((day) => day.toLowerCase() === 'wednesday'),
+      thursday: daysWorked.some((day) => day.toLowerCase() === 'thursday'),
+      friday: daysWorked.some((day) => day.toLowerCase() === 'friday'),
+      saturday: daysWorked.some((day) => day.toLowerCase() === 'saturday'),
+      sunday: daysWorked.some((day) => day.toLowerCase() === 'sunday'),
     }
-    handleCurrentInputJobValue(hoursWorked)
     console.log(formattedNewJob)
-    handleSetUsers([...users, formattedNewJob])
-    reset()
-    setDaysWorked([])
-    handleCloseModal()
+    mutateAsync(formattedNewJob)
   }
+
   function handleEditJob(data: any) {
     const formattedEditedJob = {
       id: jobToEdit.id,
-      ...data,
+      id_contractor: Number(data.contractor.replace(/[^0-9]+/g, '')),
+      id_client: Number(data.client.replace(/[^0-9]+/g, '')),
     }
-    handleCurrentInputJobValue(hoursWorked)
-    const usersFiltered = users.filter((user) => user.id !== jobToEdit.id)
-    const newUsers = [...usersFiltered, formattedEditedJob]
-    handleSetUsers(newUsers)
-    reset()
-    setDaysWorked([])
-    handleCloseModal()
+    console.log(formattedEditedJob)
+
+    mutateAsyncEdit(formattedEditedJob)
   }
 
   function handleCheckboxAddNewWorkedDay(e: any) {
@@ -79,6 +131,7 @@ export default function NewJob({ tableDate }: NewJobProps) {
       setDaysWorked((state) => state.filter((d) => d !== day))
     }
   }
+
   return (
     <>
       <Transition appear show={isModalOpen} as={Fragment}>
@@ -117,7 +170,7 @@ export default function NewJob({ tableDate }: NewJobProps) {
                   >
                     {jobToEdit.contractor ? 'Edit Job' : ' New Job'}
                   </Dialog.Title>
-                  <div className=" flex flex-col gap-4 items-center justify-center">
+                  <form className=" flex flex-col gap-4 items-center justify-center">
                     <label className="flex flex-col gap-4 items-center"></label>
                     <label className="labelsDefault">
                       Contractor:
@@ -125,12 +178,16 @@ export default function NewJob({ tableDate }: NewJobProps) {
                         className="inputsDefault"
                         list="contractors"
                         type="text"
+                        placeholder={contractorName}
                         {...register('contractor')}
+                        required
                       />
                     </label>
                     <datalist id="contractors">
-                      {contractors.map((contractor, index) => (
-                        <option key={index} value={contractor} />
+                      {contractorsList.map((contractor) => (
+                        <option key={contractor.id}>
+                          {`${contractor.id} - ${contractor.first_name} ${contractor.last_name}`}
+                        </option>
                       ))}
                     </datalist>
                     <label className="labelsDefault">
@@ -139,31 +196,38 @@ export default function NewJob({ tableDate }: NewJobProps) {
                         list="clients"
                         className="inputsDefault"
                         type="text"
+                        placeholder={clientName}
                         {...register('client')}
+                        required
                       />
                     </label>
-                    <datalist id="clients">
-                      {clients.map((client, index) => (
-                        <option key={index} value={client} />
+                    <datalist id="clients" className="text-sm">
+                      {clientsList.map((client) => (
+                        <option
+                          value={`${client.id} - ${client.name}`}
+                          key={client.id}
+                        />
                       ))}
                     </datalist>
-                    <label className="labelsDefault">
-                      P/Hour:
-                      <input
-                        {...register('pHour')}
-                        className="inputsDefault"
-                        type="number"
-                      />
-                    </label>
+
                     {!jobToEdit.contractor && (
                       <>
-                        {' '}
+                        <label className="labelsDefault">
+                          P/Hour:
+                          <input
+                            {...register('value_hour')}
+                            className="inputsDefault"
+                            type="number"
+                            required
+                          />
+                        </label>
                         <label className="labelsDefault">
                           Hours:
                           <input
-                            onChange={(e) => setHoursWorked(e.target.value)}
+                            {...register('hours')}
                             className="inputsDefault"
                             type="number"
+                            required
                           />
                         </label>
                         <label className=" w-[16rem] ml-6 self-center gap-1 flex flex-col labelsDefault">
@@ -172,7 +236,7 @@ export default function NewJob({ tableDate }: NewJobProps) {
                             {WEEKDAYS.map((day, index) => (
                               <label
                                 key={index}
-                                className="flex gap-1 text-sm items-center"
+                                className="flex  gap-1 text-sm items-center"
                               >
                                 <input
                                   value={day}
@@ -181,33 +245,37 @@ export default function NewJob({ tableDate }: NewJobProps) {
                                   }
                                   type="checkbox"
                                 />
-                                {day}
+                                <span className="first-letter:uppercase">
+                                  {day}
+                                </span>
                               </label>
                             ))}
                           </div>
                         </label>
                       </>
                     )}
-                  </div>
-                  <div className="pt-7 text-sm flex flex-col items-center gap-5">
-                    {jobToEdit.id ? (
-                      <button
-                        type="button"
-                        className="buttonStyle2 px-3"
-                        onClick={handleSubmit(handleEditJob)}
-                      >
-                        Edit
-                      </button>
-                    ) : (
-                      <button
-                        type="button"
-                        className="buttonStyle1 px-3"
-                        onClick={handleSubmit(handleCreateNewJob)}
-                      >
-                        Create
-                      </button>
-                    )}
-                  </div>
+                    <div className="pt-7 text-sm flex flex-col items-center gap-5">
+                      {jobToEdit.id ? (
+                        <button
+                          type="submit"
+                          className="buttonStyle2 px-3"
+                          onClick={handleSubmit(handleEditJob)}
+                          disabled={!contractorInput || !clientInput}
+                        >
+                          Edit
+                        </button>
+                      ) : (
+                        <button
+                          type="submit"
+                          className="buttonStyle1 px-3"
+                          onClick={handleSubmit(handleCreateNewJob)}
+                          disabled={!contractorInput || !clientInput}
+                        >
+                          Create
+                        </button>
+                      )}
+                    </div>
+                  </form>
                 </Dialog.Panel>
               </Transition.Child>
             </div>

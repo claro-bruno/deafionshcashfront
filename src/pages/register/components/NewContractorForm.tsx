@@ -1,8 +1,9 @@
 import { useMutation } from '@tanstack/react-query'
-import { ChangeEvent, useState } from 'react'
+import { useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { axiosCreateNewContractor } from '../../../api/contractor'
 import useFormate from '../../../hooks/useFormate'
+import useHandleChange from '../../../hooks/useHandleChange'
 import useModal from '../../../hooks/useModal'
 import { InputsFiles, NewContractor } from '../../../types/contractor'
 import AddressComponent from './AddressComponent'
@@ -10,15 +11,16 @@ import AlertModal from './AlertModal'
 
 export default function NewContractorForm() {
   const [addressNum, setAddressNum] = useState('1')
-  const { formatEIN, formatPhone, formatSsnOrItin } = useFormate()
+  const { formatEIN, formatPhone, formatSsnOrItin, removeEmptyValuesFromObj } =
+    useFormate()
   const { register, handleSubmit, watch, reset } = useFormContext()
-  const [inputsFiles, setInputsFiles] = useState<InputsFiles>({
+  const { inputsFiles, handleInputsFiles } = useHandleChange({
     profile: {},
     documentProof: {},
     residenceProof: {},
   })
   const [response, setResponse] = useState<any>({})
-  const { isModalOpen, closeModal } = useModal()
+  const { isModalOpen, switchModalView } = useModal()
 
   const { mutateAsync } = useMutation(
     (payload: [NewContractor, InputsFiles]) =>
@@ -26,7 +28,7 @@ export default function NewContractorForm() {
     {
       onSuccess: (response) => {
         setResponse({ isContractorCreated: true, ...response?.data })
-        closeModal()
+        switchModalView()
         reset()
       },
       onError: (error: { response: any }) => {
@@ -34,7 +36,7 @@ export default function NewContractorForm() {
           isContractorCreated: false,
           message: error.response.data.message,
         })
-        closeModal()
+        switchModalView()
       },
     },
   )
@@ -55,23 +57,7 @@ export default function NewContractorForm() {
       </>
     )
   }
-  function removeEmptyValuesFromObj(obj: any) {
-    Object.keys(obj).forEach((key) => {
-      if (typeof obj[key] === 'object') {
-        removeEmptyValuesFromObj(obj[key])
-      }
-      const isEmpty = Object.keys(obj[key]).length === 0
-      if (obj[key] === '' || (typeof obj[key] === 'object' && isEmpty)) {
-        delete obj[key]
-      }
-    })
-  }
-  function handleInputsFiles(
-    e: ChangeEvent<HTMLInputElement>,
-    inputName: string,
-  ) {
-    setInputsFiles({ ...inputsFiles, [inputName]: e.target.files![0] })
-  }
+
   function handleSubmitNewContractor(contractorInfos: any) {
     removeEmptyValuesFromObj(contractorInfos)
     mutateAsync([contractorInfos, inputsFiles])
@@ -125,7 +111,7 @@ export default function NewContractorForm() {
                 />
               </label>
               <label className="labelsDefault ">
-                <div className="flex items-start">Photo</div>
+                <div className="flex items-start">Profile Image</div>
 
                 <input
                   accept="image/*"
@@ -231,7 +217,7 @@ export default function NewContractorForm() {
       </form>
       <AlertModal
         isModalOpen={isModalOpen}
-        closeModal={closeModal}
+        switchModalView={switchModalView}
         modalInfos={response}
       />
     </>

@@ -1,8 +1,13 @@
 import { Api } from '..'
+import { DateParams } from '../../types/helpers'
 
-export async function axiosGetAllPayments(payload) {
-  return await Api.get('rota', payload)
+export async function axiosGetAllPayments({ year, month }: DateParams) {
+  return await Api.get('payment', { params: { month, year } })
 }
-export async function axiosUpdatePayments(payload) {
-  return await Api.put('rota', payload)
+export async function axiosUpdatePayments(payload: any) {
+  return await Api.post('payment', JSON.stringify(payload), {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
 }

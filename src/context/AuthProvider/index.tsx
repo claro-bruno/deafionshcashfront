@@ -1,4 +1,5 @@
-import React, { createContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { createContext } from 'use-context-selector'
 import { axiosLogin } from '../../api/login'
 import { IAuthContext, AuthProviderType, User } from '../../types/authProvider'
 import {
@@ -24,8 +25,12 @@ export function AuthProvider({ children }: AuthProviderType) {
   }, [])
 
   function saveUser(user: User) {
-    const payload = { token: user?.token, access: user?.access }
-    setUser(payload)
+    const payload = {
+      token: user.token,
+      access: user.access,
+      contractor_id: user.contractor_id,
+    }
+    setUser(user)
     setUserToLocalStorage(payload)
   }
 
@@ -40,6 +45,7 @@ export function AuthProvider({ children }: AuthProviderType) {
     setUser(null)
     removeUserFromLocalStorage()
   }
+
   const valueToProvide = {
     ...user,
     authenticate,
