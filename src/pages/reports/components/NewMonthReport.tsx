@@ -1,15 +1,10 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { useQuery } from '@tanstack/react-query'
 import { Fragment } from 'react'
 import { useForm } from 'react-hook-form'
-import { useContext } from 'use-context-selector'
-import { axiosGetAllClients } from '../../../api/client'
-import { axiosGetAllContractors } from '../../../api/contractor'
 import '../../../components/modals/modal.css'
-import { alertContext } from '../../../context/AlertProvider/AlertContextProvider'
 
 export default function NewReportMonth({ isModalOpen, switchModalView }: any) {
-  const { register, handleSubmit, reset, watch } = useForm({
+  const { register, reset, watch } = useForm({
     defaultValues: {
       payedForm: '',
       date: '',
@@ -32,21 +27,22 @@ export default function NewReportMonth({ isModalOpen, switchModalView }: any) {
     return false
   }
 
+  /*
   const { changeAlertModalState, getAlertMessage } = useContext(alertContext)
   const { data: clients } = useQuery(['clients'], axiosGetAllClients)
   const { data: contractors } = useQuery(
     [`contractors`],
     axiosGetAllContractors,
-  )
+  ) */
 
   function handleCloseModal() {
     switchModalView()
     reset()
   }
-  function handleCreateNewReport(data: any) {
+  /*   function handleCreateNewReport(data: any) {
     console.log(data)
     handleCloseModal()
-  }
+  } */
 
   return (
     <>
@@ -173,7 +169,7 @@ export default function NewReportMonth({ isModalOpen, switchModalView }: any) {
                       </label>
                     )}
 
-                    <div className="pt-7 text-sm flex flex-col items-center gap-5">
+                    {/*  <div className="pt-7 text-sm flex flex-col items-center gap-5">
                       {1 + 1 === 3 ? (
                         <button type="submit" className="buttonStyle2 px-3">
                           Edit
@@ -187,7 +183,7 @@ export default function NewReportMonth({ isModalOpen, switchModalView }: any) {
                           Create
                         </button>
                       )}
-                    </div>
+                    </div> */}
                   </form>
                 </Dialog.Panel>
               </Transition.Child>

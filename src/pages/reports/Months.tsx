@@ -17,7 +17,6 @@ export default function Months() {
     monthName,
     setYearName,
     yearName,
-    handleFilters,
     setFilterContractor,
     filterContractor,
   } = useDateFilter()

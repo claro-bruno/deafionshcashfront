@@ -3,7 +3,7 @@ import React from 'react'
 export default function Invoices() {
   return (
     <div>
-      <Header>
+      {/*     <Header>
         <div className="relative z-10 left-24 mx-auto flex items-center gap-2">
           <SelectFilter setFilter={setYearName} selectOptions={yearsListBox} />
           <SelectFilter
@@ -19,7 +19,7 @@ export default function Invoices() {
             type="text"
           />
         </div>
-      </Header>
+      </Header> */}
       <div className="2xl:flex 2xl:items-center 2xl:justify-center">
         <div className="tableContainer 2xl:w-[80vw] items-center flex flex-col overflow-auto ">
           <div className="flex justify-between  w-full px-4">
@@ -32,7 +32,7 @@ export default function Invoices() {
               </span>
             </div>
             <span className="relative h-10 flex gap-2 my-1 items-center font-extrabold text-xl self-center">
-              {`${yearName} ${monthName}`}
+              {/* {`${yearName} ${monthName}`} */}
             </span>
             <div>
               <span className="relative h-10 flex gap-2 my-1 items-center font-extrabold text-xl self-center">
@@ -46,7 +46,7 @@ export default function Invoices() {
           <table className="table">
             <thead className="tableHead">
               <tr className="">
-                {headerTableReports.map((item, index) => (
+                {/*    {headerTableReports.map((item, index) => (
                   <th
                     key={index}
                     scope="col"
@@ -54,7 +54,7 @@ export default function Invoices() {
                   >
                     {item}
                   </th>
-                ))}
+                ))} */}
               </tr>
             </thead>
             <tbody>

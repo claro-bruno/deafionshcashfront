@@ -1,4 +1,3 @@
-import { useQuery } from '@tanstack/react-query'
 import Header from '../../components/header/Header'
 import SelectFilter from '../../components/listboxes/SelectFilter'
 import { reportsYearBody, yearsListBox } from '../../helpers/constants'
@@ -7,13 +6,13 @@ import { useDateFilter } from '../../hooks/useDateFIlter'
 import YearReportTableLine from './components/YearReportTableLine'
 
 export default function Reports() {
-  const { monthName, setYearName, yearName } = useDateFilter()
+  const { setYearName, yearName } = useDateFilter()
   /* console.log(id) */
 
-  const { data, isRefetching } = useQuery<any>(['jobs'], () =>
+  /*   const { data, isRefetching } = useQuery<any>(['jobs'], () =>
     axiosGetAllJobs({ month: monthName, year: yearName }),
   )
-
+ */
   return (
     <div>
       <Header>

@@ -829,4 +829,3 @@ export const reportsMonthBody = [
     extras: 0,
   },
 ]
-
