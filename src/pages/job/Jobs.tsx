@@ -46,6 +46,14 @@ export default function Jobs() {
   const { data, isRefetching } = useQuery<any>(['jobs'], () =>
     axiosGetAllJobs({ month: monthName, year: yearName }),
   )
+  function formatFortnightDays(quarter: string) {
+    const fortnight =
+      quarter === 'Quinzena 1'
+        ? addWeakDayName().splice(0, 15)
+        : addWeakDayName().splice(15)
+
+    setFortnightDays(fortnight)
+  }
   useEffect(() => {
     if (data) {
       const jobFormatted = data.data.map((job: any) => ({
@@ -63,16 +71,7 @@ export default function Jobs() {
     if (isRefetching) {
       handleSetJobs([])
     }
-  }, [data, isRefetching])
-
-  function formatFortnightDays(quarter: string) {
-    const fortnight =
-      quarter === 'Quinzena 1'
-        ? addWeakDayName().splice(0, 15)
-        : addWeakDayName().splice(15)
-
-    setFortnightDays(fortnight)
-  }
+  }, [data, formatDate, handleSetJobs, isRefetching])
 
   useEffect(() => {
     if (id) {
@@ -82,7 +81,7 @@ export default function Jobs() {
       handleSetJobs(jobsFilteredByUserId)
     }
     formatFortnightDays('Quinzena 1')
-  }, [])
+  }, [monthName])
 
   function getDaysOfMonth() {
     const getMonthNumberByName = MONTHS.indexOf(monthName) + 1
