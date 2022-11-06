@@ -81,14 +81,14 @@ export default function Months() {
               </button>
             </div>
           </div>
-          <table className="table !w-[90vw]">
+          <table className="table relative xl:left-0 left-10 max-w-[90vw]">
             <thead className="tableHead">
               <tr className=" ">
                 {headerTableMonthsReports.map((item, index) => (
                   <th
                     key={index}
                     scope="col"
-                    className="tableLine text-center xl:max-xl:max-w-[55px]  "
+                    className=" tableLine text-center xl:max-xl:max-w-[55px]  "
                   >
                     {item}
                   </th>
@@ -99,7 +99,7 @@ export default function Months() {
               <tr className="bg-black text-center font-semibold border-b text-white ">
                 <td className=" ">xxxx</td>
                 <td className=" ">xxxx</td>
-                <td className=" ">xxxx</td>
+                <td className="">xxxx</td>
                 <td className=" ">xxxx</td>
                 <td className=" ">xxxx</td>
                 <td className="w-40 py-4">$99,999.99</td>

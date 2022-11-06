@@ -17,7 +17,7 @@ export default function NewReportMonth({ isModalOpen, switchModalView }: any) {
   const paymentType = watch('paymentType')
   const paymentIdentifierStatus = watch('paymentIdentifierStatus')
 
-  function validateInputPaymentIdView() {
+  function validateInputPaymentIdView(): boolean {
     if (
       (paymentType === 'check' || paymentType === 'app') &&
       paymentIdentifierStatus === 'ok'
