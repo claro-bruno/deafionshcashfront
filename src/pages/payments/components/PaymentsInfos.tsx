@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import { useContext } from 'use-context-selector'
 import { axiosUpdatePayments } from '../../../api/payments'
+import LoadingSpinner from '../../../components/LoadingSpinner'
 import { alertContext } from '../../../context/AlertProvider/AlertContextProvider'
 import useFormate from '../../../hooks/useFormate'
 
@@ -33,7 +34,7 @@ export default function PaymentsInfos(payInfos: any) {
   })
   const queryClient = useQueryClient()
   const { register, handleSubmit } = paymentContractorInfos
-  const { mutateAsync } = useMutation(axiosUpdatePayments, {
+  const { mutateAsync, isLoading } = useMutation(axiosUpdatePayments, {
     onSuccess(response) {
       console.log(response)
       queryClient.invalidateQueries(['payments'])
@@ -111,8 +112,9 @@ export default function PaymentsInfos(payInfos: any) {
           onClick={handleSubmit(handleUpdatePayment)}
           className="buttonStyle1 text-xs py-[0.09rem] px-2  "
           type="button"
+          disabled={isLoading}
         >
-          Save
+          {isLoading ? <LoadingSpinner /> : 'Save'}
         </button>
         <Link
           to={`/jobs/${payInfos.fk_id_contractor}`}

@@ -3,6 +3,7 @@ import { ChangeEvent, KeyboardEvent, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useContext, useContextSelector } from 'use-context-selector'
 import { axiosUpdateNewJob } from '../../../api/jobs'
+import LoadingSpinner from '../../../components/LoadingSpinner'
 import { alertContext } from '../../../context/AlertProvider/AlertContextProvider'
 import { jobsContext } from '../../../context/JobProvider/JobContextProvider'
 import useFormate from '../../../hooks/useFormate'
@@ -27,7 +28,7 @@ export default function JobTableLine({
   const { formatMoney } = useFormate()
 
   const queryClient = useQueryClient()
-  const { mutateAsync } = useMutation(axiosUpdateNewJob, {
+  const { mutateAsync, isLoading } = useMutation(axiosUpdateNewJob, {
     onSuccess() {
       queryClient.invalidateQueries(['jobs'])
     },
@@ -272,8 +273,9 @@ export default function JobTableLine({
           onClick={() => handleUpdateJob(contractorWorkedInfos)}
           className="buttonStyle1 text-xs py-[0.09rem] px-2"
           type="button"
+          disabled={isLoading}
         >
-          Save
+          {isLoading ? <LoadingSpinner css="w-5 h-5" /> : 'Save'}
         </button>
         <button
           onClick={() => handleEditContractor()}

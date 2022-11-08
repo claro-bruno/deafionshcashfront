@@ -50,6 +50,9 @@ body {
 .tableLine {
   @apply py-4 px-4 w-auto;
 }
+.tableLoading{
+@apply mt-10 absolute left-0 right-0  flex  justify-center
+}
 .tableLine:first-child {
 @apply  relative text-center;
 }

@@ -12,6 +12,7 @@ import { jobsContext } from '../../../context/JobProvider/JobContextProvider'
 import { WEEKDAYS } from '../../../helpers/constants'
 import { Clients } from '../../../types/client'
 import { Contractor } from '../../../types/contractor'
+import LoadingSpinner from '../../../components/LoadingSpinner'
 
 export default function NewJob() {
   const { jobToEdit, handleSwitchModalView, isModalOpen, editJob } =
@@ -44,7 +45,7 @@ export default function NewJob() {
   const [clientsList, setClientsList] = useState<Clients>([])
   const queryClient = useQueryClient()
 
-  const { mutateAsync } = useMutation(axiosCreateNewJob, {
+  const { mutateAsync, isLoading } = useMutation(axiosCreateNewJob, {
     onSuccess() {
       queryClient.invalidateQueries(['jobs'])
       reset()
@@ -260,18 +261,22 @@ export default function NewJob() {
                           type="submit"
                           className="buttonStyle2 px-3"
                           onClick={handleSubmit(handleEditJob)}
-                          disabled={!contractorInput || !clientInput}
+                          disabled={
+                            !contractorInput || !clientInput || isLoading
+                          }
                         >
-                          Edit
+                          {isLoading ? <LoadingSpinner btn /> : 'Edit'}
                         </button>
                       ) : (
                         <button
                           type="submit"
                           className="buttonStyle1 px-3"
                           onClick={handleSubmit(handleCreateNewJob)}
-                          disabled={!contractorInput || !clientInput}
+                          disabled={
+                            !contractorInput || !clientInput || isLoading
+                          }
                         >
-                          Create
+                          {isLoading ? <LoadingSpinner /> : 'Create'}
                         </button>
                       )}
                     </div>

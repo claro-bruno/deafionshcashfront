@@ -3,6 +3,7 @@ import { GearSix } from 'phosphor-react'
 import { useEffect, useState } from 'react'
 import { axiosGetAllContractors } from '../../api/contractor'
 import Header from '../../components/header/Header'
+import LoadingSpinner from '../../components/LoadingSpinner'
 import { headerTableContractors } from '../../helpers/headersTables'
 import useModal from '../../hooks/useModal'
 import { Contractor } from '../../types/contractor'
@@ -12,7 +13,7 @@ import ContractorModalInfos from './components/contractorsModalInfos/Contractors
 export default function Contractors() {
   const { switchModalView, isModalOpen } = useModal()
   const [contractorInfos, setContractorInfos] = useState({})
-  const { data } = useQuery([`contractors`], axiosGetAllContractors)
+  const { data, isLoading } = useQuery([`contractors`], axiosGetAllContractors)
   const [allContractors, setAllContractors] = useState<Contractor[]>([])
 
   useEffect(() => {
@@ -48,13 +49,19 @@ export default function Contractors() {
             </tr>
           </thead>
           <tbody>
-            {allContractors.map((contractor) => (
-              <ContractorsLine
-                key={contractor.id}
-                handleModalInfos={handleModalInfos}
-                contractor={contractor}
-              />
-            ))}
+            {isLoading ? (
+              <tr className="tableLoading">
+                <LoadingSpinner css="w-10 h-10" />
+              </tr>
+            ) : (
+              allContractors.map((contractor) => (
+                <ContractorsLine
+                  key={contractor.id}
+                  handleModalInfos={handleModalInfos}
+                  contractor={contractor}
+                />
+              ))
+            )}
           </tbody>
         </table>
         <ContractorModalInfos

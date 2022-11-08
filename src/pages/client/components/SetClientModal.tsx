@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { FormEvent, Fragment } from 'react'
 import { useContext } from 'use-context-selector'
 import { axiosCreateClient, axiosUpdateClient } from '../../../api/client'
+import LoadingSpinner from '../../../components/LoadingSpinner'
 import '../../../components/modals/modal.css'
 import { alertContext } from '../../../context/AlertProvider/AlertContextProvider'
 import { WEEKDAYS } from '../../../helpers/constants'
@@ -34,27 +35,33 @@ export default function SetClientModal({
     INITIAL_MODAL_CLIENT_STATES,
   )
   const { changeAlertModalState, getAlertMessage } = useContext(alertContext)
-  const { mutateAsync } = useMutation(axiosCreateClient, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['clients'])
+  const { mutateAsync, isLoading: isLoadingOnCreate } = useMutation(
+    axiosCreateClient,
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['clients'])
+      },
+      onError: (error: { response: any }) => {
+        console.log(error.response?.data)
+        getAlertMessage({
+          message: error.response?.data,
+        })
+        changeAlertModalState()
+      },
     },
-    onError: (error: { response: any }) => {
-      console.log(error.response?.data)
-      getAlertMessage({
-        message: error.response?.data,
-      })
-      changeAlertModalState()
-    },
-  })
+  )
 
-  const { mutateAsync: updateMutateAsync } = useMutation(axiosUpdateClient, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['clients'])
+  const { mutateAsync: updateMutateAsync, isLoading } = useMutation(
+    axiosUpdateClient,
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['clients'])
+      },
+      onError: (error) => {
+        console.log(error)
+      },
     },
-    onError: (error) => {
-      console.log(error)
-    },
-  })
+  )
   function handleSubmitClient(e: FormEvent<EventTarget>) {
     e.preventDefault()
     const payload = {
@@ -206,12 +213,19 @@ export default function SetClientModal({
 
                     <div className="pt-7 flex flex-col items-center gap-5">
                       <button
+                        disabled={isLoading || isLoadingOnCreate}
                         type="submit"
                         className={`${
                           isEditMode ? 'buttonStyle2 ' : 'buttonStyle1'
                         } px-3`}
                       >
-                        {isEditMode ? 'Edit ' : 'Create'}
+                        {isLoading || isLoadingOnCreate ? (
+                          <LoadingSpinner css="w-5 h-5" />
+                        ) : isEditMode ? (
+                          'Edit '
+                        ) : (
+                          'Save'
+                        )}
                       </button>
                     </div>
                   </form>

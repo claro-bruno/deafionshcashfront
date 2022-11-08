@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom'
 import { useContextSelector } from 'use-context-selector'
 import { axiosGetAllClients } from '../../api/client'
 import Header from '../../components/header/Header'
+import LoadingSpinner from '../../components/LoadingSpinner'
 import { AuthContext } from '../../context/AuthProvider'
 import { headerTableClients } from '../../helpers/headersTables'
 import useModal from '../../hooks/useModal'
@@ -17,7 +18,7 @@ export default function ClientPage() {
   const access = useContextSelector(AuthContext, (context) => context.access)
   const { switchModalView, isModalOpen } = useModal()
   const [clients, setClients] = useState<Client[] | []>([])
-  const { data } = useQuery(['clients'], axiosGetAllClients)
+  const { data, isLoading } = useQuery(['clients'], axiosGetAllClients)
   const [isEditable, setIsEditable] = useState({})
 
   useEffect(() => {
@@ -73,86 +74,92 @@ export default function ClientPage() {
             </tr>
           </thead>
           <tbody>
-            {clients.map((item) => {
-              if (tableFilters(item)) {
-                return (
-                  <tr key={item.id} className="bg-white border-b ">
-                    <th
-                      scope="row"
-                      className="flex relative top-[1.35rem] justify-center"
-                    >
-                      <Circle
-                        weight="fill"
-                        size={15}
-                        color={item.status === 'ACTIVE' ? 'green' : 'gray'}
-                      />
-                    </th>
-                    <td className="tableLine">{item.name}</td>
-                    <td className="tableLine">
-                      <ul className="flex flex-wrap gap-1">
-                        {item.sunday && (
-                          <li className="flex items-center gap-1">
-                            <Circle size={5} color="black" weight="fill" />
-                            Sun
-                          </li>
-                        )}
-                        {item.monday && (
-                          <li className="flex items-center gap-1">
-                            <Circle size={5} color="black" weight="fill" />
-                            Mon
-                          </li>
-                        )}
-                        {item.tuesday && (
-                          <li className="flex items-center gap-1">
-                            <Circle size={5} color="black" weight="fill" />
-                            Tues
-                          </li>
-                        )}
-                        {item.wednesday && (
-                          <li className="flex items-center gap-1">
-                            <Circle size={5} color="black" weight="fill" />
-                            Wed
-                          </li>
-                        )}
-                        {item.thursday && (
-                          <li className="flex items-center gap-1">
-                            <Circle size={5} color="black" weight="fill" />
-                            Thur
-                          </li>
-                        )}
-                        {item.friday && (
-                          <li className="flex items-center gap-1">
-                            <Circle size={5} color="black" weight="fill" />
-                            Fri
-                          </li>
-                        )}
-                        {item.saturday && (
-                          <li className="flex items-center gap-1">
-                            <Circle size={5} color="black" weight="fill" />
-                            Sat
-                          </li>
-                        )}
-                      </ul>
-                    </td>
-                    <td className="tableLine">
-                      {`${item.start}h - ${item.end}h`}
-                    </td>
-                    {access === 'ADMIN' && (
+            {isLoading ? (
+              <tr className="tableLoading">
+                <LoadingSpinner css="w-10 h-10" />
+              </tr>
+            ) : (
+              clients.map((item) => {
+                if (tableFilters(item)) {
+                  return (
+                    <tr key={item.id} className="bg-white border-b ">
+                      <th
+                        scope="row"
+                        className="flex relative top-[1.35rem] justify-center"
+                      >
+                        <Circle
+                          weight="fill"
+                          size={15}
+                          color={item.status === 'ACTIVE' ? 'green' : 'gray'}
+                        />
+                      </th>
+                      <td className="tableLine">{item.name}</td>
                       <td className="tableLine">
-                        <button
-                          onClick={() => handleEditClient(item)}
-                          className="buttonStyle2 px-3 relative left-7"
-                        >
-                          Edit
-                        </button>
+                        <ul className="flex flex-wrap gap-1">
+                          {item.sunday && (
+                            <li className="flex items-center gap-1">
+                              <Circle size={5} color="black" weight="fill" />
+                              Sun
+                            </li>
+                          )}
+                          {item.monday && (
+                            <li className="flex items-center gap-1">
+                              <Circle size={5} color="black" weight="fill" />
+                              Mon
+                            </li>
+                          )}
+                          {item.tuesday && (
+                            <li className="flex items-center gap-1">
+                              <Circle size={5} color="black" weight="fill" />
+                              Tues
+                            </li>
+                          )}
+                          {item.wednesday && (
+                            <li className="flex items-center gap-1">
+                              <Circle size={5} color="black" weight="fill" />
+                              Wed
+                            </li>
+                          )}
+                          {item.thursday && (
+                            <li className="flex items-center gap-1">
+                              <Circle size={5} color="black" weight="fill" />
+                              Thur
+                            </li>
+                          )}
+                          {item.friday && (
+                            <li className="flex items-center gap-1">
+                              <Circle size={5} color="black" weight="fill" />
+                              Fri
+                            </li>
+                          )}
+                          {item.saturday && (
+                            <li className="flex items-center gap-1">
+                              <Circle size={5} color="black" weight="fill" />
+                              Sat
+                            </li>
+                          )}
+                        </ul>
                       </td>
-                    )}
-                  </tr>
-                )
-              } else {
-                return []
-              }
-            })}
+                      <td className="tableLine">
+                        {`${item.start}h - ${item.end}h`}
+                      </td>
+                      {access === 'ADMIN' && (
+                        <td className="tableLine">
+                          <button
+                            onClick={() => handleEditClient(item)}
+                            className="buttonStyle2 px-3 relative left-7"
+                          >
+                            Edit
+                          </button>
+                        </td>
+                      )}
+                    </tr>
+                  )
+                } else {
+                  return []
+                }
+              })
+            )}
           </tbody>
         </table>
       </div>

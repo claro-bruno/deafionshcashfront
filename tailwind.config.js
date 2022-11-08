@@ -12,6 +12,10 @@ module.exports = {
         janitorial1: 'url(/src/assets/janitorialfoto1.png)',
         janitorial2: 'url(/src/assets/janitorialfoto2.png)',
       },
+      screens: {
+        '3xl': '1680px',
+        '4xl': '1920px',
+      },
     },
   },
   plugins: [],

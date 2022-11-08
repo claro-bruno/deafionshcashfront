@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { axiosGetAllPayments } from '../../api/payments'
 import Header from '../../components/header/Header'
 import SelectFilter from '../../components/listboxes/SelectFilter'
+import LoadingSpinner from '../../components/LoadingSpinner'
 import { monthsListBox, yearsListBox } from '../../helpers/constants'
 import { getLastDayOfMonth } from '../../helpers/functions'
 import { headerTablePayments } from '../../helpers/headersTables'
@@ -23,7 +24,7 @@ export default function Payments() {
     setMonthName,
     setFilterContractor,
   } = useDateFilter()
-  const { data } = useQuery(['payments'], () =>
+  const { data, isLoading } = useQuery(['payments'], () =>
     axiosGetAllPayments({ month: monthName, year: yearName }),
   )
   const [payments, setPayments] = useState<Payment[]>([])
@@ -86,13 +87,19 @@ export default function Payments() {
                 </tr>
               </thead>
               <tbody>
-                {payments.map((payment: any, i) => {
-                  if (handleFilters(payment)) {
-                    return <PaymentsInfos key={i} {...payment} />
-                  } else {
-                    return []
-                  }
-                })}
+                {isLoading ? (
+                  <tr className="tableLoading">
+                    <LoadingSpinner css="w-10 h-10" />
+                  </tr>
+                ) : (
+                  payments.map((payment: any, i) => {
+                    if (handleFilters(payment)) {
+                      return <PaymentsInfos key={i} {...payment} />
+                    } else {
+                      return []
+                    }
+                  })
+                )}
               </tbody>
             </table>
           </div>

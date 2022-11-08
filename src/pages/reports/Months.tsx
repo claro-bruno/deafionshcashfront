@@ -81,14 +81,14 @@ export default function Months() {
               </button>
             </div>
           </div>
-          <table className="table relative xl:left-0 left-10 max-w-[90vw]">
+          <table className="table relative 4xl:left-0 3xl:left-[8%] left-[16%] max-w-[90vw]">
             <thead className="tableHead">
               <tr className=" ">
                 {headerTableMonthsReports.map((item, index) => (
                   <th
                     key={index}
                     scope="col"
-                    className=" tableLine text-center xl:max-xl:max-w-[55px]  "
+                    className="tableLine  text-center  min-w-[90px] "
                   >
                     {item}
                   </th>
@@ -102,21 +102,21 @@ export default function Months() {
                 <td className="">xxxx</td>
                 <td className=" ">xxxx</td>
                 <td className=" ">xxxx</td>
-                <td className="w-40 py-4">$99,999.99</td>
-                <td className="w-40 py-4">$99,999.99</td>
-                <td className="w-40 py-4">$99,999.99</td>
-                <td className="w-40 py-4">$99,999.99</td>
-                <td className="w-40 py-4">$99,999.99</td>
-                <td className="w-40 py-4">$99,999.99</td>
-                <td className="w-40 py-4">$99,999.99</td>
-                <td className="w-40 py-4">$99,999.99</td>
-                <td className="w-40 py-4">$99,999.99</td>
-                <td className="w-40 py-4">$99,999.99</td>
-                <td className="w-40 py-4">$99,999.99</td>
-                <td className="w-40 py-4">$99,999.99</td>
-                <td className="w-40 py-4">$99,999.99</td>
-                <td className="w-40 py-4">$99,999.99</td>
-                <td className="w-40 py-4">$99,999.99</td>
+                <td className="tableLine">$99,999.99</td>
+                <td className="tableLine">$99,999.99</td>
+                <td className="tableLine">$99,999.99</td>
+                <td className="tableLine">$99,999.99</td>
+                <td className="tableLine">$99,999.99</td>
+                <td className="tableLine">$99,999.99</td>
+                <td className="tableLine">$99,999.99</td>
+                <td className="tableLine">$99,999.99</td>
+                <td className="tableLine">$99,999.99</td>
+                <td className="tableLine">$99,999.99</td>
+                <td className="tableLine">$99,999.99</td>
+                <td className="tableLine">$99,999.99</td>
+                <td className="tableLine">$99,999.99</td>
+                <td className="tableLine">$99,999.99</td>
+                <td className="tableLine">$99,999.99</td>
                 <td className=" ">xxxx</td>
               </tr>
               {reportsMonthBody.map((report) => (

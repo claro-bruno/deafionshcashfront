@@ -6,6 +6,7 @@ import { useContextSelector } from 'use-context-selector'
 import { axiosGetAllJobs } from '../../api/jobs'
 import Header from '../../components/header/Header'
 import SelectFilter from '../../components/listboxes/SelectFilter'
+import LoadingSpinner from '../../components/LoadingSpinner'
 import { jobsContext } from '../../context/JobProvider/JobContextProvider'
 import {
   fortnightListBox,
@@ -43,7 +44,7 @@ export default function Jobs() {
   const { id } = useParams()
   /* console.log(id) */
 
-  const { data, isRefetching } = useQuery<any>(['jobs'], () =>
+  const { data, isRefetching, isLoading } = useQuery<any>(['jobs'], () =>
     axiosGetAllJobs({ month: monthName, year: yearName }),
   )
   function formatFortnightDays(quarter: string) {
@@ -174,19 +175,25 @@ export default function Jobs() {
               </tr>
             </thead>
             <tbody>
-              {jobs.map((job: any) => {
-                if (handleFilters(job)) {
-                  return (
-                    <JobTableLine
-                      key={job.id}
-                      job={job}
-                      fortnightDays={fortnightDays}
-                    />
-                  )
-                } else {
-                  return []
-                }
-              })}
+              {isLoading ? (
+                <tr className="tableLoading">
+                  <LoadingSpinner css="w-10 h-10" />
+                </tr>
+              ) : (
+                jobs.map((job: any) => {
+                  if (handleFilters(job)) {
+                    return (
+                      <JobTableLine
+                        key={job.id}
+                        job={job}
+                        fortnightDays={fortnightDays}
+                      />
+                    )
+                  } else {
+                    return []
+                  }
+                })
+              )}
             </tbody>
           </table>
         </div>
