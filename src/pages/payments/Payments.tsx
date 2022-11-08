@@ -11,7 +11,7 @@ import { headerTablePayments } from '../../helpers/headersTables'
 import { useDateFilter } from '../../hooks/useDateFIlter'
 import useFormate from '../../hooks/useFormate'
 import { Payment } from '../../types/payments'
-import PaymentsInfos from './components/PaymentsInfos'
+import PaymentsInfos from './components/PaymentsLine'
 
 export default function Payments() {
   const { formatMoney } = useFormate()
@@ -58,7 +58,7 @@ export default function Payments() {
       </Header>
 
       <main className="flex bg-gray-100 min-h-[88vh]">
-        <div className=" absolute text-zinc-700 left-[45%] right-full flex gap-2 font-extrabold text-xl">
+        <div className=" absolute left-[45%] mt-2 right-full currentMY">
           <h2>{yearName}</h2>
           <h2>{monthName}</h2>
         </div>

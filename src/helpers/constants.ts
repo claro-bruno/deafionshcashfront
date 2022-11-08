@@ -60,7 +60,22 @@ export const PAYMENT_TYPES = [
   { name: 'Deposit' },
   { name: 'Application' },
 ]
-
+export const PAYMENT_CATEGORIES = [
+  'Inputs',
+  'Labour Payroll',
+  'Van/Fuel e oil',
+  'Fuel & oil',
+  'Equipment',
+  'Uniform',
+  'Repairs & Maintenance',
+  'Advertisement',
+  'Contractor Workers',
+  'Global',
+  'Insurance & tax',
+  'Chemical & consumables',
+  'Office expenses',
+  'Extras',
+]
 export const reportsYearBody = [
   {
     id: 1,

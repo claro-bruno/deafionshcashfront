@@ -81,3 +81,13 @@ input[type="number"] {
 .buttonStyle2 {
   @apply disabled:opacity-50 disabled:hover:ring-transparent disabled:hover:border-transparent disabled:cursor-not-allowed hover:ring-brand2 bg-brand2 focus:ring-brand2 transition-colors hover:border-white text-white  py-1 rounded border border-transparent ring-2 ring-transparent font-bold
 }
+
+.reportInfos{
+@apply relative text-zinc-500  h-auto flex gap-2 my-2 items-center  text-lg self-center;
+}
+.reportInfosValue {
+@apply font-semibold text-zinc-700
+}
+.currentMY{
+@apply text-zinc-700  flex gap-2 font-extrabold text-xl
+}

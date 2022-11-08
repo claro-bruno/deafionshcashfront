@@ -2,13 +2,16 @@ import { Dialog, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
 import { useForm } from 'react-hook-form'
 import '../../../components/modals/modal.css'
+import { PAYMENT_CATEGORIES } from '../../../helpers/constants'
 
 export default function NewReportMonth({ isModalOpen, switchModalView }: any) {
-  const { register, reset, watch } = useForm({
+  const { register, reset, watch, handleSubmit } = useForm({
     defaultValues: {
       payedForm: '',
       date: '',
       paymentType: '',
+      value: '',
+      paymentCategory: '',
       paymentIdentifierStatus: '',
       paymentIdentifier: '',
     },
@@ -39,10 +42,10 @@ export default function NewReportMonth({ isModalOpen, switchModalView }: any) {
     switchModalView()
     reset()
   }
-  /*   function handleCreateNewReport(data: any) {
+  function handleCreateNewReport(data: any) {
     console.log(data)
     handleCloseModal()
-  } */
+  }
 
   return (
     <>
@@ -88,12 +91,35 @@ export default function NewReportMonth({ isModalOpen, switchModalView }: any) {
                       Payed for:
                       <input
                         className="inputsDefault"
-                        list="contractors"
                         type="text"
                         {...register('payedForm')}
                         required
                       />
                     </label>
+                    <label className="labelsDefault">
+                      Value:
+                      <input
+                        className="inputsDefault"
+                        type="number"
+                        {...register('value')}
+                        required
+                      />
+                    </label>
+                    <label className="labelsDefault">
+                      Payment category:
+                      <input
+                        className="inputsDefault"
+                        list="categories"
+                        type="text"
+                        {...register('paymentCategory')}
+                        required
+                      />
+                    </label>
+                    <datalist id="categories">
+                      {PAYMENT_CATEGORIES.map((category) => (
+                        <option key={category}>{category}</option>
+                      ))}
+                    </datalist>
                     <label className="labelsDefault">
                       Date
                       <input
@@ -169,21 +195,23 @@ export default function NewReportMonth({ isModalOpen, switchModalView }: any) {
                       </label>
                     )}
 
-                    {/*  <div className="pt-7 text-sm flex flex-col items-center gap-5">
-                      {1 + 1 === 3 ? (
-                        <button type="submit" className="buttonStyle2 px-3">
-                          Edit
-                        </button>
-                      ) : (
-                        <button
-                          type="submit"
-                          onClick={handleSubmit(handleCreateNewReport)}
-                          className="buttonStyle1 px-3"
-                        >
-                          Create
-                        </button>
-                      )}
-                    </div> */}
+                    {
+                      <div className="pt-7 text-sm flex flex-col items-center gap-5">
+                        {1 + 1 === 3 ? (
+                          <button type="submit" className="buttonStyle2 px-3">
+                            Edit
+                          </button>
+                        ) : (
+                          <button
+                            type="submit"
+                            onClick={handleSubmit(handleCreateNewReport)}
+                            className="buttonStyle1 px-3"
+                          >
+                            Create
+                          </button>
+                        )}
+                      </div>
+                    }
                   </form>
                 </Dialog.Panel>
               </Transition.Child>

@@ -124,13 +124,13 @@ export default function Jobs() {
       </Header>
       <div className="2xl:flex 2xl:items-center 2xl:justify-center">
         <div className="tableContainer 2xl:w-[80vw] items-center flex flex-col overflow-auto ">
-          <span className="relative h-10 flex gap-2 my-1 items-center font-extrabold text-xl self-center">
+          <span className="relative h-10 my-1 currentMY items-center">
             {`${yearName} ${monthName}`}
 
             <SelectFilter
               setFilter={formatFortnightDays}
               selectOptions={fortnightListBox}
-              listCSS=" w-[8rem]"
+              listCSS=" w-[8rem] hover:ring-2 hover:ring-brand rounded"
             />
           </span>
           <button

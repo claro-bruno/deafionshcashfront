@@ -7,7 +7,7 @@ import LoadingSpinner from '../../../components/LoadingSpinner'
 import { alertContext } from '../../../context/AlertProvider/AlertContextProvider'
 import useFormate from '../../../hooks/useFormate'
 
-export default function PaymentsInfos(payInfos: any) {
+export default function PaymentsLine(payInfos: any) {
   const { formatMoney } = useFormate()
   const { changeAlertModalState, getAlertMessage } = useContext(alertContext)
 
@@ -37,8 +37,7 @@ export default function PaymentsInfos(payInfos: any) {
   const queryClient = useQueryClient()
   const { register, handleSubmit } = paymentContractorInfos
   const { mutateAsync, isLoading } = useMutation(axiosUpdatePayments, {
-    onSuccess(response) {
-      console.log(response)
+    onSuccess() {
       queryClient.invalidateQueries(['payments'])
     },
     onError: (error: { response: any }) => {
