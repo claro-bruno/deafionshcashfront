@@ -62,10 +62,10 @@ export default function Payments() {
           <h2>{yearName}</h2>
           <h2>{monthName}</h2>
         </div>
-        <div className="w-full my-2">
+        <div className="w-full flex justify-center  my-2">
           <div className="tableContainer overflow-auto mt-8">
-            <table className="table ">
-              <thead className="tableHead">
+            <table className="table min-w-[80vw] ">
+              <thead className="tableHead ">
                 <tr>
                   {headerTablePayments.map((item, index) => {
                     if (item === 'quinzena 2') {
@@ -82,7 +82,7 @@ export default function Payments() {
                     )
                   })}
                   <th scope="col" className="tableLine">
-                    <GearSix className="relative left-8" size={24} />
+                    <GearSix className="relative 3xl:left-8 left-6" size={24} />
                   </th>
                 </tr>
               </thead>

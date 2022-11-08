@@ -32,9 +32,11 @@ export const headerTableJobs = [
 export const headerTablePayments = [
   'Contractor',
   '1 - 15',
+  'taxes',
   'Payment Type',
   'Payment Identifier',
   'quinzena 2',
+  'taxes',
   'Payment Type',
   'Payment Identifier',
   'total taxes',

@@ -65,7 +65,7 @@ export default function ClientPage() {
                   <button
                     type="button"
                     onClick={switchModalView}
-                    className=" relative left-2 mt-2 flex justify-center px-2 buttonStyle1"
+                    className="mt-2 px-2 buttonStyle1"
                   >
                     Add new Client
                   </button>
@@ -94,8 +94,8 @@ export default function ClientPage() {
                         />
                       </th>
                       <td className="tableLine">{item.name}</td>
-                      <td className="tableLine">
-                        <ul className="flex flex-wrap gap-1">
+                      <td className="tableLine  flex items-center justify-center">
+                        <ul className="flex text-center flex-wrap gap-1">
                           {item.sunday && (
                             <li className="flex items-center gap-1">
                               <Circle size={5} color="black" weight="fill" />
@@ -147,7 +147,7 @@ export default function ClientPage() {
                         <td className="tableLine">
                           <button
                             onClick={() => handleEditClient(item)}
-                            className="buttonStyle2 px-3 relative left-7"
+                            className="buttonStyle2 px-3 "
                           >
                             Edit
                           </button>

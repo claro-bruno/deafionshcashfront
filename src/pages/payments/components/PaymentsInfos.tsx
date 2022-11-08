@@ -19,12 +19,14 @@ export default function PaymentsInfos(payInfos: any) {
       payments: [
         {
           method: payInfos.payments[0].method ?? '',
+          taxes: payInfos.payments[0].taxes,
           identifier: payInfos.payments[0].identifier,
           value: payInfos.payments[0].value,
           quarter: payInfos.payments[0].quarter,
         },
         {
           method: payInfos.payments[1].method ?? '',
+          taxes: payInfos.payments[1].taxes,
           identifier: payInfos.payments[1].identifier,
           value: payInfos.payments[1].value,
           quarter: payInfos.payments[1].quarter,
@@ -63,7 +65,7 @@ export default function PaymentsInfos(payInfos: any) {
     }
   }
   return (
-    <tr className={`${setStatusPayment()}  border-b`}>
+    <tr className={`${setStatusPayment()} text-center  border-b`}>
       <td className="tableLine min-w-[9rem]">
         <Link to={`/contractors/${payInfos.fk_id_contractor}`}>
           {payInfos.name}
@@ -73,6 +75,15 @@ export default function PaymentsInfos(payInfos: any) {
         <>
           <td className="tableLine min-w-[7rem]" key={payment.identifier}>
             {formatMoney(Number(payment.value))}
+          </td>
+          <td>
+            <input
+              {...register(`payments[${i}].taxes`)}
+              title="taxes"
+              type="number"
+              className={`
+              border rounded ml-1 w-[4rem] px-2 py-1 outline-brand`}
+            />
           </td>
           <td className="tableLine">
             <select
@@ -92,7 +103,7 @@ export default function PaymentsInfos(payInfos: any) {
               title="identificação do pagamento"
               type="text"
               className={`
-              border rounded focus:ml-0 focus:w-[7rem] w-[4rem] px-2 py-1 outline-brand`}
+              border rounded  w-[7rem] px-2 py-1 outline-brand`}
             />
           </td>
         </>

@@ -43,7 +43,7 @@ export default function Contractors() {
                   {item}
                 </th>
               ))}
-              <th scope="col" className="tableLine">
+              <th scope="col" className="tableLine flex  justify-center">
                 <GearSix size={24} />
               </th>
             </tr>

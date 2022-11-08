@@ -51,14 +51,14 @@ export default function ContractorsLine({
           <option value="PENDING">Pending</option>
         </select>
       </td>
-      <td className="px-4">
+      <td className="tableLine">
         {' '}
         <Link to={`/contractors/${contractor.id}`}>
           {`${contractor.first_name} ${contractor.last_name}`}
         </Link>
       </td>
-      <td className="px-2 my-2  h-16 flex items-start gap-2 justify-center flex-col">
-        <span className="relative left-4">{contractor.identification}</span>
+      <td className="px-2 my-2  h-16 flex items-center gap-2 justify-center flex-col">
+        <span>{contractor.identification}</span>
         <button
           onClick={() =>
             handleModalInfos(
@@ -66,13 +66,13 @@ export default function ContractorsLine({
               contractor.urlDocumentProof,
             )
           }
-          className="buttonStyle1 relative left-2 text-xs py-[0.09rem] px-2"
+          className="buttonStyle1 text-xs py-[0.09rem] px-2"
         >
           Document img
         </button>
       </td>
-      <td className="px-4">{contractor.telephone}</td>
-      <td className="px-4">
+      <td className="tableLine">{contractor.telephone}</td>
+      <td className="tableLine">
         <button
           onClick={() =>
             handleModalInfos(
@@ -85,7 +85,7 @@ export default function ContractorsLine({
           Address infos
         </button>
       </td>
-      <td className="px-4">
+      <td className="tableLine">
         <button
           onClick={() => handleUpdateContractor(contractor)}
           className="buttonStyle1 text-xs py-[0.09rem] px-2"
