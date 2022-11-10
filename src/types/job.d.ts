@@ -1,14 +1,17 @@
 export interface TJob {
   id?: number
-  contractor: { last_name: string; first_name: string; id?: number }
-  client: { name: string; id?: number }
+  contractor_name: string
+  contractor_id: number
+  client_name: string
   status: string
+  total: number
+  total_hours: number
   quarter: [
     {
-      total: number
-      total_hours: number
       month: string
       status: string
+      total: number
+      total_hours: number
       year: number
       taxes: number
       shirts: number
@@ -16,10 +19,10 @@ export interface TJob {
       appointment: { date: string; value: number }[]
     },
     {
-      total: number
-      total_hours: number
       month: string
       status: string
+      total: number
+      total_hours: number
       year: number
       taxes: number
       shirts: number
