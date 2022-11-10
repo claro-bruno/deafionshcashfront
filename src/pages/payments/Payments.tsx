@@ -30,9 +30,35 @@ export default function Payments() {
   const [payments, setPayments] = useState<Payment[]>([])
   const [total, setTotal] = useState<any>([])
 
+  function buildPaymentObjs(payment: any) {
+    return {
+      contractorId: payment.fk_id_contractor,
+      name: payment.name,
+      year: payment.year,
+      month: payment.month,
+      payments: [
+        {
+          quarter: 1,
+          method: payment.method_1,
+          value: payment.value_1,
+          identifier: payment.identification_1,
+          taxes: payment.taxes_1,
+        },
+        {
+          quarter: 2,
+          method: payment.method_2,
+          value: payment.value_2,
+          identifier: payment.identification_2,
+          taxes: payment.taxes_2,
+        },
+      ],
+    }
+  }
+
   useEffect(() => {
     if (data) {
-      setPayments(data.data.payments)
+      const paymentsFormatted = data.data.payments.map(buildPaymentObjs)
+      setPayments(paymentsFormatted)
       setTotal(data.data.total)
     }
   }, [data])
