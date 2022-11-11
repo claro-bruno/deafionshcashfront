@@ -19,14 +19,12 @@ export default function PaymentsLine(payInfos: any) {
       payments: [
         {
           method: payInfos.payments[0].method ?? '',
-          taxes: payInfos.payments[0].taxes,
           identifier: payInfos.payments[0].identifier,
           value: payInfos.payments[0].value,
           quarter: payInfos.payments[0].quarter,
         },
         {
           method: payInfos.payments[1].method ?? '',
-          taxes: payInfos.payments[1].taxes,
           identifier: payInfos.payments[1].identifier,
           value: payInfos.payments[1].value,
           quarter: payInfos.payments[1].quarter,
@@ -76,13 +74,11 @@ export default function PaymentsLine(payInfos: any) {
             {formatMoney(Number(payment.value))}
           </td>
           <td>
-            <input
-              {...register(`payments[${i}].taxes`)}
+            <span
               title="taxes"
-              type="number"
-              className={`
-              border rounded ml-1 w-[4rem] px-2 py-1 outline-brand`}
-            />
+            >
+            { payInfos.payments[i].taxes}
+            </span>
           </td>
           <td className="tableLine">
             <select
