@@ -200,11 +200,11 @@ export default function JobTableLine({
         </select>
       </td>
       <td className="max-w-[9rem]">
-        <Link to={`/contractors/${job.contractor.id}`}>
-          {`${job.contractor.first_name} ${job.contractor.last_name}`}
+        <Link to={`/contractors/${job.contracto_id}`}>
+          {job.contractor_name}
         </Link>
       </td>
-      <td>{job.client.name}</td>
+      <td>{job.client_name}</td>
       <td className="flex items-center justify-center">
         {
           <p className="flex justify-center py-2 gap-1">
