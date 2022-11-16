@@ -261,7 +261,7 @@ export default function JobTableLine({
           onChange={(e) => handleChange(e, 'status_payment')}
           className="rounded bg-white border outline-none p-1"
           name="status"
-          defaultValue={totalStatusPayment}
+          value={totalStatusPayment}
         >
           <option value="PENDING">Pending</option>
           <option value="REVISED">Revised</option>

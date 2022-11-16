@@ -75,7 +75,9 @@ export default function ContractorAsideInfos({
               <div className="flex flex-col gap-1">
                 <span className="text-sm">Fortnight 1</span>
                 {section === 'Payment'
-                  ? ` ${contractorPayment(totals[1]?.total_1quarter)}`
+                  ? ` ${
+                      contractorPayment(totals[1]?.total_1quarter) || '$0.00'
+                    }`
                   : `${contractorWorkedHours(totals[1]?.total_1hours)} h`}
               </div>
             )}
@@ -83,7 +85,9 @@ export default function ContractorAsideInfos({
               <div className="flex flex-col gap-1">
                 <span className="text-sm">Fortnight 2</span>
                 {section === 'Payment'
-                  ? ` ${contractorPayment(totals[2]?.total_2quarter)}`
+                  ? ` ${contractorPayment(
+                      totals[2]?.total_2quarter,
+                    )} || '$0.00'`
                   : `${contractorWorkedHours(totals[2]?.total_2hours)} h`}
               </div>
             )}
@@ -91,7 +95,7 @@ export default function ContractorAsideInfos({
               <div className="flex flex-col gap-1">
                 <span className="text-sm">Total</span>
                 {section === 'Payment'
-                  ? `  ${contractorPayment(totals[0]?.total)}`
+                  ? `  ${contractorPayment(totals[0]?.total) || '$0.00'}`
                   : `${contractorWorkedHours(totals[0]?.total_hours)} h`}
               </div>
             )}

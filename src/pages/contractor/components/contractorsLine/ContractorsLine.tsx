@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { useContext } from 'use-context-selector'
 import { axiosUpdateContractorStatus } from '../../../../api/contractor'
 import { alertContext } from '../../../../context/AlertProvider/AlertContextProvider'
+import useFormate from '../../../../hooks/useFormate'
 import { Contractor } from '../../../../types/contractor'
 
 type ContractorsLineProps = {
@@ -29,7 +30,7 @@ export default function ContractorsLine({
       changeAlertModalState()
     },
   })
-
+  const { formatPhone } = useFormate()
   function handleUpdateContractor(payload: any) {
     const contractorObj = { id: payload.id, status: contractorStatus }
     console.log(contractorObj)
@@ -71,7 +72,7 @@ export default function ContractorsLine({
           Document img
         </button>
       </td>
-      <td className="tableLine">{contractor.telephone}</td>
+      <td className="tableLine">{formatPhone(contractor.telephone)}</td>
       <td className="tableLine">
         <button
           onClick={() =>
