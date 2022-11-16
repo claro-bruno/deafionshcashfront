@@ -57,6 +57,7 @@ export default function PaymentsLine(payInfos: any) {
         { ...payload.payments[1], taxes: payInfos.payments[1].taxes },
       ],
     }
+    console.log(paymentUpdatedObj)
     mutateAsync(paymentUpdatedObj)
   }
 
@@ -94,8 +95,8 @@ export default function PaymentsLine(payInfos: any) {
               <option className="w-20" value="TRANSFER">
                 Bank Transfer
               </option>
-              <option value="DEPOSIT">Check</option>
-              <option value="OTHERS">Venmo</option>
+              <option value="CHECK">Check</option>
+              <option value="VENMO">Venmo</option>
             </select>
           </td>
           <td className=" tableLine">
