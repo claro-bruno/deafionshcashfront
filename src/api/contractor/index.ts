@@ -38,7 +38,8 @@ export function axiosUpdateContractor(
   payload: EditContractor,
   inputsFiles: InputsFiles,
 ) {
-  let objToAPI: any = { body: payload }
+  const jsonToString = JSON.stringify(payload)
+  let objToAPI: any = { body: jsonToString }
 
   if (inputsFiles.documentProof instanceof File) {
     objToAPI = { ...objToAPI, documentProof: inputsFiles.documentProof }
@@ -54,13 +55,13 @@ export function axiosUpdateContractor(
   }
   console.log(objToAPI)
 
-  return Api.put(`account/contractor/access/${payload.id}`, objToAPI, {
+  return Api.put(`contractor/${payload.id}`, objToAPI, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
   })
 }
-
+// return Api.put(`contractor/${payload.id}`, objToAPI, {
 export async function axiosUpdateContractorPassword(payload: {
   password: string
   id: number
@@ -83,11 +84,15 @@ export async function axiosGetContractorsById(id: number) {
   return await Api.get(`contractor/${id}`)
 }
 export async function axiosUpdateContractorStatus(payload: any) {
-  return await Api.patch(`contractor/${payload.id}`, JSON.stringify(payload), {
-    headers: {
-      'Content-Type': 'application/json',
+  return await Api.patch(
+    `account/contractor/access/${payload.id}`,
+    JSON.stringify(payload),
+    {
+      headers: {
+        'Content-Type': 'application/json',
+      },
     },
-  })
+  )
 }
 
 export async function axiosRecoveryPassword(payload: any) {

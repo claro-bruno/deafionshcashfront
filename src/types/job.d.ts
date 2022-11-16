@@ -1,8 +1,18 @@
 export interface TJob {
   id?: number
+<<<<<<< HEAD
   contractor_name: string
   contractor_id: number
   client_name: string
+=======
+  contractor: {
+    last_name: string
+    first_name: string
+    middle_name?: string
+    id?: number
+  }
+  client: { name: string; id?: number }
+>>>>>>> branchAtual
   status: string
   total: number
   total_hours: number

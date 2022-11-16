@@ -7,10 +7,22 @@ type HandleFiltersParams = {
   quarter?: { month: string; year: number }[]
   name?: string
 }
+
+function toMonthName(monthNumber: number) {
+  const date = new Date()
+  date.setMonth(monthNumber)
+
+  return date.toLocaleString('en-US', {
+    month: 'long',
+  })
+}
+
 export function useDateFilter() {
   const [filterContractor, setFilterContractor] = useState('')
-  const [monthName, setMonthName] = useState('October')
-  const [yearName, setYearName] = useState('2022')
+  const [monthName, setMonthName] = useState(
+    toMonthName(new Date(Date.now()).getMonth()),
+  )
+  const [yearName, setYearName] = useState(new Date().getFullYear().toString())
 
   function handleFilters(obj: HandleFiltersParams) {
     const filterByContractor = obj.contractor

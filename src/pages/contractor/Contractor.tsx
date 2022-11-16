@@ -54,7 +54,7 @@ export default function Contractor() {
   const { data } = useQuery(['contractor', urlId], () =>
     axiosGetContractorsById(Number(urlId)),
   )
-  const { data: jobs } = useQuery(['contractorJobs', urlId], () =>
+  const { data: jobs } = useQuery(['contractorJobs'], () =>
     axiosGetAllJobsById(Number(urlId), { month: monthName, year: yearName }),
   )
 
@@ -69,10 +69,10 @@ export default function Contractor() {
   }, [data, jobs])
 
   function tableFilters(item: ContractorJob) {
-    const filterByClient = item.client.name
+    const filterByClient = item.name
       .toLowerCase()
       .includes(filterCompany.toLowerCase())
-    const filterByDate = item.quarter[0].month
+    const filterByDate = item.month
       .toLowerCase()
       .includes(monthName.toLowerCase())
     return filterByClient && filterByDate
@@ -115,45 +115,32 @@ export default function Contractor() {
               </tr>
             </thead>
             <tbody>
-              {contractorJobs.map((job) => {
-                if (tableFilters(job)) {
-                  return (
-                    <>
-                      {job.quarter.map((quarter) => (
-                        <>
-                          {quarter.appointment.map((day) => {
-                            if (day.value > 0) {
-                              return (
-                                <tr
-                                  key={day.date}
-                                  className="bg-white border-b "
-                                >
-                                  <td scope="row" className="tableLine">
-                                    {formatDate(day.date)}
-                                  </td>
-                                  <td className="tableLine flex flex-wrap max-w-[9rem]">
-                                    <Link to={`/clients/${job.client.id}`}>
-                                      {job.client.name}
-                                    </Link>
-                                  </td>
-                                  <td className="tableLine ">{day.value} h</td>
-                                  <td className="tableLine">
-                                    {formatMoney(quarter.value_hour)}
-                                  </td>
-                                </tr>
-                              )
-                            } else {
-                              return null
-                            }
-                          })}
-                        </>
-                      ))}
-                    </>
-                  )
-                } else {
-                  return []
-                }
-              })}
+              <>
+                {contractorJobs.map((job, index) => {
+                  if (tableFilters(job)) {
+                    if (job.value > 0) {
+                      return (
+                        <tr key={index} className="bg-white border-b ">
+                          <td scope="row" className="tableLine">
+                            {formatDate(job.date)}
+                          </td>
+                          <td className="tableLine text-center">
+                            <Link to={`/clients/${job.id}`}>{job.name}</Link>
+                          </td>
+                          <td className="tableLine ">{job.value} h</td>
+                          <td className="tableLine">
+                            {formatMoney(job.value_hour)}
+                          </td>
+                        </tr>
+                      )
+                    } else {
+                      return null
+                    }
+                  } else {
+                    return []
+                  }
+                })}
+              </>
             </tbody>
           </table>
           {<ContractorAsideInfos totals={totalsJobsInfos} />}
