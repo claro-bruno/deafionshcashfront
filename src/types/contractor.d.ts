@@ -1,14 +1,19 @@
 export type ContractorJob = {
   id: number
-  quarter: {
-    appointment: { date: string; value: number }[]
-    month: string
-    total: number
-    total_hours: number
-    value_hour: number
-    year: number
-  }[]
-  client: { name: string; id: number }
+  value_hour: number
+  value: number
+  date: string
+  name: string
+  month: string
+  // quarter: {
+  //   appointment: { date: string; value: number }[]
+  //   month: string
+  //   total: number
+  //   total_hours: number
+  //   value_hour: number
+  //   year: number
+  // }[]
+  // client: { name: string; id: number }
 }
 
 export type NewContractor = {
@@ -35,6 +40,24 @@ export type NewContractor = {
     zipcode?: string
   }
 }
+
+export type EditContractor = {
+  id?: string
+  email: string
+  telephone: string
+  identification: string
+  status: string
+  ein: string
+  first_name: string
+  last_name: string
+  dob: string
+  middle_name: string
+  address: string
+  city: string
+  state: string
+  zipcode: string
+}
+
 export type Contractor = {
   acceptTerms: boolean
   address: {}[]
@@ -54,23 +77,6 @@ export type Contractor = {
   urlPrimaryResidencyProof: string
   urlProfile: string
   urlSecondaryResidencyProof: string
-}
-
-export type EditContractor = {
-  id?: string
-  email: string
-  telephone: string
-  identification: string
-  status: string
-  ein: string
-  first_name: string
-  last_name: string
-  dob: string
-  middle_name: string
-  address: string
-  city: string
-  state: string
-  zipcode: string
 }
 
 export type InputsFiles = {

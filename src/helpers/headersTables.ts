@@ -39,8 +39,8 @@ export const headerTablePayments = [
   'taxes',
   'Payment Type',
   'Payment Identifier',
-  'total taxes',
-  'total shirts',
+  // 'total taxes',
+  // 'total shirts',
   'Total Month',
 ]
 

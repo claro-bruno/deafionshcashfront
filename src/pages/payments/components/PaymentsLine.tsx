@@ -74,11 +74,7 @@ export default function PaymentsLine(payInfos: any) {
             {formatMoney(Number(payment.value))}
           </td>
           <td>
-            <span
-              title="taxes"
-            >
-            { payInfos.payments[i].taxes}
-            </span>
+            <span title="taxes">{payInfos.payments[i].taxes}</span>
           </td>
           <td className="tableLine">
             <select
@@ -103,8 +99,8 @@ export default function PaymentsLine(payInfos: any) {
           </td>
         </>
       ))}
-      <td className="w-[7rem]  px-2">{formatMoney(payInfos.taxes)}</td>
-      <td className="w-[7rem]  px-2">{formatMoney(payInfos.shirts)}</td>
+      {/* <td className="w-[7rem]  px-2">{formatMoney(payInfos.taxes)}</td>
+      <td className="w-[7rem]  px-2">{formatMoney(payInfos.shirts)}</td> */}
       <td className="w-[7rem]  px-2">
         {formatMoney(
           payInfos.payments.reduce(
