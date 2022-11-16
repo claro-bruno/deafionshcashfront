@@ -31,8 +31,8 @@ export default function CardContractor({
   }, [contractor])
 
   return (
-    <div className="h-[21vh] overflow-clip flex items-center justify-between p-2">
-      <div className="flex gap-4 rounded w-[20rem] bg-zinc-50 shadow-lg py-4 px-4">
+    <div className="h-[21vh] overflow-hidden flex items-center justify-between p-2">
+      <div className="flex gap-4 rounded max-w-[25rem] bg-zinc-50 shadow-lg py-4 px-4">
         <img
           className="h-20 w-20 object-cover rounded-md"
           src={
@@ -50,7 +50,7 @@ export default function CardContractor({
             <PencilSimpleLine />
             {`${contractor.first_name} ${contractor.last_name}`}
           </span>
-          <span className="contractorCardInfos">
+          <span className="contractorCardInfos ">
             <Envelope weight="fill" />
             {contractor.email}
           </span>

@@ -39,12 +39,13 @@ export default function EditContractorModal({
   const queryClient = useQueryClient()
   const { changeAlertModalState, getAlertMessage } = useContext(alertContext)
   const { formatDate, formatPhone } = useFormate()
-  const { mutateAsync } = useMutation(
+  const { mutateAsync, isLoading } = useMutation(
     (payload: [EditContractor, InputsFiles]) =>
       axiosUpdateContractor(payload[0], payload[1]),
     {
       onSuccess() {
-        queryClient.invalidateQueries(['contractor', modalInfos.id])
+        queryClient.invalidateQueries(['contractor'])
+        switchModalView()
       },
       onError: (error: { response: any }) => {
         console.log(error.response?.data)
@@ -81,8 +82,8 @@ export default function EditContractorModal({
       zipcode: state.zipcode ? state.zipcode : address.zipcode,
       ein: state.ein ? state.ein : modalInfos.ein,
     }
+    console.log(bodyPayload)
     mutateAsync([bodyPayload, inputsFiles])
-    switchModalView()
   }
   return (
     <>
@@ -128,7 +129,7 @@ export default function EditContractorModal({
                   >
                     <label className="flex  flex-col gap-4 items-center">
                       <img
-                        className="max-h-[20rem] max-w-[20rem] rounded-md object-contain"
+                        className="max-h-[17rem] max-w-[17rem] rounded-md object-contain"
                         src={
                           modalInfos?.urlProfile ||
                           'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
@@ -246,6 +247,7 @@ export default function EditContractorModal({
                       <label className="labelsDefault">
                         Address
                         <input
+                          name="address"
                           inputMode="numeric"
                           onChange={handleChange}
                           maxLength={120}
@@ -259,6 +261,7 @@ export default function EditContractorModal({
                       <label className="labelsDefault">
                         State
                         <input
+                          name="state"
                           className="inputsDefault"
                           onChange={handleChange}
                           maxLength={120}
@@ -269,6 +272,7 @@ export default function EditContractorModal({
                       <label className="labelsDefault">
                         Zip-code
                         <input
+                          name="zipcode"
                           className="inputsDefault"
                           onChange={handleChange}
                           type="text"
@@ -279,6 +283,7 @@ export default function EditContractorModal({
                       <label className="labelsDefault">
                         City
                         <input
+                          name="city"
                           className="inputsDefault"
                           onChange={handleChange}
                           type="text"
@@ -322,6 +327,7 @@ export default function EditContractorModal({
 
                     <button
                       type="submit"
+                      disabled={isLoading}
                       className=" buttonStyle2 px-4 mt-10 font-bold"
                     >
                       Edit

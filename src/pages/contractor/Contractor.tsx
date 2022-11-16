@@ -54,7 +54,7 @@ export default function Contractor() {
   const { data } = useQuery(['contractor', urlId], () =>
     axiosGetContractorsById(Number(urlId)),
   )
-  const { data: jobs } = useQuery(['contractorJobs', urlId], () =>
+  const { data: jobs } = useQuery(['contractorJobs'], () =>
     axiosGetAllJobsById(Number(urlId), { month: monthName, year: yearName }),
   )
 
@@ -122,11 +122,9 @@ export default function Contractor() {
                       return (
                         <tr key={index} className="bg-white border-b ">
                           <td scope="row" className="tableLine">
-                            {new Intl.DateTimeFormat('en-US').format(
-                              new Date(job.date),
-                            )}
+                            {formatDate(job.date)}
                           </td>
-                          <td className="tableLine flex flex-wrap max-w-[9rem]">
+                          <td className="tableLine text-center">
                             <Link to={`/clients/${job.id}`}>{job.name}</Link>
                           </td>
                           <td className="tableLine ">{job.value} h</td>
@@ -135,6 +133,8 @@ export default function Contractor() {
                           </td>
                         </tr>
                       )
+                    } else {
+                      return null
                     }
                   } else {
                     return []

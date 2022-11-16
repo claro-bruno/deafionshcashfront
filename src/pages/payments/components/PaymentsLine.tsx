@@ -13,7 +13,6 @@ export default function PaymentsLine(payInfos: any) {
 
   const paymentContractorInfos = useForm<any>({
     defaultValues: {
-      contractor_id: payInfos.fk_id_contractor,
       month: payInfos.month,
       year: payInfos.year,
       payments: [
@@ -22,12 +21,14 @@ export default function PaymentsLine(payInfos: any) {
           identifier: payInfos.payments[0].identifier,
           value: payInfos.payments[0].value,
           quarter: payInfos.payments[0].quarter,
+          taxes: payInfos.taxes,
         },
         {
           method: payInfos.payments[1].method ?? '',
           identifier: payInfos.payments[1].identifier,
           value: payInfos.payments[1].value,
           quarter: payInfos.payments[1].quarter,
+          taxes: payInfos.taxes,
         },
       ],
     },
@@ -46,10 +47,19 @@ export default function PaymentsLine(payInfos: any) {
       changeAlertModalState()
     },
   })
+
   function handleUpdatePayment(payload: any) {
-    console.log(payload)
-    mutateAsync(payload)
+    const paymentUpdatedObj = {
+      ...payload,
+      contractor_id: payInfos.contractorId,
+      payments: [
+        { ...payload.payments[0], taxes: payInfos.payments[0].taxes },
+        { ...payload.payments[1], taxes: payInfos.payments[1].taxes },
+      ],
+    }
+    mutateAsync(paymentUpdatedObj)
   }
+
   function setStatusPayment() {
     const paymentQuarter1 = payInfos.payments[0].identifier
     const paymentQuarter2 = payInfos.payments[1].identifier
@@ -74,18 +84,18 @@ export default function PaymentsLine(payInfos: any) {
             {formatMoney(Number(payment.value))}
           </td>
           <td>
-            <span title="taxes">{payInfos.payments[i].taxes}</span>
+            <span title="taxes">{formatMoney(payInfos.payments[i].taxes)}</span>
           </td>
           <td className="tableLine">
             <select
               className="rounded bg-white border w-[4.9rem] outline-none text-xs py-1"
               {...register(`payments[${i}].method`)}
             >
-              <option className="w-20" value="Transfer">
+              <option className="w-20" value="TRANSFER">
                 Bank Transfer
               </option>
-              <option value="Deposit">Check</option>
-              <option value="Others">Venmo</option>
+              <option value="DEPOSIT">Check</option>
+              <option value="OTHERS">Venmo</option>
             </select>
           </td>
           <td className=" tableLine">
