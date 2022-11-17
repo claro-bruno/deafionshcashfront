@@ -42,7 +42,7 @@ export default function Jobs() {
   )
   const { formatDate } = useFormate()
   const { id } = useParams()
-  /* console.log(id) */
+  console.log(id)
 
   const { data, isRefetching, isLoading } = useQuery<any>(['jobs'], () =>
     axiosGetAllJobs({ month: monthName, year: yearName }),
@@ -55,6 +55,7 @@ export default function Jobs() {
 
     setFortnightDays(fortnight)
   }
+
   useEffect(() => {
     if (data) {
       const jobFormatted = data.data.map((job: any) => ({
@@ -67,8 +68,10 @@ export default function Jobs() {
           })),
         })),
       }))
+
       handleSetJobs(jobFormatted)
     }
+
     if (isRefetching) {
       handleSetJobs([])
     }

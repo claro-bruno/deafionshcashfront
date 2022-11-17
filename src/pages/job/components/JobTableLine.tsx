@@ -26,7 +26,7 @@ export default function JobTableLine({
     handleSwitchModalView,
   } = useContextSelector(jobsContext, (context) => context)
   const { formatMoney } = useFormate()
-
+  // console.log(contractorWorkedInfos);
   const queryClient = useQueryClient()
   const { mutateAsync, isLoading } = useMutation(axiosUpdateNewJob, {
     onSuccess() {
@@ -41,6 +41,8 @@ export default function JobTableLine({
     },
   })
 
+  // console.log(fortnightDays);
+  // console.log(contractorWorkedInfos);
   const pHourValue =
     fortnightDays[0]?.dayNum === 1
       ? contractorWorkedInfos?.quarter[0].value_hour

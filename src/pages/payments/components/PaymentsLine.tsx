@@ -18,14 +18,14 @@ export default function PaymentsLine(payInfos: any) {
       payments: [
         {
           method: payInfos.payments[0].method ?? '',
-          identifier: payInfos.payments[0].identifier,
+          identifier: payInfos.payments[0].identifier ?? '',
           value: payInfos.payments[0].value,
           quarter: payInfos.payments[0].quarter,
           taxes: payInfos.taxes,
         },
         {
           method: payInfos.payments[1].method ?? '',
-          identifier: payInfos.payments[1].identifier,
+          identifier: payInfos.payments[1].identifier ?? '',
           value: payInfos.payments[1].value,
           quarter: payInfos.payments[1].quarter,
           taxes: payInfos.taxes,
