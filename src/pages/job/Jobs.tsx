@@ -123,7 +123,7 @@ export default function Jobs() {
         </div>
       </Header>
       <div className="2xl:flex 2xl:items-center 2xl:justify-center">
-        <div className="tableContainer 2xl:w-[80vw] items-center flex flex-col overflow-auto ">
+        <div className="tableContainer 2xl:w-[82vw] items-center flex flex-col overflow-auto ">
           <span className="relative h-10 my-1 currentMY items-center">
             {`${yearName} ${monthName}`}
 
@@ -140,7 +140,7 @@ export default function Jobs() {
           >
             Add new Contractor/work
           </button>
-          <table className="table">
+          <table className="table ">
             <thead className="tableHead  ">
               <tr className="">
                 {headerTableJobs.map((item, index) => {
@@ -163,7 +163,7 @@ export default function Jobs() {
                     <th
                       scope="col"
                       key={index}
-                      className=" first:pl-6 last:text-pink-500 "
+                      className=" first:pl-6 px-2 last:text-pink-500 "
                     >
                       {item}
                     </th>

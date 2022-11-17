@@ -191,7 +191,7 @@ export default function JobTableLine({
       <td className="pl-4 ">
         <select
           onChange={(e) => handleChange(e, 'editStatus')}
-          className="rounded bg-white border outline-none p-1"
+          className="rounded bg-white border outline-none  py-1 px-2"
           name="status"
           defaultValue={job.status}
         >
@@ -199,13 +199,13 @@ export default function JobTableLine({
           <option value="INACTIVE">Inactive</option>
         </select>
       </td>
-      <td className="max-w-[9rem]">
+      <td className="max-w-[9rem] tableLine">
         <Link to={`/contractors/${job.contractor.id}`}>
           {`${job.contractor.first_name} ${job.contractor.middle_name} ${job.contractor.last_name}`}
         </Link>
       </td>
-      <td>{job.client.name}</td>
-      <td className="flex items-center justify-center">
+      <td className="tableLine">{job.client.name}</td>
+      <td className="tableLine">
         {
           <p className="flex justify-center py-2 gap-1">
             {daysInputs.map((day) => (
@@ -225,36 +225,42 @@ export default function JobTableLine({
           </p>
         }
       </td>
-      <td>{hoursValue}</td>
-      <td className="w-[5rem]">
-        $
-        <input
-          onChange={(e) => handleChange(e, 'pHour')}
-          name="value_hour"
-          type="number"
-          className="w-[2.1rem] border ml-1 p-1"
-          value={pHourValue}
-        />
+      <td className="2xl:tableLine">{hoursValue} h</td>
+      <td className="w-[5rem] 2xl:tableLine">
+        <label>
+          $
+          <input
+            onChange={(e) => handleChange(e, 'pHour')}
+            name="value_hour"
+            type="number"
+            className="w-[2.1rem] border ml-1 p-1"
+            value={pHourValue}
+          />
+        </label>
       </td>
       <td>
-        $
-        <input
-          onChange={(e) => handleChange(e, 'taxes')}
-          name="taxes"
-          type="number"
-          className="w-[2.1rem] border ml-1 p-1"
-          value={taxesValue}
-        />
+        <label className="flex items-center">
+          $
+          <input
+            onChange={(e) => handleChange(e, 'taxes')}
+            name="taxes"
+            type="number"
+            className="w-[2.1rem] border ml-1 p-1"
+            value={taxesValue}
+          />
+        </label>
       </td>
       <td>
-        $
-        <input
-          onChange={(e) => handleChange(e, 'shirts')}
-          name="shirts"
-          type="number"
-          className="w-[2.1rem] border ml-1 p-1"
-          value={shirtsValue}
-        />
+        <label className="flex items-center">
+          $
+          <input
+            onChange={(e) => handleChange(e, 'shirts')}
+            name="shirts"
+            type="number"
+            className="w-[2.1rem] border ml-1 p-1"
+            value={shirtsValue}
+          />
+        </label>
       </td>
       <td className="pl-4 ">
         <select
