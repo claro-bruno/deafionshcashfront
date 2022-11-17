@@ -19,12 +19,11 @@ export default function useFormate() {
         const dateYYYYMMDD = dateMMDDYYYY.split('/')
         return `${dateYYYYMMDD[2]}-${dateYYYYMMDD[1]}-${dateYYYYMMDD[0]}`
       }
-      const dateFormatter = new Intl.DateTimeFormat('en-US', {
-        month: '2-digit',
-        day: '2-digit',
-        year: 'numeric',
-      })
-      return dateFormatter.format(date)
+      const data = payload.split('T')[0].split('-')
+      return `${data[1]}/${data[2]}/${data[0]}`
+      // const dateFormatter = new Intl.DateTimeFormat("en-US");
+
+      // return dateFormatter.format(date);
     }
   }
   function formatPhone(payload: string) {
