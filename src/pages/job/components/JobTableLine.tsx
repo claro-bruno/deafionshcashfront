@@ -276,7 +276,7 @@ export default function JobTableLine({
         </select>
       </td>
       <td>{formatMoney(totalPaymentValue)}</td>
-      <td className=" flex gap-1">
+      <td className="relative top-7 right-2 flex gap-1">
         <button
           onClick={() => handleUpdateJob(contractorWorkedInfos)}
           className="buttonStyle1 text-xs py-[0.09rem] px-2"
