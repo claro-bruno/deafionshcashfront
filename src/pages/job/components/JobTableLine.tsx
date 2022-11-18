@@ -56,8 +56,8 @@ export default function JobTableLine({
   const isFirstQuarter = daysInputs[daysInputs.length - 1].date.includes('/15/')
 
   const hoursValue = isFirstQuarter
-    ? contractorWorkedInfos?.quarter[0].total_hours
-    : contractorWorkedInfos?.quarter[1].total_hours
+    ? contractorWorkedInfos?.quarter[0].total_hours.toFixed(2)
+    : contractorWorkedInfos?.quarter[1].total_hours.toFixed(2)
 
   const totalPaymentValue = isFirstQuarter
     ? contractorWorkedInfos?.quarter[0].total

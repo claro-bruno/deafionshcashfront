@@ -83,9 +83,12 @@ export default function ClientPage() {
                 if (tableFilters(item)) {
                   return (
                     <tr key={item.id} className="bg-white border-b ">
-                      <th scope="row" className="">
+                      <th
+                        scope="row"
+                        className="flex self-center justify-center"
+                      >
                         <Circle
-                          className="relative left-24"
+                          className=""
                           weight="fill"
                           size={15}
                           color={item.status === 'ACTIVE' ? 'green' : 'gray'}

@@ -26,7 +26,7 @@ export default function ContractorAsideInfos({
   }
 
   function contractorWorkedHours(hours: string) {
-    return Number(hours).toFixed(1)
+    return Number(hours).toFixed(2)
   }
 
   return (
@@ -85,9 +85,9 @@ export default function ContractorAsideInfos({
               <div className="flex flex-col gap-1">
                 <span className="text-sm">Fortnight 2</span>
                 {section === 'Payment'
-                  ? ` ${contractorPayment(
-                      totals[2]?.total_2quarter,
-                    )} || '$0.00'`
+                  ? ` ${
+                      contractorPayment(totals[2]?.total_2quarter) || '$0.00'
+                    } `
                   : `${contractorWorkedHours(totals[2]?.total_2hours)} h`}
               </div>
             )}
