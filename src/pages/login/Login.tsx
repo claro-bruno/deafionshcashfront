@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { useContext, useContextSelector } from 'use-context-selector'
 import Logo from '../../assets/globalLogo.png'
+import LoadingSpinner from '../../components/LoadingSpinner'
 import { alertContext } from '../../context/AlertProvider/AlertContextProvider'
 import { AuthContext } from '../../context/AuthProvider'
 import useModal from '../../hooks/useModal'
@@ -34,7 +35,7 @@ export default function Login() {
     }
   }, [checkUserInLocalStorage, navigate])
 
-  const { mutateAsync } = useMutation(
+  const { mutateAsync, isLoading } = useMutation(
     (payload: UserLogin) => authenticate(payload.username, payload.password),
     {
       onSuccess: (response) => {
@@ -94,11 +95,11 @@ export default function Login() {
               />
             </label>
             <button
-              disabled={!username || password.length < 5}
+              disabled={!username || password.length < 5 || isLoading}
               className="buttonStyle2 px-3"
               type="submit"
             >
-              Sign in
+              {isLoading ? <LoadingSpinner css="w-8 h-8" /> : 'Sign in'}
             </button>
           </form>
           <span className="text-sm mt-2 text-gray-400">
