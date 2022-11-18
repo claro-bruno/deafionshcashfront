@@ -75,7 +75,7 @@ export default function PaymentsLine(payInfos: any) {
   return (
     <tr className={`${setStatusPayment()} text-center  border-b`}>
       <td className="tableLine min-w-[9rem]">
-        <Link to={`/contractors/${payInfos.fk_id_contractor}`}>
+        <Link to={`/contractors/${payInfos.contractorId}`}>
           {payInfos.name}
         </Link>
       </td>
@@ -133,7 +133,7 @@ export default function PaymentsLine(payInfos: any) {
           {isLoading ? <LoadingSpinner /> : 'Save'}
         </button>
         <Link
-          to={`/jobs/${payInfos.fk_id_contractor}`}
+          to={`/jobs/${payInfos.contractorId}`}
           className="buttonStyle2 text-xs py-[0.09rem] px-2  "
         >
           Edit

@@ -24,7 +24,7 @@ export const headerTableJobs = [
   'Month',
   ' total hours',
   'P/Hour',
-  'Taxes',
+  'Others',
   'Shirts',
   'Status Payment',
   'total payment',

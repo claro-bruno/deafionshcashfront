@@ -240,8 +240,8 @@ export default function JobTableLine({
           />
         </label>
       </td>
-      <td>
-        <label className="flex items-center">
+      <td className="2xl:tableLine">
+        <label className="">
           $
           <input
             onChange={(e) => handleChange(e, 'taxes')}
@@ -252,8 +252,8 @@ export default function JobTableLine({
           />
         </label>
       </td>
-      <td>
-        <label className="flex items-center">
+      <td className="2xl:tableLine">
+        <label className="">
           $
           <input
             onChange={(e) => handleChange(e, 'shirts')}
@@ -279,7 +279,7 @@ export default function JobTableLine({
       <td className="relative right-2 tableLine flex flex-col gap-1">
         <button
           onClick={() => handleUpdateJob(contractorWorkedInfos)}
-          className="buttonStyle1 text-xs py-[0.09rem] px-2"
+          className="buttonStyle1 flex items-center justify-center py-[0.09rem] px-2"
           type="button"
           disabled={isLoading}
         >

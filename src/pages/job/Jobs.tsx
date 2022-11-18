@@ -44,7 +44,6 @@ export default function Jobs() {
   )
   const { formatDate } = useFormate()
   const { id } = useParams()
-  console.log(id)
 
   const { data, isRefetching, isLoading } = useQuery<any>(['jobs'], () =>
     axiosGetAllJobs({ month: monthName, year: yearName }),
@@ -59,6 +58,16 @@ export default function Jobs() {
   }
 
   useEffect(() => {
+    if (isRefetching) {
+      handleSetJobs([])
+    }
+    if (id) {
+      const jobsFilteredByUserId = jobs.filter(
+        (user) => user.contractor.id === Number(id),
+      )
+      handleSetJobs(jobsFilteredByUserId)
+      return
+    }
     if (data) {
       const jobFormatted = data.data.map((job: any) => ({
         ...job,
@@ -72,22 +81,17 @@ export default function Jobs() {
       }))
 
       handleSetJobs(jobFormatted)
+      formatFortnightDays('Quinzena 1')
     }
-
-    if (isRefetching) {
-      handleSetJobs([])
-    }
-  }, [data, formatDate, handleSetJobs, isRefetching])
-
-  useEffect(() => {
-    if (id) {
-      const jobsFilteredByUserId = jobs.filter(
-        (user) => user.contractor.id === Number(id),
-      )
-      handleSetJobs(jobsFilteredByUserId)
-    }
-    formatFortnightDays('Quinzena 1')
-  }, [monthName])
+  }, [
+    data,
+    formatDate,
+    formatFortnightDays,
+    handleSetJobs,
+    id,
+    isRefetching,
+    jobs,
+  ])
 
   function getDaysOfMonth() {
     const getMonthNumberByName = MONTHS.indexOf(monthName) + 1
