@@ -65,7 +65,7 @@ export default function Invoices() {
             </thead>
             <tbody>
               <tr className="border-b tableLineHover">
-                <td className="tableLine">January</td>
+                <td className="tableLine">11/18/2022</td>
                 <td className="tableLine">1</td>
                 <td className="tableLine">Amazon</td>
                 <td className="tableLine">222331</td>
@@ -73,7 +73,7 @@ export default function Invoices() {
                 <td className="tableLine">US$ 2,550.22</td>
               </tr>
               <tr className="border-b tableLineHover">
-                <td className="tableLine">January</td>
+                <td className="tableLine">11/18/2022</td>
                 <td className="tableLine">2</td>
                 <td className="tableLine">Netflix</td>
                 <td className="tableLine">233134</td>

@@ -89,7 +89,7 @@ export const headerTableMonthsReports = [
 ]
 
 export const headerTableInvoices = [
-  'month',
+  'date',
   'client Id',
   'client',
   'invoice',
