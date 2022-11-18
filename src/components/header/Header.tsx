@@ -39,12 +39,11 @@ export default function Header(props: PropsWithChildren) {
                 Clients
               </NavLink>
             )}
-            {access === 'CONTRACTOR' && (
+            {access === 'CONTRACTOR' ? (
               <NavLink to={`/contractors/${id}`} className="headerLink">
                 Balance
               </NavLink>
-            )}
-            {access === 'ADMIN' && location.pathname.includes('/reports') ? (
+            ) : access === 'ADMIN' && location.pathname.includes('/reports') ? (
               <>
                 <NavLink to="/reports" className="headerLink">
                   Reports
