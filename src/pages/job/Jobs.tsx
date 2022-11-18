@@ -34,6 +34,8 @@ export default function Jobs() {
     handleFilters,
     setFilterContractor,
     filterContractor,
+    filterClient,
+    setFilterClient,
   } = useDateFilter()
   const [fortnightDays, setFortnightDays] = useState<DaysObj[]>([])
   const { handleSwitchModalView, jobs, handleSetJobs } = useContextSelector(
@@ -123,6 +125,13 @@ export default function Jobs() {
             value={filterContractor}
             type="text"
           />
+          <input
+            placeholder="Ex: Amazon"
+            onChange={(e) => setFilterClient(e.target.value)}
+            className="inputsDefault mt-[0.2rem] "
+            value={filterClient}
+            type="text"
+          />
         </div>
       </Header>
       <div className="2xl:flex 2xl:items-center 2xl:justify-center">
@@ -143,7 +152,7 @@ export default function Jobs() {
           >
             Add new Contractor/work
           </button>
-          <table className="table ">
+          <table className="table relative top-3">
             <thead className="tableHead  ">
               <tr className="">
                 {headerTableJobs.map((item, index) => {

@@ -33,14 +33,14 @@ export const headerTablePayments = [
   'Contractor',
   '1 - 15',
   'Others',
+  'total payment',
   'Payment Type',
   'Payment Identifier',
-  'total payment',
   'quinzena 2',
   'Others',
+  'total payment',
   'Payment Type',
   'Payment Identifier',
-  'total payment',
   'Total Month',
 ]
 

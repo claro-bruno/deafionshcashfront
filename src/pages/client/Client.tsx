@@ -85,7 +85,7 @@ export default function ClientPage() {
                     <tr key={item.id} className="bg-white border-b ">
                       <th
                         scope="row"
-                        className="flex self-center justify-center"
+                        className="flex self-center relative top-3 justify-center"
                       >
                         <Circle
                           className=""

@@ -87,6 +87,11 @@ export default function PaymentsLine(payInfos: any) {
           <td>
             <span title="taxes">{formatMoney(payInfos.payments[i].taxes)}</span>
           </td>
+          <td>
+            <span title="taxes">
+              {formatMoney(Number(payment.value - payInfos.payments[i].taxes))}
+            </span>
+          </td>
           <td className="tableLine">
             <select
               className="rounded bg-white border w-[4.9rem] outline-none text-xs py-1"
@@ -110,8 +115,6 @@ export default function PaymentsLine(payInfos: any) {
           </td>
         </>
       ))}
-      {/* <td className="w-[7rem]  px-2">{formatMoney(payInfos.taxes)}</td>
-      <td className="w-[7rem]  px-2">{formatMoney(payInfos.shirts)}</td> */}
       <td className="w-[7rem]  px-2">
         {formatMoney(
           payInfos.payments.reduce(
