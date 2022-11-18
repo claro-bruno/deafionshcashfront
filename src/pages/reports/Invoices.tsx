@@ -2,7 +2,10 @@ import React from 'react'
 import Header from '../../components/header/Header'
 import SelectFilter from '../../components/listboxes/SelectFilter'
 import { monthsListBox, yearsListBox } from '../../helpers/constants'
+import { headerTableInvoices } from '../../helpers/headersTables'
 import { useDateFilter } from '../../hooks/useDateFIlter'
+import useModal from '../../hooks/useModal'
+import NewMonthInvoice from './components/NewMonthInvoice'
 
 export default function Invoices() {
   const {
@@ -13,6 +16,7 @@ export default function Invoices() {
     setFilterContractor,
     filterContractor,
   } = useDateFilter()
+  const { isModalOpen, switchModalView } = useModal()
   return (
     <div>
       <Header>
@@ -34,41 +38,21 @@ export default function Invoices() {
       </Header>
       <div className="2xl:flex 2xl:items-center 2xl:justify-center">
         <div className="tableContainer 2xl:w-[80vw] items-center flex flex-col overflow-auto ">
-          <div className="flex justify-between  w-full px-4">
-            <div>
-              <span className="reportInfos">
-                Total Labour Payroll:
-                <span className="font-semibold reportInfosValue">
-                  $ 595,148.23
-                </span>
-              </span>
-              <span className="reportInfos">
-                Total Contractors:
-                <span className="font-semibold reportInfosValue">
-                  $ 595,148.23
-                </span>
-              </span>
-            </div>
-            <span className="reportInfos">{`${yearName} ${monthName}`}</span>
-            <div>
-              <span className="reportInfos">
-                Total Expenses:
-                <span className="font-semibold reportInfosValue">
-                  $ 595,148.23
-                </span>
-              </span>
-              <span className="reportInfos">
-                Total:
-                <span className="font-semibold reportInfosValue">
-                  $ 595,148.23
-                </span>
-              </span>
+          <div className="flex  justify-center  w-full px-4">
+            <span className="reportInfos flex-1 flex justify-center">{`${yearName} ${monthName}`}</span>
+            <div className="flex items-center pl-auto">
+              <button
+                onClick={switchModalView}
+                className="buttonStyle1 px-4 text-sm"
+              >
+                Add new Invoice
+              </button>
             </div>
           </div>
           <table className="table">
             <thead className="tableHead">
               <tr className="">
-                {/*    {headerTableReports.map((item, index) => (
+                {headerTableInvoices.map((item, index) => (
                   <th
                     key={index}
                     scope="col"
@@ -76,30 +60,33 @@ export default function Invoices() {
                   >
                     {item}
                   </th>
-                ))} */}
+                ))}
               </tr>
             </thead>
             <tbody>
-              <tr className="bg-black border-b text-white ">
-                <td className="tableLine">xxxxxxxxxxxx</td>
-                <td className="tableLine">janeiro</td>
-                <td className="tableLine">janeiro</td>
-                <td className="tableLine">janeiro</td>
-                <td className="tableLine">janeiro</td>
-                <td className="tableLine">janeiro</td>
-                <td className="tableLine">janeiro</td>
-                <td className="tableLine">janeiro</td>
-                <td className="tableLine">janeiro</td>
-                <td className="tableLine">janeiro</td>
-                <td className="tableLine">janeiro</td>
-                <td className="tableLine">janeiro</td>
-                <td className="tableLine">janeiro</td>
-                <td className="tableLine">janeiro</td>
-                <td className="tableLine">janeiro</td>
+              <tr className="border-b tableLineHover">
+                <td className="tableLine">January</td>
+                <td className="tableLine">1</td>
+                <td className="tableLine">Amazon</td>
+                <td className="tableLine">222331</td>
+                <td className="tableLine">Deep Cleaning</td>
+                <td className="tableLine">US$ 2,550.22</td>
+              </tr>
+              <tr className="border-b tableLineHover">
+                <td className="tableLine">January</td>
+                <td className="tableLine">2</td>
+                <td className="tableLine">Netflix</td>
+                <td className="tableLine">233134</td>
+                <td className="tableLine">Deep Cleaning </td>
+                <td className="tableLine">US$ 4,150.00</td>
               </tr>
             </tbody>
           </table>
         </div>
+        <NewMonthInvoice
+          switchModalView={switchModalView}
+          isModalOpen={isModalOpen}
+        />
       </div>
     </div>
   )

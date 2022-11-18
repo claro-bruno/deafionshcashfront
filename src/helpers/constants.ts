@@ -76,6 +76,7 @@ export const PAYMENT_CATEGORIES = [
   'Office expenses',
   'Extras',
 ]
+export const CLIENTS_LIST = ['Amazon', 'Netflix']
 export const reportsYearBody = [
   {
     id: 1,

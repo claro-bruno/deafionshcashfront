@@ -87,3 +87,20 @@ export const headerTableMonthsReports = [
   'extras',
   'save',
 ]
+
+export const headerTableInvoices = [
+  'month',
+  'client Id',
+  'client',
+  'invoice',
+  'descriptions',
+  'value',
+]
+
+export const headerTableInvoicesMonths = [
+  'day',
+  'client Id',
+  'client',
+  'invoice',
+  'total',
+]
