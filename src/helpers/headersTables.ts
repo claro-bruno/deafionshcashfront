@@ -4,12 +4,7 @@ export const headerTableClients = [
   'Working Days',
   'Working Hours',
 ]
-export const headerTableContractor = [
-  'Date',
-  'Client',
-  'Worked Hours',
-  'P/Hour',
-]
+export const headerTableTransactions = ['Date', 'Type', 'Valor', 'Username']
 export const headerTableContractors = [
   'status',
   'fullname',

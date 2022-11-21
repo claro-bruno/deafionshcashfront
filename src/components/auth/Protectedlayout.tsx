@@ -9,31 +9,28 @@ export default function ProtectedLayout({
 }: {
   children: JSX.Element
 }) {
-  const { token, access, saveUser } = useContextSelector(
+  const { token, saveUser } = useContextSelector(
     AuthContext,
     (context) => context,
   )
   const navigate = useNavigate()
-  const location = useLocation()
-  const urlsProtected = ['/jobs', '/payments', '/contractors']
   useEffect(() => {
     const user = getUserFromLocalStorage()
-    if (!user?.token || !user?.access) {
+    if (!user?.token) {
       navigate('/login')
-      console.log('voce nao tem acesso')
     }
-    if (user?.token && user?.access) {
+    if (user?.token) {
       saveUser(user)
     }
-  }, [navigate, saveUser])
-  useEffect(() => {
-    if (urlsProtected.includes(location.pathname) && access === 'CONTRACTOR') {
-      navigate('/home')
-      console.log('NAO TENHO ACESSO')
-    }
-  }, [location, access, navigate])
+  }, [saveUser, navigate])
+  // useEffect(() => {
+  //   if (urlsProtected.includes(location.pathname) && access === 'CONTRACTOR') {
+  //     navigate('/home')
+  //     console.log('NAO TENHO ACESSO')
+  //   }
+  // }, [location, access, navigate])
 
-  if (!token || !access) {
+  if (!token) {
     return null
   }
   return children

@@ -1,18 +1,9 @@
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import ProtectedLayout from './components/auth/Protectedlayout'
-import JobContextProvider from './context/JobProvider/JobContextProvider'
-import Client from './pages/client/Client'
-import Contractor from './pages/contractor/Contractor'
-import Contractors from './pages/contractor/Contractors'
 import Home from './pages/home/Home'
-import Job from './pages/job/Jobs'
 import Login from './pages/login/Login'
-import Payments from './pages/payments/Payments'
 import Register from './pages/register/Register'
-import Terms from './pages/register/Terms'
-import Invoices from './pages/reports/Invoices'
-import Months from './pages/reports/Months'
-import Reports from './pages/reports/Reports'
+import Transaction from './pages/transaction/Transaction'
 
 function App() {
   return (
@@ -27,93 +18,16 @@ function App() {
           </ProtectedLayout>
         }
       />
-      <Route path="/register">
-        <Route index element={<Register />} />
-        <Route path="terms" element={<Terms />} />
-      </Route>
       <Route
-        path="/payments"
+        path="/transaction"
         element={
           <ProtectedLayout>
-            <Payments />
+            <Transaction />
           </ProtectedLayout>
         }
       />
-      <Route path="/jobs">
-        <Route
-          index
-          element={
-            <ProtectedLayout>
-              <JobContextProvider>
-                <Job />
-              </JobContextProvider>
-            </ProtectedLayout>
-          }
-        />
-        <Route
-          path=":id"
-          element={
-            <ProtectedLayout>
-              <JobContextProvider>
-                <Job />
-              </JobContextProvider>
-            </ProtectedLayout>
-          }
-        />
-      </Route>
-      <Route
-        path="/clients"
-        element={
-          <ProtectedLayout>
-            <Client />
-          </ProtectedLayout>
-        }
-      >
-        <Route path=":name" element={<Client />} />
-      </Route>
-      <Route path="/contractors">
-        <Route
-          index
-          element={
-            <ProtectedLayout>
-              <Contractors />
-            </ProtectedLayout>
-          }
-        />
-        <Route
-          path=":id"
-          element={
-            <ProtectedLayout>
-              <Contractor />
-            </ProtectedLayout>
-          }
-        />
-      </Route>
-      <Route path="/reports">
-        <Route
-          index
-          element={
-            <ProtectedLayout>
-              <Reports />
-            </ProtectedLayout>
-          }
-        />
-        <Route
-          path="invoices"
-          element={
-            <ProtectedLayout>
-              <Invoices />
-            </ProtectedLayout>
-          }
-        />
-        <Route
-          path="months"
-          element={
-            <ProtectedLayout>
-              <Months />
-            </ProtectedLayout>
-          }
-        />
+      <Route path="/register">
+        <Route path="/register" element={<Register />} />
       </Route>
     </Routes>
   )

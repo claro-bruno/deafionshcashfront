@@ -6,21 +6,13 @@ export default function useFormate() {
     })
     return priceFormatter.format(payload)
   }
-  function formatDate(payload: string, type?: string) {
+  function formatDate(payload: string) {
     if (payload) {
-      const date = new Date(payload)
-      if (type === 'birthDate') {
-        const dateFormatter = new Intl.DateTimeFormat('en-US', {
-          year: 'numeric',
-          month: '2-digit',
-          day: '2-digit',
-        })
-        const dateMMDDYYYY = dateFormatter.format(date)
-        const dateYYYYMMDD = dateMMDDYYYY.split('/')
-        return `${dateYYYYMMDD[2]}-${dateYYYYMMDD[1]}-${dateYYYYMMDD[0]}`
-      }
-      const data = payload.split('T')[0].split('-')
-      return `${data[1]}/${data[2]}/${data[0]}`
+      const data = payload.split('T')[0]
+      const date = new Date(data)
+      date.setDate(date.getDate() + 1)
+      const dateFormatter = new Intl.DateTimeFormat('en-US')
+      return dateFormatter.format(date)
       // const dateFormatter = new Intl.DateTimeFormat("en-US");
 
       // return dateFormatter.format(date);

@@ -1,4 +1,4 @@
-export type DateParams = {
-  year: string
-  month: string
+export type IFilter = {
+  id: string
+  filter?: string
 }

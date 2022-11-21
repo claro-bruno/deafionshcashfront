@@ -1,10 +1,9 @@
 import { ReactNode } from 'react'
 
 export type User = {
-  access?: string
   token?: string
-  reset?: boolean
-  contractor_id?: number
+  username?: string
+  accountId?: string
 }
 
 export interface IAuthContext extends User {

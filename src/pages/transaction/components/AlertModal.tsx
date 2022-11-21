@@ -11,7 +11,7 @@ export default function AlertModal({
 }: ModalProps) {
   const navigate = useNavigate()
   function handleSwitchModalView() {
-    modalInfos.isContractorCreated && navigate('/')
+    modalInfos.isTransactionCreated && navigate('/')
     switchModalView()
   }
 
@@ -48,7 +48,7 @@ export default function AlertModal({
               >
                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                   <div className="flex items-center justify-center">
-                    {modalInfos?.isContractorCreated ? (
+                    {modalInfos?.isTransactionCreated ? (
                       <CheckCircle size={36} color={'green'} />
                     ) : (
                       <Warning size={36} color={'red'} />
@@ -59,8 +59,8 @@ export default function AlertModal({
                     className="text-xl text-center py-4 font-medium leading-6 text-gray-900"
                   >
                     <span className="font-bold">
-                      {modalInfos?.isContractorCreated
-                        ? 'Account Successfully created'
+                      {modalInfos?.isTransactionCreated
+                        ? 'Transaction Successfully created'
                         : 'Warning!'}
                     </span>
                   </Dialog.Title>

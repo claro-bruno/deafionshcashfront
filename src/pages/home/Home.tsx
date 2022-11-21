@@ -1,113 +1,141 @@
-import {
-  Article,
-  Bank,
-  Buildings,
-  CurrencyDollar,
-  SuitcaseSimple,
-  Ticket,
-  UserList,
-} from 'phosphor-react'
-import { useEffect } from 'react'
-import { NavLink } from 'react-router-dom'
+/* eslint-disable prettier/prettier */
+/* eslint-disable react/jsx-key */
+import { useQuery } from '@tanstack/react-query'
+import { User, Money } from 'phosphor-react'
+import { useContext, useEffect, useState } from 'react'
 import { useContextSelector } from 'use-context-selector'
+import { axiosGetBalance } from '../../api/account'
+import { axiosGetAllTransaction } from '../../api/transactions'
+// import { useContextSelector } from 'use-context-selector'
 import Header from '../../components/header/Header'
 import { AuthContext } from '../../context/AuthProvider'
+import { headerTableTransactions } from '../../helpers/headersTables'
+// import { AuthContext } from '../../context/AuthProvider'
+import { alertContext } from '../../context/AlertProvider/AlertContextProvider'
 import useModal from '../../hooks/useModal'
-import ChangeModalPassword from './components/ChangeModalPassword'
 import './home.css'
+import { Link, useNavigate } from 'react-router-dom'
+// import CreateTransaction from './components/CreateTransaction/CreateTransaction'
 
 export default function Home() {
-  const { access, reset } = useContextSelector(
+  const { accountId, username } = useContextSelector(
     AuthContext,
     (context) => context,
   )
 
+  // const { changeAlertModalState, getAlertMessage } = useContext(alertContext)
+  // const navigate = useNavigate()
+  // const { isModalOpen, switchModalView } = useModal()
+  const [filterType, setFilterType] = useState('')
+  const [filterDate, setFilterDate] = useState('')
+  const [balance, setBalance] = useState(0)
+  const [transactions, setTransactions] = useState([])
+  const { data } = useQuery(['balance'], () =>
+    axiosGetBalance({ id: accountId }),
+  )
+  const { data: result } = useQuery(['transaction'], () =>
+    axiosGetAllTransaction({ id: accountId!, filter: '' }),
+  )
+
   useEffect(() => {
-    if (reset) {
-      switchModalView()
+    if (data) {
+      setBalance(data.data.balance)
     }
-  }, [])
-  const { isModalOpen, switchModalView } = useModal()
+  }, [data])
+
+  useEffect(() => {
+    if (result) {
+      setTransactions(result.data.transactions)
+    }
+  }, [result])
+
+  function tableFilters(item: any) {
+    const filterByType = item.type
+      .includes(filterType.toLowerCase())
+    const filterByDate = item.created_at
+      .includes(filterDate.toLowerCase())
+    return filterByType && filterByDate
+  }
+
   return (
     <div className="flex  flex-col">
+      <div className="relative left-20 mx-auto flex items-center gap-2" >
+          <input type="date" id="filterDate" name="filterDate" value={filterDate} onChange={(e) => setFilterDate(e.target.value)}/>
+          <select id='filterType' name='filterType' value={filterType} onChange={(e) => setFilterType(e.target.value)}>
+            <option value=""></option>
+            <option value="cash-in">Cash-In</option>
+            <option value="cash-out">Cash-Out</option>
+          </select>
+        </div>
       <Header />
-      <main className="min-h-screen flex justify-center items-center ">
-        <nav className="flex flex-col gap-6 items-center justify-center relative bottom-14 ">
-          {access === 'ADMIN' && (
-            <>
-              <div className="flex gap-8">
-                <NavLink to={'/contractors'} className="home-cards group ">
-                  <span className="card-hover">
-                    {' '}
-                    <UserList size={65} />
-                  </span>
-                  <h2 className="card-hover">Contractors</h2>
-                </NavLink>
-                <NavLink to={'/clients'} className="home-cards group ">
-                  <span className="card-hover">
-                    <Buildings size={65} />
-                  </span>
-                  <h2 className="card-hover">Clients</h2>
-                </NavLink>
-                <NavLink to={'/jobs'} className="home-cards group ">
-                  <span className="card-hover">
-                    <SuitcaseSimple size={65} />
-                  </span>
-                  <h2 className="card-hover">Jobs</h2>
-                </NavLink>
-              </div>
-              <div className="flex gap-8">
-                <NavLink to={'/tickets'} className="home-cards group ">
-                  <span className="card-hover">
-                    {' '}
-                    <Ticket size={65} />
-                  </span>
-                  <h2 className="card-hover">Tickets</h2>
-                </NavLink>
-                <NavLink to={'/payments'} className="home-cards group ">
-                  <span className="card-hover">
-                    <CurrencyDollar size={65} />
-                  </span>
-                  <h2 className="card-hover">Payments</h2>
-                </NavLink>
-                <NavLink to={'/reports'} className="home-cards group ">
-                  <span className="card-hover">
-                    {' '}
-                    <Bank size={65} />
-                  </span>
-                  <h2 className="card-hover">Financial Reports</h2>
-                </NavLink>
-              </div>
-            </>
-          )}
-          {access === 'CONTRACTOR' && (
-            <div className="flex gap-8">
-              <NavLink to={'/clients'} className="home-cards group ">
-                <span className="card-hover">
-                  <Buildings size={65} />
-                </span>
-                <h2 className="card-hover">Clients</h2>
-              </NavLink>
-              <NavLink to={'/contractors/1'} className="home-cards group ">
-                <span className="card-hover">
-                  <CurrencyDollar size={65} />
-                </span>
-                <h2 className="card-hover">Balance</h2>
-              </NavLink>
-              <NavLink to={'/register/terms'} className="home-cards group ">
-                <span className="card-hover">
-                  <Article size={65} />
-                </span>
-                <h2 className="card-hover">Terms and Conditions</h2>
-              </NavLink>
-            </div>
-          )}
-        </nav>
+      <main className="dashboard-container">
+        <div className="account-container">
+          <div className="container-info">
+            <p className='account-icon'> <User /> Account</p>
+
+            <p className='value-info'>{`${username}`}</p>
+          </div>
+          <div className="container-info">
+            <p className='account-icon'> <Money weight="fill" /> Balance</p>
+
+            <p className='value-info'> {new Intl.NumberFormat('pt-BR', {
+              style: 'currency',
+              currency: 'BRL',
+            }).format(balance)}</p>
+          </div>
+          <Link className="transfer-link" to="/transaction">
+            Transferir
+          </Link>
+          
+        </div>
+        
+        <div className="tableContainer relative left-2 flex gap-4 w-[70vw] max-h-[70vh] overflow-auto">
+        
+          <table className="table">
+            
+            <thead className="tableHead">
+              <tr>
+                {headerTableTransactions.map((item, index) => (
+                  <th scope="col" key={index} className="tableLine">
+                    {item}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              <>
+                {transactions.map((transaction, index) => {
+                  if (tableFilters(transaction)) {
+
+                  return (
+                    <tr key={index} className="bg-white border-b ">
+                      <td scope="row" className="tableLine">
+                        {new Intl.DateTimeFormat('pt-BR').format(
+                          new Date(transaction.created_at),
+                        )}
+                      </td>
+                      <td className="tableLine text-center">
+                        {transaction.type}
+                      </td>
+                      <td className="tableLine">
+                        {new Intl.NumberFormat('pt-BR', {
+                          style: 'currency',
+                          currency: 'BRL',
+                        }).format(transaction.value)}
+                      </td>
+                      <td className="tableLine">{transaction.account}</td>
+                    </tr>
+                  )
+
+                  } else {
+                    return []
+                  }
+                })}
+              </>
+            </tbody>
+          </table>
+        </div>
       </main>
-      <ChangeModalPassword
-        isModalOpen={isModalOpen}
-        switchModalView={switchModalView}
-      />
     </div>
   )
 }

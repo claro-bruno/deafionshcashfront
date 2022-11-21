@@ -1,10 +1,10 @@
 import { User } from '../../types/authProvider'
 
 export function setUserToLocalStorage(user: User) {
-  localStorage.setItem('u/globaljanitorialservices', JSON.stringify(user))
+  localStorage.setItem('u/ngcash', JSON.stringify(user))
 }
 export function getUserFromLocalStorage() {
-  const json = localStorage.getItem('u/globaljanitorialservices')
+  const json = localStorage.getItem('u/ngcash')
   if (!json) {
     return null
   }
@@ -12,5 +12,5 @@ export function getUserFromLocalStorage() {
   return user ?? null
 }
 export function removeUserFromLocalStorage() {
-  localStorage.removeItem('u/globaljanitorialservices')
+  localStorage.removeItem('u/ngcash')
 }

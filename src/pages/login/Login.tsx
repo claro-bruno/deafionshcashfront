@@ -3,12 +3,13 @@ import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { useContext, useContextSelector } from 'use-context-selector'
-import Logo from '../../assets/globalLogo.png'
+import Logo from '../../assets/237227162_602828361124532_208029147972362625_n.jpg'
+import Imagem1 from '../../assets/ngcard.ced5acb.svg'
 import LoadingSpinner from '../../components/LoadingSpinner'
 import { alertContext } from '../../context/AlertProvider/AlertContextProvider'
 import { AuthContext } from '../../context/AuthProvider'
-import useModal from '../../hooks/useModal'
-import RecoveryPassword from './RecoveryPasswordComponent/RecoveryPassword'
+// import useModal from '../../hooks/useModal'
+// import RecoveryPassword from './RecoveryPasswordComponent/RecoveryPassword'
 
 export type UserLogin = {
   username: string
@@ -28,7 +29,7 @@ export default function Login() {
   const username = watch('username')
   const password = watch('password')
   const navigate = useNavigate()
-  const { isModalOpen, switchModalView } = useModal()
+  // const { isModalOpen, switchModalView } = useModal()
   useEffect(() => {
     if (checkUserInLocalStorage()) {
       navigate('/home')
@@ -59,11 +60,11 @@ export default function Login() {
     <div className="flex  min-w-screen min-h-screen">
       <div className="flex-1 flex items-center flex-col object-cover justify-center  bg-brand ">
         <h1 className=" uppercase leading-4 relative bottom-24 font-extrabold text-4xl font-['Poppins'] text-gray-200">
-          Global Janitorial Services!
+          NGCASH
         </h1>
         <img
           className="w-[99%] object-cover rounded shadow-md"
-          src="https://www.globaljanitorialservices.com/assets/images/backgrounds/main-slider-2-1.jpg"
+          src={Imagem1}
           alt="workers smiling"
         />
       </div>
@@ -105,24 +106,24 @@ export default function Login() {
           <span className="text-sm mt-2 text-gray-400">
             Don&apos;t have an account ?{' '}
             {
-              <Link className="text-blue-500" to="/register/terms">
+              <Link className="text-blue-500" to="/register">
                 Register
               </Link>
             }
           </span>
-          <span className="text-sm mt-2 text-gray-400">
+          {/* <span className="text-sm mt-2 text-gray-400">
             Forgot your password ?{' '}
             {
               <button className="text-blue-500" onClick={switchModalView}>
                 Recover
               </button>
             }
-          </span>
+          </span> */}
         </div>
-        <RecoveryPassword
+        {/* <RecoveryPassword
           isModalOpen={isModalOpen}
           switchModalView={switchModalView}
-        />
+        /> */}
       </div>
     </div>
   )
